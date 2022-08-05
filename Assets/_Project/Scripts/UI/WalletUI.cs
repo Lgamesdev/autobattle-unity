@@ -1,3 +1,4 @@
+using System;
 using LGamesDev.Core.Player;
 using TMPro;
 using UnityEngine;
@@ -7,16 +8,11 @@ namespace LGamesDev.UI
     public class WalletUI : MonoBehaviour
     {
         public Transform goldAmount;
-        private Transform _container;
+        public Transform crystalAmount;
+        
         private IShopCustomer _shopCustomer;
 
         private PlayerWalletManager _walletManager;
-
-        private void Awake()
-        {
-            goldAmount = transform.Find("goldAmount");
-            _container = transform.Find("container");
-        }
 
         private void Start()
         {
@@ -32,7 +28,17 @@ namespace LGamesDev.UI
 
         private void OnCurrencyChanged(Currency currency)
         {
-            goldAmount.GetComponent<TextMeshProUGUI>().text = currency.amount.ToString();
+            switch (currency.type)
+            {
+                case CurrencyType.Gold:
+                    goldAmount.GetComponent<TextMeshProUGUI>().text = currency.amount.ToString();
+                    break;
+                case CurrencyType.Crystal:
+                    crystalAmount.GetComponent<TextMeshProUGUI>().text = currency.amount.ToString();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 }

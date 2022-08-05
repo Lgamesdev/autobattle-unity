@@ -61,6 +61,8 @@ namespace LGamesDev
                     walletManager.SetCurrencies(result);
                     FindObjectOfType<WalletUI>().GetComponent<WalletUI>().goldAmount.GetComponent<TextMeshProUGUI>().text 
                         = walletManager.GetAmount(CurrencyType.Gold).ToString();
+                    FindObjectOfType<WalletUI>().GetComponent<WalletUI>().crystalAmount.GetComponent<TextMeshProUGUI>().text 
+                        = walletManager.GetAmount(CurrencyType.Crystal).ToString();
                 }
             ));
             _coroutinesLoading.Add(InitialisationStage.Equipment, CharacterEquipmentHandler.LoadEquipments(

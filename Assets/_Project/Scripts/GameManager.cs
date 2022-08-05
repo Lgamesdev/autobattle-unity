@@ -82,7 +82,7 @@ namespace LGamesDev
             _scenesLoading.Add(SceneManager.LoadSceneAsync((int)SceneIndexes.MainMenu, LoadSceneMode.Additive));
 
             StartCoroutine(GetSceneLoadProgress());
-            yield return StartCoroutine(GetTotalProgress());
+            StartCoroutine(GetTotalProgress());
             yield return StartCoroutine(DisableLoadingScreen());
         }
 
@@ -154,13 +154,13 @@ namespace LGamesDev
                 var totalProgress = Mathf.Round((_totalSceneProgress + _totalSetupProgress) / 2f);
 
                 _progressBar.current = Mathf.RoundToInt(totalProgress);
-
+                
                 yield return new WaitForEndOfFrame();
             }
-
-            _progressBar.current = 100;
             
-            Debug.Log("initialisation is done");
+            _progressBar.current = 100;
+
+            yield return null;
         }
 
         public IEnumerator DisableLoadingScreen()

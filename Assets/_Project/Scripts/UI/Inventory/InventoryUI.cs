@@ -1,0 +1,61 @@
+using System.Collections.Generic;
+using LGamesDev.Core.Player;
+using UnityEngine;
+
+namespace LGamesDev.UI
+{
+    public class InventoryUI : MonoBehaviour
+    {
+        [SerializeField] private Transform pfUIItemSlot;
+
+        private PlayerInventoryManager _inventoryManager;
+
+        private Transform _itemsParent;
+
+        private InventorySlotUI[] _slots;
+
+        private void Awake()
+        {
+            _itemsParent = transform.Find("Background").Find("ItemsParent");
+        }
+
+        private void Start()
+        {
+            _inventoryManager = PlayerInventoryManager.Instance;
+            _inventoryManager.OnItemChanged += Inventory_OnItemChanged;
+
+
+            _slots = new InventorySlotUI[_inventoryManager.Inventory.Space];
+
+            SetupInventoryUI();
+        }
+
+        private void Inventory_OnItemChanged(List<Item> items)
+        {
+            UpdateInventoryUI();
+        }
+
+        private void UpdateInventoryUI()
+        {
+            for (var i = 0; i < _slots.Length; i++)
+                if (i < _inventoryManager.Inventory.Items.Count)
+                    _slots[i].AddItem(_inventoryManager.Inventory.Items[i]);
+                else
+                    _slots[i].ClearSlot();
+        }
+
+        private void SetupInventoryUI()
+        {
+            for (var i = 0; i < _slots.Length; i++)
+            {
+                var itemSlotRectTransform = Instantiate(pfUIItemSlot, _itemsParent).GetComponent<RectTransform>();
+
+                var slot = itemSlotRectTransform.GetComponent<InventorySlotUI>();
+
+                _slots[i] = slot;
+            }
+
+            UpdateInventoryUI();
+        }
+    }
+}

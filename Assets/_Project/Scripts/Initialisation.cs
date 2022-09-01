@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using LGamesDev.Core.Character;
 using LGamesDev.Core.Player;
+using LGamesDev.Core.Request;
 using LGamesDev.UI;
 using TMPro;
 using UnityEngine;
@@ -32,9 +33,12 @@ namespace LGamesDev
         private void LoadMainMenu()
         {
             // Load coroutines to setup main menu
-            _coroutinesLoading.Add(InitialisationStage.Body, PlayerBody.Load(
+            _coroutinesLoading.Add(InitialisationStage.Body, PlayerBodyHandler.Load(
                 this,
-                result => { _gameManager.SetPlayerBody(result); }
+                result =>
+                {
+                    _gameManager.SetPlayerBody(result);
+                }
             ));
             _coroutinesLoading.Add(InitialisationStage.Infos, PlayerConfigHandler.Load(
                 this,
@@ -45,13 +49,18 @@ namespace LGamesDev
                     if (!result.creationDone) StartCoroutine(_gameManager.LoadCustomization());
                 }
             ));
-            /*_coroutinesLoading.Add(InitialisationStage.Infos, PlayerInfosHandler.Load(
+            _coroutinesLoading.Add(InitialisationStage.Progression, PlayerProgressionHandler.Load(
                 this,
                 result =>
                 {
-                    _gameManager.SetPlayerInfos(result);
+                    _gameManager.SetPlayerProgression(result);
+
+                    FindObjectOfType<InfosUI>().GetComponent<InfosUI>().username.GetComponent<TextMeshProUGUI>().text
+                        = GameManager.Instance.GetAuthentication().user;
+                    FindObjectOfType<InfosUI>().GetComponent<InfosUI>().level.GetComponent<TextMeshProUGUI>().text 
+                        = result.level.ToString();
                 }
-            ));*/
+            ));
             _coroutinesLoading.Add(InitialisationStage.Wallet, PlayerWalletHandler.Load(
                 this,
                 result =>
@@ -69,6 +78,8 @@ namespace LGamesDev
                 this,
                 result =>
                 {
+                    //foreach (CharacterEquipment characterEquipment in result) Debug.Log(characterEquipment.ToString());
+                    
                     CharacterEquipmentManager.Instance.currentEquipment = result;
                 }
             ));
@@ -76,9 +87,11 @@ namespace LGamesDev
                 this,
                 result =>
                 {
+                    //Debug.Log(result.ToString());
                     PlayerInventoryManager.Instance.Inventory = result;
                 }
             ));
+            _coroutinesLoading.Add(InitialisationStage.Character, CharacterHandler.Instance.SetupCharacter());
             
             StartCoroutine(SetupCoroutines());
         }
@@ -106,8 +119,10 @@ namespace LGamesDev
     {
         Body,
         Infos,
+        Progression,
         Wallet,
         Equipment,
-        Inventory
+        Inventory,
+        Character
     }
 }

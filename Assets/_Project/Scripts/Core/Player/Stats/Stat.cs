@@ -34,7 +34,7 @@ namespace LGamesDev.Core.Player
 
         public override string ToString()
         {
-            return "[ \n " +
+            return "stat : [ \n " +
                    "statType : " + statType + "\n" +
                    "value : " + GetValue() + "\n" +
                    "]";

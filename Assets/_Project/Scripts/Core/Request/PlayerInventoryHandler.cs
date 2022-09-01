@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using LGamesDev.Core.Player;
 using LGamesDev.Core.Request;
 using Unity.Plastic.Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace LGamesDev.Core.Player
+namespace LGamesDev.Core.Request
 {
     public class PlayerInventoryHandler
     {

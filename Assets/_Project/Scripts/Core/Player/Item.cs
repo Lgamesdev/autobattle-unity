@@ -1,5 +1,7 @@
 using System;
 using LGamesDev.Core.Player;
+using LGamesDev.Request.Converters;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace LGamesDev
@@ -9,6 +11,7 @@ namespace LGamesDev
     {
         public string name = "New Item";
 
+        [JsonConverter(typeof(EquipmentConverter))]
         public Sprite icon;
 
         public bool isDefaultItem;

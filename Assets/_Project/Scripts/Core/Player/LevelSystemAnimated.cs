@@ -14,6 +14,9 @@ namespace LGamesDev.Core.Player
         private Character_LevelSystem playerLevelSystem;
         private float updateTimer;
         private readonly float updateTimerMax;
+        
+        public event EventHandler OnExperienceChanged;
+        public event EventHandler OnLevelChanged;
 
         public LevelSystemAnimated(Character_LevelSystem levelSystem)
         {
@@ -22,9 +25,6 @@ namespace LGamesDev.Core.Player
 
             FunctionUpdater.Create(() => Update());
         }
-
-        public event EventHandler OnExperienceChanged;
-        public event EventHandler OnLevelChanged;
 
         private void SetPlayerLevelSystem(Character_LevelSystem playerLevelSystem)
         {

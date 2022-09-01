@@ -13,5 +13,20 @@ namespace LGamesDev
         public string chestColor;
         public string beltColor;
         public string shortColor;
+
+        public override string ToString()
+        {
+            return "Body : [ \n" +
+                       "isMaleGender : " + isMaleGender + "\n" +
+                       "hairIndex : " + hairIndex + "\n" +
+                       "moustacheIndex : " + moustacheIndex + "\n" +
+                       "beardIndex : " + beardIndex + "\n" +
+                       "hairColor : " + hairColor + "\n" +
+                       "skinColor : " + skinColor + "\n" +
+                       "chestColor : " + chestColor + "\n" +
+                       "beltColor : " + beltColor + "\n" +
+                       "shortColor : " + shortColor + "\n" +
+                   "]";
+        }
     }
 }

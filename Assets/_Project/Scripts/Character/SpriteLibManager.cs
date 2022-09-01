@@ -2,34 +2,38 @@ using System;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 
-public class SpriteLibManager : MonoBehaviour
+namespace LGamesDev
 {
-    public static SpriteLibManager Instance;
-    
-    [SerializeField] private SpriteLibraryAsset maleLibrary;
-    [SerializeField] private SpriteLibraryAsset femaleLibrary;
-    
-    private SpriteLibrary _currentLibrary;
-
-    public delegate void OnSpriteLibChangeEvent(SpriteLib spriteLib);
-    public OnSpriteLibChangeEvent OnSpriteLibChange;
-
-    private void Awake()
+    public class SpriteLibManager : MonoBehaviour
     {
-        Instance = this;
-        
-        _currentLibrary = transform.GetComponent<SpriteLibrary>();
-    }
+        public static SpriteLibManager Instance;
 
-    public void SwitchLibrary(SpriteLib library)
-    {
-        OnSpriteLibChange?.Invoke(library);
-        
-        _currentLibrary.spriteLibraryAsset = library switch
+        [SerializeField] private SpriteLibraryAsset maleLibrary;
+        [SerializeField] private SpriteLibraryAsset femaleLibrary;
+
+        public SpriteLibrary currentLibrary;
+
+        public delegate void OnSpriteLibChangeEvent(SpriteLib spriteLib);
+
+        public OnSpriteLibChangeEvent OnSpriteLibChange;
+
+        private void Awake()
         {
-            SpriteLib.Male => maleLibrary,
-            SpriteLib.Female => femaleLibrary,
-            _ => throw new ArgumentOutOfRangeException(nameof(library), library, null)
-        };
+            Instance = this;
+
+            currentLibrary = transform.GetComponent<SpriteLibrary>();
+        }
+
+        public void SwitchLibrary(SpriteLib library)
+        {
+            OnSpriteLibChange?.Invoke(library);
+
+            currentLibrary.spriteLibraryAsset = library switch
+            {
+                SpriteLib.Male => maleLibrary,
+                SpriteLib.Female => femaleLibrary,
+                _ => throw new ArgumentOutOfRangeException(nameof(library), library, null)
+            };
+        }
     }
 }

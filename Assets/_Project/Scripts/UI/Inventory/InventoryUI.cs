@@ -6,7 +6,7 @@ namespace LGamesDev.UI
 {
     public class InventoryUI : MonoBehaviour
     {
-        [SerializeField] private Transform pfUIItemSlot;
+        [SerializeField] private Transform pfUIInventorySlot;
 
         private PlayerInventoryManager _inventoryManager;
 
@@ -16,7 +16,7 @@ namespace LGamesDev.UI
 
         private void Awake()
         {
-            _itemsParent = transform.Find("Background").Find("ItemsParent");
+            _itemsParent = transform.Find("ItemsParent");
         }
 
         private void Start()
@@ -48,7 +48,7 @@ namespace LGamesDev.UI
         {
             for (var i = 0; i < _slots.Length; i++)
             {
-                var itemSlotRectTransform = Instantiate(pfUIItemSlot, _itemsParent).GetComponent<RectTransform>();
+                var itemSlotRectTransform = Instantiate(pfUIInventorySlot, _itemsParent).GetComponent<RectTransform>();
 
                 var slot = itemSlotRectTransform.GetComponent<InventorySlotUI>();
 

@@ -143,6 +143,7 @@ namespace LGamesDev.UI
 
         public static void Show_Static(Item item)
         {
+            Debug.Log(item.ToString());
             _instance.Show(item);
         }
 

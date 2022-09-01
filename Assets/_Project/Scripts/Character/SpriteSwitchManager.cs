@@ -5,55 +5,58 @@ using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public class SpriteSwitchManager : MonoBehaviour
+namespace LGamesDev
 {
-    public List<SpriteSwitcher> spriteSwitchers;
-    public List<ColorPickerButton> colorPickers;
-
-    private void Start()
+    public class SpriteSwitchManager : MonoBehaviour
     {
-        SpriteLibManager.Instance.OnSpriteLibChange += ResetSprites;
+        public List<SpriteSwitcher> spriteSwitchers;
+        public List<ColorPickerButton> colorPickers;
+
+        private void Start()
+        {
+            SpriteLibManager.Instance.OnSpriteLibChange += ResetSprites;
+        }
+
+        private void ResetSprites(SpriteLib spriteLib)
+        {
+            foreach (SpriteSwitcher switcher in spriteSwitchers)
+            {
+                switcher.Reset();
+            }
+
+            foreach (ColorPickerButton colorPickerButton in colorPickers)
+            {
+                colorPickerButton.GetComponent<Image>().color = colorPickerButton.activeColor;
+            }
+        }
+
+        public void RandomizeSprites()
+        {
+            foreach (SpriteSwitcher switcher in spriteSwitchers)
+            {
+                switcher.Randomize();
+            }
+
+            foreach (ColorPickerButton colorPickerButton in colorPickers)
+            {
+                colorPickerButton.Randomize();
+            }
+        }
     }
 
-    private void ResetSprites(SpriteLib spriteLib)
+    public enum SwitchBodyPart
     {
-        foreach (SpriteSwitcher switcher in spriteSwitchers)
-        {
-            switcher.Reset();
-        }
-
-        foreach (ColorPickerButton colorPickerButton in colorPickers)
-        {
-            colorPickerButton.GetComponent<Image>().color = colorPickerButton.activeColor;
-        }
+        Hair,
+        Beard,
+        Moustache,
     }
 
-    public void RandomizeSprites()
+    public enum SwitchBodyColorPart
     {
-        foreach (SpriteSwitcher switcher in spriteSwitchers)
-        {
-            switcher.Randomize();
-        }
-
-        foreach (ColorPickerButton colorPickerButton in colorPickers)
-        {
-            colorPickerButton.Randomize();
-        }
+        Hair,
+        Skin,
+        Chest,
+        Belt,
+        Short
     }
-}
-
-public enum SwitchBodyPart
-{
-    Hair,
-    Beard,
-    Moustache,
-}
-
-public enum SwitchBodyColorPart
-{
-    Hair,
-    Skin,
-    Chest,
-    Belt,
-    Short
 }

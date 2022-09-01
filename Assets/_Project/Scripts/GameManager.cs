@@ -4,7 +4,9 @@ using Core.Player;
 using LGamesDev.Core;
 using LGamesDev.Core.Authentication;
 using LGamesDev.Core.Player;
+using LGamesDev.Fighting;
 using LGamesDev.UI;
+using Newtonsoft.Json;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -28,8 +30,10 @@ namespace LGamesDev
 
         private GameObject _loadingScreen;
         private RawImage _mountains;
-        private PlayerBody _playerBody;
+        private Body _body;
+        
         private PlayerConfig _playerConfig;
+        private PlayerProgression _playerProgression;
 
         private ProgressBar _progressBar;
         private TextMeshProUGUI _progressText;
@@ -83,6 +87,22 @@ namespace LGamesDev
 
             StartCoroutine(GetSceneLoadProgress());
             StartCoroutine(GetTotalProgress());
+            yield return StartCoroutine(DisableLoadingScreen());
+        }
+        
+        public IEnumerator LoadFight(Fight fight)
+        {
+            yield return StartCoroutine(EnableLoadingScreen());
+
+            // Load / unload scene below to load Main menu
+            if(SceneManager.GetSceneByBuildIndex((int)SceneIndexes.MainMenu).isLoaded)
+                _scenesLoading.Add(SceneManager.UnloadSceneAsync((int)SceneIndexes.MainMenu));
+
+            _scenesLoading.Add(SceneManager.LoadSceneAsync((int)SceneIndexes.Battle, LoadSceneMode.Additive));
+
+            StartCoroutine(GetSceneLoadProgress());
+            yield return StartCoroutine(GetTotalProgress());
+            FightManager.Instance.SetupFight(fight);
             yield return StartCoroutine(DisableLoadingScreen());
         }
 
@@ -144,9 +164,11 @@ namespace LGamesDev
                     {
                         InitialisationStage.Body => "Loading Body",
                         InitialisationStage.Infos => "Loading Player Infos",
+                        InitialisationStage.Progression => "Loading Player Infos",
                         InitialisationStage.Wallet => "Loading Wallet",
                         InitialisationStage.Equipment => "Loading Equipment",
                         InitialisationStage.Inventory => "Loading Inventory",
+                        InitialisationStage.Character => "Loading Character",
                         _ => "Loading some things..."
                     };
                 }
@@ -214,22 +236,38 @@ namespace LGamesDev
         public void SetPlayerConfig(PlayerConfig playerConfig)
         {
             if (playerConfig != null)
+            {
                 _playerConfig = playerConfig;
-            else
+                PlayerPrefs.SetString("PlayerConfig", JsonConvert.SerializeObject(playerConfig));
+            } else {
                 Debug.LogError("trying to set playerConf to null");
+            }
+        }
+        
+        public PlayerProgression GetPlayerProgression()
+        {
+            return _playerProgression;
         }
 
-        public PlayerBody GetPlayerBody()
+        public void SetPlayerProgression(PlayerProgression playerProgression)
         {
-            return _playerBody;
-        }
-
-        public void SetPlayerBody(PlayerBody playerBody)
-        {
-            if (playerBody != null)
-                _playerBody = playerBody;
+            if (playerProgression != null)
+                _playerProgression = playerProgression;
             else
-                Debug.LogError("trying to set playerBody to null");
+                Debug.LogError("trying to set player progression to null");
+        }
+
+        public Body GetPlayerBody()
+        {
+            return _body;
+        }
+
+        public void SetPlayerBody(Body body)
+        {
+            if (body != null)
+                _body = body;
+            else
+                Debug.LogError("trying to set body to null");
         }
     }
 }

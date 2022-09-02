@@ -1,5 +1,6 @@
 ﻿using System;
 using LGamesDev.Core.Player;
+using LGamesDev.Core.Request;
 using UnityEngine;
 
 namespace LGamesDev

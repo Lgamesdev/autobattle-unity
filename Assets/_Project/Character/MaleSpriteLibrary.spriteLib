@@ -49,8 +49,23 @@ MonoBehaviour:
       m_Sprite: {fileID: -3586096948976905488, guid: af9119dcab167a649bea08ea1817d43c, type: 3}
       m_FromMain: 0
       m_SpriteOverride: {fileID: -3586096948976905488, guid: af9119dcab167a649bea08ea1817d43c, type: 3}
+    - m_Name: 2
+      m_Hash: 450215437
+      m_Sprite: {fileID: -3586096948976905488, guid: af9119dcab167a649bea08ea1817d43c, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -3586096948976905488, guid: af9119dcab167a649bea08ea1817d43c, type: 3}
+    - m_Name: 3
+      m_Hash: 1842515611
+      m_Sprite: {fileID: -3586096948976905488, guid: af9119dcab167a649bea08ea1817d43c, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -3586096948976905488, guid: af9119dcab167a649bea08ea1817d43c, type: 3}
+    - m_Name: 4
+      m_Hash: -206169288
+      m_Sprite: {fileID: 0}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 0}
     m_FromMain: 0
-    m_EntryOverrideCount: 2
+    m_EntryOverrideCount: 5
   - m_Name: Belt
     m_Hash: -1067067409
     m_CategoryList: []
@@ -59,7 +74,7 @@ MonoBehaviour:
       m_Hash: 1619415391
       m_Sprite: {fileID: -220360561259302917, guid: af9119dcab167a649bea08ea1817d43c, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: -220360561259302917, guid: af9119dcab167a649bea08ea1817d43c, type: 3}
+      m_SpriteOverride: {fileID: 0}
     m_FromMain: 0
     m_EntryOverrideCount: 1
   - m_Name: CalfL
@@ -147,8 +162,18 @@ MonoBehaviour:
       m_Sprite: {fileID: 7917671537358980887, guid: af9119dcab167a649bea08ea1817d43c, type: 3}
       m_FromMain: 0
       m_SpriteOverride: {fileID: 7917671537358980887, guid: af9119dcab167a649bea08ea1817d43c, type: 3}
+    - m_Name: 2
+      m_Hash: 450215437
+      m_Sprite: {fileID: 7917671537358980887, guid: af9119dcab167a649bea08ea1817d43c, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 7917671537358980887, guid: af9119dcab167a649bea08ea1817d43c, type: 3}
+    - m_Name: 3
+      m_Hash: 1842515611
+      m_Sprite: {fileID: 7917671537358980887, guid: af9119dcab167a649bea08ea1817d43c, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 7917671537358980887, guid: af9119dcab167a649bea08ea1817d43c, type: 3}
     m_FromMain: 0
-    m_EntryOverrideCount: 2
+    m_EntryOverrideCount: 4
   - m_Name: Short
     m_Hash: 1323941798
     m_CategoryList: []
@@ -157,7 +182,7 @@ MonoBehaviour:
       m_Hash: 1619415391
       m_Sprite: {fileID: 8380885099867691655, guid: af9119dcab167a649bea08ea1817d43c, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: 8380885099867691655, guid: af9119dcab167a649bea08ea1817d43c, type: 3}
+      m_SpriteOverride: {fileID: 0}
     m_FromMain: 0
     m_EntryOverrideCount: 1
   - m_Name: ShoulderL
@@ -281,6 +306,22 @@ MonoBehaviour:
       m_SpriteOverride: {fileID: -2676526507185608988, guid: af9119dcab167a649bea08ea1817d43c, type: 3}
     m_FromMain: 0
     m_EntryOverrideCount: 1
+  - m_Name: Helmet
+    m_Hash: 2097605520
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Base
+      m_Hash: 1619415391
+      m_Sprite: {fileID: 0}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 0}
+    - m_Name: Helmet_1
+      m_Hash: 1807589298
+      m_Sprite: {fileID: 0}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 0}
+    m_FromMain: 0
+    m_EntryOverrideCount: 2
   - m_Name: Chest
     m_Hash: 981834931
     m_CategoryList: []
@@ -290,6 +331,43 @@ MonoBehaviour:
       m_Sprite: {fileID: 0}
       m_FromMain: 0
       m_SpriteOverride: {fileID: 0}
+    - m_Name: Chest_1
+      m_Hash: 460671951
+      m_Sprite: {fileID: 0}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 0}
     m_FromMain: 0
-    m_EntryOverrideCount: 1
+    m_EntryOverrideCount: 2
+  - m_Name: Pants
+    m_Hash: -1111633170
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Base
+      m_Hash: 1619415391
+      m_Sprite: {fileID: 0}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 0}
+    - m_Name: Pants_1
+      m_Hash: -2063301767
+      m_Sprite: {fileID: 0}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 0}
+    m_FromMain: 0
+    m_EntryOverrideCount: 2
+  - m_Name: Weapon
+    m_Hash: 1855955664
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Base
+      m_Hash: 1619415391
+      m_Sprite: {fileID: 0}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 0}
+    - m_Name: Weapon_1
+      m_Hash: -1799079398
+      m_Sprite: {fileID: 0}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 0}
+    m_FromMain: 0
+    m_EntryOverrideCount: 2
   m_PrimaryLibraryGUID: 

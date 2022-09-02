@@ -2,18 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpriteLibSwitchComponent : MonoBehaviour
+namespace LGamesDev
 {
-    public SpriteLib spriteLib;
-
-    public void SwitchLib()
+    public class SpriteLibSwitchComponent : MonoBehaviour
     {
-        SpriteLibManager.Instance.SwitchLibrary(spriteLib);
-    }
-}
+        public SpriteLib spriteLib;
 
-public enum SpriteLib
-{
-    Male,
-    Female
+        public void SwitchLib()
+        {
+            SpriteLibManager.Instance.SwitchLibrary(spriteLib);
+        }
+    }
+
+
+    public enum SpriteLib
+    {
+        Male,
+        Female
+    }
 }

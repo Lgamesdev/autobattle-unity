@@ -18,7 +18,7 @@ namespace LGamesDev.Core.CharacterRenderer
 
         private Inventory _inventory;
 
-        private PlayerBody _playerBody;
+        private Body _playerBody;
         private Texture2D _swordTexture;
 
         protected override void Awake()
@@ -139,8 +139,8 @@ namespace LGamesDev.Core.CharacterRenderer
                 Resources.Load<Texture2D>("Textures/Base/GuestSpriteSheet_Base").GetPixels(0, 0, 512, 512);
             texture.SetPixels(0, 0, 512, 512, spritesheetBasePixels);
 
-            var skinColor = _playerBody.skinColor;
-
+            ColorUtility.TryParseHtmlString(_playerBody.skinColor, out Color skinColor);
+            
             var handPixels = Resources.Load<Texture2D>("Textures/Base/SpriteSheet_Hand").GetPixels(0, 0, 64, 64);
             TintColorArray(handPixels, skinColor);
             texture.SetPixels(384, 448, 64, 64, handPixels);
@@ -159,7 +159,7 @@ namespace LGamesDev.Core.CharacterRenderer
         {
             var texture = new Texture2D(384, 128, TextureFormat.RGBA32, true);
 
-            var skinColor = _playerBody.skinColor;
+            ColorUtility.TryParseHtmlString(_playerBody.skinColor, out Color skinColor);
 
             var baseHeadPixels =
                 Resources.Load<Texture2D>("Textures/Head/head_Skin")
@@ -172,7 +172,7 @@ namespace LGamesDev.Core.CharacterRenderer
             {
                 TintColorArraysInsideMask(baseHeadPixels, skinColor, headSkinMaskPixels);
 
-                var hairColor = _playerBody.hairColor;
+                ColorUtility.TryParseHtmlString(_playerBody.hairColor, out Color hairColor);
 
                 var hasHair = _playerBody.hairIndex != -1;
                 if (hasHair)
@@ -207,8 +207,8 @@ namespace LGamesDev.Core.CharacterRenderer
         {
             var texture = new Texture2D(384, 128, TextureFormat.RGBA32, true);
 
-            var bodyIndex = _playerBody.bodyIndex;
-            var bodyPixels =
+            //var bodyIndex = _playerBody.body;
+            /*var bodyPixels =
                 Resources.Load<Texture2D>("Textures/Body/body_" + bodyIndex)
                     .GetPixels(0, 0, 256, 128); //bodyTextureWhite.GetPixels(128 * bodyIndex, 0, 128, 128);
             var bodyMaskPixels = Resources.Load<Texture2D>("Textures/Body_Mask/body_mask_" + bodyIndex)
@@ -219,7 +219,7 @@ namespace LGamesDev.Core.CharacterRenderer
             var secondaryColor = _playerBody.bodySecondaryColor;
             var secondaryMaskColor = new Color(0, 0, 1);
             TintColorArraysInsideMask(bodyPixels, secondaryColor, bodyMaskPixels, secondaryMaskColor);
-            texture.SetPixels(0, 0, 256, 128, bodyPixels);
+            texture.SetPixels(0, 0, 256, 128, bodyPixels);*/
 
             texture.Apply();
 
@@ -295,7 +295,7 @@ namespace LGamesDev.Core.CharacterRenderer
             return _inventory;
         }
 
-        public void SetPlayerBody(PlayerBody playerBody)
+        public void SetPlayerBody(Body playerBody)
         {
             _playerBody = playerBody;
         }

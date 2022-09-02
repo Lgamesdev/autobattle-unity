@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
 using System.Text;
+using LGamesDev.Core.Player;
 using LGamesDev.Core.Request;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace LGamesDev.Core.Player
+namespace LGamesDev.Core.Request
 {
     public static class PlayerWalletHandler
     {

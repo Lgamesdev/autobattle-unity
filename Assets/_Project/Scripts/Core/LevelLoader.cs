@@ -53,8 +53,8 @@ namespace LGamesDev.Core
     {
         PersistentScene = 0,
         Authentication = 1,
-        MainMenu = 2,
-        Customization = 3,
+        Customization = 2,
+        MainMenu = 3,
         Inventory = 4,
         Shop = 5,
         Battle = 6

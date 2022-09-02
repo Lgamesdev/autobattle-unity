@@ -12,11 +12,11 @@ EditorBuildSettings:
     path: Assets/_Project/Scenes/1 Authentication.unity
     guid: 612a0650d46fb6f4a9078ce930f55378
   - enabled: 1
-    path: Assets/_Project/Scenes/2 Main menu.unity
-    guid: 2ee8c00555583db43913476776e5e073
-  - enabled: 1
-    path: Assets/_Project/Scenes/3 Customization.unity
+    path: Assets/_Project/Scenes/2 Customization.unity
     guid: 8704e18178f131c46ac85390dd06d5dc
+  - enabled: 1
+    path: Assets/_Project/Scenes/3 Main menu.unity
+    guid: 2ee8c00555583db43913476776e5e073
   - enabled: 1
     path: Assets/_Project/Scenes/4 Inventory.unity
     guid: 05b4f2d441066a7419106d92b38c88e0
@@ -24,7 +24,7 @@ EditorBuildSettings:
     path: Assets/_Project/Scenes/5 Shop.unity
     guid: c199657a6f1649d41b5a54810eda5d4d
   - enabled: 1
-    path: Assets/_Project/Scenes/6 Battle.unity
+    path: Assets/_Project/Scenes/6 Fight.unity
     guid: a7cd57e60ae66f542899b463f42fe151
   m_configObjects:
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 6f516f859a66aa049b693a197ccee9d4, type: 2}

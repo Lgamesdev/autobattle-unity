@@ -1,5 +1,6 @@
 ﻿using LGamesDev.Core.Player;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace LGamesDev.Core.Character
 {
@@ -21,8 +22,6 @@ namespace LGamesDev.Core.Character
             }
 
             Instance = this;
-
-            //currentEquipment = CharacterEquipmentHandler.LoadEquipments();
         }
 
         public void Equip(Equipment newItem)

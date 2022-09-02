@@ -1,5 +1,8 @@
 using System;
 using LGamesDev.Core.Character;
+using LGamesDev.Request.Converters;
+using Newtonsoft.Json;
+using UnityEditor;
 using UnityEngine;
 
 namespace LGamesDev.Core.Player
@@ -10,7 +13,7 @@ namespace LGamesDev.Core.Player
         public Stat[] stats;
         
         public EquipmentSlot equipmentType;
-
+        
         public Sprite sprite;
 
         public override void Use()
@@ -33,15 +36,18 @@ namespace LGamesDev.Core.Player
 
         public override string ToString()
         {
-            var result = "[ \n " +
+            var result = "equipment : [ \n " +
                          "name : " + name + "\n" +
+                         "iconPath : " + AssetDatabase.GetAssetPath(icon) + "\n" +
                          "equipmentslot : " + equipmentType + "\n" +
-                         "stats : \n";
+                         "spritePath : " + AssetDatabase.GetAssetPath(sprite) + "\n" +
+                         "cost : " + cost + "\n" +
+                         "amount : " + amount + "\n" +
+                         "stats : [ \n";
 
-            if (stats != null) Array.ForEach(stats, stat => result += stat + "\n");
+            if (stats != null) Array.ForEach(stats, stat => result += stat.ToString() + "\n");
 
-            result += "cost : " + cost + "\n" +
-                      "amount : " + amount + "\n" +
+            result += "] \n" + 
                       "]";
 
             return result;

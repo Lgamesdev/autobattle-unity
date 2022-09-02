@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
 using LGamesDev.Core.Character;
-using LGamesDev.Core.Request;
-using Unity.Plastic.Newtonsoft.Json;
+using LGamesDev.Core.Player;
+using LGamesDev.Request.Converters;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace LGamesDev.Core.Player
+namespace LGamesDev.Core.Request
 {
     public class CharacterEquipmentHandler
     {
@@ -17,17 +18,21 @@ namespace LGamesDev.Core.Player
                 error => { Debug.Log("Error on equipments load : " + error); },
                 response =>
                 {
-                    //Debug.Log("Received player equipments : " + response);
+                    Debug.Log("Received player equipments : " + response);
 
-                    CharacterEquipment[] equipments = JsonConvert.DeserializeObject<CharacterEquipment[]>(response);
+                    JsonSerializerSettings settings = new JsonSerializerSettings();
+                    settings.Converters.Add(new EquipmentConverter());
+
+                    CharacterEquipment[] equipments = JsonConvert.DeserializeObject<CharacterEquipment[]>(response, settings);
+                    
                     if (equipments != null)
                     {
-                        //foreach (CharacterEquipment equipment in equipments) Debug.Log(equipment.ToString());
+                        string log = "equipments [ \n";
+                        foreach (CharacterEquipment equipment in equipments) log += equipment.ToString() + "\n";
+                        Debug.Log(log + "\n ]");
                         setResult(equipments);
-                    }
-                    else
-                    {
-                        Debug.Log("character equipments null ");
+                    } else {
+                        Debug.Log("character equipments null");
                     }
                 },
                 null,

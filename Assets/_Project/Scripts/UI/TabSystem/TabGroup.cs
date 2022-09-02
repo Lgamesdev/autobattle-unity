@@ -1,8 +1,5 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class TabGroup : MonoBehaviour
 {
@@ -36,9 +33,13 @@ public class TabGroup : MonoBehaviour
         int index = button.transform.GetSiblingIndex();
         for (int i = 0; i < objectsToSwap.Count; i++)
         {
-            if (i != index) continue;
-            objectsToSwap[i].SetActive(i == index);
-            objectActive = objectsToSwap[i];
+            if (i == index)
+            {
+                objectsToSwap[i].SetActive(true);
+                objectActive = objectsToSwap[i];
+            } else {
+                objectsToSwap[i].SetActive(false);
+            }
         }
     }
     

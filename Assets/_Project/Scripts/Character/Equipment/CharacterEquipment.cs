@@ -1,16 +1,24 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using LGamesDev.Core.Player;
+using LGamesDev.Request.Converters;
+using Unity.Plastic.Newtonsoft.Json;
+using UnityEditor;
 using UnityEngine;
 
 namespace LGamesDev.Core.Character
 {
+    [Serializable]
     public class CharacterEquipment
     {
         public Equipment equipment;
 
-        private Stat[] _modifiers;
+        private List<Stat> _modifiers;
+
+        public CharacterEquipment()
+        {
+            _modifiers = new List<Stat>();
+        }
 
         public void Use()
         {
@@ -20,7 +28,7 @@ namespace LGamesDev.Core.Character
         public int GetStat(StatType statType)
         {
             int baseValue = equipment.GetStatValue(statType);
-            int modifierValue = Array.Find(_modifiers, s => s.statType == statType).GetValue();
+            int modifierValue = _modifiers.Find(s => s.statType == statType).GetValue();
             return baseValue + modifierValue;
         }
 
@@ -36,7 +44,7 @@ namespace LGamesDev.Core.Character
 
                 if (_modifiers != null)
                 {
-                    Stat modifier = Array.Find(_modifiers, s => s.statType == stat.statType);
+                    Stat modifier = _modifiers.Find(s => s.statType == stat.statType);
 
                     if (modifier != null)
                     {
@@ -67,15 +75,13 @@ namespace LGamesDev.Core.Character
         public override string ToString()
         {
             var result = "characterEquipment: [ \n " +
-                         "name : " + equipment.name + "\n" +
-                         "equipmentslot : " + equipment.equipmentType + "\n" +
-                         "stats : \n";
+                            equipment.ToString() + "\n" +
+                         "modifiers : [ \n";
 
-            if (GetStats() != null) Array.ForEach(GetStats(), stat => result += stat + "\n");
-
-            result += "cost : " + equipment.cost + "\n" +
-                      "amount : " + equipment.amount + "\n" +
-                      "]";
+            _modifiers.ForEach(stat => result += stat.ToString() + "\n");
+            
+            result += "] \n" +
+                    "]";
 
             return result;
         }

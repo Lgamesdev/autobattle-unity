@@ -22,8 +22,8 @@ namespace LGamesDev.Fighting
             winsNumber.text = playerWins.ToString();
             losesNumber.text = playerLoses.ToString();
 
-            FightManager.Instance.onPlayerWin += BattleHandler_OnPlayerWin;
-            FightManager.Instance.onPlayerLose += BattleHandler_OnPlayerLose;
+            FightManager.Instance.OnPlayerWin += BattleHandler_OnPlayerWin;
+            FightManager.Instance.OnPlayerLose += BattleHandler_OnPlayerLose;
         }
 
         private void BattleHandler_OnPlayerLose()

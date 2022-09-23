@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using LGamesDev.Core;
 using LGamesDev.Core.Character;
 using LGamesDev.Core.Player;
@@ -15,145 +16,172 @@ namespace LGamesDev.Fighting
 
         public float movementSpeed = 10f;
 
-        private HealthBar healthBar;
-        private LevelSystem levelSystem;
-        private Action onSlideComplete;
-        private Action onWalkComplete;
-        private PlayerStats playerStats;
-        private GameObject selectionCircleGameObject;
-        private Vector3 slideTargetPosition;
+        private HealthBar _healthBar;
+        private LevelSystem _levelSystem;
+        private Action _onSlideComplete;
+        private Action _onWalkComplete;
+        private CharacterStatsManager _characterStatsManager;
+        private GameObject _selectionCircleGameObject;
+        private Vector3 _slideTargetPosition;
 
-        private State state;
-        private UnitHandler unitHandler;
+        private State _state = State.Idle;
+        private CharacterHandler _characterHandler;
 
-        private Vector3 walkTargetPosition;
+        private Vector3 _walkTargetPosition;
 
         private void Awake()
         {
-            unitHandler = GetComponent<UnitHandler>();
-            healthBar = transform.Find("HealthBar").gameObject.GetComponent<HealthBar>();
+            _characterHandler = GetComponent<CharacterHandler>();
 
-            playerStats = GetComponent<PlayerStats>();
-            playerStats.OnHealthChanged += PlayerStats_OnHealthChanged;
+            _characterStatsManager = GetComponent<CharacterStatsManager>();
+            _characterStatsManager.OnHealthChanged += CharacterStatsManagerOnHealthChanged;
 
-            selectionCircleGameObject = transform.Find("SelectionCircle").gameObject;
-            HideSelectionCircle();
+            //selectionCircleGameObject = transform.Find("SelectionCircle").gameObject;
+            //HideSelectionCircle();
 
-            state = State.Idle;
+            _state = State.Idle;
         }
 
-        private void Start()
+        public IEnumerator SetupCharacterFight(Character character)
         {
-            var level = PlayerPrefs.GetInt("level", 0);
-
+            yield return StartCoroutine(_characterHandler.SetupCharacter(character));
+            
+            _levelSystem = new LevelSystem(character.Level, character.Experience);
+            
             if (isPlayerTeam)
             {
-                var experience = PlayerPrefs.GetFloat("experience", 0);
+                _healthBar = FindObjectOfType<HealthPannelUI>().playerHealthBar;
+                /*_characterHandler.SetAnimsSwordTwoHandedBack();
 
-                unitHandler.SetAnimsSwordTwoHandedBack();
+                _characterHandler.SetGuestSpriteSheetData(GuestSpritesheetData.Load_Static());
+                _characterHandler.SetGuestSpriteSheetTexture();
 
-                unitHandler.SetGuestSpriteSheetData(GuestSpritesheetData.Load_Static());
-                unitHandler.SetGuestSpriteSheetTexture();
-
-                unitHandler.SetCharacterEquipment(CharacterEquipmentManager.Instance);
-                unitHandler.SetupTexture();
+                _characterHandler.SetCharacterEquipment(CharacterEquipmentManager.Instance);*/
+                
                 //unitHandler.GetMaterial().mainTexture = BattleHandler.GetInstance().playerSpritesheet;
-
-                levelSystem = new LevelSystem(level, experience);
-                //Debug.Log("trying to setlevelsystem by " + transform.name);
-
-                EarningWindow.Instance.SetLevelSystem(levelSystem);
+                
+                EarningWindow.Instance.SetLevelSystem(_levelSystem);
+                
+                string log = "character stats : [ \n";
+                foreach (Stat stat in _characterHandler.statsManager.stats) log += stat.ToString() + "\n";
+                Debug.Log(log + "\n ]");
             }
             else
             {
+                string log = "opponent stats : [ \n";
+                foreach (Stat stat in _characterHandler.statsManager.stats) log += stat.ToString() + "\n";
+                Debug.Log(log + "\n ]");
+                
+                _healthBar = FindObjectOfType<HealthPannelUI>().opponentHealthBar;
+                
                 //TODO
-                unitHandler.SetAnimsSwordShield();
-                unitHandler.GetMaterial().mainTexture = FightManager.Instance.enemySpritesheet;
-
-                levelSystem = new LevelSystem(level, 0);
+                /*_characterHandler.SetAnimsSwordShield();
+                _characterHandler.GetMaterial().mainTexture = FightManager.Instance.enemySpritesheet;*/
             }
+            
+            _healthBar.SetMaxHealth(_characterStatsManager.GetMaxHealth());
+            _healthBar.SetCurrentHealth(_characterStatsManager.GetCurrentHealth());
 
-            PlayAnimIdle();
+            //PlayAnimIdle();
+        }
+        
+        public void Intro(CharacterFight target, Action onIntroComplete)
+        {
+            var position = transform.position;
+            
+            var walkTargetPosition = new Vector3(position.x, position.y);
+            var targetPosition = target.GetPosition() + (GetPosition() - target.GetPosition()).normalized * 12f;
+            position -= new Vector3(position.x + targetPosition.x, 0);
+            transform.position = position;
+
+            _walkTargetPosition = walkTargetPosition;
+            _onWalkComplete = onIntroComplete;
+            _state = State.Walking;
+            _characterHandler.PlayAnimMove(walkTargetPosition);
         }
 
         private void Update()
         {
-            switch (state)
+            switch (_state)
             {
                 case State.Idle:
                     break;
                 case State.Busy:
                     break;
                 case State.Sliding:
-                    transform.position += (slideTargetPosition - GetPosition()) * Time.deltaTime * movementSpeed;
+                    transform.position += (_slideTargetPosition - GetPosition()) * (Time.deltaTime * movementSpeed);
 
                     var reachedDistance = 0.1f;
-                    if (Vector3.Distance(GetPosition(), slideTargetPosition) < reachedDistance)
+                    if (Vector3.Distance(GetPosition(), _slideTargetPosition) < reachedDistance)
                     {
                         //Arrived at slide target position
-                        transform.position = slideTargetPosition;
-                        onSlideComplete();
+                        transform.position = _slideTargetPosition;
+                        _onSlideComplete();
                     }
 
                     break;
                 case State.Walking:
                     //TODO : fix intro duration
                     transform.position =
-                        new Vector3(Mathf.Lerp(transform.position.x, walkTargetPosition.x, introDuration * Time.deltaTime),
-                            walkTargetPosition.y);
+                        new Vector3(Mathf.Lerp(transform.position.x, _walkTargetPosition.x, introDuration * Time.deltaTime),
+                            _walkTargetPosition.y);
 
                     reachedDistance = 0.1f;
-                    if (Vector3.Distance(GetPosition(), walkTargetPosition) < reachedDistance)
+                    if (Vector3.Distance(GetPosition(), _walkTargetPosition) < reachedDistance)
                     {
-                        //Arrived at inital fight position
-                        transform.position = walkTargetPosition;
-                        onWalkComplete();
+                        //Arrived at initial fight position
+                        transform.position = _walkTargetPosition;
+                        _onWalkComplete();
                     }
 
                     break;
             }
         }
 
-        private void PlayerStats_OnHealthChanged(object sender, EventArgs e)
+        private void CharacterStatsManagerOnHealthChanged(object sender, EventArgs e)
         {
-            healthBar.SetSize(playerStats.GetHealthPercent());
+            _healthBar.SetSize(_characterStatsManager.GetHealthPercent());
+            _healthBar.SetCurrentHealth(_characterStatsManager.GetCurrentHealth());
         }
 
         private void PlayAnimIdle()
         {
             if (isPlayerTeam)
-                unitHandler.PlayAnimIdle(new Vector3(1, 0));
-            else
-                unitHandler.PlayAnimIdle(new Vector3(-1, 0));
+            {
+                //_characterHandler.PlayAnimIdle(new Vector3(1, 0));
+            } else {
+                //_characterHandler.PlayAnimIdle(new Vector3(-1, 0));
+            }
         }
 
-        public Vector3 GetPosition()
+        private Vector3 GetPosition()
         {
             return transform.position;
         }
 
-        public void Damage(int damageAmount, bool isCritical)
+        private void Damage(int damageAmount, bool isCritical)
         {
-            playerStats.TakeDamage(damageAmount);
+            _characterStatsManager.TakeDamage(damageAmount);
 
             DamagePopup.Create(GetPosition(), damageAmount, isCritical);
+            
             //TODO:  Impact effect
-
             //CodeMonkey.Utils.UtilsClass.ShakeCamera(.7f, .07f);
 
-            if (IsDead())
+            if (IsDead()) {
                 //Died
-                unitHandler.PlayAnimLyingUp();
+                //_characterHandler.PlayAnimLyingUp();
+            }
         }
 
         public bool IsDead()
         {
-            return playerStats.IsDead();
+            return _characterStatsManager.IsDead();
         }
 
-        public void Attack(CharacterFight target, Action onAttackComplete)
+        public void Attack(CharacterFight target, int damage, bool isCritical, Action onAttackComplete)
         {
-            var slideTargetPosition = target.GetPosition() + (GetPosition() - target.GetPosition()).normalized * 12f;
+            var slideTargetPosition = target.GetPosition() + (GetPosition() - target.GetPosition()).normalized * 18f;
 
             var startingPosition = GetPosition();
 
@@ -161,26 +189,18 @@ namespace LGamesDev.Fighting
             SlideToPosition(slideTargetPosition, () =>
             {
                 // Arrived at target, attack him
-                state = State.Busy;
+                _state = State.Busy;
                 var attackDir = (target.GetPosition() - GetPosition()).normalized;
-                unitHandler.PlayAnimAttack(attackDir, () =>
+                _characterHandler.PlayAnimAttack(attackDir, () =>
                 {
                     //Target hit
-                    var damageAmount = Mathf.RoundToInt(Random.Range(playerStats.GetStat(StatType.Damage) * 0.8f,
-                        playerStats.GetStat(StatType.Damage) * 1.2f));
-                    if (!isPlayerTeam)
-                        damageAmount = Mathf.RoundToInt(Random.Range(playerStats.GetStat(StatType.Damage) * 0.7f,
-                            playerStats.GetStat(StatType.Damage) * 1.1f));
-                    if (Random.value < (float)playerStats.GetStat(StatType.Critical) / 100)
-                        target.Damage(damageAmount * 2, true);
-                    else
-                        target.Damage(damageAmount, false);
+                    target.Damage(damage, isCritical);
                 }, () =>
                 {
                     // Slide back to starting position
                     SlideToPosition(startingPosition, () =>
                     {
-                        state = State.Idle;
+                        _state = State.Idle;
                         PlayAnimIdle();
                         onAttackComplete();
                     });
@@ -188,42 +208,34 @@ namespace LGamesDev.Fighting
             });
         }
 
-        public void Intro(CharacterFight target, Action onIntroComplete)
-        {
-            var walkTargetPosition = new Vector3(transform.position.x, transform.position.y);
-            var targetPosition = target.GetPosition() + (GetPosition() - target.GetPosition()).normalized * 12f;
-            transform.position -= new Vector3(transform.position.x + targetPosition.x, 0);
-
-            this.walkTargetPosition = walkTargetPosition;
-            onWalkComplete = onIntroComplete;
-            state = State.Walking;
-            unitHandler.PlayAnimMove(walkTargetPosition);
-        }
-
         private void SlideToPosition(Vector3 slideTargetPosition, Action onSlideComplete)
         {
-            this.slideTargetPosition = slideTargetPosition;
-            this.onSlideComplete = onSlideComplete;
-            state = State.Sliding;
+            this._slideTargetPosition = slideTargetPosition;
+            this._onSlideComplete = onSlideComplete;
+            _state = State.Sliding;
             if (slideTargetPosition.x - transform.position.x > 0)
-                unitHandler.PlayAnimSlideRight();
+            {
+               // _characterHandler.PlayAnimSlideRight();
+            }
             else
-                unitHandler.PlayAnimSlideLeft();
+            {
+                //_characterHandler.PlayAnimSlideLeft();
+            }
         }
 
-        public void HideSelectionCircle()
+        /*public void HideSelectionCircle()
         {
-            selectionCircleGameObject.SetActive(false);
+            _selectionCircleGameObject.SetActive(false);
         }
 
         public void ShowSelectionCircle()
         {
-            selectionCircleGameObject.SetActive(true);
-        }
+            _selectionCircleGameObject.SetActive(true);
+        }*/
 
         public LevelSystem GetLevelSystem()
         {
-            return levelSystem;
+            return _levelSystem;
         }
 
         private enum State

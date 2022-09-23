@@ -1,31 +1,33 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace LGamesDev.Core.Player
 {
+    [Serializable]
     public class Inventory
     {
-        public List<Item> Items;
+        public List<Item> items;
         
-        public int Space = 28;
+        public int space = 28;
 
         public void AddItem(Item item)
         {
             if (!item.isDefaultItem)
             {
-                if (Items.Count >= Space)
+                if (items.Count >= space)
                 {
-                    Debug.Log("Not enough room.");
+                    Debug.Log("Not enough space.");
                     return;
                 }
 
-                Items.Add(item);
+                items.Add(item);
             }
             else
             {
                 var itemAlreadyInInventory = false;
-                foreach (var inventoryItem in Items)
+                foreach (var inventoryItem in items)
                     if (inventoryItem.name == item.name)
                     {
                         inventoryItem.amount += item.amount;
@@ -34,14 +36,14 @@ namespace LGamesDev.Core.Player
 
                 if (!itemAlreadyInInventory)
                 {
-                    Items.Add(item);
+                    items.Add(item);
                 }
             }
         }
 
         public void RemoveItem(Item item)
         {
-            Items.Remove(item);
+            items.Remove(item);
 
             /*if (item.IsStackable())
             {
@@ -72,13 +74,13 @@ namespace LGamesDev.Core.Player
             string result = "inventory : { \n" +
                             " items : [";
 
-            foreach (Item item in Items)
+            foreach (Item item in items)
             {
-                result += item + "\n";
+                result += item.ToString() + "\n";
             }
 
             result += "] \n" +
-                      "space : " + Space + "\n" +
+                      "space : " + space + "\n" +
                       "]}";
 
             return result;

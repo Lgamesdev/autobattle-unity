@@ -1,7 +1,12 @@
+using System.Collections.Generic;
 using CodeMonkey.Utils;
 using LGamesDev.Core.Player;
+using LGamesDev.Core.Request;
+using LGamesDev.Request.Converters;
+using Newtonsoft.Json;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 namespace LGamesDev.UI
@@ -16,6 +21,8 @@ namespace LGamesDev.UI
         private Transform _shopItemTemplate;
 
         private PlayerWalletManager _walletManager;
+
+        [SerializeField] private List<Item> shopItems = new();
 
         private void Awake()
         {
@@ -36,6 +43,31 @@ namespace LGamesDev.UI
             CreateItemButton(Item.ItemType.ManaPotion, Item.GetSprite(Item.ItemType.ManaPotion), "Mana Potion", Item.GetCost(Item.ItemType.ManaPotion), 4);
             CreateItemButton(Item.ItemType.HealthPotion, Item.GetSprite(Item.ItemType.HealthPotion), "Health Potion", Item.GetCost(Item.ItemType.HealthPotion), 5);*/
             //Hide();
+            
+            StartCoroutine(RequestHandler.Request("api/shop",
+                UnityWebRequest.kHttpVerbGET,
+                error => { Debug.Log("Error on /shop : " + error); },
+                response =>
+                {
+                    //Debug.Log("Received /shop : " + response);
+                    
+                    JsonSerializerSettings settings = new JsonSerializerSettings();
+                    settings.Converters.Add(new ItemConverter());
+                    
+                    shopItems = JsonConvert.DeserializeObject<List<Item>>(response, settings);
+
+                    SetupUI();
+                },
+                null,
+                GameManager.Instance.GetAuthentication())
+            );
+        }
+
+        private void SetupUI()
+        {
+            for (int i = 0; i < shopItems.Count; i++) {
+                CreateItemButton(shopItems[i], i);
+            }
         }
 
         private void CreateItemButton(Item item, int positionIndex)
@@ -44,7 +76,7 @@ namespace LGamesDev.UI
             shopItemTransform.gameObject.SetActive(true);
             var shopItemRectTransform = shopItemTransform.GetComponent<RectTransform>();
 
-            var shopItemHeight = 100f;
+            var shopItemHeight = 120f;
             shopItemRectTransform.anchoredPosition = new Vector2(0, -shopItemHeight * positionIndex);
 
             shopItemTransform.Find("nameText").GetComponent<TextMeshProUGUI>().text = item.name;

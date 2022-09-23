@@ -1,5 +1,6 @@
 using System;
 using LGamesDev.Core.Player;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,24 +13,24 @@ namespace LGamesDev.Fighting
         public float smoothing = 3f;
         private bool animate;
         private Slider experienceBar;
-        private Text experienceText;
-        private Text goldGained;
+        private TextMeshProUGUI experienceText;
+        private TextMeshProUGUI goldGained;
 
         public LevelSystem levelSystem;
 
-        private Text levelText;
+        private TextMeshProUGUI levelText;
 
         private void Awake()
         {
             Instance = this;
 
-            levelText = transform.Find("levelText").GetComponent<Text>();
-            experienceText = transform.Find("experienceText").GetComponent<Text>();
+            levelText = transform.Find("levelText").GetComponent<TextMeshProUGUI>();
+            experienceText = transform.Find("Rewards").Find("HorizontalContent").Find("Experience").Find("experienceText").GetComponent<TextMeshProUGUI>();
             experienceBar = transform.Find("experienceBar").GetComponent<Slider>();
-            goldGained = transform.Find("goldGained").GetComponent<Text>();
+            goldGained = transform.Find("Rewards").Find("HorizontalContent").Find("Gold").Find("goldGained").GetComponent<TextMeshProUGUI>();
 
             //BattleHandler.instance.onPlayerWin += BattleHandler_OnPlayerWin;
-            PlayerWalletManager.Instance.OnCurrencyGained += Wallet_OnCurrencyGained;
+            PlayerWalletManager.Instance.OnCurrencyChanged += Wallet_OnCurrencyChanged;
         }
 
         private void Update()
@@ -49,7 +50,7 @@ namespace LGamesDev.Fighting
             }
         }
 
-        private void Wallet_OnCurrencyGained(Currency currency)
+        private void Wallet_OnCurrencyChanged(Currency currency)
         {
             goldGained.text = currency.amount.ToString();
         }

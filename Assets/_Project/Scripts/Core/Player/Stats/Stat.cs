@@ -11,6 +11,9 @@ namespace LGamesDev.Core.Player
         public int value;
         
         public StatType statType;
+        
+        [SerializeField]
+        private List<int> modifiers = new List<int>();
 
         public string GetStatType()
         {
@@ -24,12 +27,30 @@ namespace LGamesDev.Core.Player
         
         public int GetValue()
         {
-            return value;
+            int finalValue = value;
+            modifiers.ForEach(modifier => finalValue += modifier);
+            return finalValue;
         }
 
         public void SetValue(int val)
         {
-            this.value = val;
+            value = val;
+        }
+        
+        public void AddModifiers(int modifier)
+        {
+            if(modifier != 0)
+            {
+                modifiers.Add(modifier);
+            }
+        }
+
+        public void RemoveModifier(int modifier)
+        {
+            if(modifier != 0)
+            {
+                modifiers.Remove(modifier);
+            }
         }
 
         public override string ToString()
@@ -46,6 +67,7 @@ namespace LGamesDev.Core.Player
         Health,
         Armor,
         Damage,
+        Dodge,
         Speed,
         Critical
     }

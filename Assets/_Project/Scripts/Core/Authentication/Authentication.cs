@@ -1,7 +1,7 @@
 using System;
 using Core.Player;
 
-namespace LGamesDev.Core.Authentication
+namespace LGamesDev.Core.Request
 {
     [Serializable]
     public class Authentication

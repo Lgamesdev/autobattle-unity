@@ -55,6 +55,7 @@ public class ModalWindowPanel : MonoBehaviour
 
         horizontalLayoutArea.gameObject.SetActive(false);
         verticalLayoutArea.gameObject.SetActive(true);
+        heroImage.gameObject.SetActive(true);
 
         //Hide the header if there's no title
         bool hasTitle = !string.IsNullOrEmpty(title);
@@ -143,6 +144,36 @@ public class ModalWindowPanel : MonoBehaviour
 
         Show();
     }
+    
+    public void ShowAsTextPopup(string title, string message, string confirmMessage, string declineMessage, Action confirmAction, Action declineAction = null, Action alternateAction = null)
+    {
+        LeanTween.cancel(gameObject);
+
+        horizontalLayoutArea.gameObject.SetActive(false);
+        verticalLayoutArea.gameObject.SetActive(true);
+        heroImage.gameObject.SetActive(false);
+
+        //Hide the header if there's no title
+        bool hasTitle = !string.IsNullOrEmpty(title);
+        headerArea.gameObject.SetActive(hasTitle);
+        titleField.text = title;
+        
+        heroText.text = message;
+
+        confirmText.text = confirmMessage;
+        _onConfirmAction = confirmAction;
+
+        bool hasDecline = (declineAction != null);
+        declineButton.gameObject.SetActive(hasDecline);
+        declineText.text = declineMessage;
+        _onDeclineAction = declineAction;
+
+        bool hasAlternate = (alternateAction != null);
+        alternateButton.gameObject.SetActive(hasAlternate);
+        _onAlternateAction = alternateAction;
+        
+        Show();
+    }
 
     public void Confirm()
     {
@@ -165,7 +196,9 @@ public class ModalWindowPanel : MonoBehaviour
     private void Show()
     {
         box.gameObject.SetActive(false);
-        imageArea.gameObject.SetActive(false);
+        if (imageArea != null) {
+            imageArea.gameObject.SetActive(false);
+        }
 
         Image panelImage = GetComponent<Image>();
         gameObject.SetActive(true);
@@ -181,7 +214,11 @@ public class ModalWindowPanel : MonoBehaviour
     private void ShowModalBox()
     {
         box.gameObject.SetActive(true);
-        LeanTween.scale(imageArea.gameObject, new Vector3(1f, 1f, 1f), .5f).setFrom(new Vector3(.2f, .2f, .2f)).setEase(LeanTweenType.linear).setOnComplete(ShowMainImage);
+        if (imageArea != null)
+        {
+            LeanTween.scale(imageArea.gameObject, new Vector3(1f, 1f, 1f), .5f).setFrom(new Vector3(.2f, .2f, .2f))
+                .setEase(LeanTweenType.linear).setOnComplete(ShowMainImage);
+        }
     }
 
     private void ShowMainImage()
@@ -190,7 +227,7 @@ public class ModalWindowPanel : MonoBehaviour
         LeanTween.scale(box.gameObject, new Vector3(1f, 1f, 1f), .5f).setFrom(new Vector3(.2f, .2f, .2f)).setEase(LeanTweenType.linear);
     }
 
-    private void Close()
+    public void Close()
     {
         LeanTween.cancel(gameObject);
         gameObject.SetActive(false);

@@ -28,7 +28,7 @@ namespace LGamesDev.UI
 
         private void OnCurrencyChanged(Currency currency)
         {
-            switch (currency.type)
+            switch (currency.currencyType)
             {
                 case CurrencyType.Gold:
                     goldAmount.GetComponent<TextMeshProUGUI>().text = currency.amount.ToString();

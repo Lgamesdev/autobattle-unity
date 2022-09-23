@@ -23,13 +23,6 @@ namespace LGamesDev.UI
 
             _loadingPanel = transform.Find("loadingPanel");
             _errorText = transform.Find("errorText").GetComponent<TMP_InputField>();
-            
-            AuthenticationManager.Instance.OnAuthenticationError += OnAuthenticationError;
-        }
-
-        private void OnAuthenticationError(string message)
-        {
-            ShowLoginError(message);
         }
 
         private void Start()
@@ -80,15 +73,19 @@ namespace LGamesDev.UI
             if (_activeForm == _registerForm)
             {
                 if (!_activeForm.Find("passwordField").GetComponent<TMP_InputField>().text
-                        .Equals(_activeForm.Find("rePasswordField").GetComponent<TMP_InputField>().text))
+                        .Equals(_activeForm.Find("rePasswordField").GetComponent<TMP_InputField>().text)) 
+                {
                     ShowLoginError("Password must correspond to the password verification.");
-                else
+                } 
+                else 
+                {
                     AuthenticationManager.Instance.Submit(
                         _state,
                         _activeForm.Find("usernameField").GetComponent<TMP_InputField>().text,
                         _activeForm.Find("passwordField").GetComponent<TMP_InputField>().text,
                         _activeForm.Find("emailField").GetComponent<TMP_InputField>().text
                     );
+                }
             }
             else
             {

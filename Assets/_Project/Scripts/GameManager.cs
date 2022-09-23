@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Core.Player;
 using LGamesDev.Core;
 using LGamesDev.Core.Authentication;
-using LGamesDev.Core.Player;
+using LGamesDev.Core.Request;
 using LGamesDev.Fighting;
 using LGamesDev.UI;
 using Newtonsoft.Json;
@@ -30,11 +30,7 @@ namespace LGamesDev
 
         private GameObject _loadingScreen;
         private RawImage _mountains;
-        private Body _body;
         
-        private PlayerConfig _playerConfig;
-        private PlayerProgression _playerProgression;
-
         private ProgressBar _progressBar;
         private TextMeshProUGUI _progressText;
 
@@ -43,37 +39,60 @@ namespace LGamesDev
         private Animator _transition;
         private RawImage _treesGround;
 
+        private ModalWindowPanel _modalWindow;
+        
+        private PlayerConfig _playerConfig;
+
         private void Awake()
         {
             Instance = this;
 
-            _loadingScreen = GameObject.Find("/LoadingScreen");
-            _transition = _loadingScreen.transform.Find("Canvas").GetComponent<Animator>();
-            _backMountains = _loadingScreen.transform.Find("Canvas").Find("ParallaxBackground").Find("BackMountains")
+            //Loading Screen
+            _loadingScreen = GameObject.Find("/Canvas/LoadingScreen");
+            _transition = GameObject.Find("/Canvas").GetComponent<Animator>();
+            _backMountains = _loadingScreen.transform.Find("ParallaxBackground").Find("BackMountains")
                 .GetComponent<RawImage>();
-            _clouds = _loadingScreen.transform.Find("Canvas").Find("ParallaxBackground").Find("Clouds")
+            _clouds = _loadingScreen.transform.Find("ParallaxBackground").Find("Clouds")
                 .GetComponent<RawImage>();
-            _mountains = _loadingScreen.transform.Find("Canvas").Find("ParallaxBackground").Find("Mountains")
+            _mountains = _loadingScreen.transform.Find("ParallaxBackground").Find("Mountains")
                 .GetComponent<RawImage>();
-            _treesGround = _loadingScreen.transform.Find("Canvas").Find("ParallaxBackground").Find("TreesGround")
+            _treesGround = _loadingScreen.transform.Find("ParallaxBackground").Find("TreesGround")
                 .GetComponent<RawImage>();
 
-            _progressBar = _loadingScreen.transform.Find("Canvas").Find("ProgressBar").GetComponent<ProgressBar>();
-            _progressText = _loadingScreen.transform.Find("Canvas").Find("ProgressText").GetComponent<TextMeshProUGUI>();
+            _progressBar = _loadingScreen.transform.Find("ProgressBar").GetComponent<ProgressBar>();
+            _progressText = _loadingScreen.transform.Find("ProgressText").GetComponent<TextMeshProUGUI>();
 
-            _authentication = JsonUtility.FromJson<Authentication>(PlayerPrefs.GetString("authentication"));
+            //Modal Window
+            _modalWindow = GameObject.Find("/Canvas/Modal Window Panel").GetComponent<ModalWindowPanel>();
+            _modalWindow.Close();
+
+            //Authentication
+            _authentication = JsonConvert.DeserializeObject<Authentication>(PlayerPrefs.GetString("authentication"));
+
+            //Request Error Event
+            RequestHandler.OnRequestError += OnRequestError;
+        }
+
+        private void OnRequestError(string error)
+        {
+            _modalWindow.ShowAsTextPopup("error occured", error, "close", "", _modalWindow.Close);
         }
 
         private IEnumerator Start()
         {
             yield return StartCoroutine(EnableLoadingScreen());
-
+            
             _scenesLoading.Add(SceneManager.LoadSceneAsync((int)SceneIndexes.Authentication, LoadSceneMode.Additive));
-            StartCoroutine(GetSceneLoadProgress());
+            yield return StartCoroutine(GetSceneLoadProgress());
             yield return StartCoroutine(DisableLoadingScreen());
         }
 
-        public IEnumerator LoadGame()
+        public void LoadGame()
+        {
+            StartCoroutine(LoadGameCoroutine());
+        }
+
+        private IEnumerator LoadGameCoroutine()
         {
             yield return StartCoroutine(EnableLoadingScreen());
 
@@ -85,12 +104,18 @@ namespace LGamesDev
             
             _scenesLoading.Add(SceneManager.LoadSceneAsync((int)SceneIndexes.MainMenu, LoadSceneMode.Additive));
 
-            StartCoroutine(GetSceneLoadProgress());
-            StartCoroutine(GetTotalProgress());
+            yield return StartCoroutine(GetSceneLoadProgress());
+            yield return StartCoroutine(GetTotalProgress());
+            
             yield return StartCoroutine(DisableLoadingScreen());
         }
+
+        public void LoadFight(Fight fight)
+        {
+            StartCoroutine(LoadFightCoroutine(fight));
+        }
         
-        public IEnumerator LoadFight(Fight fight)
+        private IEnumerator LoadFightCoroutine(Fight fight)
         {
             yield return StartCoroutine(EnableLoadingScreen());
 
@@ -98,12 +123,17 @@ namespace LGamesDev
             if(SceneManager.GetSceneByBuildIndex((int)SceneIndexes.MainMenu).isLoaded)
                 _scenesLoading.Add(SceneManager.UnloadSceneAsync((int)SceneIndexes.MainMenu));
 
-            _scenesLoading.Add(SceneManager.LoadSceneAsync((int)SceneIndexes.Battle, LoadSceneMode.Additive));
+            if (SceneManager.GetSceneByBuildIndex((int)SceneIndexes.Fight).isLoaded)
+                _scenesLoading.Add(SceneManager.UnloadSceneAsync((int)SceneIndexes.Fight));
 
-            StartCoroutine(GetSceneLoadProgress());
-            yield return StartCoroutine(GetTotalProgress());
-            FightManager.Instance.SetupFight(fight);
+            _scenesLoading.Add(SceneManager.LoadSceneAsync((int)SceneIndexes.Fight, LoadSceneMode.Additive));
+
+            yield return StartCoroutine(GetSceneLoadProgress());
+            
+            yield return StartCoroutine(FightManager.Instance.SetupFight(fight));
+            
             yield return StartCoroutine(DisableLoadingScreen());
+            FightManager.Instance.StartFight();
         }
 
         public IEnumerator LoadCustomization()
@@ -114,22 +144,28 @@ namespace LGamesDev
             _scenesLoading.Add(SceneManager.UnloadSceneAsync((int)SceneIndexes.MainMenu));
             _scenesLoading.Add(SceneManager.LoadSceneAsync((int)SceneIndexes.Customization, LoadSceneMode.Additive));
 
-            StartCoroutine(GetSceneLoadProgress());
+            yield return StartCoroutine(GetSceneLoadProgress());
             yield return StartCoroutine(DisableLoadingScreen());
         }
-
-        private IEnumerator EnableLoadingScreen()
+        
+        public IEnumerator Logout()
         {
-            _loadingScreen.SetActive(true);
-            StartCoroutine(ScrollingBackground());
+            yield return StartCoroutine(EnableLoadingScreen());
+            PlayerPrefs.DeleteKey("authentication");
+            
+            // Load / unload scene below to load Customization
+            _scenesLoading.Add(SceneManager.UnloadSceneAsync((int)SceneIndexes.MainMenu));
+            
+            _scenesLoading.Add(SceneManager.LoadSceneAsync((int)SceneIndexes.Authentication, LoadSceneMode.Additive));
 
-            _transition.SetTrigger(Start1);
-            yield return new WaitForSeconds(1);
+            yield return StartCoroutine(GetSceneLoadProgress());
+            yield return StartCoroutine(DisableLoadingScreen());
         }
 
         private IEnumerator GetSceneLoadProgress()
         {
             foreach (var sceneLoading in _scenesLoading)
+            {
                 while (!sceneLoading.isDone)
                 {
                     _totalSceneProgress = 0;
@@ -143,7 +179,12 @@ namespace LGamesDev
 
                     yield return new WaitForEndOfFrame();
                 }
-        } 
+            }
+
+            _scenesLoading.Clear();
+            
+            yield return new WaitForSeconds(0.5f);
+        }
         
         /**
         * For player setup initialisation after loading scenes
@@ -168,7 +209,7 @@ namespace LGamesDev
                         InitialisationStage.Wallet => "Loading Wallet",
                         InitialisationStage.Equipment => "Loading Equipment",
                         InitialisationStage.Inventory => "Loading Inventory",
-                        InitialisationStage.Character => "Loading Character",
+                        InitialisationStage.Character or InitialisationStage.CharacterStats => "Loading Character",
                         _ => "Loading some things..."
                     };
                 }
@@ -179,17 +220,32 @@ namespace LGamesDev
                 
                 yield return new WaitForEndOfFrame();
             }
-            
-            _progressBar.current = 100;
 
-            yield return null;
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        private IEnumerator EnableLoadingScreen()
+        {
+            _loadingScreen.SetActive(true);
+            StartCoroutine(ScrollingBackground());
+
+            LTDescr anim = LeanTween.alpha(_loadingScreen.GetComponent<RectTransform>(), 0f, 1f).setEase(LeanTweenType.linear).setOnComplete(() =>
+            {
+                LeanTween.alpha(_loadingScreen.GetComponent<RectTransform>(), 1f, 1f).setEase(LeanTweenType.linear);
+            });
+
+            yield return new WaitForSeconds(anim.time);
         }
 
         public IEnumerator DisableLoadingScreen()
         {
-            _transition.SetTrigger(End);
-            yield return new WaitForSeconds(1);
+            LTDescr anim = LeanTween.alpha(_loadingScreen.GetComponent<RectTransform>(), 1f, 1f).setEase(LeanTweenType.linear).setOnComplete(() =>
+            {
+                LeanTween.alpha(_loadingScreen.GetComponent<RectTransform>(), 0f, 1f).setEase(LeanTweenType.linear);
+            });
 
+            yield return new WaitForSeconds(anim.time);
+            
             _loadingScreen.SetActive(false);
         }
 
@@ -238,36 +294,9 @@ namespace LGamesDev
             if (playerConfig != null)
             {
                 _playerConfig = playerConfig;
-                PlayerPrefs.SetString("PlayerConfig", JsonConvert.SerializeObject(playerConfig));
             } else {
                 Debug.LogError("trying to set playerConf to null");
             }
-        }
-        
-        public PlayerProgression GetPlayerProgression()
-        {
-            return _playerProgression;
-        }
-
-        public void SetPlayerProgression(PlayerProgression playerProgression)
-        {
-            if (playerProgression != null)
-                _playerProgression = playerProgression;
-            else
-                Debug.LogError("trying to set player progression to null");
-        }
-
-        public Body GetPlayerBody()
-        {
-            return _body;
-        }
-
-        public void SetPlayerBody(Body body)
-        {
-            if (body != null)
-                _body = body;
-            else
-                Debug.LogError("trying to set body to null");
         }
     }
 }

@@ -16,7 +16,6 @@ namespace LGamesDev.Fighting
 
         private TextMeshPro _textMesh;
 
-
         private void Awake()
         {
             _textMesh = transform.GetComponent<TextMeshPro>();
@@ -68,14 +67,14 @@ namespace LGamesDev.Fighting
             if (!isCriticalHit)
             {
                 //Normal hit
-                _textMesh.fontSize = 64;
-                _textColor = UtilsClass.GetColorFromString("FFFFFF");
+                _textMesh.fontSize = 70;
+                _textColor = Color.white;
             }
             else
             {
                 // Critical hit
-                _textMesh.fontSize = 70;
-                _textColor = UtilsClass.GetColorFromString("FFEA00");
+                _textMesh.fontSize = 78;
+                _textColor = Color.yellow;
             }
 
             _textMesh.color = _textColor;
@@ -83,7 +82,7 @@ namespace LGamesDev.Fighting
 
             _sortingOrder++;
             _textMesh.sortingOrder = _sortingOrder;
-            _moveVector = new Vector3(1, 2) * 65f;
+            _moveVector = new Vector3(0, 2) * 150f;
         }
     }
 }

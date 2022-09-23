@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using LGamesDev.Core.Player;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace LGamesDev
 {
@@ -11,10 +12,9 @@ namespace LGamesDev
 
         public static PlayerInventoryManager Instance;
 
-        public Inventory Inventory;
+        public Inventory inventory;
 
         #region Singleton
-
         private void Awake()
         {
             if (Instance != null)
@@ -25,32 +25,25 @@ namespace LGamesDev
 
             Instance = this;
         }
-
         #endregion
 
-        private void Start()
+        public void SetupManager(Inventory playerInventory)
         {
-            //items = PlayerInventoryHandler.Load_Static();
-
-            //Mockup
-            /*Inventory.AddItem(ItemAssets.Instance.armor);
-            Inventory.AddItem(ItemAssets.Instance.sword);
-            Inventory.AddItem(ItemAssets.Instance.helmet);
-            Inventory.AddItem(ItemAssets.Instance.healthPotion);*/
+            inventory = playerInventory;
         }
 
         public void AddItem(Item item)
         {
-            Inventory.AddItem(item);
+            inventory.AddItem(item);
             
-            OnItemChanged?.Invoke(Inventory.Items);
+            OnItemChanged?.Invoke(inventory.items);
         }
 
         public void RemoveItem(Item item)
         {
-            Inventory.RemoveItem(item);
+            inventory.RemoveItem(item);
 
-            OnItemChanged?.Invoke(Inventory.Items);
+            OnItemChanged?.Invoke(inventory.items);
         }
     }
 }

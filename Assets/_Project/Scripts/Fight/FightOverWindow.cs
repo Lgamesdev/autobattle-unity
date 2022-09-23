@@ -11,8 +11,8 @@ namespace LGamesDev.Fighting
         {
             _winnerText = transform.Find("BattleOverPanel").Find("winnerText").GetComponent<TextMeshProUGUI>();
         
-            FightManager.Instance.onPlayerWin += () => Show("You Win ! ");
-            FightManager.Instance.onPlayerLose += () => Show("Enemy Wins ! ");
+            FightManager.Instance.OnPlayerWin += () => Show("You Win ! ");
+            FightManager.Instance.OnPlayerLose += () => Show("Enemy Wins ! ");
         }
 
         private void Start()

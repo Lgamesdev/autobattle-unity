@@ -1,10 +1,10 @@
-using System.Collections;
+using System;
+using LGamesDev.Core;
 using LGamesDev.Core.Request;
-using LGamesDev.Fighting;
 using LGamesDev.UI;
 using UnityEngine;
 using UnityEngine.Networking;
-using FightHandler = LGamesDev.Core.Request.FightHandler;
+using UnityEngine.SceneManagement;
 
 namespace LGamesDev
 {
@@ -30,7 +30,9 @@ namespace LGamesDev
             StartCoroutine(RequestHandler.Request("api/user/tutorialDone",
                 UnityWebRequest.kHttpVerbGET,
                 error => { Debug.Log("Error on /tutorialDone : " + error); },
-                response => { Debug.Log("Received /tutorialDone : " + response); })
+                response => { Debug.Log("Received /tutorialDone : " + response); },
+                null,
+                _gameManager.GetAuthentication())
             );
         }
 
@@ -41,8 +43,8 @@ namespace LGamesDev
                 result =>
                 {
                     Debug.Log("fight request result : " + result.ToString());
-                    
-                    StartCoroutine(_gameManager.LoadFight(result));
+
+                    _gameManager.LoadFight(result);
                 }
             ));
             
@@ -56,7 +58,7 @@ namespace LGamesDev
                 {
                     Debug.Log("fight request result : " + result.ToString());
 
-                    StartCoroutine(_gameManager.LoadFight(result));
+                    _gameManager.LoadFight(result);
                 }
             ));
         }

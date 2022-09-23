@@ -4,6 +4,6 @@
     {
         public int level;
         public int xp;
-        public int rating;
+        public int ranking;
     }
 }

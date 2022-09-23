@@ -57,6 +57,6 @@ namespace LGamesDev.Core
         MainMenu = 3,
         Inventory = 4,
         Shop = 5,
-        Battle = 6
+        Fight = 6
     }
 }

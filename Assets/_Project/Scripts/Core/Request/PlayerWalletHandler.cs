@@ -11,7 +11,9 @@ namespace LGamesDev.Core.Request
 {
     public static class PlayerWalletHandler
     {
-        public static IEnumerator Load(MonoBehaviour instance, Action<Currency[]> setResult)
+        private static PlayerWalletManager _manager;
+        
+        public static IEnumerator Load(MonoBehaviour instance, Action<Wallet> setResult)
         {
             yield return instance.StartCoroutine(RequestHandler.Request("api/user/wallet",
                 UnityWebRequest.kHttpVerbGET,
@@ -20,12 +22,12 @@ namespace LGamesDev.Core.Request
                 {
                     //Debug.Log("Received currencies : " + response);
 
-                    Currency[] currencies = JsonConvert.DeserializeObject<Currency[]>(response);
+                    Wallet wallet = JsonConvert.DeserializeObject<Wallet>(response);
 
-                    if (currencies != null)
+                    if (wallet != null)
                     {
-                        //foreach (Currency currency in currencies) Debug.Log(currency.ToString());
-                        setResult(currencies);
+                        //foreach (Currency currency in wallet.Currencies) Debug.Log(currency.ToString());
+                        setResult(wallet);
                     }
                     else
                     {
@@ -37,7 +39,7 @@ namespace LGamesDev.Core.Request
             );
         }
 
-        public static IEnumerator SaveWallet(MonoBehaviour instance, Currency currency)
+        private static IEnumerator SaveWallet(MonoBehaviour instance, Currency currency)
         {
             var bodyRaw = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(currency));
 
@@ -51,6 +53,17 @@ namespace LGamesDev.Core.Request
                 bodyRaw,
                 GameManager.Instance.GetAuthentication())
             );
+        }
+
+        public static void SetManager(PlayerWalletManager manager)
+        {
+            _manager = manager;
+            _manager.OnCurrencyChanged += OnCurrencyChanged;
+        }
+
+        private static void OnCurrencyChanged(Currency currency)
+        {
+            _manager.StartCoroutine(SaveWallet(_manager, currency));
         }
     }
 }

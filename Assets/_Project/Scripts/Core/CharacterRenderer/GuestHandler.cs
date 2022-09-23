@@ -56,13 +56,13 @@ namespace LGamesDev.Core.CharacterRenderer
                 // Equip Item
                 switch (equipment.equipmentType)
                 {
-                    case EquipmentSlot.Weapon:
+                    case EquipmentType.Weapon:
                         _swordTexture = equipment.icon.texture;
                         break;
-                    case EquipmentSlot.Chest:
+                    case EquipmentType.Chest:
                         _chestTexture = equipment.icon.texture;
                         break;
-                    case EquipmentSlot.Head:
+                    case EquipmentType.Helmet:
                         _helmetTexture = equipment.icon.texture;
                         break;
                 }

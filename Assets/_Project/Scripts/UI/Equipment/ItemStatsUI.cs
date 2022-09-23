@@ -1,3 +1,4 @@
+using System;
 using LGamesDev.Core.Character;
 using LGamesDev.Core.Player;
 using TMPro;
@@ -8,10 +9,10 @@ namespace LGamesDev.UI
 {
     public class ItemStatsUI : MonoBehaviour
     {
-        private static ItemStatsUI _instance;
+        public static ItemStatsUI Instance;
         [SerializeField] private Transform pfUIStatSlot;
 
-        private Transform _equipButton;
+        private Transform _useButton;
 
         private Image _icon;
 
@@ -28,7 +29,7 @@ namespace LGamesDev.UI
 
         private void Awake()
         {
-            _instance = this;
+            Instance = this;
 
             _itemSlot = transform.Find("itemSlot");
 
@@ -36,11 +37,14 @@ namespace LGamesDev.UI
 
             _itemName = transform.Find("itemName").GetComponent<TextMeshProUGUI>();
 
-            _equipButton = transform.Find("equipButton");
+            _useButton = transform.Find("useButton");
             _sellButton = transform.Find("sellButton");
 
             _statsParent = transform.Find("StatsParent");
+        }
 
+        private void Start()
+        {
             Hide();
         }
 
@@ -49,22 +53,38 @@ namespace LGamesDev.UI
             gameObject.SetActive(false);
         }
 
-        private void Show(Item item)
+        public void Show(Item item)
         {
             gameObject.SetActive(true);
 
             _itemShowed = item;
 
-            _equipButton.GetComponent<Button>().onClick.RemoveAllListeners();
-            _equipButton.GetComponent<Button>().onClick.AddListener(UseItem);
+            _useButton.GetComponent<Button>().onClick.RemoveAllListeners();
+            _useButton.GetComponent<Button>().onClick.AddListener(UseItem);
 
+            SetupUI(_itemShowed.GetType() == typeof(Equipment) ? "Equip" : "Use");
+        }
+
+        public void ShowEquipped(Equipment equipment)
+        {
+            gameObject.SetActive(true);
+
+            _itemShowed = equipment;
+
+            _useButton.GetComponent<Button>().onClick.RemoveAllListeners();
+            _useButton.GetComponent<Button>().onClick.AddListener(UnEquipItem);
+
+            SetupUI("UnEquip");
+        }
+        
+        private void SetupUI(string useButtonText)
+        {
+            _useButton.Find("text").GetComponent<TextMeshProUGUI>().text = useButtonText;
+            
             foreach (Transform child in _statsParent) Destroy(child.gameObject);
 
             if (_itemShowed != null)
             {
-                /*Transform uiItemTransform = Instantiate(pfUI_ItemImage, itemContainer);
-            uiItemTransform.GetComponent<RectTransform>().anchoredPosition = itemSlot.GetComponent<RectTransform>().anchoredPosition;
-            Image uiItemImage = uiItemTransform.GetComponent<Image>();*/
                 _icon.sprite = _itemShowed.icon;
                 _icon.gameObject.SetActive(true);
                 _itemSlot.Find("emptyImage").gameObject.SetActive(false);
@@ -73,23 +93,17 @@ namespace LGamesDev.UI
 
                 if (_itemShowed.GetType() == typeof(Equipment))
                 {
-                    _equipButton.Find("text").GetComponent<TextMeshProUGUI>().text = "Equip";
-
-                    foreach (var stat in ((Equipment)_itemShowed).GetStats())
+                    foreach (Stat stat in ((Equipment)_itemShowed).GetStats())
                     {
-                        var statSlotRectTransform = Instantiate(pfUIStatSlot, _statsParent).GetComponent<RectTransform>();
+                        RectTransform statSlotRectTransform =
+                            Instantiate(pfUIStatSlot, _statsParent).GetComponent<RectTransform>();
 
-                        var label = statSlotRectTransform.Find("label").GetComponent<TextMeshProUGUI>();
-                        var value = statSlotRectTransform.Find("value").GetComponent<TextMeshProUGUI>();
-
-                        //label.text = stat.type.ToString();
-                        value.text = stat.GetValue().ToString();
+                        statSlotRectTransform.Find("label").GetComponent<TextMeshProUGUI>().text =
+                            stat.statType.ToString();
+                        statSlotRectTransform.Find("value").GetComponent<TextMeshProUGUI>().text =
+                            stat.GetValue().ToString();
                     }
                 }
-                else
-                {
-                    _equipButton.Find("text").GetComponent<TextMeshProUGUI>().text = "Use";
-                }
             }
             else
             {
@@ -98,75 +112,22 @@ namespace LGamesDev.UI
             }
         }
 
-        private void ShowEquiped(Item item)
+        public void UseItem()
         {
-            gameObject.SetActive(true);
-
-            _itemShowed = item;
-
-            _equipButton.GetComponent<Button>().onClick.RemoveAllListeners();
-            _equipButton.GetComponent<Button>().onClick.AddListener(UnEquipItem);
-
-            if (_itemShowed != null)
-            {
-                /*Transform uiItemTransform = Instantiate(pfUI_ItemImage, itemContainer);
-            uiItemTransform.GetComponent<RectTransform>().anchoredPosition = itemSlot.GetComponent<RectTransform>().anchoredPosition;
-            Image uiItemImage = uiItemTransform.GetComponent<Image>();
-            uiItemImage.sprite = itemShowed.icon;*/
-                _icon.sprite = _itemShowed.icon;
-                _icon.gameObject.SetActive(true);
-                _itemSlot.Find("emptyImage").gameObject.SetActive(false);
-
-                if (_itemShowed.name != null) _itemName.text = _itemShowed.name;
-
-                _equipButton.Find("text").GetComponent<TextMeshProUGUI>().text = "UnEquip";
-
-                foreach (Transform child in _statsParent) Destroy(child.gameObject);
-
-                foreach (var stat in ((Equipment)_itemShowed).GetStats())
-                {
-                    var statSlotRectTransform = Instantiate(pfUIStatSlot, _statsParent).GetComponent<RectTransform>();
-
-                    var label = statSlotRectTransform.Find("label").GetComponent<TextMeshProUGUI>();
-                    var value = statSlotRectTransform.Find("value").GetComponent<TextMeshProUGUI>();
-
-                    label.text = stat.GetStatType();
-                    value.text = stat.GetValue().ToString();
-                }
-            }
-            else
-            {
-                _icon.gameObject.SetActive(false);
-                _itemSlot.Find("emptyImage").gameObject.SetActive(true);
-            }
+            _itemShowed.Use();
+            Hide();
         }
 
-        public static void Show_Static(Item item)
+        private void UnEquipItem()
         {
-            Debug.Log(item.ToString());
-            _instance.Show(item);
-        }
-
-        public static void ShowEquiped_Static(Equipment equipment)
-        {
-            _instance.ShowEquiped(equipment);
-        }
-
-        public void UnEquipItem()
-        {
-            CharacterEquipmentManager.Instance.Unequip((int)((Equipment)_itemShowed).equipmentType);
+            //CharacterEquipmentManager.Instance.UnEquip((int)((Equipment)_itemShowed).equipmentType);
+            CharacterHandler.Instance.equipmentManager.UnEquip((int)((Equipment)_itemShowed).equipmentType);
             Hide();
         }
 
         public void SellItem()
         {
             _itemShowed.Sell();
-            Hide();
-        }
-
-        public void UseItem()
-        {
-            _itemShowed.Use();
             Hide();
         }
     }

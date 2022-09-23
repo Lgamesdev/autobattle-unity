@@ -24,7 +24,7 @@ namespace LGamesDev.Core.Player
 
         public void BoughtItem(Item item)
         {
-            PlayerInventoryManager.Instance.Inventory.AddItem(item);
+            PlayerInventoryManager.Instance.inventory.AddItem(item);
         }
 
         public void SellItem(Item item)

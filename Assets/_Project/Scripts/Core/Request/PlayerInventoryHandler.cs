@@ -1,11 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using LGamesDev.Core.Player;
-using LGamesDev.Core.Request;
-using Unity.Plastic.Newtonsoft.Json;
+using LGamesDev.Request.Converters;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -21,8 +19,11 @@ namespace LGamesDev.Core.Request
                 response =>
                 {
                     //Debug.Log("Received inventory : " + response);
-
-                    Inventory inventory = JsonConvert.DeserializeObject<Inventory>(response);
+                    
+                    JsonSerializerSettings settings = new JsonSerializerSettings();
+                    settings.Converters.Add(new ItemConverter());
+                    
+                    Inventory inventory = JsonConvert.DeserializeObject<Inventory>(response, settings);
 
                     if (inventory != null) {
                         //Debug.Log(inventory.ToString());
@@ -37,7 +38,7 @@ namespace LGamesDev.Core.Request
             );
         }
 
-        public static IEnumerator Save(List<Item> items)
+        public static IEnumerator Save(List<Equipment> items)
         {
             //var jsonString = Serialize(items);
 

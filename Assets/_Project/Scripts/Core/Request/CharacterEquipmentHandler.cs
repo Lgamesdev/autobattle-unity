@@ -18,31 +18,33 @@ namespace LGamesDev.Core.Request
                 error => { Debug.Log("Error on equipments load : " + error); },
                 response =>
                 {
-                    Debug.Log("Received player equipments : " + response);
+                    //Debug.Log("Received player equipments : " + response);
 
                     JsonSerializerSettings settings = new JsonSerializerSettings();
-                    settings.Converters.Add(new EquipmentConverter());
+                    settings.Converters.Add(new ItemConverter());
 
-                    CharacterEquipment[] equipments = JsonConvert.DeserializeObject<CharacterEquipment[]>(response, settings);
-                    
-                    if (equipments != null)
+                    CharacterEquipment[] responseRaw =
+                        JsonConvert.DeserializeObject<CharacterEquipment[]>(response, settings);
+
+                    if (responseRaw == null)
                     {
-                        string log = "equipments [ \n";
-                        foreach (CharacterEquipment equipment in equipments) log += equipment.ToString() + "\n";
-                        Debug.Log(log + "\n ]");
-                        setResult(equipments);
-                    } else {
-                        Debug.Log("character equipments null");
+                        Debug.Log("No Equipment in response");
                     }
+                    
+                    /*string log = "equipments [ \n";
+                    foreach (CharacterEquipment equipment in equipments) log += equipment.ToString() + "\n";
+                    Debug.Log(log + "\n ]");*/
+                    
+                    setResult(responseRaw);
                 },
                 null,
                 GameManager.Instance.GetAuthentication())
             );
         }
 
-        public static IEnumerator SaveEquipment(Equipment newItem, Equipment oldItem)
+        public static IEnumerator SaveEquipment(Equipment newEquipment, Equipment oldEquipment)
         {
-            if (newItem != null)
+            if (newEquipment != null)
             {
                 //string jsonString = JsonConvert.SerializeObject(newItem, Formatting.Indented);
                 //var jsonString = Serialize(newItem);

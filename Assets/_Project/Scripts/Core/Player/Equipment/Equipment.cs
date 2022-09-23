@@ -1,8 +1,5 @@
 using System;
 using LGamesDev.Core.Character;
-using LGamesDev.Request.Converters;
-using Newtonsoft.Json;
-using UnityEditor;
 using UnityEngine;
 
 namespace LGamesDev.Core.Player
@@ -12,15 +9,17 @@ namespace LGamesDev.Core.Player
     {
         public Stat[] stats;
         
-        public EquipmentSlot equipmentType;
-        
-        public Sprite sprite;
+        public EquipmentType equipmentType;
+
+        public int spriteId;
 
         public override void Use()
         {
-            base.Use();
+            //base.Use();
             //Equip the item 
-            CharacterEquipmentManager.Instance.Equip(this);
+            Debug.Log("Equip the item");
+            //CharacterEquipmentManager.Instance.Equip(this);
+            CharacterHandler.Instance.equipmentManager.Equip(this);
             RemoveFromInventory();
         }
 
@@ -37,12 +36,10 @@ namespace LGamesDev.Core.Player
         public override string ToString()
         {
             var result = "equipment : [ \n " +
-                         "name : " + name + "\n" +
-                         "iconPath : " + AssetDatabase.GetAssetPath(icon) + "\n" +
-                         "equipmentslot : " + equipmentType + "\n" +
-                         "spritePath : " + AssetDatabase.GetAssetPath(sprite) + "\n" +
-                         "cost : " + cost + "\n" +
-                         "amount : " + amount + "\n" +
+                         base.ToString() +
+                         "equipmentSlot : " + equipmentType + "\n" +
+                         //"spritePath : " + (sprites.Count != 0 ? AssetDatabase.GetAssetPath(sprites[0]) : null) + "\n" +
+                         "spriteId : " + spriteId + "\n" +
                          "stats : [ \n";
 
             if (stats != null) Array.ForEach(stats, stat => result += stat.ToString() + "\n");
@@ -54,10 +51,11 @@ namespace LGamesDev.Core.Player
         }
     }
 
-    public enum EquipmentSlot
+    public enum EquipmentType
     {
-        Head,
+        Helmet,
         Chest,
+        Pants,
         Weapon
         /*Shield,*/
     }

@@ -1,101 +1,115 @@
+using System;
+using System.Collections;
 using LGamesDev.Core.Player;
+using LGamesDev.Core.Request;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 namespace LGamesDev.Fighting
 {
     public class FightManager : MonoBehaviour
     {
-        public delegate void OnPlayerLose();
+        public delegate void OnPlayerLoseEvent();
+        public OnPlayerLoseEvent OnPlayerLose;
 
-        public delegate void OnPlayerWin();
+        public delegate void OnPlayerWinEvent();
+        public OnPlayerWinEvent OnPlayerWin;
 
         public static FightManager Instance;
 
         [SerializeField] private Transform pfCharacterBattle;
-        public Texture2D enemySpritesheet;
 
-        [FormerlySerializedAs("playerCharacterBattle")] public CharacterFight playerCharacterFight;
+        public CharacterFight playerCharacterFight;
         private CharacterFight _activeCharacterFight;
         private CharacterFight _enemyCharacterFight;
-        public OnPlayerLose onPlayerLose;
-        public OnPlayerWin onPlayerWin;
 
-        private State _state;
+        private Fight _fight;
+        [SerializeField] private int currentAction = 0;
+
+        [SerializeField] private State state = State.Busy;
+
+        private GameManager _gameManager; 
 
         private void Awake()
         {
             Instance = this;
+            
+            _gameManager = GameManager.Instance;
         }
 
-        public void SetupFight(Fight fight)
+        public IEnumerator SetupFight(Fight fight)
         {
-            //_enemyCharacterFight = SpawnCharacter(fight.opponent);
-
-            playerCharacterFight.Intro(_enemyCharacterFight, () => { _state = State.WaitingForPlayer; });
+            _fight = fight;
+            
+            yield return StartCoroutine(playerCharacterFight.SetupCharacterFight(fight.character));
+            
+            _enemyCharacterFight = SpawnCharacter();
+            yield return StartCoroutine(_enemyCharacterFight.SetupCharacterFight(fight.opponent));
         }
 
-        private void Update()
+        public void StartFight()
         {
-            if (_state == State.WaitingForPlayer)
-            {
-                _state = State.Busy;
-                playerCharacterFight.Attack(_enemyCharacterFight, ChooseNextActiveCharacter);
-            }
+            playerCharacterFight.Intro(_enemyCharacterFight, ChooseNextActiveCharacter);
         }
 
         private CharacterFight SpawnCharacter()
         {
-            Vector3 position;
-
             var cam = Camera.main;
 
             var camHeight = cam.orthographicSize * 2f;
             var camWidth = camHeight * cam.aspect;
 
-            position = new Vector3(camWidth * 0.28f, -30);
+            Vector3 position = new Vector3(camWidth * 0.28f, -30);
 
             var characterTransform = Instantiate(pfCharacterBattle, position, Quaternion.identity);
 
             return characterTransform.GetComponent<CharacterFight>();
         }
 
-        private void SetActiveCharacterBattle(CharacterFight characterFight)
-        {
-            if (_activeCharacterFight != null) _activeCharacterFight.HideSelectionCircle();
-
-            _activeCharacterFight = characterFight;
-            _activeCharacterFight.ShowSelectionCircle();
-        }
-
         private void ChooseNextActiveCharacter()
         {
             if (TestBattleOver()) return;
 
-            if (_activeCharacterFight == playerCharacterFight)
-            {
-                SetActiveCharacterBattle(_enemyCharacterFight);
+            FightAction fightAction = _fight.actions[currentAction];
 
-                _state = State.Busy;
-                _enemyCharacterFight.Attack(playerCharacterFight, () => { ChooseNextActiveCharacter(); });
+            if (fightAction.playerTeam)
+            {
+                SetActiveCharacterBattle(playerCharacterFight);
+
+                state = State.Busy;
+                playerCharacterFight.Attack(_enemyCharacterFight, _fight.actions[currentAction].damage, fightAction.critialHit, ChooseNextActiveCharacter);
             }
             else
             {
-                SetActiveCharacterBattle(playerCharacterFight);
-                _state = State.WaitingForPlayer;
+                SetActiveCharacterBattle(_enemyCharacterFight);
+
+                state = State.Busy;
+                _enemyCharacterFight.Attack(playerCharacterFight, _fight.actions[currentAction].damage, fightAction.critialHit, ChooseNextActiveCharacter);
             }
+
+            currentAction++;
+        }
+        
+        private void SetActiveCharacterBattle(CharacterFight characterFight)
+        {
+            //if (_activeCharacterFight != null) _activeCharacterFight.HideSelectionCircle();
+
+            _activeCharacterFight = characterFight;
+            //_activeCharacterFight.ShowSelectionCircle();
         }
 
         private bool TestBattleOver()
         {
+            if (_fight.actions.Count - 1 != currentAction) return false;
+            
             //Win
             if (_enemyCharacterFight.IsDead())
             {
                 //Enemy dead, player wins
                 HandlePlayerEarning(true);
 
-                onPlayerWin?.Invoke();
-                return true;
+                OnPlayerWin?.Invoke();
             }
 
             //Lose
@@ -104,11 +118,11 @@ namespace LGamesDev.Fighting
                 //Player dead, enemy wins
                 HandlePlayerEarning(false);
 
-                onPlayerLose?.Invoke();
-                return true;
+                OnPlayerLose?.Invoke();
             }
 
-            return false;
+            return true;
+
         }
 
         public void HandlePlayerEarning(bool playerWin)
@@ -126,6 +140,24 @@ namespace LGamesDev.Fighting
 
             PlayerPrefs.SetInt("level", playerCharacterFight.GetLevelSystem().GetLevel());
             PlayerPrefs.SetFloat("experience", playerCharacterFight.GetLevelSystem().GetExperience());
+        }
+
+        public void BackToMainMenu()
+        {
+            _gameManager.LoadGame();
+        }
+
+        public void FightAgain()
+        {
+            StartCoroutine(FightHandler.Load(
+                this,
+                result =>
+                {
+                    Debug.Log("fight request result : " + result.ToString());
+
+                    _gameManager.LoadFight(result);
+                }
+            ));
         }
 
         private enum State

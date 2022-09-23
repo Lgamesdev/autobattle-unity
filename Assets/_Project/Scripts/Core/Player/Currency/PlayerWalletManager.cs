@@ -1,6 +1,8 @@
 ﻿using System;
 using LGamesDev.Core.Player;
 using LGamesDev.Core.Request;
+using LGamesDev.UI;
+using TMPro;
 using UnityEngine;
 
 namespace LGamesDev
@@ -11,10 +13,8 @@ namespace LGamesDev
         
         public delegate void OnCurrencyChangedEvent(Currency currency);
         public OnCurrencyChangedEvent OnCurrencyChanged;
-        public delegate void OnCurrencyGainedEvent(Currency currency);
-        public OnCurrencyGainedEvent OnCurrencyGained;
 
-        public Wallet Wallet;
+        private Wallet _wallet = new();
         
         private void Awake()
         {
@@ -25,35 +25,32 @@ namespace LGamesDev
             }
 
             Instance = this;
+        }
+
+        public void SetupManager(Wallet wallet)
+        {
+            _wallet = wallet;
             
-            Wallet = new Wallet();
+            PlayerWalletHandler.SetManager(this);
         }
 
         public int GetAmount(CurrencyType currencyType)
         {
-            return Wallet.GetAmount(currencyType);
+            return _wallet.GetAmount(currencyType);
         }
 
         public void SpendCurrency(CurrencyType currencyType, int amount)
         {
-            Wallet.SpendCurrency(currencyType, amount);
+            _wallet.SpendCurrency(currencyType, amount);
 
-            OnCurrencyChanged?.Invoke(Wallet.GetCurrency(currencyType));
-            StartCoroutine(PlayerWalletHandler.SaveWallet(this, Wallet.GetCurrency(currencyType)));
+            OnCurrencyChanged?.Invoke(_wallet.GetCurrency(currencyType));
         }
 
         public void AddCurrency(CurrencyType currencyType, int amount)
         {
-            Wallet.AddCurrency(currencyType, amount);
+            _wallet.AddCurrency(currencyType, amount);
 
-            OnCurrencyChanged?.Invoke(Wallet.GetCurrency(currencyType));
-            StartCoroutine(PlayerWalletHandler.SaveWallet(this, Wallet.GetCurrency(currencyType)));
-            //onCurrencyGained?.Invoke(new Currency() { type = currencyType, amount = amount });
-        }
-
-        public void SetCurrencies(Currency[] currencies)
-        {
-            Wallet.Currencies = currencies;
+            OnCurrencyChanged?.Invoke(_wallet.GetCurrency(currencyType));
         }
     }
 }

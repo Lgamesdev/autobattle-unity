@@ -8,9 +8,9 @@ namespace LGamesDev.UI
     {
         public Image icon;
 
-        private Equipment _equipment;
+        private Core.Player.Equipment _equipment;
 
-        public void SetEquipment(Equipment equipment)
+        public void SetEquipment(Core.Player.Equipment equipment)
         {
             this._equipment = equipment;
 
@@ -26,14 +26,14 @@ namespace LGamesDev.UI
             icon.enabled = false;
         }
 
-        public Equipment GetEquipment()
+        public Core.Player.Equipment GetEquipment()
         {
             return _equipment;
         }
 
         public void Clicked()
         {
-            if (_equipment != null) ItemStatsUI.ShowEquiped_Static(_equipment);
+            if (_equipment != null) ItemStatsUI.Instance.ShowEquipped(_equipment);
         }
     }
 }

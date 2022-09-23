@@ -2,6 +2,7 @@ using System;
 using LGamesDev.Core.Player;
 using LGamesDev.Request.Converters;
 using Newtonsoft.Json;
+using UnityEditor;
 using UnityEngine;
 
 namespace LGamesDev
@@ -10,8 +11,7 @@ namespace LGamesDev
     public class Item
     {
         public string name = "New Item";
-
-        [JsonConverter(typeof(EquipmentConverter))]
+        
         public Sprite icon;
 
         public bool isDefaultItem;
@@ -23,7 +23,7 @@ namespace LGamesDev
         public virtual void Use()
         {
             // Use the item
-            //Debug.Log("Using " + name);
+            Debug.Log("Using " + name);
         }
 
         public virtual void Sell()
@@ -36,13 +36,15 @@ namespace LGamesDev
 
         public void RemoveFromInventory()
         {
-            PlayerInventoryManager.Instance.Inventory.RemoveItem(this);
+            PlayerInventoryManager.Instance.RemoveItem(this);
         }
 
         public override string ToString()
         {
-            return "[ \n " +
+            return "item : [ \n " +
                    "name : " + name + "\n" +
+                   "isDefaultItem : " + isDefaultItem + "\n" +
+                   "iconPath : " + AssetDatabase.GetAssetPath(icon) + "\n" +
                    "cost : " + cost + "\n" +
                    "amount : " + amount + "\n" +
                    "]";

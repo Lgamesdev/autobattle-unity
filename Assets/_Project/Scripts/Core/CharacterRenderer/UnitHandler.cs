@@ -97,40 +97,40 @@ namespace LGamesDev.Core
             material.mainTexture = texture;
         }
 
-        public void UpdateEquipmentTexture(Equipment newItem, Equipment oldItem)
+        public void UpdateEquipmentTexture(Player.Equipment newEquipment, Player.Equipment oldEquipment)
         {
-            if (newItem != null)
+            if (newEquipment != null)
                 // Equip Item
-                switch (newItem.equipmentType)
+                switch (newEquipment.equipmentType)
                 {
-                    case EquipmentSlot.Weapon:
+                    /*case EquipmentSlot.Weapon:
                         hasSword = true;
-                        swordTexture = newItem.sprite.texture;
+                        swordTexture = newItem.sprites[0].texture;
                         break;
                     case EquipmentSlot.Chest:
                         hasArmor = true;
-                        chestTexture = newItem.sprite.texture;
+                        chestTexture = newItem.sprites[0].texture;
                         break;
                     case EquipmentSlot.Head:
                         hasHelmet = true;
-                        helmetTexture = newItem.sprite.texture;
-                        break;
+                        helmetTexture = newItem.sprites[0].texture;
+                        break;*/
                     /*case EquipmentSlot.Shield:
                     break;*/
                 }
-            else if (oldItem != null)
+            else if (oldEquipment != null)
                 // Unequip Item
-                switch (oldItem.equipmentType)
+                switch (oldEquipment.equipmentType)
                 {
-                    case EquipmentSlot.Weapon:
+                    case EquipmentType.Weapon:
                         hasSword = false;
                         swordTexture = null;
                         break;
-                    case EquipmentSlot.Chest:
+                    case EquipmentType.Chest:
                         hasArmor = false;
                         chestTexture = null;
                         break;
-                    case EquipmentSlot.Head:
+                    case EquipmentType.Helmet:
                         hasHelmet = false;
                         helmetTexture = null;
                         break;

@@ -9,7 +9,7 @@ namespace LGamesDev.UI
     {
         [SerializeField] private Transform pfUIStatSlot;
 
-        private PlayerStats _playerStats;
+        private CharacterStatsManager _characterStatsManager;
 
         private Transform _statsParent;
 
@@ -29,11 +29,11 @@ namespace LGamesDev.UI
         transform.Find("patrolBtn").GetComponent<Button_UI>().MouseOverOnceFunc = () => Tooltip.ShowTooltip_Static("Patrol");
         transform.Find("patrolBtn").GetComponent<Button_UI>().MouseOutOnceFunc = () => Tooltip.HideTooltip_Static();*/
 
-            _playerStats = PlayerStats.instance;
+            _characterStatsManager = CharacterStatsManager.Instance;
 
-            _playerStats.onStatsUpdated += OnStatsUpdated;
+            _characterStatsManager.OnStatsUpdated += OnStatsUpdated;
 
-            OnStatsUpdated(_playerStats.stats);
+            OnStatsUpdated(_characterStatsManager.stats);
         }
 
         private void OnStatsUpdated(Stat[] stats)

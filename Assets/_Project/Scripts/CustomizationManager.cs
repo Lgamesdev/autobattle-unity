@@ -78,7 +78,7 @@ namespace LGamesDev
                 {
                     Debug.Log("Received : " + response);
                     
-                    StartCoroutine(_gameManager.LoadGame());
+                    _gameManager.LoadGame();
                 },
                 bodyRaw,
                 _gameManager.GetAuthentication())

@@ -15,21 +15,28 @@ public class MainWindowPanel : MonoBehaviour
     [Header("Content")]
     [SerializeField] private Transform contentArea;
     [SerializeField] private Transform inventoryTab;
+    [SerializeField] private Transform characterTab;
     [SerializeField] private Transform shopTab;
     [SerializeField] private Transform scoreTab;
 
     [Header("Footer")] 
     [SerializeField] private Transform footerArea;
     [SerializeField] private Button inventoryButton;
+    [SerializeField] private Button characterButton;
     [SerializeField] private Button shopButton;
     [SerializeField] private Button scoreButton;
     [SerializeField] private Button closeButton;
+
+    private void Awake()
+    {
+        Close();
+    }
 
     public void Show()
     {
         LeanTween.cancel(gameObject);
 
-        box.gameObject.SetActive(false);
+        //box.gameObject.SetActive(false);
         //imageArea.gameObject.SetActive(false);
 
         Image panelImage = GetComponent<Image>();
@@ -40,7 +47,7 @@ public class MainWindowPanel : MonoBehaviour
                 Color c = panelImage.color;
                 c.a = val;
                 panelImage.color = c;
-            }).setEase(LeanTweenType.linear).setOnComplete(ShowModalBox);
+            }).setEase(LeanTweenType.linear); /*.setOnComplete(ShowModalBox);*/
     }
 
     private void ShowModalBox()

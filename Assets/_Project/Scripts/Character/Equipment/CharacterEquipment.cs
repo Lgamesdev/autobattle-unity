@@ -5,6 +5,7 @@ using LGamesDev.Request.Converters;
 using Unity.Plastic.Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace LGamesDev.Core.Character
 {

@@ -16,7 +16,7 @@ namespace LGamesDev
         public Wallet Wallet = new();
         public Inventory Inventory = new();
         public Stat[] Stats = new Stat[Enum.GetNames(typeof(StatType)).Length];
-        public CharacterEquipment[] Equipments = new CharacterEquipment[Enum.GetNames(typeof(EquipmentType)).Length];
+        public CharacterEquipment[] Equipments = new CharacterEquipment[Enum.GetNames(typeof(EquipmentSlot)).Length];
 
         public override string ToString()
         {

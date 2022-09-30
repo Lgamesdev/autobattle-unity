@@ -428,8 +428,8 @@ MonoBehaviour:
       m_SpriteOverride: {fileID: 249300904150281831, guid: af9119dcab167a649bea08ea1817d43c, type: 3}
     m_FromMain: 0
     m_EntryOverrideCount: 5
-  - m_Name: Belt
-    m_Hash: -1067067409
+  - m_Name: Pants
+    m_Hash: -1111633170
     m_CategoryList: []
     m_OverrideEntries:
     - m_Name: Base
@@ -437,28 +437,6 @@ MonoBehaviour:
       m_Sprite: {fileID: -220360561259302917, guid: af9119dcab167a649bea08ea1817d43c, type: 3}
       m_FromMain: 0
       m_SpriteOverride: {fileID: -220360561259302917, guid: af9119dcab167a649bea08ea1817d43c, type: 3}
-    m_FromMain: 0
-    m_EntryOverrideCount: 1
-  - m_Name: Short
-    m_Hash: 1323941798
-    m_CategoryList: []
-    m_OverrideEntries:
-    - m_Name: Base
-      m_Hash: 1619415391
-      m_Sprite: {fileID: 8380885099867691655, guid: af9119dcab167a649bea08ea1817d43c, type: 3}
-      m_FromMain: 0
-      m_SpriteOverride: {fileID: 8380885099867691655, guid: af9119dcab167a649bea08ea1817d43c, type: 3}
-    m_FromMain: 0
-    m_EntryOverrideCount: 1
-  - m_Name: Pants
-    m_Hash: -1111633170
-    m_CategoryList: []
-    m_OverrideEntries:
-    - m_Name: Base
-      m_Hash: 1619415391
-      m_Sprite: {fileID: 0}
-      m_FromMain: 0
-      m_SpriteOverride: {fileID: 0}
     - m_Name: Pants_1
       m_Hash: -2063301767
       m_Sprite: {fileID: 3981164996776512893, guid: af9119dcab167a649bea08ea1817d43c, type: 3}

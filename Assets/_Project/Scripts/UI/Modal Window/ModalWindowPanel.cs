@@ -145,7 +145,7 @@ public class ModalWindowPanel : MonoBehaviour
         Show();
     }
     
-    public void ShowAsTextPopup(string title, string message, string confirmMessage, string declineMessage, Action confirmAction, Action declineAction = null, Action alternateAction = null)
+    public void ShowAsTextPopup(string title, string message, string confirmMessage, string declineMessage, Action confirmAction = null, Action declineAction = null, Action alternateAction = null)
     {
         LeanTween.cancel(gameObject);
 
@@ -160,6 +160,8 @@ public class ModalWindowPanel : MonoBehaviour
         
         heroText.text = message;
 
+        bool hasConfirm = (confirmAction != null);
+        confirmButton.gameObject.SetActive(hasConfirm);
         confirmText.text = confirmMessage;
         _onConfirmAction = confirmAction;
 

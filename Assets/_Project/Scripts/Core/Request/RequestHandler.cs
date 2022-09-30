@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 namespace LGamesDev.Core.Request
 {
     public class RequestHandler : MonoBehaviour
     {
         private const string BaseURL = @"http://autobattle.hopto.org:35080/";
-        
+
         public delegate void OnRequestErrorEvent(string error);
         public static OnRequestErrorEvent OnRequestError;
 
@@ -27,12 +29,49 @@ namespace LGamesDev.Core.Request
             yield return request.SendWebRequest();
 
             if (request.result == UnityWebRequest.Result.Success)
+            {
                 onSuccess(request.downloadHandler.text);
-            else {
-                Debug.Log("error : " + request.downloadHandler.text);
-                var parsedJObjet = JObject.Parse(request.downloadHandler.text);
-                OnRequestError?.Invoke(parsedJObjet["detail"]?.ToString());
-                onError(request.error);
+            } 
+            else 
+            {
+                string error = request.error + "\n";
+                
+                if (!string.IsNullOrEmpty(request.downloadHandler.text))
+                {
+                    try
+                    {
+                        JObject parsedJObjet = JObject.Parse(request.downloadHandler.text);
+
+                        error += parsedJObjet["detail"]?.ToString();
+                    }
+                    catch (JsonReaderException)
+                    {
+                        error += "handling error by copying it to clipboard";
+                        GUIUtility.systemCopyBuffer = request.downloadHandler.text;
+                    }
+                }
+                else
+                {
+                    error += request.downloadHandler.text;
+                }
+
+                GameManager.Instance.modalWindow.ShowAsTextPopup(
+                    "Something get wrong...",
+                    error,
+                    "Retry",
+                    "Close",
+                    () =>
+                    {
+                        GameManager.Instance.StartCoroutine(Request(url, httpVerb, onError, onSuccess, bodyRaw,
+                            authentication));
+                    },
+                    GameManager.Instance.modalWindow.Close, 
+                    () =>
+                    {
+                        SceneManager.LoadScene((int)SceneIndexes.PersistentScene);
+                    });
+                
+                onError(error);
             }
         }
     }

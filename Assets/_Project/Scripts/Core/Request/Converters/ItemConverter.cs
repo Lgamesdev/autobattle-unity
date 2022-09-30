@@ -18,12 +18,37 @@ namespace LGamesDev.Request.Converters
         {
             return typeof(Item).IsAssignableFrom(objectType);
         }
-        
-        public override bool CanWrite => false;
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            throw new NotImplementedException();
+            Item item = (Item)value;
+            
+            JToken t = JToken.FromObject(item);
+
+            if (t.Type != JTokenType.Object)
+            {
+                t.WriteTo(writer);
+            }
+            else
+            {
+                JObject o = (JObject)t;
+                o["type"] = item.GetType() == typeof(Equipment) ? "equipment" : "item";
+                o["iconPath"] = AssetDatabase.GetAssetPath(item.icon);
+
+                /*if (item.GetType() == typeof(Equipment))
+                {
+                    o["equipmentSlot"] = ((Equipment)item).equipmentSlot.ToString();
+                }*/
+                
+                /*IList<string> propertyNames = o.Properties().Select(p => p.Name).ToList();
+
+                o.AddFirst(new JProperty("Keys", new JArray(propertyNames)));*/
+
+                o.WriteTo(writer);
+            }
+            
+            /*writer.WritePropertyName("iconPath");
+            writer.WriteValue(AssetDatabase.GetAssetPath(item.icon));*/
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
@@ -39,21 +64,13 @@ namespace LGamesDev.Request.Converters
             serializer.Populate(jsonObject.CreateReader(), item);
 
             string iconPath = jsonObject["iconPath"]?.ToString();
-            if (iconPath != null) {
-                Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>(_rootPath + iconPath);
-                if (sprite != null)
-                    item.icon = sprite;
-            }
-
-            /*if (item.GetType() == typeof(Equipment))
-            {
-                int? spriteId = jsonObject["spriteId"]?.ToObject<int>();
-                if (spriteId != null) {
-                    List<Sprite> sprites = GetSpritesInLibraryFromLabelId((int)spriteId, equipment.equipmentType);
-                    if (sprites != null)
-                        equipment.sprites = sprites;
-                }
-            }*/
+            
+            if (iconPath == null) 
+                return item;
+            
+            Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>(_rootPath + iconPath);
+            if (sprite != null)
+                item.icon = sprite;
 
             return item;
         }
@@ -68,12 +85,12 @@ namespace LGamesDev.Request.Converters
             return jObject[fieldName] != null;
         }
         
-        private List<Sprite> GetSpritesInLibraryFromLabelId(int spriteId, EquipmentType equipType)
+        private List<Sprite> GetSpritesInLibraryFromLabelId(int spriteId, EquipmentSlot equipSlot)
         {
             SpriteLibrary spriteLib = SpriteLibManager.Instance.currentLibrary;
             List<Sprite> sprites = new List<Sprite>();
 
-            if (equipType == EquipmentType.Chest) 
+            if (equipSlot == EquipmentSlot.Chest) 
             {
                 foreach (SpriteResolver resolver in CharacterHandler.Instance.chestResolvers) 
                 {
@@ -83,11 +100,11 @@ namespace LGamesDev.Request.Converters
                     sprites.Add(spriteLib.GetSprite(category, labels[spriteId]));
                 }
             } else {
-                string category = equipType switch
+                string category = equipSlot switch
                 {
-                    EquipmentType.Helmet => CharacterHandler.Instance.helmetResolver.GetCategory(),
-                    EquipmentType.Pants => CharacterHandler.Instance.pantResolver.GetCategory(),
-                    EquipmentType.Weapon => CharacterHandler.Instance.weaponResolver.GetCategory(),
+                    EquipmentSlot.Helmet => CharacterHandler.Instance.helmetResolver.GetCategory(),
+                    EquipmentSlot.Pants => CharacterHandler.Instance.pantResolver.GetCategory(),
+                    EquipmentSlot.Weapon => CharacterHandler.Instance.weaponResolver.GetCategory(),
                     _ => ""
                 };
 

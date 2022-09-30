@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using LGamesDev.Core.Character;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -8,42 +9,44 @@ namespace LGamesDev.Core.Player
     [Serializable]
     public class Inventory
     {
-        public List<Item> items;
+        public List<IBaseCharacterItem> Items;
         
         public int space = 28;
 
-        public void AddItem(Item item)
+        public void AddItem(IBaseCharacterItem characterItem)
         {
-            if (!item.isDefaultItem)
+            if (!characterItem.Item.isDefaultItem)
             {
-                if (items.Count >= space)
+                if (Items.Count >= space)
                 {
                     Debug.Log("Not enough space.");
                     return;
                 }
 
-                items.Add(item);
+                Items.Add(characterItem);
             }
             else
             {
                 var itemAlreadyInInventory = false;
-                foreach (var inventoryItem in items)
-                    if (inventoryItem.name == item.name)
+                foreach (var inventoryItem in Items)
+                    if (inventoryItem.Item.name == characterItem.Item.name)
                     {
-                        inventoryItem.amount += item.amount;
+                        inventoryItem.Amount += characterItem.Amount;
                         itemAlreadyInInventory = true;
                     }
 
                 if (!itemAlreadyInInventory)
                 {
-                    items.Add(item);
+                    Items.Add(characterItem);
                 }
             }
         }
 
-        public void RemoveItem(Item item)
+        public void RemoveItem(IBaseCharacterItem item)
         {
-            items.Remove(item);
+            CharacterItem characterItem = item as CharacterItem;
+            
+            Items.Remove(characterItem);
 
             /*if (item.IsStackable())
             {
@@ -74,7 +77,7 @@ namespace LGamesDev.Core.Player
             string result = "inventory : { \n" +
                             " items : [";
 
-            foreach (Item item in items)
+            foreach (IBaseCharacterItem item in Items)
             {
                 result += item.ToString() + "\n";
             }

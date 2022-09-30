@@ -1,4 +1,5 @@
 using System;
+using LGamesDev.Core.Character;
 using LGamesDev.UI;
 using UnityEngine;
 
@@ -24,24 +25,26 @@ namespace LGamesDev.Core.Player
 
         public void BoughtItem(Item item)
         {
-            PlayerInventoryManager.Instance.inventory.AddItem(item);
+            Debug.Log("Request to buy item");
+            
+            //PlayerInventoryManager.Instance.inventory.AddItem(item);
         }
 
-        public void SellItem(Item item)
+        public void SellItem(CharacterItem item)
         {
-            item.Sell();
+            Debug.Log("Request to sell item");
+            
+            //item.Sell();
         }
 
         public bool TrySpendGoldAmount(int spendGoldAmount)
         {
-            if (GetGoldAmount() >= spendGoldAmount)
-            {
-                walletManager.SpendCurrency(CurrencyType.Gold, spendGoldAmount);
-                OnGoldAmountChanged?.Invoke(this, EventArgs.Empty);
-                return true;
-            }
+            if (GetGoldAmount() < spendGoldAmount) return false;
+            
+            walletManager.SpendCurrency(CurrencyType.Gold, spendGoldAmount);
+            OnGoldAmountChanged?.Invoke(this, EventArgs.Empty);
+            return true;
 
-            return false;
         }
 
         public event EventHandler OnGoldAmountChanged;

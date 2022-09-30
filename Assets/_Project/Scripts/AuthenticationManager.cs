@@ -20,12 +20,11 @@ namespace LGamesDev
             if (_gameManager.GetAuthentication() == null)
             {
                 Debug.Log("no credentials");
-                StartCoroutine(_gameManager.DisableLoadingScreen());
             }
             else
             {
                 Debug.Log("credentials exists : " + _gameManager.GetAuthentication().user);
-                Submit(AuthenticationState.Refresh, null, null, null, _gameManager.GetAuthentication().refresh_token);
+                Submit(AuthenticationState.Refresh);
             }
         }
 
@@ -41,7 +40,7 @@ namespace LGamesDev
                     Login(username, password);
                     break;
                 case AuthenticationState.Refresh:
-                    Refresh(refreshToken);
+                    Refresh();
                     break;
             }
         }
@@ -55,7 +54,7 @@ namespace LGamesDev
                 result =>
                 {
                     _gameManager.SetAuthentication(result);
-                    _gameManager.LoadGame();
+                    _gameManager.LoadMainMenu();
                 }
             ));
         }
@@ -68,19 +67,20 @@ namespace LGamesDev
                 result =>
                 {
                     _gameManager.SetAuthentication(result);
-                    _gameManager.LoadGame();
+                    _gameManager.LoadMainMenu();
                 }
             ));
         }
 
-        private void Refresh(string refreshToken)
+        private void Refresh()
         {
-            StartCoroutine(AuthenticationHandler.RefreshToken(this,
-                refreshToken,
+            StartCoroutine(AuthenticationHandler.RefreshToken(
+                this,
+                _gameManager.GetAuthentication().refresh_token,
                 result =>
                 {
                     _gameManager.SetAuthentication(result);
-                    _gameManager.LoadGame();
+                    _gameManager.LoadMainMenu();
                 }
             ));
         }

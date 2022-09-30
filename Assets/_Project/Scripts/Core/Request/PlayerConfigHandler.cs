@@ -10,7 +10,7 @@ namespace LGamesDev.Core.Request
 {
     public class PlayerConfigHandler
     {
-        public static IEnumerator Load(MonoBehaviour instance, Action<PlayerConfig> setResult)
+        public static IEnumerator Load(MonoBehaviour instance, Action<string> onError, Action<PlayerConfig> setResult)
         {
             PlayerConfig playerConf = JsonConvert.DeserializeObject<PlayerConfig>(PlayerPrefs.GetString("PlayerConfig"));
             if (playerConf != null)
@@ -20,7 +20,10 @@ namespace LGamesDev.Core.Request
             } else {
                 yield return instance.StartCoroutine(RequestHandler.Request("api/user/configuration",
                     UnityWebRequest.kHttpVerbGET,
-                    error => { Debug.Log("Error on player config load : " + error); },
+                    error =>
+                    {
+                        onError?.Invoke("error on player config loading : \n" + error);
+                    },
                     response =>
                     {
                         //Debug.Log("Received player config : " + response);

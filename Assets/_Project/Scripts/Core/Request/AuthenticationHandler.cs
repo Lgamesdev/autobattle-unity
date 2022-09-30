@@ -49,7 +49,7 @@ namespace LGamesDev.Core.Request
             
 
             yield return instance.StartCoroutine(RequestHandler.Request("api/login",
-                UnityWebRequest.kHttpVerbGET,
+                UnityWebRequest.kHttpVerbPOST,
                 error =>
                 {
                     Debug.Log("Error : " + error);
@@ -70,13 +70,16 @@ namespace LGamesDev.Core.Request
             Dictionary<string, string> form = new Dictionary<string, string>() {
                 {"refresh_token", refreshToken},
             };
-            var bodyRaw = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(form));
+
+            string bodyRequest = JsonConvert.SerializeObject(form);
+
+            var bodyRaw = Encoding.UTF8.GetBytes(bodyRequest);
 
             yield return instance.StartCoroutine(RequestHandler.Request("api/token/refresh",
-                UnityWebRequest.kHttpVerbGET,
+                UnityWebRequest.kHttpVerbPOST,
                 error =>
                 {
-                    Debug.Log("Error : " + error);
+                    //Debug.Log("Error : " + error);
                 },
                 response =>
                 {
@@ -89,15 +92,15 @@ namespace LGamesDev.Core.Request
             );
         }
 
-        public static IEnumerator Logout(MonoBehaviour instance, string refresh_token, Action onComplete)
+        public static IEnumerator Logout(MonoBehaviour instance, string refreshToken, Action onComplete)
         {
             Dictionary<string, string> form = new Dictionary<string, string>() {
-                {"refresh_token", refresh_token},
+                {"refresh_token", refreshToken},
             };
             var bodyRaw = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(form));
             
             yield return instance.StartCoroutine(RequestHandler.Request("api/token/invalidate",
-                UnityWebRequest.kHttpVerbGET,
+                UnityWebRequest.kHttpVerbPOST,
                 error =>
                 {
                     Debug.Log("Error : " + error);
@@ -108,7 +111,8 @@ namespace LGamesDev.Core.Request
 
                     onComplete?.Invoke();
                 },
-                bodyRaw)
+                bodyRaw,
+                GameManager.Instance.GetAuthentication())
             );
         }
     }

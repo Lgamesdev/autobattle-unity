@@ -19,6 +19,16 @@ namespace LGamesDev
             _gameManager = GameManager.Instance;
         }
 
+        private void Start()
+        {
+            if (_gameManager == null)
+            {
+                SceneManager.LoadScene((int)SceneIndexes.PersistentScene);
+            } else {
+                Initialisation.Current.LoadMainMenu();
+            }
+        }
+
         private void SetupScene()
         {
             if (!_gameManager.GetPlayerConfig().tutorialDone)
@@ -42,7 +52,7 @@ namespace LGamesDev
                 this,
                 result =>
                 {
-                    Debug.Log("fight request result : " + result.ToString());
+                    //Debug.Log("fight request result : " + result.ToString());
 
                     _gameManager.LoadFight(result);
                 }
@@ -56,7 +66,7 @@ namespace LGamesDev
                 this,
                 result =>
                 {
-                    Debug.Log("fight request result : " + result.ToString());
+                    //Debug.Log("fight request result : " + result.ToString());
 
                     _gameManager.LoadFight(result);
                 }

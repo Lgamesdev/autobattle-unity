@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using LGamesDev.Core.Character;
 using LGamesDev.Core.Player;
 using UnityEngine;
 
@@ -29,7 +30,7 @@ namespace LGamesDev.UI
             SetupInventoryUI();
         }
 
-        private void Inventory_OnItemChanged(List<Item> items)
+        private void Inventory_OnItemChanged(List<IBaseCharacterItem> items)
         {
             UpdateInventoryUI();
         }
@@ -37,8 +38,8 @@ namespace LGamesDev.UI
         private void UpdateInventoryUI()
         {
             for (var i = 0; i < _slots.Length; i++)
-                if (i < _inventoryManager.inventory.items.Count)
-                    _slots[i].AddItem(_inventoryManager.inventory.items[i]);
+                if (i < _inventoryManager.inventory.Items.Count)
+                    _slots[i].AddItem(_inventoryManager.inventory.Items[i]);
                 else
                     _slots[i].ClearSlot();
         }

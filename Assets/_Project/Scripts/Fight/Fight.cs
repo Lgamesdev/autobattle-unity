@@ -4,18 +4,21 @@ namespace LGamesDev.Fighting
 {
     public class Fight
     {
-        public Character character;
-        public Character opponent;
-        public List<FightAction> actions;
+        public bool PlayerWin;
+        public Character Character;
+        public Character Opponent;
+        public List<FightAction> Actions = new();
+        public Reward Reward;
 
         public override string ToString()
         {
             string result = "[ \n" +
-                            "character : " + character.ToString() + "\n" +
-                            "opponent : " + opponent.ToString() + "\n" +
+                            "character : " + Character.ToString() + "\n" +
+                            "opponent : " + Opponent.ToString() + "\n" +
                             "actions [ : \n";
-            actions.ForEach(action => result += action.ToString());
-            result += " ] \n";
+            Actions.ForEach(action => result += action.ToString());
+            result += " ] \n" +
+                      "reward : " + Reward.ToString();
             return result;
         }
     }

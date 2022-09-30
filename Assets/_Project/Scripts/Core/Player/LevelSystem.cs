@@ -5,98 +5,74 @@ namespace LGamesDev.Core.Player
 {
     public class LevelSystem
     {
-        public delegate void OnExperienceChanged(float amount);
+        public delegate void OnExperienceChangedEvent(int amount);
+        public OnExperienceChangedEvent OnExperienceChanged;
 
-        private const int XP_ADDITION_MULITPLIER = 300;
-        private const int XP_POWER_MULITPLIER = 2;
-        private const int XP_DIVISION_MULITPLIER = 14;
-        private float currentXp;
+        private const int XpAdditionMultiplier = 300;
+        private const int XpPowerMultiplier = 2;
+        private const int XpDivisionMultiplier = 14;
 
-        private int level;
-        public OnExperienceChanged onExperienceChanged;
+        private int _level;
+        private int _currentExperience;
 
-        public LevelSystem(int level, float experience)
+        public LevelSystem(int level, int experience)
         {
-            this.level = level;
-            currentXp = experience;
+            this._level = level;
+            _currentExperience = experience;
         }
 
         public event EventHandler onLevelChanged;
 
-        public void AddExperienceScalable(float xpGained, int passedLevel)
+        public void AddExperience(int xpGained)
         {
-            if (!IsMaxLevel())
+            if (IsMaxLevel()) return;
+            
+            _currentExperience += xpGained;
+            while (!IsMaxLevel() && _currentExperience >= CalculateRequiredXp(_level))
             {
-                if (passedLevel < level)
-                {
-                    var multiplier = 1 + (level - passedLevel) * 0.1f;
-                    xpGained = xpGained * multiplier;
-                }
-
-                currentXp += xpGained;
-
-                while (!IsMaxLevel() && currentXp >= CalculateRequiredXp(level))
-                {
-                    //Enough experience to level up
-                    currentXp -= CalculateRequiredXp(level);
-                    level++;
-                    if (onLevelChanged != null) onLevelChanged(this, EventArgs.Empty);
-                }
-
-                onExperienceChanged?.Invoke(xpGained);
+                //Enough experience to level up
+                _currentExperience -= CalculateRequiredXp(_level);
+                _level++;
+                onLevelChanged?.Invoke(this, EventArgs.Empty);
             }
-        }
 
-        public void AddExperienceFlat(int xpGained)
-        {
-            if (!IsMaxLevel())
-            {
-                currentXp += xpGained;
-                while (!IsMaxLevel() && currentXp >= CalculateRequiredXp(level))
-                {
-                    //Enough experience to level up
-                    currentXp -= CalculateRequiredXp(level);
-                    level++;
-                    if (onLevelChanged != null) onLevelChanged(this, EventArgs.Empty);
-                }
-
-                onExperienceChanged?.Invoke(xpGained);
-            }
+            OnExperienceChanged?.Invoke(xpGained);
         }
 
         public int GetLevel()
         {
-            return level;
+            return _level;
         }
 
-        public float GetExperienceNormalized()
+        public int GetExperienceNormalized()
         {
             if (IsMaxLevel())
-                return 1f;
-            return currentXp / CalculateRequiredXp(level);
+                return 1;
+            
+            return _currentExperience / CalculateRequiredXp(_level);
         }
 
-        public float GetExperience()
+        public int GetExperience()
         {
-            return currentXp;
+            return _currentExperience;
         }
 
         public int CalculateRequiredXp(int level)
         {
             var solveForRequiredXp = 0;
             for (var levelCycle = 1; levelCycle <= level; levelCycle++)
-                solveForRequiredXp += Mathf.FloorToInt(levelCycle + XP_ADDITION_MULITPLIER *
-                    Mathf.Pow(XP_POWER_MULITPLIER, levelCycle / XP_DIVISION_MULITPLIER));
+                solveForRequiredXp += Mathf.FloorToInt(levelCycle + XpAdditionMultiplier *
+                    Mathf.Pow(XpPowerMultiplier, levelCycle / XpDivisionMultiplier));
 
             return solveForRequiredXp / 4;
         }
 
-        public bool IsMaxLevel()
+        private bool IsMaxLevel()
         {
-            return IsMaxLevel(level);
+            return IsMaxLevel(_level);
         }
 
-        public bool IsMaxLevel(int level)
+        private bool IsMaxLevel(int level)
         {
             return level == 200;
         }

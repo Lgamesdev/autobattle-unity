@@ -10,10 +10,8 @@ using UnityEngine.Serialization;
 namespace LGamesDev.Core.Character
 {
     [Serializable]
-    public class CharacterEquipment
+    public class CharacterEquipment : BaseCharacterItem<Equipment>
     {
-        public Equipment equipment;
-
         private List<Stat> _modifiers;
 
         public CharacterEquipment()
@@ -21,14 +19,23 @@ namespace LGamesDev.Core.Character
             _modifiers = new List<Stat>();
         }
 
-        public void Use()
+        public override void Use()
         {
-            equipment.Use();
+            //Equip the item 
+            //Debug.Log("Equip the item");
+            CharacterHandler.Instance.equipmentManager.Equip(this);
+        }
+
+        public override void Sell()
+        {
+            Debug.Log(item.name + " selled.");
+            //TODO : sell item
+            PlayerWalletManager.Instance.AddCurrency(CurrencyType.Gold, (int)(item.cost * 0.25));
         }
 
         public int GetStat(StatType statType)
         {
-            int baseValue = equipment.GetStatValue(statType);
+            int baseValue = item.GetStatValue(statType);
             int modifierValue = _modifiers.Find(s => s.statType == statType).GetValue();
             return baseValue + modifierValue;
         }
@@ -37,7 +44,7 @@ namespace LGamesDev.Core.Character
         {
             List<Stat> mergedStats = new List<Stat>();
 
-            foreach (Stat stat in equipment.GetStats())
+            foreach (Stat stat in item.GetStats())
             {
                 Stat mergedStat = new Stat() { statType = stat.statType };
 
@@ -76,8 +83,9 @@ namespace LGamesDev.Core.Character
         public override string ToString()
         {
             var result = "characterEquipment: [ \n " +
-                            equipment.ToString() + "\n" +
-                         "modifiers : [ \n";
+                            "id : " + id + "\n" +
+                            item.ToString() + "\n" +
+                            "modifiers : [ \n";
 
             _modifiers.ForEach(stat => result += stat.ToString() + "\n");
             

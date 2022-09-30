@@ -1,3 +1,5 @@
+using System;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +16,9 @@ namespace LGamesDev.UI
         public Image fill;
         public Color color;
 
+        public TextMeshProUGUI progressText;
+        public TextMeshProUGUI percentageText;
+
 #if UNITY_EDITOR
         [MenuItem("GameObject/UI/Linear Progress Bar")]
         public static void AddLinearProgressBar()
@@ -21,7 +26,13 @@ namespace LGamesDev.UI
             Instantiate(Resources.Load<GameObject>("UI/Linear Progress Bar"), Selection.activeGameObject.transform, false);
         }
 #endif
-        
+
+        private void Awake()
+        {
+            progressText = transform.Find("Text Panel").Find("ProgressText").GetComponent<TextMeshProUGUI>();
+            percentageText = transform.Find("Text Panel").Find("PercentageText").GetComponent<TextMeshProUGUI>();
+        }
+
         private void Update()
         {
             GetCurrentFill();

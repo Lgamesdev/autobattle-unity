@@ -15,8 +15,8 @@ namespace LGamesDev.Core.Player
         private float updateTimer;
         private readonly float updateTimerMax;
         
-        public event EventHandler OnExperienceChanged;
-        public event EventHandler OnLevelChanged;
+        // public event EventHandler OnExperienceChanged;
+        // public event EventHandler OnLevelChanged;
 
         public LevelSystemAnimated(Character_LevelSystem levelSystem)
         {

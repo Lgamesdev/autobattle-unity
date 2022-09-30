@@ -13,11 +13,14 @@ namespace LGamesDev.Core.Request
     {
         private static PlayerWalletManager _manager;
         
-        public static IEnumerator Load(MonoBehaviour instance, Action<Wallet> setResult)
+        public static IEnumerator Load(MonoBehaviour instance, Action<string> onError, Action<Wallet> setResult)
         {
             yield return instance.StartCoroutine(RequestHandler.Request("api/user/wallet",
                 UnityWebRequest.kHttpVerbGET,
-                error => { Debug.Log("Error on wallet load : " + error); },
+                error =>
+                {
+                    onError?.Invoke("error on player wallet loading : \n" + error);
+                },
                 response =>
                 {
                     //Debug.Log("Received currencies : " + response);
@@ -63,7 +66,8 @@ namespace LGamesDev.Core.Request
 
         private static void OnCurrencyChanged(Currency currency)
         {
-            _manager.StartCoroutine(SaveWallet(_manager, currency));
+            Debug.Log("theory saving");
+            //_manager.StartCoroutine(SaveWallet(_manager, currency));
         }
     }
 }

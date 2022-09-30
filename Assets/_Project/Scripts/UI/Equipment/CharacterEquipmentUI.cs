@@ -37,44 +37,44 @@ namespace LGamesDev.UI
             SetupVisual();
         }
 
-        private void SetupVisualEquipment(EquipmentType equipmentType, Equipment equipment = null)
+        private void SetupVisualEquipment(EquipmentSlot equipmentSlot, Equipment equipment = null)
         {
             if (equipment != null && equipment.spriteId != 0) {
-                switch (equipment.equipmentType)
+                switch (equipment.equipmentSlot)
                 {
-                    case EquipmentType.Helmet:
+                    case EquipmentSlot.Helmet:
                         _helmetSlot.SetEquipment(equipment);
                         _helmetSlot.transform.Find("emptyImage").gameObject.SetActive(false);
                         break;
-                    case EquipmentType.Chest:
+                    case EquipmentSlot.Chest:
                         _armorSlot.SetEquipment(equipment);
                         _armorSlot.transform.Find("emptyImage").gameObject.SetActive(false);
                         break;
-                    case EquipmentType.Pants:
+                    case EquipmentSlot.Pants:
                         _pantsSlot.SetEquipment(equipment);
                         _pantsSlot.transform.Find("emptyImage").gameObject.SetActive(false);
                         break;
-                    case EquipmentType.Weapon:
+                    case EquipmentSlot.Weapon:
                         _weaponSlot.SetEquipment(equipment);
                         _weaponSlot.transform.Find("emptyImage").gameObject.SetActive(false);
                         break;
                 }
             } else {
-                switch (equipmentType)
+                switch (equipmentSlot)
                 {
-                    case EquipmentType.Helmet:
+                    case EquipmentSlot.Helmet:
                         _helmetSlot.ClearSlot();
                         _helmetSlot.transform.Find("emptyImage").gameObject.SetActive(true);
                         break;
-                    case EquipmentType.Chest:
+                    case EquipmentSlot.Chest:
                         _armorSlot.ClearSlot();
                         _armorSlot.transform.Find("emptyImage").gameObject.SetActive(true);
                         break;
-                    case EquipmentType.Pants:
+                    case EquipmentSlot.Pants:
                         _pantsSlot.ClearSlot();
                         _pantsSlot.transform.Find("emptyImage").gameObject.SetActive(true);
                         break;
-                    case EquipmentType.Weapon:
+                    case EquipmentSlot.Weapon:
                         _weaponSlot.ClearSlot();
                         _weaponSlot.transform.Find("emptyImage").gameObject.SetActive(true);
                         break;
@@ -82,15 +82,15 @@ namespace LGamesDev.UI
             }
         }
 
-        private void CharacterEquipment_OnEquipmentChanged(Equipment newEquipment, Equipment oldEquipment)
+        private void CharacterEquipment_OnEquipmentChanged(CharacterEquipment newEquipment, CharacterEquipment oldEquipment)
         {
             if (newEquipment != null)
             {
-                SetupVisualEquipment(newEquipment.equipmentType, newEquipment);
+                SetupVisualEquipment(((Equipment)newEquipment.item).equipmentSlot, (Equipment)newEquipment.item);
             } 
             else if (oldEquipment != null)
             {
-                SetupVisualEquipment(oldEquipment.equipmentType);
+                SetupVisualEquipment(((Equipment)oldEquipment.item).equipmentSlot);
             }
             else
             {
@@ -100,11 +100,11 @@ namespace LGamesDev.UI
 
         private void SetupVisual()
         {
-            foreach (EquipmentType equipmentSlot in (EquipmentType[]) Enum.GetValues(typeof(EquipmentType)))
+            foreach (EquipmentSlot equipmentSlot in (EquipmentSlot[]) Enum.GetValues(typeof(EquipmentSlot)))
             {
                 if (_equipmentManager.currentEquipment[(int)equipmentSlot] != null)
                 {
-                    SetupVisualEquipment(equipmentSlot, _equipmentManager.currentEquipment[(int)equipmentSlot].equipment);
+                    SetupVisualEquipment(equipmentSlot, (Equipment)_equipmentManager.currentEquipment[(int)equipmentSlot].item);
                 }
                 else
                 {

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using CodeMonkey.Utils;
+using LGamesDev.Core.Character;
 using LGamesDev.Core.Player;
 using LGamesDev.Core.Request;
 using LGamesDev.Request.Converters;
@@ -35,32 +36,14 @@ namespace LGamesDev.UI
 
         private void Start()
         {
-            //CreateItemButton(ItemAssets.Instance.helmet, 0);
-            //CreateItemButton(Item.ItemType.Armor, Item.GetSprite(Item.ItemType.Armor), "Armor", Item.GetCost(Item.ItemType.Armor), 0);
-            //CreateItemButton(Item.ItemType.Sword, Item.GetSprite(Item.ItemType.Sword), "Sword", Item.GetCost(Item.ItemType.Sword), 1);
-            //CreateItemButton(Item.ItemType.Helmet, Item.GetSprite(Item.ItemType.Helmet), "Helmet", Item.GetCost(Item.ItemType.Helmet), 2);
-            /*CreateItemButton(Item.ItemType.Medkit, Item.GetSprite(Item.ItemType.Medkit), "Medicinal kit", Item.GetCost(Item.ItemType.Medkit), 3);
-            CreateItemButton(Item.ItemType.ManaPotion, Item.GetSprite(Item.ItemType.ManaPotion), "Mana Potion", Item.GetCost(Item.ItemType.ManaPotion), 4);
-            CreateItemButton(Item.ItemType.HealthPotion, Item.GetSprite(Item.ItemType.HealthPotion), "Health Potion", Item.GetCost(Item.ItemType.HealthPotion), 5);*/
-            //Hide();
-            
-            StartCoroutine(RequestHandler.Request("api/shop",
-                UnityWebRequest.kHttpVerbGET,
-                error => { Debug.Log("Error on /shop : " + error); },
-                response =>
+            StartCoroutine(ShopHandler.Load(
+                this,
+                result =>
                 {
-                    //Debug.Log("Received /shop : " + response);
-                    
-                    JsonSerializerSettings settings = new JsonSerializerSettings();
-                    settings.Converters.Add(new ItemConverter());
-                    
-                    shopItems = JsonConvert.DeserializeObject<List<Item>>(response, settings);
-
+                    shopItems = result;
                     SetupUI();
-                },
-                null,
-                GameManager.Instance.GetAuthentication())
-            );
+                }
+            ));
         }
 
         private void SetupUI()

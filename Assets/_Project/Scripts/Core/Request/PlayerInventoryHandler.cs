@@ -11,16 +11,22 @@ namespace LGamesDev.Core.Request
 {
     public class PlayerInventoryHandler
     {
-        public static IEnumerator Load(MonoBehaviour instance, Action<Inventory> setResult)
+        public static IEnumerator Load(MonoBehaviour instance, Action<string> onError, Action<Inventory> setResult)
         {
             yield return instance.StartCoroutine(RequestHandler.Request("api/user/inventory",
                 UnityWebRequest.kHttpVerbGET,
-                error => { Debug.Log("Error on inventory load : " + error); },
+                error =>
+                {
+                    onError?.Invoke("error on inventory load : \n" + error);
+                },
                 response =>
                 {
                     //Debug.Log("Received inventory : " + response);
-                    
-                    JsonSerializerSettings settings = new JsonSerializerSettings();
+
+                    JsonSerializerSettings settings = new JsonSerializerSettings()
+                    {
+                        TypeNameHandling = TypeNameHandling.Auto,
+                    };
                     settings.Converters.Add(new ItemConverter());
                     
                     Inventory inventory = JsonConvert.DeserializeObject<Inventory>(response, settings);

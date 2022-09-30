@@ -19,8 +19,7 @@ namespace LGamesDev.UI
         private Transform _itemContainer;
 
         private TextMeshProUGUI _itemName;
-
-        private Item _itemShowed;
+        private IBaseCharacterItem _currentCharacterItem;
 
         private Transform _itemSlot;
         private Transform _sellButton;
@@ -53,23 +52,23 @@ namespace LGamesDev.UI
             gameObject.SetActive(false);
         }
 
-        public void Show(Item item)
+        public void Show(IBaseCharacterItem item)
         {
             gameObject.SetActive(true);
 
-            _itemShowed = item;
+            _currentCharacterItem = item;
 
             _useButton.GetComponent<Button>().onClick.RemoveAllListeners();
             _useButton.GetComponent<Button>().onClick.AddListener(UseItem);
 
-            SetupUI(_itemShowed.GetType() == typeof(Equipment) ? "Equip" : "Use");
+            SetupUI(_currentCharacterItem.GetType() == typeof(CharacterEquipment) ? "Equip" : "Use");
         }
 
         public void ShowEquipped(Equipment equipment)
         {
             gameObject.SetActive(true);
 
-            _itemShowed = equipment;
+            _currentCharacterItem.Item = equipment;
 
             _useButton.GetComponent<Button>().onClick.RemoveAllListeners();
             _useButton.GetComponent<Button>().onClick.AddListener(UnEquipItem);
@@ -83,17 +82,17 @@ namespace LGamesDev.UI
             
             foreach (Transform child in _statsParent) Destroy(child.gameObject);
 
-            if (_itemShowed != null)
+            if (_currentCharacterItem != null)
             {
-                _icon.sprite = _itemShowed.icon;
+                _icon.sprite = _currentCharacterItem.Item.icon;
                 _icon.gameObject.SetActive(true);
                 _itemSlot.Find("emptyImage").gameObject.SetActive(false);
 
-                if (_itemShowed.name != null) _itemName.text = _itemShowed.name;
+                if (_currentCharacterItem.Item.name != null) _itemName.text = _currentCharacterItem.Item.name;
 
-                if (_itemShowed.GetType() == typeof(Equipment))
+                if (_currentCharacterItem.GetType() == typeof(CharacterEquipment))
                 {
-                    foreach (Stat stat in ((Equipment)_itemShowed).GetStats())
+                    foreach (Stat stat in ((Equipment)_currentCharacterItem.Item).GetStats())
                     {
                         RectTransform statSlotRectTransform =
                             Instantiate(pfUIStatSlot, _statsParent).GetComponent<RectTransform>();
@@ -112,22 +111,23 @@ namespace LGamesDev.UI
             }
         }
 
-        public void UseItem()
+        private void UseItem()
         {
-            _itemShowed.Use();
+            //Debug.Log("click on use/equip item");
+            _currentCharacterItem.Use();
             Hide();
         }
 
         private void UnEquipItem()
         {
             //CharacterEquipmentManager.Instance.UnEquip((int)((Equipment)_itemShowed).equipmentType);
-            CharacterHandler.Instance.equipmentManager.UnEquip((int)((Equipment)_itemShowed).equipmentType);
+            CharacterHandler.Instance.equipmentManager.UnEquip((int)((Equipment)_currentCharacterItem.Item).equipmentSlot);
             Hide();
         }
 
         public void SellItem()
         {
-            _itemShowed.Sell();
+            _currentCharacterItem.Sell();
             Hide();
         }
     }

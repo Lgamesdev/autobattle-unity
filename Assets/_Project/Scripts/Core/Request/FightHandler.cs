@@ -19,6 +19,7 @@ namespace LGamesDev.Core.Request
                     //Debug.Log("Received fight : " + response);
 
                     Fight fight = JsonConvert.DeserializeObject<Fight>(response);
+
                     setResult(fight);
                 },
                 null,

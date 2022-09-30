@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
+using LGamesDev.Core;
 using LGamesDev.Core.Player;
 using LGamesDev.Core.Request;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
@@ -10,11 +12,8 @@ namespace LGamesDev.Fighting
 {
     public class FightManager : MonoBehaviour
     {
-        public delegate void OnPlayerLoseEvent();
-        public OnPlayerLoseEvent OnPlayerLose;
-
-        public delegate void OnPlayerWinEvent();
-        public OnPlayerWinEvent OnPlayerWin;
+        public delegate void OnFightOverEvent(Reward reward, bool playerWin);
+        public OnFightOverEvent OnFightOver;
 
         public static FightManager Instance;
 
@@ -27,7 +26,7 @@ namespace LGamesDev.Fighting
         private Fight _fight;
         [SerializeField] private int currentAction = 0;
 
-        [SerializeField] private State state = State.Busy;
+        //[SerializeField] private State state = State.Busy;
 
         private GameManager _gameManager; 
 
@@ -38,14 +37,22 @@ namespace LGamesDev.Fighting
             _gameManager = GameManager.Instance;
         }
 
+        private void Start()
+        {
+            if (_gameManager == null)
+            {
+                SceneManager.LoadScene((int)SceneIndexes.PersistentScene);
+            }
+        }
+
         public IEnumerator SetupFight(Fight fight)
         {
             _fight = fight;
             
-            yield return StartCoroutine(playerCharacterFight.SetupCharacterFight(fight.character));
+            yield return StartCoroutine(playerCharacterFight.SetupCharacterFight(fight.Character));
             
             _enemyCharacterFight = SpawnCharacter();
-            yield return StartCoroutine(_enemyCharacterFight.SetupCharacterFight(fight.opponent));
+            yield return StartCoroutine(_enemyCharacterFight.SetupCharacterFight(fight.Opponent));
         }
 
         public void StartFight()
@@ -71,21 +78,21 @@ namespace LGamesDev.Fighting
         {
             if (TestBattleOver()) return;
 
-            FightAction fightAction = _fight.actions[currentAction];
+            FightAction fightAction = _fight.Actions[currentAction];
 
             if (fightAction.playerTeam)
             {
                 SetActiveCharacterBattle(playerCharacterFight);
 
-                state = State.Busy;
-                playerCharacterFight.Attack(_enemyCharacterFight, _fight.actions[currentAction].damage, fightAction.critialHit, ChooseNextActiveCharacter);
+                //state = State.Busy;
+                playerCharacterFight.Attack(_enemyCharacterFight, _fight.Actions[currentAction].damage, fightAction.critialHit, ChooseNextActiveCharacter);
             }
             else
             {
                 SetActiveCharacterBattle(_enemyCharacterFight);
 
-                state = State.Busy;
-                _enemyCharacterFight.Attack(playerCharacterFight, _fight.actions[currentAction].damage, fightAction.critialHit, ChooseNextActiveCharacter);
+                //state = State.Busy;
+                _enemyCharacterFight.Attack(playerCharacterFight, _fight.Actions[currentAction].damage, fightAction.critialHit, ChooseNextActiveCharacter);
             }
 
             currentAction++;
@@ -101,50 +108,29 @@ namespace LGamesDev.Fighting
 
         private bool TestBattleOver()
         {
-            if (_fight.actions.Count - 1 != currentAction) return false;
+            if (_fight.Actions.Count - 1 != currentAction) return false;
             
-            //Win
-            if (_enemyCharacterFight.IsDead())
-            {
-                //Enemy dead, player wins
-                HandlePlayerEarning(true);
-
-                OnPlayerWin?.Invoke();
-            }
-
-            //Lose
-            if (playerCharacterFight.IsDead())
-            {
-                //Player dead, enemy wins
-                HandlePlayerEarning(false);
-
-                OnPlayerLose?.Invoke();
-            }
+            OnFightOver?.Invoke(_fight.Reward, _fight.PlayerWin);
+            HandlePlayerReward();
 
             return true;
-
         }
 
-        public void HandlePlayerEarning(bool playerWin)
+        private void HandlePlayerReward()
         {
-            int amount;
+            playerCharacterFight.GetLevelSystem().AddExperience(_fight.Reward.Experience);
 
-            if (playerWin)
-                amount = playerCharacterFight.GetLevelSystem().GetLevel() * 16;
-            else
-                amount = playerCharacterFight.GetLevelSystem().GetLevel() * 9;
-
-            playerCharacterFight.GetLevelSystem()
-                .AddExperienceScalable(amount, _enemyCharacterFight.GetLevelSystem().GetLevel());
-            PlayerWalletManager.Instance.AddCurrency(CurrencyType.Gold, Mathf.RoundToInt(Random.Range(amount * 0.08f, amount * 0.12f)));
-
-            PlayerPrefs.SetInt("level", playerCharacterFight.GetLevelSystem().GetLevel());
-            PlayerPrefs.SetFloat("experience", playerCharacterFight.GetLevelSystem().GetExperience());
+            foreach (Currency currency in _fight.Reward.Currencies)
+            {
+                PlayerWalletManager.Instance.AddCurrency(
+                    currency.currencyType, currency.amount
+                );
+            }
         }
 
         public void BackToMainMenu()
         {
-            _gameManager.LoadGame();
+            _gameManager.LoadMainMenu();
         }
 
         public void FightAgain()

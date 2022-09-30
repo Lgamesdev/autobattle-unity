@@ -58,9 +58,9 @@ namespace LGamesDev.Core.CharacterRenderer
 
         private void SetupTexture()
         {
-            foreach (CharacterEquipment characterEquipment in _equipmentManager.currentEquipment)
+            /*foreach (CharacterEquipment characterEquipment in _equipmentManager.currentEquipment)
                 if (characterEquipment.equipment != null)
-                    UpdateEquipmentTexture(characterEquipment.equipment, null);
+                    UpdateEquipmentTexture(characterEquipment.equipment, null);*/
         }
 
         private void UpdateTexture()
@@ -87,7 +87,7 @@ namespace LGamesDev.Core.CharacterRenderer
             material.mainTexture = texture;
         }
 
-        public void UpdateEquipmentTexture(Player.Equipment newEquipment, Player.Equipment oldEquipment)
+        /*public void UpdateEquipmentTexture(Player.Equipment newEquipment, Player.Equipment oldEquipment)
         {
             if (newEquipment != null)
                 // Equip Item
@@ -104,7 +104,7 @@ namespace LGamesDev.Core.CharacterRenderer
                     case EquipmentSlot.Head:
                         _hasHelmet = true;
                         _helmetTexture = newItem.sprites[0].texture;
-                        break;*/
+                        break;#1#
                     //case EquipmentSlot.Shield:
                     //break;
                 }
@@ -125,11 +125,11 @@ namespace LGamesDev.Core.CharacterRenderer
                         _helmetTexture = null;
                         break;
                     /*case EquipmentSlot.Shield:
-                    break;*/
+                    break;#1#
                 }
 
             UpdateTexture();
-        }
+        }*/
 
         public void SetGuestSpriteSheetTexture()
         {
@@ -303,7 +303,7 @@ namespace LGamesDev.Core.CharacterRenderer
         public void SetCharacterEquipmentManager(CharacterEquipmentManager equipmentManager)
         {
             _equipmentManager = equipmentManager;
-            _equipmentManager.OnEquipmentChanged += UpdateEquipmentTexture;
+            //_equipmentManager.OnEquipmentChanged += UpdateEquipmentTexture;
         }
     }
 }

@@ -14,7 +14,7 @@ public class OptionsUI : MonoBehaviour
             this,
             authentication.refresh_token,
             () => {
-                StartCoroutine(GameManager.Instance.Logout());
+                GameManager.Instance.Logout();
             }
         ));
     }

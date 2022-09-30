@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,39 +6,43 @@ namespace LGamesDev.Fighting
 {
     public class PlayerRanking : MonoBehaviour
     {
-        private Text losesNumber;
-        private int playerLoses;
+        private Text _losesNumber;
+        private int _playerLoses;
 
-        private int playerWins;
-        private Text winsNumber;
+        private int _playerWins;
+        private Text _winsNumber;
 
         private void Awake()
         {
-            winsNumber = transform.Find("winsNumber").GetComponent<Text>();
-            losesNumber = transform.Find("losesNumber").GetComponent<Text>();
+            _winsNumber = transform.Find("winsNumber").GetComponent<Text>();
+            _losesNumber = transform.Find("losesNumber").GetComponent<Text>();
 
-            playerWins = PlayerPrefs.GetInt("playerWins");
-            playerLoses = PlayerPrefs.GetInt("playerLoses");
+            _playerWins = PlayerPrefs.GetInt("playerWins");
+            _playerLoses = PlayerPrefs.GetInt("playerLoses");
 
-            winsNumber.text = playerWins.ToString();
-            losesNumber.text = playerLoses.ToString();
-
-            FightManager.Instance.OnPlayerWin += BattleHandler_OnPlayerWin;
-            FightManager.Instance.OnPlayerLose += BattleHandler_OnPlayerLose;
+            _winsNumber.text = _playerWins.ToString();
+            _losesNumber.text = _playerLoses.ToString();
         }
 
-        private void BattleHandler_OnPlayerLose()
+        private void Start()
         {
-            losesNumber.text = (playerLoses + 1).ToString();
-            PlayerPrefs.SetInt("playerLoses", PlayerPrefs.GetInt("playerLoses") + 1);
-            PlayerPrefs.Save();
+            FightManager.Instance.OnFightOver += OnFightOver;
         }
 
-        private void BattleHandler_OnPlayerWin()
+        private void OnFightOver(Reward reward, bool playerWin)
         {
-            winsNumber.text = (playerWins + 1).ToString();
-            PlayerPrefs.SetInt("playerWins", PlayerPrefs.GetInt("playerWins") + 1);
-            PlayerPrefs.Save();
+            if (playerWin)
+            {
+                _winsNumber.text = (_playerWins + 1).ToString();
+                PlayerPrefs.SetInt("playerWins", PlayerPrefs.GetInt("playerWins") + 1);
+                PlayerPrefs.Save();
+            }
+            else
+            {
+                _losesNumber.text = (_playerLoses + 1).ToString();
+                PlayerPrefs.SetInt("playerLoses", PlayerPrefs.GetInt("playerLoses") + 1);
+                PlayerPrefs.Save();
+            }
         }
     }
 }

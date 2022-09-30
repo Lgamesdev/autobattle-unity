@@ -27,8 +27,6 @@ namespace LGamesDev
         public SpriteResolver helmetResolver;
         [Header("Chest")]
         public List<SpriteResolver> chestResolvers;
-        [Header("Belt")]
-        public SpriteResolver beltResolver;
         [Header("Pant")]
         public SpriteResolver pantResolver;
         
@@ -42,6 +40,7 @@ namespace LGamesDev
         private int _runHash = Animator.StringToHash("Run");
         private int _attackHash = Animator.StringToHash("Attack");
         
+        [Header("Managers")]
         public CharacterEquipmentManager equipmentManager;
         public CharacterStatsManager statsManager;
         
@@ -59,19 +58,19 @@ namespace LGamesDev
         public IEnumerator SetupCharacter(Character character)
         {
             //Setup Equipments
-            foreach (EquipmentType equipmentSlot in (EquipmentType[]) Enum.GetValues(typeof(EquipmentType)))
+            foreach (EquipmentSlot equipmentSlot in (EquipmentSlot[]) Enum.GetValues(typeof(EquipmentSlot)))
             {
-                Equipment defaultEquipment = new Equipment() { equipmentType = equipmentSlot, isDefaultItem = true };
+                Equipment defaultEquipment = new Equipment() { equipmentSlot = equipmentSlot, isDefaultItem = true };
                         
                 Character.Equipments[(int)equipmentSlot] = new CharacterEquipment()
                 {
-                    equipment = defaultEquipment
+                    item = defaultEquipment
                 };
             }
             
             foreach (CharacterEquipment characterEquipment in character.Equipments)
             {
-                Character.Equipments[(int)characterEquipment.equipment.equipmentType] = characterEquipment;
+                Character.Equipments[(int)characterEquipment.item.equipmentSlot] = characterEquipment;
             }
             
             //Setup Stats
@@ -129,7 +128,7 @@ namespace LGamesDev
                 bodyResolver.GetComponent<SpriteRenderer>().color = skinColor;
             }
             
-            if (Character.Equipments[(int)EquipmentType.Chest].equipment.spriteId == 0)
+            if (Character.Equipments[(int)EquipmentSlot.Chest].item.spriteId == 0)
             {
                 ColorUtility.TryParseHtmlString(body.chestColor, out Color chestColor);
                 foreach (SpriteResolver chestResolver in chestResolvers) {
@@ -137,35 +136,32 @@ namespace LGamesDev
                 }
             }
 
-            ColorUtility.TryParseHtmlString(body.beltColor, out Color beltColor);
-            beltResolver.GetComponent<SpriteRenderer>().color = beltColor;
-
-            if (Character.Equipments[(int)EquipmentType.Pants].equipment.spriteId == 0)
+            if (Character.Equipments[(int)EquipmentSlot.Pants].item.spriteId == 0)
             {
                 ColorUtility.TryParseHtmlString(body.shortColor, out Color shortColor);
                 pantResolver.GetComponent<SpriteRenderer>().color = shortColor;
             }
 
             foreach (CharacterEquipment characterEquipment in Character.Equipments) {
-                if (characterEquipment.equipment != null)
+                if (characterEquipment.item != null)
                 {
                     //Debug.Log("equipment : " + characterEquipment.ToString());
-                    UpdateEquipmentTexture(characterEquipment.equipment, null);
+                    UpdateEquipmentTexture(characterEquipment, null);
                 }
             }
 
             yield return new WaitForEndOfFrame();
         }
 
-        private void UpdateEquipmentTexture(Equipment newEquipment, Equipment oldEquipment)
+        private void UpdateEquipmentTexture(CharacterEquipment newEquipment, CharacterEquipment oldEquipment)
         {
             List<string> labels;
             if (newEquipment != null)
             {
                 // Equip Item
-                switch (newEquipment.equipmentType)
+                switch (newEquipment.item.equipmentSlot)
                 {
-                    case EquipmentType.Helmet:
+                    case EquipmentSlot.Helmet:
                         if (Character.Body.isMaleGender)
                         {
                             labels = hairResolver.spriteLibrary.spriteLibraryAsset
@@ -175,31 +171,31 @@ namespace LGamesDev
 
                         labels = helmetResolver.spriteLibrary.spriteLibraryAsset
                             .GetCategoryLabelNames(helmetResolver.GetCategory()).ToList();
-                        helmetResolver.SetCategoryAndLabel(helmetResolver.GetCategory(), labels[newEquipment.spriteId]);
+                        helmetResolver.SetCategoryAndLabel(helmetResolver.GetCategory(), labels[newEquipment.item.spriteId]);
                         break;
                     
-                    case EquipmentType.Chest:
+                    case EquipmentSlot.Chest:
                         foreach (SpriteResolver resolver in chestResolvers) {
                             resolver.GetComponent<SpriteRenderer>().color = Color.white;
                             
                             labels = resolver.spriteLibrary.spriteLibraryAsset
                                 .GetCategoryLabelNames(resolver.GetCategory()).ToList();
-                            resolver.SetCategoryAndLabel(resolver.GetCategory(), labels[newEquipment.spriteId]);
+                            resolver.SetCategoryAndLabel(resolver.GetCategory(), labels[newEquipment.item.spriteId]);
                         }
                         break;
                     
-                    case EquipmentType.Pants:
+                    case EquipmentSlot.Pants:
                         pantResolver.GetComponent<SpriteRenderer>().color = Color.white;
                         
                         labels = pantResolver.spriteLibrary.spriteLibraryAsset
                             .GetCategoryLabelNames(pantResolver.GetCategory()).ToList();
-                        pantResolver.SetCategoryAndLabel(pantResolver.GetCategory(), labels[newEquipment.spriteId]);
+                        pantResolver.SetCategoryAndLabel(pantResolver.GetCategory(), labels[newEquipment.item.spriteId]);
                         break;
                     
-                    case EquipmentType.Weapon:
+                    case EquipmentSlot.Weapon:
                         labels = weaponResolver.spriteLibrary.spriteLibraryAsset
                             .GetCategoryLabelNames(weaponResolver.GetCategory()).ToList();
-                        weaponResolver.SetCategoryAndLabel(weaponResolver.GetCategory(), labels[newEquipment.spriteId]);
+                        weaponResolver.SetCategoryAndLabel(weaponResolver.GetCategory(), labels[newEquipment.item.spriteId]);
                         break;
                     
                     /*case EquipmentSlot.Shield:
@@ -209,15 +205,15 @@ namespace LGamesDev
             else if (oldEquipment != null) 
             {
                 // Unequip Item
-                switch (oldEquipment.equipmentType)
+                switch (oldEquipment.item.equipmentSlot)
                 {
-                    case EquipmentType.Helmet:
+                    case EquipmentSlot.Helmet:
                         labels = helmetResolver.spriteLibrary.spriteLibraryAsset
                             .GetCategoryLabelNames(helmetResolver.GetCategory()).ToList();
                         helmetResolver.SetCategoryAndLabel(helmetResolver.GetCategory(), labels[0]);
                         break;
 
-                    case EquipmentType.Chest:
+                    case EquipmentSlot.Chest:
                         ColorUtility.TryParseHtmlString(Character.Body.chestColor, out Color chestColor);
                         
                         foreach (SpriteResolver resolver in chestResolvers) {
@@ -229,7 +225,7 @@ namespace LGamesDev
                         }
                         break;
                     
-                    case EquipmentType.Pants:
+                    case EquipmentSlot.Pants:
                         labels = pantResolver.spriteLibrary.spriteLibraryAsset
                             .GetCategoryLabelNames(pantResolver.GetCategory()).ToList();
                         pantResolver.SetCategoryAndLabel(pantResolver.GetCategory(), labels[0]);
@@ -238,7 +234,7 @@ namespace LGamesDev
                         pantResolver.GetComponent<SpriteRenderer>().color = shortColor;
                         break;
                     
-                    case EquipmentType.Weapon:
+                    case EquipmentSlot.Weapon:
                         labels = weaponResolver.spriteLibrary.spriteLibraryAsset
                             .GetCategoryLabelNames(weaponResolver.GetCategory()).ToList();
                         weaponResolver.SetCategoryAndLabel(weaponResolver.GetCategory(), labels[0]);

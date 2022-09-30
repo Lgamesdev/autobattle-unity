@@ -40,7 +40,6 @@ namespace LGamesDev.Core
             //Play animation
             transition.SetTrigger("Start");
 
-
             //Wait
             yield return new WaitForSeconds(transitionTime);
 

@@ -60,17 +60,17 @@ namespace LGamesDev.Fighting
                 
                 //unitHandler.GetMaterial().mainTexture = BattleHandler.GetInstance().playerSpritesheet;
                 
-                EarningWindow.Instance.SetLevelSystem(_levelSystem);
+                RewardUI.Instance.SetLevelSystem(_levelSystem);
                 
-                string log = "character stats : [ \n";
+                /*string log = "character stats : [ \n";
                 foreach (Stat stat in _characterHandler.statsManager.stats) log += stat.ToString() + "\n";
-                Debug.Log(log + "\n ]");
+                Debug.Log(log + "\n ]");*/
             }
             else
             {
-                string log = "opponent stats : [ \n";
+                /*string log = "opponent stats : [ \n";
                 foreach (Stat stat in _characterHandler.statsManager.stats) log += stat.ToString() + "\n";
-                Debug.Log(log + "\n ]");
+                Debug.Log(log + "\n ]");*/
                 
                 _healthBar = FindObjectOfType<HealthPannelUI>().opponentHealthBar;
                 

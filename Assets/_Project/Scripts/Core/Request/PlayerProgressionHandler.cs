@@ -10,11 +10,14 @@ namespace LGamesDev.Core.Request
 {
     public class PlayerProgressionHandler
     {
-        public static IEnumerator Load(MonoBehaviour instance, Action<PlayerProgression> setResult)
+        public static IEnumerator Load(MonoBehaviour instance, Action<string> onError, Action<PlayerProgression> setResult)
         {
             yield return instance.StartCoroutine(RequestHandler.Request("api/user/progression",
                     UnityWebRequest.kHttpVerbGET,
-                    error => { Debug.Log("Error on player progression load : " + error); },
+                    error =>
+                    {
+                        onError?.Invoke("error on playerProgression load : \n" + error);
+                    },
                     response =>
                     {
                         //Debug.Log("Received player config : " + response);

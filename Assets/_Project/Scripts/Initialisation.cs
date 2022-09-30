@@ -33,23 +33,14 @@ namespace LGamesDev
             isDone = false;
         }
 
-        private void Start()
-        {
-            if (_gameManager == null)
-            {
-                SceneManager.LoadScene((int)SceneIndexes.PersistentScene);
-            } else {
-                LoadMainMenu();
-            }
-        }
-
-        private void LoadMainMenu()
+        public void LoadMainMenu()
         {
             Character character = new Character();
             
             // Load coroutines to setup main menu
-            _coroutinesLoading.Add(InitialisationStage.Body, PlayerBodyHandler.Load(
+            _coroutinesLoading.Add(InitialisationStage.Body, CharacterBodyHandler.Load(
                 this,
+                ShowErrorWindow,
                 result =>
                 {
                     character.Body = result;
@@ -57,15 +48,17 @@ namespace LGamesDev
             ));
             _coroutinesLoading.Add(InitialisationStage.Infos, PlayerConfigHandler.Load(
                 this,
+                ShowErrorWindow,
                 result =>
                 {
                     _gameManager.SetPlayerConfig(result);
 
-                    if (!result.creationDone) StartCoroutine(_gameManager.LoadCustomization());
+                    if (!result.creationDone) _gameManager.LoadCustomization();
                 }
             ));
             _coroutinesLoading.Add(InitialisationStage.Progression, PlayerProgressionHandler.Load(
                 this,
+                ShowErrorWindow,
                 result =>
                 {
                     character.Level = result.level;
@@ -83,6 +76,7 @@ namespace LGamesDev
             ));
             _coroutinesLoading.Add(InitialisationStage.Wallet, PlayerWalletHandler.Load(
                 this,
+                ShowErrorWindow,
                 result =>
                 {
                     character.Wallet = result;
@@ -98,6 +92,7 @@ namespace LGamesDev
             ));
             _coroutinesLoading.Add(InitialisationStage.Equipment, CharacterEquipmentHandler.LoadEquipments(
                 this,
+                ShowErrorWindow,
                 result =>
                 {
                     //foreach (CharacterEquipment characterEquipment in result) Debug.Log(characterEquipment.ToString());
@@ -107,6 +102,7 @@ namespace LGamesDev
             ));
             _coroutinesLoading.Add(InitialisationStage.Inventory, PlayerInventoryHandler.Load(
                 this,
+                ShowErrorWindow,
                 result =>
                 {
                     //Debug.Log(result.ToString());
@@ -115,6 +111,7 @@ namespace LGamesDev
             ));
             _coroutinesLoading.Add(InitialisationStage.CharacterStats, CharacterStatHandler.LoadStats(
                 this,
+                ShowErrorWindow,
                 result =>
                 {
                     //Debug.Log(result.ToString());
@@ -145,6 +142,21 @@ namespace LGamesDev
             yield return new WaitForSeconds(0.7f);
             
             isDone = true;
+        }
+
+        private void ShowErrorWindow(string error)
+        {
+            string text = "error on game loading : \n " + error;
+            
+            _gameManager.modalWindow.ShowAsTextPopup(
+                "Something get wrong...", 
+                text, 
+                "Retry", 
+                "",
+                () =>
+                {
+                    SceneManager.LoadScene((int)SceneIndexes.PersistentScene);
+                });
         }
     }
 

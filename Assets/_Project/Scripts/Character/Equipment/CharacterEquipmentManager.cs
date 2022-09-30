@@ -1,66 +1,60 @@
-﻿using LGamesDev.Core.Player;
+﻿using LGamesDev.Core.Request;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace LGamesDev.Core.Character
 {
     public class CharacterEquipmentManager : MonoBehaviour
     {
-        public delegate void OnEquipmentChangedEvent(Equipment newEquipment, Equipment oldEquipment);
+        public delegate void OnEquipmentChangedEvent(CharacterEquipment newEquipment, CharacterEquipment oldEquipment);
         public OnEquipmentChangedEvent OnEquipmentChanged;
-
-        //public static CharacterEquipmentManager Instance;
-
+        
         public CharacterEquipment[] currentEquipment;
-
-        private void Awake()
-        {
-            /*if (Instance != null)
-            {
-                Debug.LogWarning("More than one instance of CharacterEquipment found ! ");
-                return;
-            }
-
-            Instance = this;*/
-        }
 
         public void SetupManager(CharacterEquipment[] characterEquipments)
         {
             currentEquipment = characterEquipments;
         }
 
-        public void Equip(Equipment newEquipment)
+        public void Equip(CharacterEquipment newCharacterEquipment)
         {
-            var slotIndex = (int)newEquipment.equipmentType;
+            int slotIndex = (int)newCharacterEquipment.item.equipmentSlot;
 
-            Equipment oldEquipment = null;
+            CharacterEquipment oldCharacterEquipment = null;
 
-            if (currentEquipment[slotIndex].equipment is { isDefaultItem: false })
-            {
-                oldEquipment = currentEquipment[slotIndex].equipment;
-                PlayerInventoryManager.Instance.inventory.AddItem(oldEquipment);
+            if (currentEquipment[slotIndex].item is { isDefaultItem: false }) {
+                oldCharacterEquipment = currentEquipment[slotIndex];
             }
 
-            currentEquipment[slotIndex].equipment = newEquipment;
-
-            OnEquipmentChanged?.Invoke(newEquipment, oldEquipment);
+            StartCoroutine(CharacterEquipmentHandler.Equip(
+                this,
+                newCharacterEquipment,
+                error =>
+                {
+                    Debug.Log("error on equipment saving : " + error);
+                },
+                response=>
+                {
+                    Debug.Log("Equipment successfully saved : " + response);
+                    
+                    PlayerInventoryManager.Instance.RemoveItem(newCharacterEquipment);
+                    PlayerInventoryManager.Instance.AddItem(oldCharacterEquipment);
+                    
+                    currentEquipment[slotIndex] = newCharacterEquipment;
+                    OnEquipmentChanged?.Invoke(newCharacterEquipment, oldCharacterEquipment);
+                }
+            ));
         }
 
         public void UnEquip(int slotIndex)
         {
-            if (currentEquipment[slotIndex].equipment == null) return;
+            if (currentEquipment[slotIndex] == null) return;
             
-            Equipment oldItem = currentEquipment[slotIndex].equipment;
-            PlayerInventoryManager.Instance.AddItem(oldItem);
+            CharacterEquipment oldCharacterEquipment = currentEquipment[slotIndex];
+            PlayerInventoryManager.Instance.AddItem(oldCharacterEquipment);
 
-            currentEquipment[slotIndex].equipment = null;
+            currentEquipment[slotIndex] = null;
 
-            OnEquipmentChanged?.Invoke(null, oldItem);
-        }
-
-        public void UnequipAll()
-        {
-            for (var i = 0; i < currentEquipment.Length; i++) UnEquip(i);
+            OnEquipmentChanged?.Invoke(null, oldCharacterEquipment);
         }
     }
 }

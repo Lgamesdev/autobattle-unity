@@ -2,7 +2,13 @@
 {
     public class PlayerConfig
     {
-        public bool creationDone;
-        public bool tutorialDone;
+        public bool CreationDone;
+        public bool TutorialDone;
+
+        public override string ToString()
+        {
+            return "creationDone : " + CreationDone + "\n"
+                   + "tutorialDone : " + TutorialDone + "\n";
+        }
     }
 }

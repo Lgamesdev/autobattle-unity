@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Text;
+using LGamesDev.Core.Character;
 using LGamesDev.Core.Player;
 using LGamesDev.Core.Request;
+using LGamesDev.Request.Converters;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -42,32 +44,54 @@ namespace LGamesDev.Core.Request
             );
         }
 
-        private static IEnumerator SaveWallet(MonoBehaviour instance, Currency currency)
+        public static IEnumerator Buy(MonoBehaviour instance, Item item, Action<string> onError, Action<IBaseCharacterItem> onResult)
         {
-            var bodyRaw = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(currency));
-
-            yield return instance.StartCoroutine(RequestHandler.Request("api/user/wallet",
-                UnityWebRequest.kHttpVerbPUT,
-                error => { Debug.Log("Error on wallet save : " + error); },
+            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.EnableWaitingScreen());
+            
+            yield return instance.StartCoroutine(RequestHandler.Request("api/shop/buy/" + item.ID,
+                UnityWebRequest.kHttpVerbPOST,
+                error =>
+                {
+                    onError?.Invoke(error);
+                },
                 response =>
                 {
-                    Debug.Log("wallet saved : " + response);
+                    //Debug.Log("buy reponse : " + response);
+                    
+                    JsonSerializerSettings settings = new JsonSerializerSettings();
+                    settings.Converters.Add(new BaseCharacterItemConverter());
+                    
+                    IBaseCharacterItem characterItem = JsonConvert.DeserializeObject<IBaseCharacterItem>(response, settings);
+                    
+                    onResult?.Invoke(characterItem);
                 },
-                bodyRaw,
+                null,
                 GameManager.Instance.GetAuthentication())
             );
+            
+            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());
         }
-
-        public static void SetManager(PlayerWalletManager manager)
+        
+        public static IEnumerator Sell(MonoBehaviour instance, IBaseCharacterItem characterItem, Action<string> onError, Action<string> onResult)
         {
-            _manager = manager;
-            _manager.OnCurrencyChanged += OnCurrencyChanged;
-        }
-
-        private static void OnCurrencyChanged(Currency currency)
-        {
-            Debug.Log("theory saving");
-            //_manager.StartCoroutine(SaveWallet(_manager, currency));
+            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.EnableWaitingScreen());
+            
+            yield return instance.StartCoroutine(RequestHandler.Request("api/shop/sell/" + characterItem.Id,
+                UnityWebRequest.kHttpVerbPUT,
+                error =>
+                {
+                    onError?.Invoke(error);
+                },
+                response =>
+                {
+                    //Debug.Log("sell reponse : " + response);
+                    onResult?.Invoke(response);
+                },
+                null,
+                GameManager.Instance.GetAuthentication())
+            );
+            
+            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());
         }
     }
 }

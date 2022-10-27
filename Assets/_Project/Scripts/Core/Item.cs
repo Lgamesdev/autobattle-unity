@@ -14,7 +14,7 @@ namespace LGamesDev
         public string name = "New Item";
         [JsonIgnore]
         public Sprite icon;
-        public bool isDefaultItem;
+        public bool isDefaultItem = true;
         public int cost = 0;
         
         public override string ToString()
@@ -22,7 +22,7 @@ namespace LGamesDev
             return "item : [ \n " +
                    "name : " + name + "\n" +
                    "isDefaultItem : " + isDefaultItem + "\n" +
-                   "iconPath : " + AssetDatabase.GetAssetPath(icon) + "\n" +
+                   /*"iconPath : " + AssetDatabase.GetAssetPath(icon) + "\n" +*/
                    "cost : " + cost + "\n" +
                    "]";
         }

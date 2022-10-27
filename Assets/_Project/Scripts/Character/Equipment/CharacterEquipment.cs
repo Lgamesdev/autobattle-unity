@@ -1,22 +1,18 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using LGamesDev.Core.Player;
-using LGamesDev.Request.Converters;
-using Unity.Plastic.Newtonsoft.Json;
-using UnityEditor;
-using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace LGamesDev.Core.Character
 {
     [Serializable]
     public class CharacterEquipment : BaseCharacterItem<Equipment>
     {
-        private List<Stat> _modifiers;
+        public List<Stat> modifiers;
 
         public CharacterEquipment()
         {
-            _modifiers = new List<Stat>();
+            modifiers = new List<Stat>();
         }
 
         public override void Use()
@@ -28,47 +24,53 @@ namespace LGamesDev.Core.Character
 
         public override void Sell()
         {
-            Debug.Log(item.name + " selled.");
-            //TODO : sell item
-            PlayerWalletManager.Instance.AddCurrency(CurrencyType.Gold, (int)(item.cost * 0.25));
+            PlayerWalletManager.Instance.SellCharacterItem(this);
+            //Debug.Log(item.name + " selled.");
         }
 
-        public int GetStat(StatType statType)
+        public Stat GetStat(StatType statType)
         {
-            int baseValue = item.GetStatValue(statType);
-            int modifierValue = _modifiers.Find(s => s.statType == statType).GetValue();
-            return baseValue + modifierValue;
-        }
-
-        public Stat[] GetStats()
-        {
-            List<Stat> mergedStats = new List<Stat>();
-
-            foreach (Stat stat in item.GetStats())
+            Stat mergedStat = new()
             {
-                Stat mergedStat = new Stat() { statType = stat.statType };
+                statType = statType,
+                value = item.GetStatValue(statType) 
+                        + modifiers.Find(s => s.statType == statType).GetValue()
+            };
+            return mergedStat;
+        }
+        
+        public List<Stat> GetStats()
+        {
+            List<Stat> mergedStats = item.GetStats().ToList();
 
-                int baseValue = stat.GetValue();
-
-                if (_modifiers != null)
+            foreach (Stat stat in GetModifiers())
+            {
+                int existingStatIndex = mergedStats.FindIndex(s => s.statType == stat.statType);
+                
+                if (existingStatIndex != -1)
                 {
-                    Stat modifier = _modifiers.Find(s => s.statType == stat.statType);
-
-                    if (modifier != null)
-                    {
-                        mergedStat.SetValue(baseValue + modifier.GetValue());
-                    }
+                    mergedStats[existingStatIndex].value += stat.value;
                 }
                 else
                 {
-                    mergedStat.SetValue(baseValue);
+                    mergedStats.Add(stat);
                 }
-
-                mergedStats.Add(mergedStat);
             }
 
-            if (_modifiers != null){
-                foreach (Stat modifier in _modifiers)
+            return mergedStats;
+        }
+
+        public Stat GetModifier(StatType statType)
+        {
+            return modifiers.Find(s => s.statType == statType);
+        }
+
+        public List<Stat> GetModifiers()
+        {
+            List<Stat> mergedStats = new List<Stat>();
+
+            if (modifiers != null){
+                foreach (Stat modifier in modifiers)
                 {
                     if (!mergedStats.Exists(s => s.statType == modifier.statType))
                     {
@@ -77,19 +79,19 @@ namespace LGamesDev.Core.Character
                 }
             }
 
-            return mergedStats.ToArray();
+            return mergedStats;
         }
 
         public override string ToString()
         {
             var result = "characterEquipment: [ \n " +
-                            "id : " + id + "\n" +
-                            item.ToString() + "\n" +
-                            "modifiers : [ \n";
+                            "\t id : " + id + "\n" +
+                            "\t " + item.ToString() + "\n" +
+                            "\t modifiers : [ \n";
 
-            _modifiers.ForEach(stat => result += stat.ToString() + "\n");
+            modifiers.ForEach(stat => result += "\t " + stat.ToString() + "\n");
             
-            result += "] \n" +
+            result += "\t ] \n" +
                     "]";
 
             return result;

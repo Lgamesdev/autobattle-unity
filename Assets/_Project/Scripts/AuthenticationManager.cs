@@ -1,5 +1,9 @@
-﻿using LGamesDev.Core.Request;
+﻿using System;
+using System.Collections;
+using LGamesDev.Core;
+using LGamesDev.Core.Request;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace LGamesDev
 {
@@ -17,15 +21,25 @@ namespace LGamesDev
 
         private void Start()
         {
+            if (_gameManager == null)
+            {
+                SceneManager.LoadScene((int)SceneIndexes.PersistentScene);
+            }
+        }
+
+        public void SetupAuthentication()
+        {
             if (_gameManager.GetAuthentication() == null)
             {
                 Debug.Log("no credentials");
             }
             else
             {
-                Debug.Log("credentials exists : " + _gameManager.GetAuthentication().user);
+                Debug.Log("credentials exists : " + _gameManager.GetAuthentication().username);
                 Submit(AuthenticationState.Refresh);
             }
+            
+            //yield return new WaitForEndOfFrame();
         }
 
         public void Submit(AuthenticationState authenticationState, string username = "", string password = "",

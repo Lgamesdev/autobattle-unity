@@ -610,12 +610,20 @@ PrefabInstance:
       value: 0.9999997
       objectReference: {fileID: 0}
     - target: {fileID: -6967155359882043163, guid: af9119dcab167a649bea08ea1817d43c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6967155359882043163, guid: af9119dcab167a649bea08ea1817d43c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6967155359882043163, guid: af9119dcab167a649bea08ea1817d43c, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0.00078378286
       objectReference: {fileID: 0}
     - target: {fileID: -6967155359882043163, guid: af9119dcab167a649bea08ea1817d43c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -0.248
+      value: 1.442
       objectReference: {fileID: 0}
     - target: {fileID: -6949653355126872590, guid: af9119dcab167a649bea08ea1817d43c, type: 3}
       propertyPath: m_Layer
@@ -1749,9 +1757,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8ebb29dcfbc45a1829e81e8307e406c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory:
-    items: []
-    space: 28
 --- !u!114 &1792992169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1764,7 +1769,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7c308fc5a944b70bb347d33394df126, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentEquipment: []
+  currentGear:
+    equipments:
+    - id: 0
+      amount: 1
+      item:
+        name: New Item
+        icon: {fileID: 0}
+        isDefaultItem: 1
+        cost: 0
+        stats: []
+        equipmentSlot: 0
+        spriteId: 0
+      modifiers: []
+    - id: 0
+      amount: 1
+      item:
+        name: New Item
+        icon: {fileID: 0}
+        isDefaultItem: 1
+        cost: 0
+        stats: []
+        equipmentSlot: 0
+        spriteId: 0
+      modifiers: []
+    - id: 0
+      amount: 1
+      item:
+        name: New Item
+        icon: {fileID: 0}
+        isDefaultItem: 1
+        cost: 0
+        stats: []
+        equipmentSlot: 0
+        spriteId: 0
+      modifiers: []
+    - id: 0
+      amount: 1
+      item:
+        name: New Item
+        icon: {fileID: 0}
+        isDefaultItem: 1
+        cost: 0
+        stats: []
+        equipmentSlot: 0
+        spriteId: 0
+      modifiers: []
 --- !u!114 &353650194703547383
 MonoBehaviour:
   m_ObjectHideFlags: 0

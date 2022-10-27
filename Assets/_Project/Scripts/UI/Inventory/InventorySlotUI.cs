@@ -33,6 +33,8 @@ namespace LGamesDev.UI
 
         public void Clicked()
         {
+            //Debug.Log(_characterItem.ToString());
+            
             if (_characterItem != null) ItemStatsUI.Instance.Show(_characterItem);
         }
     }

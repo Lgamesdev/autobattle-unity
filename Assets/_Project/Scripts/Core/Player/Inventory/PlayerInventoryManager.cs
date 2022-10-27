@@ -13,7 +13,11 @@ namespace LGamesDev
 
         public static PlayerInventoryManager Instance;
 
-        public Inventory inventory;
+        private Inventory _inventory;
+
+        public List<IBaseCharacterItem> Items => _inventory.Items;
+        public int space => _inventory.space;
+        
 
         #region Singleton
         private void Awake()
@@ -30,21 +34,21 @@ namespace LGamesDev
 
         public void SetupManager(Inventory playerInventory)
         {
-            inventory = playerInventory;
+            _inventory = playerInventory;
         }
 
         public void AddItem(IBaseCharacterItem item)
         {
-            inventory.AddItem(item);
+            _inventory.AddItem(item);
             
-            OnItemChanged?.Invoke(inventory.Items);
+            OnItemChanged?.Invoke(_inventory.Items);
         }
 
         public void RemoveItem(IBaseCharacterItem item)
         {
-            inventory.RemoveItem(item);
+            _inventory.RemoveItem(item);
 
-            OnItemChanged?.Invoke(inventory.Items);
+            OnItemChanged?.Invoke(_inventory.Items);
         }
     }
 }

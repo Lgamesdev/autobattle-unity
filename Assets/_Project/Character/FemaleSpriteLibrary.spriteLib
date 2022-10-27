@@ -419,6 +419,68 @@ MonoBehaviour:
       m_SpriteOverride: {fileID: -3411109383476033550, guid: 7fd0e5574238f814c8ecb551531e142d, type: 3}
     m_FromMain: 0
     m_EntryOverrideCount: 5
+  - m_Name: Pants_Left_Leg
+    m_Hash: 1311342907
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Base
+      m_Hash: 1619415391
+      m_Sprite: {fileID: 0}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 0}
+    - m_Name: Pants_1
+      m_Hash: -2063301767
+      m_Sprite: {fileID: 0}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 0}
+    - m_Name: Pants_2
+      m_Hash: 470667971
+      m_Sprite: {fileID: 0}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 0}
+    - m_Name: Pants_3
+      m_Hash: 1795875413
+      m_Sprite: {fileID: 0}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 0}
+    - m_Name: Pants_4
+      m_Hash: -177309706
+      m_Sprite: {fileID: 0}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 0}
+    m_FromMain: 0
+    m_EntryOverrideCount: 5
+  - m_Name: Pants_Right_Leg
+    m_Hash: -1605867614
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Base
+      m_Hash: 1619415391
+      m_Sprite: {fileID: 0}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 0}
+    - m_Name: Pants_1
+      m_Hash: -2063301767
+      m_Sprite: {fileID: 0}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 0}
+    - m_Name: Pants_2
+      m_Hash: 470667971
+      m_Sprite: {fileID: 0}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 0}
+    - m_Name: Pants_3
+      m_Hash: 1795875413
+      m_Sprite: {fileID: 0}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 0}
+    - m_Name: Pants_4
+      m_Hash: -177309706
+      m_Sprite: {fileID: 0}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 0}
+    m_FromMain: 0
+    m_EntryOverrideCount: 5
   - m_Name: Weapon
     m_Hash: 1855955664
     m_CategoryList: []

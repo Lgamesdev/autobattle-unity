@@ -11,30 +11,30 @@ namespace LGamesDev.Core.Player
         private const int XpAdditionMultiplier = 300;
         private const int XpPowerMultiplier = 2;
         private const int XpDivisionMultiplier = 14;
+        
+        //public event EventHandler onLevelChanged;
 
-        private int _level;
-        private int _currentExperience;
+        private readonly int _level;
+        private readonly int _currentExperience;
 
         public LevelSystem(int level, int experience)
         {
-            this._level = level;
+            _level = level;
             _currentExperience = experience;
         }
-
-        public event EventHandler onLevelChanged;
-
+        
         public void AddExperience(int xpGained)
         {
             if (IsMaxLevel()) return;
             
-            _currentExperience += xpGained;
+            /*_currentExperience += xpGained;
             while (!IsMaxLevel() && _currentExperience >= CalculateRequiredXp(_level))
             {
                 //Enough experience to level up
                 _currentExperience -= CalculateRequiredXp(_level);
                 _level++;
                 onLevelChanged?.Invoke(this, EventArgs.Empty);
-            }
+            }*/
 
             OnExperienceChanged?.Invoke(xpGained);
         }

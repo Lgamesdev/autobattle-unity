@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using LGamesDev.Fighting;
-using Unity.Plastic.Newtonsoft.Json;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Networking;
 

@@ -2,15 +2,13 @@ using System;
 using System.Collections.Generic;
 using LGamesDev.Core.Character;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace LGamesDev.Core.Player
 {
     [Serializable]
     public class Inventory
     {
-        public List<IBaseCharacterItem> Items;
-        
+        public List<IBaseCharacterItem> Items = new();
         public int space = 28;
 
         public void AddItem(IBaseCharacterItem characterItem)
@@ -44,9 +42,7 @@ namespace LGamesDev.Core.Player
 
         public void RemoveItem(IBaseCharacterItem item)
         {
-            CharacterItem characterItem = item as CharacterItem;
-            
-            Items.Remove(characterItem);
+            Items.Remove(item);
 
             /*if (item.IsStackable())
             {

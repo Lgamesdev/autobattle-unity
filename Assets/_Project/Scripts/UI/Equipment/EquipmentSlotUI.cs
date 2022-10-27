@@ -1,3 +1,4 @@
+using LGamesDev.Core.Character;
 using LGamesDev.Core.Player;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,32 +9,32 @@ namespace LGamesDev.UI
     {
         public Image icon;
 
-        private Core.Player.Equipment _equipment;
+        private CharacterEquipment _characterEquipment;
 
-        public void SetEquipment(Core.Player.Equipment equipment)
+        public void SetCharacterEquipment(CharacterEquipment characterEquipment)
         {
-            this._equipment = equipment;
+            this._characterEquipment = characterEquipment;
 
-            icon.sprite = equipment.icon;
+            icon.sprite = characterEquipment.item.icon;
             icon.enabled = true;
         }
 
         public void ClearSlot()
         {
-            _equipment = null;
+            _characterEquipment = null;
 
             icon.sprite = null;
             icon.enabled = false;
         }
 
-        public Core.Player.Equipment GetEquipment()
+        public CharacterEquipment GetCharacterEquipment()
         {
-            return _equipment;
+            return _characterEquipment;
         }
 
         public void Clicked()
         {
-            if (_equipment != null) ItemStatsUI.Instance.ShowEquipped(_equipment);
+            if (_characterEquipment != null) ItemStatsUI.Instance.ShowEquipped(_characterEquipment);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using LGamesDev.Core.Character;
 using LGamesDev.Core.Player;
 using LGamesDev.Core.Request;
 using LGamesDev.UI;
@@ -30,26 +31,66 @@ namespace LGamesDev
         public void SetupManager(Wallet wallet)
         {
             _wallet = wallet;
-            
-            PlayerWalletHandler.SetManager(this);
         }
 
         public int GetAmount(CurrencyType currencyType)
         {
             return _wallet.GetAmount(currencyType);
         }
+        
+        public void TryBuyItem(Item item)
+        {
+            if (GetAmount(CurrencyType.Gold) > item.cost)
+            {
+                //Can afford cost
+                StartCoroutine(PlayerWalletHandler.Buy(
+                    this,
+                    item,
+                    error =>
+                    {
+                        Debug.Log("error on trying to buy item : " + error);
+                    },
+                    baseCharacterItem =>
+                    {
+                        Debug.Log("item successfully buy : " + baseCharacterItem.ToString());
+                        SpendCurrency(CurrencyType.Gold, item.cost);
+                        PlayerInventoryManager.Instance.AddItem(baseCharacterItem);
+                    }
+                ));
+            }
+            else
+            {
+                Tooltip_Warning.ShowTooltip_Static("Cannot afford " + item.cost + " gold !");
+            }
+        }
+        
+        public void SellCharacterItem(IBaseCharacterItem characterItem)
+        {
+            StartCoroutine(PlayerWalletHandler.Sell(
+                this,
+                characterItem,
+                error =>
+                {
+                    Debug.Log("error on item sell : " + error);
+                },
+                result =>
+                {
+                    Debug.Log("item successfully selled : " + result);
+                    AddCurrency(CurrencyType.Gold, characterItem.Item.cost);
+                    PlayerInventoryManager.Instance.RemoveItem(characterItem);
+                }
+            ));
+        }
 
-        public void SpendCurrency(CurrencyType currencyType, int amount)
+        private void SpendCurrency(CurrencyType currencyType, int amount)
         {
             _wallet.SpendCurrency(currencyType, amount);
-
             OnCurrencyChanged?.Invoke(_wallet.GetCurrency(currencyType));
         }
 
         public void AddCurrency(CurrencyType currencyType, int amount)
         {
             _wallet.AddCurrency(currencyType, amount);
-
             OnCurrencyChanged?.Invoke(_wallet.GetCurrency(currencyType));
         }
     }

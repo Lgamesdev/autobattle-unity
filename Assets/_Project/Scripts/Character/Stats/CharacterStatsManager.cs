@@ -31,8 +31,8 @@ namespace LGamesDev.Core.Player
             
             stats = characterStats;
 
-            foreach (CharacterEquipment characterEquipment in _equipmentManager.currentEquipment) {
-                if (characterEquipment.item != null) {
+            foreach (CharacterEquipment characterEquipment in _equipmentManager.currentGear.equipments) {
+                if (characterEquipment != null) {
                     OnEquipmentChanged(characterEquipment, null);
                 }
             }
@@ -47,7 +47,7 @@ namespace LGamesDev.Core.Player
             {
                 foreach (var stat in newEquipment.GetStats())
                 {
-                    //Debug.Log("stat : " + stat.GetType() + " +" + stat.GetValue());
+                    //Debug.Log("stat " + stat.statType + " : " + stats[(int)stat.statType].value + " +" + stat.GetValue());
                     stats[(int)stat.statType].AddModifiers(stat.GetValue());
                 }
             }
@@ -56,7 +56,7 @@ namespace LGamesDev.Core.Player
             {
                 foreach (var stat in oldEquipment.GetStats())
                 {
-                    //Debug.Log("stat : " + stat.GetType() + " -" + stat.GetValue());
+                    //Debug.Log("stat " + stat.statType + " : " + stats[(int)stat.statType].value + " -" + stat.GetValue());
                     stats[(int)stat.statType].RemoveModifier(stat.GetValue());
                 }
             }
@@ -101,7 +101,7 @@ namespace LGamesDev.Core.Player
 
         public float GetHealthPercent()
         {
-            return (float) currentHealth / maxHealth;
+            return (float)currentHealth / (float)maxHealth;
         }
 
         public int GetCurrentHealth()

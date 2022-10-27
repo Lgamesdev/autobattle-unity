@@ -21,6 +21,8 @@ namespace LGamesDev.Core.Request
 
             var bodyRaw = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(form));
             
+            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.EnableWaitingScreen());
+            
             yield return instance.StartCoroutine(RequestHandler.Request("api/register",
                 UnityWebRequest.kHttpVerbPOST,
                 error =>
@@ -29,7 +31,7 @@ namespace LGamesDev.Core.Request
                 },
                 response =>
                 {
-                    Debug.Log("Received : " + response);
+                    //Debug.Log("Received : " + response);
 
                     Authentication authentication = JsonConvert.DeserializeObject<Authentication>(response);
                     
@@ -37,6 +39,8 @@ namespace LGamesDev.Core.Request
                 },
                 bodyRaw)
             );
+            
+            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());
         }
         
         public static IEnumerator Login(MonoBehaviour instance, string username, string password, Action<Authentication> setResult)
@@ -47,7 +51,8 @@ namespace LGamesDev.Core.Request
             };
             var bodyRaw = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(form));
             
-
+            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.EnableWaitingScreen());
+            
             yield return instance.StartCoroutine(RequestHandler.Request("api/login",
                 UnityWebRequest.kHttpVerbPOST,
                 error =>
@@ -63,6 +68,8 @@ namespace LGamesDev.Core.Request
                 },
                 bodyRaw)
             );
+            
+            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());
         }
         
         public static IEnumerator RefreshToken(MonoBehaviour instance, string refreshToken, Action<Authentication> setResult)
@@ -75,6 +82,8 @@ namespace LGamesDev.Core.Request
 
             var bodyRaw = Encoding.UTF8.GetBytes(bodyRequest);
 
+            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.EnableWaitingScreen());
+            
             yield return instance.StartCoroutine(RequestHandler.Request("api/token/refresh",
                 UnityWebRequest.kHttpVerbPOST,
                 error =>
@@ -90,6 +99,8 @@ namespace LGamesDev.Core.Request
                 },
                 bodyRaw)
             );
+            
+            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());
         }
 
         public static IEnumerator Logout(MonoBehaviour instance, string refreshToken, Action onComplete)
@@ -98,6 +109,8 @@ namespace LGamesDev.Core.Request
                 {"refresh_token", refreshToken},
             };
             var bodyRaw = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(form));
+            
+            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.EnableWaitingScreen());
             
             yield return instance.StartCoroutine(RequestHandler.Request("api/token/invalidate",
                 UnityWebRequest.kHttpVerbPOST,
@@ -114,6 +127,8 @@ namespace LGamesDev.Core.Request
                 bodyRaw,
                 GameManager.Instance.GetAuthentication())
             );
+            
+            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());
         }
     }
 }

@@ -1,8 +1,11 @@
+using System;
+
 namespace LGamesDev.Core.Character
 {
     public interface IBaseCharacterItem
     {
-        public abstract Item Item { get; set; }
+        public abstract int Id { get; }
+        public abstract Item Item { get; }
         
         public abstract int Amount { get; set; }
 

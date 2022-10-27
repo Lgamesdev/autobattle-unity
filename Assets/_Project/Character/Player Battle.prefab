@@ -1532,7 +1532,7 @@ GameObject:
   - component: {fileID: 319252982882066541}
   - component: {fileID: 2723862710988327086}
   m_Layer: 3
-  m_Name: Male armR
+  m_Name: armR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2239,7 +2239,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3992772321030158315}
   m_Layer: 3
-  m_Name: Male Right_Arm
+  m_Name: Right_Arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3221,7 +3221,7 @@ GameObject:
   - component: {fileID: 6333578759555084851}
   - component: {fileID: 4977217321503940081}
   m_Layer: 3
-  m_Name: Male wristR
+  m_Name: wristR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3465,7 +3465,6 @@ GameObject:
   - component: {fileID: 4753141892120768425}
   - component: {fileID: 4753141892120768426}
   - component: {fileID: 4753141892658299107}
-  - component: {fileID: 2649459682988453678}
   - component: {fileID: 4980672929515796472}
   - component: {fileID: 4753141892120768422}
   - component: {fileID: 2028049260426153151}
@@ -3473,6 +3472,7 @@ GameObject:
   - component: {fileID: 4753141892120768424}
   - component: {fileID: 4753141892652569518}
   - component: {fileID: 4753141892658299106}
+  - component: {fileID: 2649459682988453678}
   - component: {fileID: 1071405176482591220}
   m_Layer: 0
   m_Name: Player Battle
@@ -3567,47 +3567,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &2649459682988453678
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6335847080109120775}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03921021eebd4c359093153e19c5e8f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hairResolver: {fileID: 5264660617675374414}
-  eyeBrowsRenderer: {fileID: 8668896134200121051}
-  moustacheResolver: {fileID: 5311546786258611250}
-  beardResolver: {fileID: 6782197497348682006}
-  bodyResolvers:
-  - {fileID: 4325159283368977912}
-  - {fileID: 7967733683432773194}
-  - {fileID: 3734983221309590179}
-  - {fileID: 5019750171005134563}
-  - {fileID: 4465677741545029854}
-  - {fileID: 4838387804911668003}
-  - {fileID: 2723862710988327086}
-  - {fileID: 4977217321503940081}
-  - {fileID: 6075233268674303954}
-  - {fileID: 7107289149752619908}
-  - {fileID: 816012117307297785}
-  - {fileID: 4513365095301087346}
-  - {fileID: 4941559512204877081}
-  - {fileID: 8404958966069445147}
-  helmetResolver: {fileID: 5863839494966107112}
-  chestResolvers:
-  - {fileID: 3319213146033280192}
-  - {fileID: 6842769082984668788}
-  - {fileID: 5872033600390461802}
-  pantResolver: {fileID: 7075309659023371114}
-  weaponResolver: {fileID: 2336753369379258540}
-  offHandResolver: {fileID: 0}
-  equipmentManager: {fileID: 0}
-  statsManager: {fileID: 0}
 --- !u!114 &4980672929515796472
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3635,7 +3594,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7c308fc5a944b70bb347d33394df126, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentEquipment: []
+  currentGear:
+    equipments:
+    - id: 0
+      amount: 1
+      item:
+        name: New Item
+        icon: {fileID: 0}
+        isDefaultItem: 1
+        cost: 0
+        stats: []
+        equipmentSlot: 0
+        spriteId: 0
+      modifiers: []
+    - id: 0
+      amount: 1
+      item:
+        name: New Item
+        icon: {fileID: 0}
+        isDefaultItem: 1
+        cost: 0
+        stats: []
+        equipmentSlot: 0
+        spriteId: 0
+      modifiers: []
+    - id: 0
+      amount: 1
+      item:
+        name: New Item
+        icon: {fileID: 0}
+        isDefaultItem: 1
+        cost: 0
+        stats: []
+        equipmentSlot: 0
+        spriteId: 0
+      modifiers: []
+    - id: 0
+      amount: 1
+      item:
+        name: New Item
+        icon: {fileID: 0}
+        isDefaultItem: 1
+        cost: 0
+        stats: []
+        equipmentSlot: 0
+        spriteId: 0
+      modifiers: []
 --- !u!114 &2028049260426153151
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3661,9 +3665,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8ebb29dcfbc45a1829e81e8307e406c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory:
-    items: []
-    space: 28
 --- !u!114 &4753141892120768424
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3717,6 +3718,47 @@ MonoBehaviour:
     showGizmo: 1
   - color: {r: 1, g: 0, b: 0.75964546, a: 1}
     showGizmo: 1
+--- !u!114 &2649459682988453678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6335847080109120775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03921021eebd4c359093153e19c5e8f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hairResolver: {fileID: 5264660617675374414}
+  eyeBrowsRenderer: {fileID: 8668896134200121051}
+  moustacheResolver: {fileID: 5311546786258611250}
+  beardResolver: {fileID: 6782197497348682006}
+  bodyResolvers:
+  - {fileID: 4325159283368977912}
+  - {fileID: 7967733683432773194}
+  - {fileID: 3734983221309590179}
+  - {fileID: 5019750171005134563}
+  - {fileID: 4465677741545029854}
+  - {fileID: 4838387804911668003}
+  - {fileID: 2723862710988327086}
+  - {fileID: 4977217321503940081}
+  - {fileID: 6075233268674303954}
+  - {fileID: 7107289149752619908}
+  - {fileID: 816012117307297785}
+  - {fileID: 4513365095301087346}
+  - {fileID: 4941559512204877081}
+  - {fileID: 8404958966069445147}
+  helmetResolver: {fileID: 5863839494966107112}
+  chestResolvers:
+  - {fileID: 3319213146033280192}
+  - {fileID: 6842769082984668788}
+  - {fileID: 5872033600390461802}
+  pantResolver: {fileID: 7075309659023371114}
+  weaponResolver: {fileID: 2336753369379258540}
+  offHandResolver: {fileID: 0}
+  equipmentManager: {fileID: 0}
+  statsManager: {fileID: 0}
 --- !u!114 &1071405176482591220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4868,7 +4910,7 @@ GameObject:
   - component: {fileID: 7445091609578558722}
   - component: {fileID: 4838387804911668003}
   m_Layer: 3
-  m_Name: Male ShoulderR
+  m_Name: ShoulderR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

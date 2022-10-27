@@ -4,17 +4,22 @@ using UnityEngine;
 public class TabGroup : MonoBehaviour
 {
     public List<TabButton> tabButtons;
-    public Sprite tabIdle;
-    public Sprite tabActive;
+    
     //public Sprite tabHover;
 
+    //public PanelGroup panelGroup;
+
+    //public List<GameObject> objectsToSwap;
     public TabButton selectedTab;
-    public List<GameObject> objectsToSwap;
     public GameObject objectActive;
 
     private void Start()
     {
-        selectedTab.background.sprite = tabActive;
+        selectedTab.background.color = new Color(
+            selectedTab.background.color.r - 0.20f, 
+            selectedTab.background.color.g - 0.20f,
+            selectedTab.background.color.b - 0.20f
+        );
         
         OnTabSelected(selectedTab);
     }
@@ -25,12 +30,26 @@ public class TabGroup : MonoBehaviour
         {
             selectedTab.Deselect();
         }
+
+        if (objectActive != null)
+        {
+            objectActive.SetActive(false);
+        }
+        
         selectedTab = button;
         selectedTab.Select();
         
         ResetTabs();
-        button.background.sprite = tabActive;
-        int index = button.transform.GetSiblingIndex();
+        button.background.color = new Color(
+            button.background.color.r - 0.20f, 
+            button.background.color.g - 0.20f,
+            button.background.color.b - 0.20f
+        );
+        
+        button.objectToSwap.SetActive(true);
+        objectActive = button.objectToSwap;
+
+        /*int index = button.transform.GetSiblingIndex();
         for (int i = 0; i < objectsToSwap.Count; i++)
         {
             if (i == index)
@@ -40,14 +59,23 @@ public class TabGroup : MonoBehaviour
             } else {
                 objectsToSwap[i].SetActive(false);
             }
-        }
+        }*/
+
+        /*if (panelGroup != null)
+        {
+            panelGroup.SetPageIndex(index);
+        }*/
     }
     
     /*public void OnTabEnter(TabButton button)
     {
         ResetTabs();
         if(selectedTab == null || button != selectedTab) {
-            button.background.sprite = tabHover;
+            button.background.color = new Color(
+                button.background.color.r - 0.10f, 
+                button.background.color.g - 0.10f,
+                button.background.color.b - 0.10f
+            );
         }
     }
 
@@ -60,8 +88,12 @@ public class TabGroup : MonoBehaviour
     {
         foreach (TabButton button in tabButtons)
         {
-            if (selectedTab != null && button == selectedTab) continue; 
-            button.background.sprite = tabIdle;
+            if (selectedTab != null && button == selectedTab) continue;
+            button.background.color = new Color(
+                button.background.color.r + 0.20f, 
+                button.background.color.g + 0.20f,
+                button.background.color.b + 0.20f
+            );
         }
     }
 }

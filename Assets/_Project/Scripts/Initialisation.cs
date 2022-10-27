@@ -29,12 +29,12 @@ namespace LGamesDev
         {
             Current = this;
             _gameManager = GameManager.Instance;
-
-            isDone = false;
         }
 
         public void LoadMainMenu()
         {
+            isDone = false;
+
             Character character = new Character();
             
             // Load coroutines to setup main menu
@@ -46,16 +46,18 @@ namespace LGamesDev
                     character.Body = result;
                 }
             ));
-            _coroutinesLoading.Add(InitialisationStage.Infos, PlayerConfigHandler.Load(
+            /*_coroutinesLoading.Add(InitialisationStage.Infos, PlayerConfigHandler.Load(
                 this,
                 ShowErrorWindow,
                 result =>
                 {
+                    Debug.Log("player config : " + result.ToString());
+                    
                     _gameManager.SetPlayerConfig(result);
 
-                    if (!result.creationDone) _gameManager.LoadCustomization();
+                    if (!result.CreationDone) _gameManager.LoadCustomization();
                 }
-            ));
+            ));*/
             _coroutinesLoading.Add(InitialisationStage.Progression, PlayerProgressionHandler.Load(
                 this,
                 ShowErrorWindow,
@@ -68,10 +70,10 @@ namespace LGamesDev
                     InfosUI infosUI = FindObjectOfType<InfosUI>();
                     
                     infosUI.username.GetComponent<TextMeshProUGUI>().text
-                        = GameManager.Instance.GetAuthentication().user;
+                        = GameManager.Instance.GetAuthentication().username;
                     
                     infosUI.level.GetComponent<TextMeshProUGUI>().text 
-                        = result.level.ToString();
+                        = "Level : " + result.level.ToString();
                 }
             ));
             _coroutinesLoading.Add(InitialisationStage.Wallet, PlayerWalletHandler.Load(
@@ -90,14 +92,13 @@ namespace LGamesDev
                         = result.GetAmount(CurrencyType.Crystal).ToString();
                 }
             ));
-            _coroutinesLoading.Add(InitialisationStage.Equipment, CharacterEquipmentHandler.LoadEquipments(
+            _coroutinesLoading.Add(InitialisationStage.Equipment, GearHandler.Load(
                 this,
                 ShowErrorWindow,
                 result =>
                 {
                     //foreach (CharacterEquipment characterEquipment in result) Debug.Log(characterEquipment.ToString());
-                    
-                    character.Equipments = result;
+                    character.Gear = result;
                 }
             ));
             _coroutinesLoading.Add(InitialisationStage.Inventory, PlayerInventoryHandler.Load(
@@ -109,7 +110,7 @@ namespace LGamesDev
                     character.Inventory = result;
                 }
             ));
-            _coroutinesLoading.Add(InitialisationStage.CharacterStats, CharacterStatHandler.LoadStats(
+            _coroutinesLoading.Add(InitialisationStage.CharacterStats, CharacterStatHandler.Load(
                 this,
                 ShowErrorWindow,
                 result =>
@@ -153,10 +154,10 @@ namespace LGamesDev
                 text, 
                 "Retry", 
                 "",
-                () =>
-                {
+                () => {
                     SceneManager.LoadScene((int)SceneIndexes.PersistentScene);
-                });
+                }
+            );
         }
     }
 

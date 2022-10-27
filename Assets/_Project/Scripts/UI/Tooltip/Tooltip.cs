@@ -14,7 +14,7 @@ namespace LGamesDev.UI
         {
             instance = this;
             backgroundRectTransform = transform.Find("background").GetComponent<RectTransform>();
-            tooltipText = transform.Find("text").GetComponent<TextMeshProUGUI>();
+            tooltipText = backgroundRectTransform.Find("text").GetComponent<TextMeshProUGUI>();
 
             HideTooltip();
 

@@ -57,7 +57,7 @@ public class SpriteSwitcher : MonoBehaviour
         foreach (SpriteResolver sr in bodyParts)
         {
             List<string> labels = sr.spriteLibrary.spriteLibraryAsset.GetCategoryLabelNames(sr.GetCategory()).ToList();
-            activeIndex = 1;
+            activeIndex = 0;
 
             sr.SetCategoryAndLabel(sr.GetCategory(), labels[activeIndex]);
         }

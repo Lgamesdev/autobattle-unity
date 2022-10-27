@@ -34,10 +34,10 @@ namespace LGamesDev.Core.Player
             experience = playerLevelSystem.GetExperience();
 
             //playerLevelSystem.onExperienceChanged += LevelSystemAnimated_OnExperienceChanged;
-            playerLevelSystem.OnLevelChanged += LevelSystemAnimated_OnLevelChanged;
+            //playerLevelSystem.OnLevelChanged += LevelSystemAnimated_OnLevelChanged;
         }
 
-        private void LevelSystemAnimated_OnExperienceChanged(float xpGained)
+        /*private void LevelSystemAnimated_OnExperienceChanged(float xpGained)
         {
             IsAnimating = true;
         }
@@ -45,7 +45,7 @@ namespace LGamesDev.Core.Player
         private void LevelSystemAnimated_OnLevelChanged(object sender, EventArgs e)
         {
             IsAnimating = true;
-        }
+        }*/
 
         private void Update()
         {

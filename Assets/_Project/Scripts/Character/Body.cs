@@ -11,7 +11,7 @@ namespace LGamesDev
         public string hairColor;
         public string skinColor;
         public string chestColor;
-        public string beltColor;
+        //public string beltColor;
         public string shortColor;
 
         public override string ToString()
@@ -24,7 +24,7 @@ namespace LGamesDev
                        "hairColor : " + hairColor + "\n" +
                        "skinColor : " + skinColor + "\n" +
                        "chestColor : " + chestColor + "\n" +
-                       "beltColor : " + beltColor + "\n" +
+                       //"beltColor : " + beltColor + "\n" +
                        "shortColor : " + shortColor + "\n" +
                    "]";
         }

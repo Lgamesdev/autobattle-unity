@@ -57,6 +57,6 @@ namespace LGamesDev
         Skin,
         Chest,
         Belt,
-        Short
+        Pants
     }
 }

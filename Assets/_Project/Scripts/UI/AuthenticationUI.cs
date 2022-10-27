@@ -5,8 +5,8 @@ namespace LGamesDev.UI
 {
     public class AuthenticationUI : MonoBehaviour
     {
-        private static Transform _loadingPanel;
-        private static TMP_InputField _errorText;
+        //private static Transform _loadingPanel;
+        //private static TMP_InputField _errorText;
 
         private Transform _activeForm;
         private Transform _loginForm;
@@ -21,8 +21,8 @@ namespace LGamesDev.UI
             _registerForm = transform.Find("register");
             _loginForm = transform.Find("login");
 
-            _loadingPanel = transform.Find("loadingPanel");
-            _errorText = transform.Find("errorText").GetComponent<TMP_InputField>();
+            //_loadingPanel = transform.Find("loadingPanel");
+            //_errorText = transform.Find("errorText").GetComponent<TMP_InputField>();
         }
 
         private void Start()
@@ -30,8 +30,8 @@ namespace LGamesDev.UI
             _registerForm.gameObject.SetActive(false);
             _loginForm.gameObject.SetActive(false);
 
-            _loadingPanel.gameObject.SetActive(false);
-            _errorText.gameObject.SetActive(false);
+            //_loadingPanel.gameObject.SetActive(false);
+            //_errorText.gameObject.SetActive(false);
         }
 
         public void SetAuthenticationTo(int formState)
@@ -69,13 +69,21 @@ namespace LGamesDev.UI
 
         public void Submit()
         {
-            _loadingPanel.gameObject.SetActive(true);
+            //_loadingPanel.gameObject.SetActive(true);
             if (_activeForm == _registerForm)
             {
                 if (!_activeForm.Find("passwordField").GetComponent<TMP_InputField>().text
                         .Equals(_activeForm.Find("rePasswordField").GetComponent<TMP_InputField>().text)) 
                 {
-                    ShowLoginError("Password must correspond to the password verification.");
+                    //ShowLoginError("Password must correspond to the password verification.");
+                    GameManager.Instance.modalWindow.ShowAsTextPopup(
+                        "Error on register", 
+                        "Password must correspond to the password verification.", 
+                        "", 
+                        "Close",
+                        null,
+                        GameManager.Instance.modalWindow.Close
+                    );
                 } 
                 else 
                 {
@@ -99,9 +107,9 @@ namespace LGamesDev.UI
 
         private static void ShowLoginError(string message)
         {
-            _loadingPanel.gameObject.SetActive(false);
-            _errorText.gameObject.SetActive(true);
-            _errorText.text = message;
+            //_loadingPanel.gameObject.SetActive(false);
+            //_errorText.gameObject.SetActive(true);
+            //_errorText.text = message;
         }
 
         public void VerifyInputs()

@@ -36,8 +36,6 @@ namespace LGamesDev.UI
                 case CurrencyType.Crystal:
                     crystalAmount.GetComponent<TextMeshProUGUI>().text = currency.amount.ToString();
                     break;
-                default:
-                    throw new ArgumentOutOfRangeException();
             }
         }
     }

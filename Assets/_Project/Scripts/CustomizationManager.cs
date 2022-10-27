@@ -1,8 +1,5 @@
-using System;
-using System.Text;
 using LGamesDev.Core.Request;
 using UnityEngine;
-using UnityEngine.Networking;
 
 namespace LGamesDev
 {
@@ -54,16 +51,14 @@ namespace LGamesDev
                     case SwitchBodyColorPart.Chest:
                         body.chestColor = "#" + ColorUtility.ToHtmlStringRGB(colorPicker.activeColor);
                         break;
-                    case SwitchBodyColorPart.Belt:
+                    /*case SwitchBodyColorPart.Belt:
                         body.beltColor = "#" + ColorUtility.ToHtmlStringRGB(colorPicker.activeColor);
-                        break;
-                    case SwitchBodyColorPart.Short:
+                        break;*/
+                    case SwitchBodyColorPart.Pants:
                         body.shortColor = "#" + ColorUtility.ToHtmlStringRGB(colorPicker.activeColor);
                         break;
                 }
             }
-            
-            var bodyRaw = Encoding.UTF8.GetBytes(JsonUtility.ToJson(body));
 
             StartCoroutine(CharacterBodyHandler.Save(
                 this,
@@ -74,7 +69,11 @@ namespace LGamesDev
                 },
                 response =>
                 {
-                    Debug.Log("Received : " + response);
+                    //Debug.Log("Received : " + response);
+
+                    Authentication authentication = _gameManager.GetAuthentication();
+                    authentication.PlayerConf.CreationDone = true;
+                    _gameManager.SetAuthentication(authentication);
                     
                     _gameManager.LoadMainMenu();
                 }

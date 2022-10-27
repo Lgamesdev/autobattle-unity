@@ -37,25 +37,25 @@ namespace LGamesDev.UI
             SetupVisual();
         }
 
-        private void SetupVisualEquipment(EquipmentSlot equipmentSlot, Equipment equipment = null)
+        private void SetupVisualEquipment(EquipmentSlot equipmentSlot, CharacterEquipment equipment = null)
         {
-            if (equipment != null && equipment.spriteId != 0) {
-                switch (equipment.equipmentSlot)
+            if (equipment != null && equipment.item.spriteId != 0) {
+                switch (equipment.item.equipmentSlot)
                 {
                     case EquipmentSlot.Helmet:
-                        _helmetSlot.SetEquipment(equipment);
+                        _helmetSlot.SetCharacterEquipment(equipment);
                         _helmetSlot.transform.Find("emptyImage").gameObject.SetActive(false);
                         break;
                     case EquipmentSlot.Chest:
-                        _armorSlot.SetEquipment(equipment);
+                        _armorSlot.SetCharacterEquipment(equipment);
                         _armorSlot.transform.Find("emptyImage").gameObject.SetActive(false);
                         break;
                     case EquipmentSlot.Pants:
-                        _pantsSlot.SetEquipment(equipment);
+                        _pantsSlot.SetCharacterEquipment(equipment);
                         _pantsSlot.transform.Find("emptyImage").gameObject.SetActive(false);
                         break;
                     case EquipmentSlot.Weapon:
-                        _weaponSlot.SetEquipment(equipment);
+                        _weaponSlot.SetCharacterEquipment(equipment);
                         _weaponSlot.transform.Find("emptyImage").gameObject.SetActive(false);
                         break;
                 }
@@ -86,11 +86,11 @@ namespace LGamesDev.UI
         {
             if (newEquipment != null)
             {
-                SetupVisualEquipment(((Equipment)newEquipment.item).equipmentSlot, (Equipment)newEquipment.item);
+                SetupVisualEquipment((newEquipment.item).equipmentSlot, newEquipment);
             } 
             else if (oldEquipment != null)
             {
-                SetupVisualEquipment(((Equipment)oldEquipment.item).equipmentSlot);
+                SetupVisualEquipment((oldEquipment.item).equipmentSlot);
             }
             else
             {
@@ -102,9 +102,9 @@ namespace LGamesDev.UI
         {
             foreach (EquipmentSlot equipmentSlot in (EquipmentSlot[]) Enum.GetValues(typeof(EquipmentSlot)))
             {
-                if (_equipmentManager.currentEquipment[(int)equipmentSlot] != null)
+                if (_equipmentManager.currentGear.equipments[(int)equipmentSlot] != null)
                 {
-                    SetupVisualEquipment(equipmentSlot, (Equipment)_equipmentManager.currentEquipment[(int)equipmentSlot].item);
+                    SetupVisualEquipment(equipmentSlot, _equipmentManager.currentGear.equipments[(int)equipmentSlot]);
                 }
                 else
                 {

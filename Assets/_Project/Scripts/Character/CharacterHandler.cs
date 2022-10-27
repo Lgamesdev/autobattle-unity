@@ -62,31 +62,35 @@ namespace LGamesDev
             {
                 Equipment defaultEquipment = new Equipment() { equipmentSlot = equipmentSlot, isDefaultItem = true };
                         
-                Character.Equipments[(int)equipmentSlot] = new CharacterEquipment()
+                Character.Gear.equipments[(int)equipmentSlot] = new CharacterEquipment()
                 {
                     item = defaultEquipment
                 };
+                yield return new WaitForEndOfFrame();
             }
             
-            foreach (CharacterEquipment characterEquipment in character.Equipments)
+            foreach (CharacterEquipment characterEquipment in character.Gear.equipments)
             {
-                Character.Equipments[(int)characterEquipment.item.equipmentSlot] = characterEquipment;
+                Character.Gear.equipments[(int)characterEquipment.item.equipmentSlot] = characterEquipment;
+                yield return new WaitForEndOfFrame();
             }
             
             //Setup Stats
             foreach (StatType statType in (StatType[])Enum.GetValues(typeof(StatType)))
             {
                 Character.Stats[(int)statType] = new Stat() { statType = statType };
+                yield return new WaitForEndOfFrame();
             }
             
             foreach (Stat stat in character.Stats)
             {
                 Character.Stats[(int)stat.statType] = stat;
+                yield return new WaitForEndOfFrame();
             }
             
             //Setup Equipment Manager
             equipmentManager = GetComponent<CharacterEquipmentManager>();
-            equipmentManager.SetupManager(Character.Equipments);
+            equipmentManager.SetupManager(Character.Gear);
             equipmentManager.OnEquipmentChanged += UpdateEquipmentTexture;
 
             //Setup Stat Manager
@@ -126,9 +130,10 @@ namespace LGamesDev
             foreach (SpriteResolver bodyResolver in bodyResolvers)
             {
                 bodyResolver.GetComponent<SpriteRenderer>().color = skinColor;
+                yield return new WaitForEndOfFrame();
             }
             
-            if (Character.Equipments[(int)EquipmentSlot.Chest].item.spriteId == 0)
+            if (Character.Gear.equipments[(int)EquipmentSlot.Chest].item.spriteId == 0)
             {
                 ColorUtility.TryParseHtmlString(body.chestColor, out Color chestColor);
                 foreach (SpriteResolver chestResolver in chestResolvers) {
@@ -136,18 +141,27 @@ namespace LGamesDev
                 }
             }
 
-            if (Character.Equipments[(int)EquipmentSlot.Pants].item.spriteId == 0)
+            if (Character.Gear.equipments[(int)EquipmentSlot.Pants].item.spriteId == 0)
             {
                 ColorUtility.TryParseHtmlString(body.shortColor, out Color shortColor);
                 pantResolver.GetComponent<SpriteRenderer>().color = shortColor;
             }
 
-            foreach (CharacterEquipment characterEquipment in Character.Equipments) {
+            foreach (CharacterEquipment characterEquipment in Character.Gear.equipments) {
                 if (characterEquipment.item != null)
                 {
                     //Debug.Log("equipment : " + characterEquipment.ToString());
-                    UpdateEquipmentTexture(characterEquipment, null);
+                    if (!characterEquipment.item.isDefaultItem)
+                    {
+                        UpdateEquipmentTexture(characterEquipment, null);
+                    }
+                    else
+                    {
+                        UpdateEquipmentTexture(null, characterEquipment);
+                    }
                 }
+                
+                yield return new WaitForEndOfFrame();
             }
 
             yield return new WaitForEndOfFrame();

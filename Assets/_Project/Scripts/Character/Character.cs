@@ -14,23 +14,21 @@ namespace LGamesDev
         public int Ranking;
         public Body Body;
         public Wallet Wallet = new();
-        public Inventory Inventory = new();
         public Stat[] Stats = new Stat[Enum.GetNames(typeof(StatType)).Length];
-        public CharacterEquipment[] Equipments = new CharacterEquipment[Enum.GetNames(typeof(EquipmentSlot)).Length];
+        public Gear Gear = new();
+        public Inventory Inventory = new();
 
         public override string ToString()
         {
             string result = "Character : [ \n" +
-                            "username : " + Username + "\n" +
-                            "level : " + Level + "\n" +
-                            "xp : " + Experience + "\n" +
-                            "ranking : " + Ranking + "\n" +
-                            "body : " + Body.ToString() + "\n" +
-                            "equipments : [ \n";
-            foreach (CharacterEquipment equipment in Equipments) { result += equipment.ToString(); }
-            result +=  " ] \n" +
-                       "stats : [ \n";
-            foreach (Stat stat in Stats) { result += stat.ToString(); }
+                            "\t username : " + Username + "\n" +
+                            "\t level : " + Level + "\n" +
+                            "\t xp : " + Experience + "\n" +
+                            "\t ranking : " + Ranking + "\n" +
+                            "\t body : " + Body.ToString() + "\n" +
+                            "\t gear : " + Gear.ToString() + "\n" +
+                            "\t stats : [ \n";
+            foreach (Stat stat in Stats) { result += "\t " + stat.ToString(); }
             result += " ] \n";
 
             return result;

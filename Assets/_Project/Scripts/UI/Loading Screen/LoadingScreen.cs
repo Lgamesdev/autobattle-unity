@@ -14,52 +14,89 @@ public class LoadingScreen : MonoBehaviour
     private ParallaxBackgroundUI _parallaxBackground;
     private Coroutine _scrollingCoroutine;
 
+    private bool _loadingScreenEnabled;
+    private bool _waitingScreenEnabled;
+
     private void Awake()
     {
         _parallaxBackground = transform.Find("ParallaxBackground").GetComponent<ParallaxBackgroundUI>();
 
         _loadingText = transform.Find("Progress Panel").Find("LoadingText");
         progressBar = transform.Find("Progress Panel").Find("ProgressBar").GetComponent<ProgressBar>();
+
+        _loadingScreenEnabled = false;
+        _waitingScreenEnabled = false;
     }
     
     public IEnumerator EnableWaitingScreen()
     {
-        gameObject.SetActive(true);
+        _waitingScreenEnabled = true;
         
-        _parallaxBackground.gameObject.SetActive(false);
+        if (!_loadingScreenEnabled)
+        {
+            gameObject.SetActive(true);
+            _parallaxBackground.gameObject.SetActive(false);
+            
+            LTDescr anim = LeanTween.alpha(transform.GetComponent<RectTransform>(), .4f, .25f)
+                .setEase(LeanTweenType.linear);
+
+            yield return new WaitForSeconds(anim.time);
+        }
+        
         progressBar.gameObject.SetActive(false);
         _loadingText.gameObject.SetActive(true);
 
-        LTDescr anim = LeanTween.alpha(transform.GetComponent<RectTransform>(), .4f, .25f).setEase(LeanTweenType.linear);
-
-        yield return new WaitForSeconds(anim.time);
+        yield return new WaitForEndOfFrame();
     }
     
     public IEnumerator DisableWaitingScreen()
     {
-        LTDescr anim = LeanTween.alpha(transform.GetComponent<RectTransform>(), 0f, .25f).setEase(LeanTweenType.linear);
+        if (!_loadingScreenEnabled)
+        {
+            LTDescr anim = LeanTween.alpha(transform.GetComponent<RectTransform>(), 0f, .25f).setEase(LeanTweenType.linear);
 
-        yield return new WaitForSeconds(anim.time);
+            yield return new WaitForSeconds(anim.time);
             
-        gameObject.SetActive(false);
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            progressBar.gameObject.SetActive(true);
+            _loadingText.gameObject.SetActive(false);
+        }
+        
+        _waitingScreenEnabled = false;
+
+        yield return new WaitForEndOfFrame();
     }
     
     public IEnumerator EnableLoadingScreen()
     {
-        gameObject.SetActive(true);
-        
-        _parallaxBackground.gameObject.SetActive(true);
-        progressBar.gameObject.SetActive(true);
-        _loadingText.gameObject.SetActive(false);
-
-        _scrollingCoroutine = StartCoroutine(_parallaxBackground.ScrollingBackground());
-
-        LTDescr anim = LeanTween.alpha(transform.GetComponent<RectTransform>(), 0f, 1f).setEase(LeanTweenType.linear).setOnComplete(() =>
+        if (!_loadingScreenEnabled)
         {
-            LeanTween.alpha(transform.GetComponent<RectTransform>(), 1f, 1f).setEase(LeanTweenType.linear);
-        });
+            _loadingScreenEnabled = true;
 
-        yield return new WaitForSeconds(anim.time);
+            if (!_waitingScreenEnabled)
+            {
+                gameObject.SetActive(true);
+            }
+
+            _parallaxBackground.gameObject.SetActive(true);
+            progressBar.gameObject.SetActive(true);
+            _loadingText.gameObject.SetActive(false);
+
+            _scrollingCoroutine = StartCoroutine(_parallaxBackground.ScrollingBackground());
+
+            LTDescr anim = LeanTween.alpha(transform.GetComponent<RectTransform>(), 0f, 1f)
+                .setEase(LeanTweenType.linear).setOnComplete(() =>
+                {
+                    LeanTween.alpha(transform.GetComponent<RectTransform>(), 1f, 1f).setEase(LeanTweenType.linear);
+                });
+
+            yield return new WaitForSeconds(anim.time);
+        }
+
+        yield return new WaitForEndOfFrame();
     }
 
     public IEnumerator DisableLoadingScreen()
@@ -71,6 +108,11 @@ public class LoadingScreen : MonoBehaviour
 
         yield return new WaitForSeconds(anim.time);
 
-        gameObject.SetActive(false);
+        if (!_waitingScreenEnabled)
+        {
+            gameObject.SetActive(false);
+        }
+
+        _loadingScreenEnabled = false;
     }
 }

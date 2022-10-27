@@ -84,7 +84,7 @@ namespace LGamesDev.Fighting
                 oldExperience = maxExperience + oldExperience;
                 aimedExperience = maxExperience;
 
-                Debug.Log("old experience : " + oldExperience);
+                //Debug.Log("old experience : " + oldExperience);
 
                 animTime /= 2;
                 

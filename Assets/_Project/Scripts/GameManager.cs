@@ -19,6 +19,7 @@ namespace LGamesDev
         public static GameManager Instance;
         
         [SerializeField] private SceneLoader sceneLoader;
+
         public LoadingScreen loadingScreen;
         public ModalWindowPanel modalWindow;
         
@@ -43,7 +44,16 @@ namespace LGamesDev
 
         private void Start()
         {
-            StartCoroutine(sceneLoader.LoadAuthentication());
+            if (_authentication == null)
+            {
+                Debug.Log("authentication is null");
+                StartCoroutine(sceneLoader.LoadAuthentication(true, true));
+            }
+            else
+            {  
+                Debug.Log("credentials find");
+                StartCoroutine(sceneLoader.LoadAuthentication(true, false));
+            }
         }
 
         public void LoadCustomization()
@@ -63,8 +73,9 @@ namespace LGamesDev
 
         public void Logout()
         {
-            StartCoroutine(sceneLoader.LoadAuthentication());
             PlayerPrefs.DeleteKey("authentication");
+            _authentication = null;
+            StartCoroutine(sceneLoader.LoadAuthentication(true, true));
         }
 
         public Authentication GetAuthentication()
@@ -82,21 +93,6 @@ namespace LGamesDev
             else
             {
                 Debug.LogError("trying to set authentication to null");
-            }
-        }
-
-        public PlayerConfig GetPlayerConfig()
-        {
-            return _playerConfig;
-        }
-
-        public void SetPlayerConfig(PlayerConfig playerConfig)
-        {
-            if (playerConfig != null)
-            {
-                _playerConfig = playerConfig;
-            } else {
-                Debug.LogError("trying to set playerConf to null");
             }
         }
     }

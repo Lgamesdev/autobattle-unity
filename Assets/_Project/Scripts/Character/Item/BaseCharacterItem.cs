@@ -8,12 +8,10 @@ namespace LGamesDev.Core.Character
         public int id;
         public int amount = 1;
         public T item;
+
+        int IBaseCharacterItem.Id => id;
         
-        Item IBaseCharacterItem.Item
-        {
-            get => item;
-            set => item = value as T;
-        }
+        Item IBaseCharacterItem.Item => item;
 
         int IBaseCharacterItem.Amount
         {

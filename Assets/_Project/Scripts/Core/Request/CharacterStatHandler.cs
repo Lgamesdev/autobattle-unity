@@ -11,7 +11,7 @@ namespace LGamesDev.Core.Request
 {
     public class CharacterStatHandler
     {
-        public static IEnumerator LoadStats(MonoBehaviour instance, Action<string> onError, Action<Stat[]> setResult)
+        public static IEnumerator Load(MonoBehaviour instance, Action<string> onError, Action<Stat[]> setResult)
         {
             yield return instance.StartCoroutine(RequestHandler.Request("api/user/stats",
                 UnityWebRequest.kHttpVerbGET,

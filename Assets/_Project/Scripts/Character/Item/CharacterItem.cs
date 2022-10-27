@@ -1,12 +1,5 @@
 using System;
-using System.Collections.Generic;
-using LGamesDev.Core.Player;
-using LGamesDev.Request.Converters;
-using Unity.Plastic.Newtonsoft.Json;
-using UnityEditor;
-using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace LGamesDev.Core.Character
 {
@@ -21,9 +14,8 @@ namespace LGamesDev.Core.Character
 
         public override void Sell()
         {
-            Debug.Log(item.name + " selled.");
-            //TODO : sell item
-            PlayerWalletManager.Instance.AddCurrency(CurrencyType.Gold, (int)(item.cost * 0.25));
+            PlayerWalletManager.Instance.SellCharacterItem(this);
+            //Debug.Log(item.name + " selled.");
         }
 
         public override string ToString()

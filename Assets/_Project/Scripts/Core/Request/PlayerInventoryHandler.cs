@@ -23,11 +23,8 @@ namespace LGamesDev.Core.Request
                 {
                     //Debug.Log("Received inventory : " + response);
 
-                    JsonSerializerSettings settings = new JsonSerializerSettings()
-                    {
-                        TypeNameHandling = TypeNameHandling.Auto,
-                    };
-                    settings.Converters.Add(new ItemConverter());
+                    JsonSerializerSettings settings = new JsonSerializerSettings();
+                    settings.Converters.Add(new BaseCharacterItemConverter());
                     
                     Inventory inventory = JsonConvert.DeserializeObject<Inventory>(response, settings);
 

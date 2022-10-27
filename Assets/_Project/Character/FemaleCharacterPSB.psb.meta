@@ -10209,7 +10209,7 @@ ScriptedImporter:
     - name: HandR Bone
       guid: e4e9218c3c31d7c489dbbe4a0b4c351f
       position: {x: 210.00684, y: 446.1399, z: 0}
-      rotation: {x: 0, y: 0, z: -0.64314896, w: 0.76574117}
+      rotation: {x: 0, y: 0, z: -0.6431489, w: 0.76574117}
       length: 334.53326
       parentId: -1
       color:
@@ -11537,7 +11537,7 @@ ScriptedImporter:
     - name: FootL Bone
       guid: 52b9ecf27bef12241b7f309e8faffc63
       position: {x: 206.33496, y: 278.34766, z: 0}
-      rotation: {x: 0, y: 0, z: -0.2662253, w: 0.9639109}
+      rotation: {x: 0, y: 0, z: -0.26622525, w: 0.96391094}
       length: 343.9276
       parentId: -1
       color:

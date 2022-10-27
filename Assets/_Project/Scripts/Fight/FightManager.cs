@@ -50,7 +50,7 @@ namespace LGamesDev.Fighting
             _fight = fight;
             
             yield return StartCoroutine(playerCharacterFight.SetupCharacterFight(fight.Character));
-            
+
             _enemyCharacterFight = SpawnCharacter();
             yield return StartCoroutine(_enemyCharacterFight.SetupCharacterFight(fight.Opponent));
         }
@@ -80,35 +80,39 @@ namespace LGamesDev.Fighting
 
             FightAction fightAction = _fight.Actions[currentAction];
 
+            //Debug.Log("currentAction damage : " + _fight.Actions[currentAction].damage);
+            
             if (fightAction.playerTeam)
             {
-                SetActiveCharacterBattle(playerCharacterFight);
+                //SetActiveCharacterBattle(playerCharacterFight);
 
                 //state = State.Busy;
                 playerCharacterFight.Attack(_enemyCharacterFight, _fight.Actions[currentAction].damage, fightAction.critialHit, ChooseNextActiveCharacter);
+                //Debug.Log("enemy current health : " + _enemyCharacterFight.GetComponent<CharacterHandler>().statsManager.GetCurrentHealth());
             }
             else
             {
-                SetActiveCharacterBattle(_enemyCharacterFight);
+                //SetActiveCharacterBattle(_enemyCharacterFight);
 
                 //state = State.Busy;
                 _enemyCharacterFight.Attack(playerCharacterFight, _fight.Actions[currentAction].damage, fightAction.critialHit, ChooseNextActiveCharacter);
+                //Debug.Log("player current health : " + playerCharacterFight.GetComponent<CharacterHandler>().statsManager.GetCurrentHealth());
             }
 
             currentAction++;
         }
         
-        private void SetActiveCharacterBattle(CharacterFight characterFight)
+        /*private void SetActiveCharacterBattle(CharacterFight characterFight)
         {
             //if (_activeCharacterFight != null) _activeCharacterFight.HideSelectionCircle();
 
             _activeCharacterFight = characterFight;
             //_activeCharacterFight.ShowSelectionCircle();
-        }
+        }*/
 
         private bool TestBattleOver()
         {
-            if (_fight.Actions.Count - 1 != currentAction) return false;
+            if (currentAction < _fight.Actions.Count) return false;
             
             OnFightOver?.Invoke(_fight.Reward, _fight.PlayerWin);
             HandlePlayerReward();

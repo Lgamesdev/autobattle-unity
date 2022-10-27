@@ -25,13 +25,20 @@ namespace LGamesDev
             {
                 SceneManager.LoadScene((int)SceneIndexes.PersistentScene);
             } else {
-                Initialisation.Current.LoadMainMenu();
+                if (!_gameManager.GetAuthentication().PlayerConf.CreationDone)
+                {
+                    _gameManager.LoadCustomization();
+                }
+                else
+                {
+                    Initialisation.Current.LoadMainMenu();
+                }
             }
         }
 
         private void SetupScene()
         {
-            if (!_gameManager.GetPlayerConfig().tutorialDone)
+            if (!_gameManager.GetAuthentication().PlayerConf.TutorialDone)
                 firstPopup.PopUp("Kalcifer : Salut et bienvenue dans mon tout premier jeu ! :)");
         }
 

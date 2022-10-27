@@ -52,7 +52,7 @@ namespace LGamesDev.UI
 
             CreateCharacterCard(new Character()
             {
-                Username = GameManager.Instance.GetAuthentication().user,
+                Username = GameManager.Instance.GetAuthentication().username,
                 Level = playerCharacter.Level,
                 Ranking = playerCharacter.Ranking,
             }, 0, true);

@@ -25,7 +25,7 @@ namespace LGamesDev.UI
             _inventoryManager = PlayerInventoryManager.Instance;
             _inventoryManager.OnItemChanged += Inventory_OnItemChanged;
             
-            _slots = new InventorySlotUI[_inventoryManager.inventory.space];
+            _slots = new InventorySlotUI[_inventoryManager.space];
             
             SetupInventoryUI();
         }
@@ -38,8 +38,8 @@ namespace LGamesDev.UI
         private void UpdateInventoryUI()
         {
             for (var i = 0; i < _slots.Length; i++)
-                if (i < _inventoryManager.inventory.Items.Count)
-                    _slots[i].AddItem(_inventoryManager.inventory.Items[i]);
+                if (i < _inventoryManager.Items.Count)
+                    _slots[i].AddItem(_inventoryManager.Items[i]);
                 else
                     _slots[i].ClearSlot();
         }

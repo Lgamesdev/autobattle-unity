@@ -12,7 +12,7 @@ namespace LGamesDev.Request.Converters
 {
     public class ItemConverter : JsonConverter
     {
-        private string _rootPath = "Assets/_Project/";
+        //private string _rootPath = "Assets/_Project/";
 
         public override bool CanConvert(Type objectType)
         {
@@ -33,7 +33,7 @@ namespace LGamesDev.Request.Converters
             {
                 JObject o = (JObject)t;
                 o["type"] = item.GetType() == typeof(Equipment) ? "equipment" : "item";
-                o["iconPath"] = AssetDatabase.GetAssetPath(item.icon);
+                //o["iconPath"] = AssetDatabase.GetAssetPath(item.icon);
 
                 /*if (item.GetType() == typeof(Equipment))
                 {
@@ -64,11 +64,11 @@ namespace LGamesDev.Request.Converters
             serializer.Populate(jsonObject.CreateReader(), item);
 
             string iconPath = jsonObject["iconPath"]?.ToString();
-            
+
             if (iconPath == null) 
                 return item;
-            
-            Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>(_rootPath + iconPath);
+
+            Sprite sprite = Resources.Load<Sprite>(iconPath);//AssetDatabase.LoadAssetAtPath<Sprite>(_rootPath + iconPath + ".png");
             if (sprite != null)
                 item.icon = sprite;
 

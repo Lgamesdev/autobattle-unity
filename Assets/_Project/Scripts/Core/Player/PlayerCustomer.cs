@@ -25,9 +25,14 @@ namespace LGamesDev.Core.Player
 
         public void BoughtItem(Item item)
         {
-            Debug.Log("Request to buy item");
+            //Debug.Log("Request to buy item");
             
             //PlayerInventoryManager.Instance.inventory.AddItem(item);
+        }
+
+        public void BoughtItem(IBaseCharacterItem item)
+        {
+            throw new NotImplementedException();
         }
 
         public void SellItem(CharacterItem item)
@@ -41,7 +46,7 @@ namespace LGamesDev.Core.Player
         {
             if (GetGoldAmount() < spendGoldAmount) return false;
             
-            walletManager.SpendCurrency(CurrencyType.Gold, spendGoldAmount);
+            //walletManager.SpendCurrency(CurrencyType.Gold, spendGoldAmount);
             OnGoldAmountChanged?.Invoke(this, EventArgs.Empty);
             return true;
 

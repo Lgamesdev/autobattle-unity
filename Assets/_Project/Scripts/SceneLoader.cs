@@ -22,7 +22,7 @@ namespace LGamesDev
             _gameManager = GameManager.Instance;
         }
 
-        public IEnumerator LoadAuthentication()
+        public IEnumerator LoadAuthentication(bool loadingScreenEnabled, bool loadingScreenDisabled)
         {
             yield return StartCoroutine(SetupSceneTransition(
                 () =>
@@ -32,8 +32,12 @@ namespace LGamesDev
                         _scenesLoading.Add(SceneManager.UnloadSceneAsync((int)SceneIndexes.MainMenu));
                     
                     _scenesLoading.Add(SceneManager.LoadSceneAsync((int)SceneIndexes.Authentication, LoadSceneMode.Additive));
-                }
-            ));
+                },
+                loadingScreenEnabled,
+                loadingScreenDisabled)
+            );
+
+            AuthenticationManager.Instance.SetupAuthentication();
         }
 
         public IEnumerator LoadMainMenu()
@@ -53,6 +57,8 @@ namespace LGamesDev
 
                     _scenesLoading.Add(SceneManager.LoadSceneAsync((int)SceneIndexes.MainMenu, LoadSceneMode.Additive));
                 },
+                true,
+                true,
                 GetTotalProgress()
             ));
 
@@ -81,6 +87,7 @@ namespace LGamesDev
             yield return StartCoroutine(FightManager.Instance.SetupFight(fight));
             
             yield return StartCoroutine(_gameManager.loadingScreen.DisableLoadingScreen());
+
             FightManager.Instance.StartFight();
         }
 
@@ -100,19 +107,27 @@ namespace LGamesDev
             SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex((int)SceneIndexes.Customization));
         }
 
-        private IEnumerator SetupSceneTransition(Action onLoadingScreenFunction, IEnumerator onSceneLoadComplete = null)
+        private IEnumerator SetupSceneTransition(Action onLoadingScreenFunction, bool loadingScreenEnabled = true, bool loadingScreenDisabled = true, IEnumerator onSceneLoadComplete = null)
         {
-            yield return StartCoroutine(_gameManager.loadingScreen.EnableLoadingScreen());
+            if (loadingScreenEnabled)
+            {
+                yield return StartCoroutine(_gameManager.loadingScreen.EnableLoadingScreen());
+            }
 
             onLoadingScreenFunction?.Invoke();
             
             yield return StartCoroutine(GetSceneLoadProgress());
+            
             if (onSceneLoadComplete != null)
             {
                 yield return StartCoroutine(onSceneLoadComplete);
+
             }
 
-            yield return StartCoroutine(_gameManager.loadingScreen.DisableLoadingScreen());
+            if (loadingScreenDisabled)
+            {
+                yield return StartCoroutine(_gameManager.loadingScreen.DisableLoadingScreen());
+            }
         }
 
         private IEnumerator GetSceneLoadProgress()

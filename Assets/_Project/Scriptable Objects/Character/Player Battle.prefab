@@ -1,0 +1,166 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &460541583084220565
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1633740095180548342}
+  - component: {fileID: 1188899891191775796}
+  - component: {fileID: 5596931408496927021}
+  - component: {fileID: 1188899891191775802}
+  - component: {fileID: 1188899891191775797}
+  - component: {fileID: 2119013392191034637}
+  - component: {fileID: -3192286778083205860}
+  m_Layer: 0
+  m_Name: Player Battle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1633740095180548342
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 460541583084220565}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1188899891191775796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 460541583084220565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7c308fc5a944b70bb347d33394df126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentGear:
+    equipments:
+    - id: 0
+      amount: 1
+      item:
+        name: New Item
+        icon: {fileID: 0}
+        isDefaultItem: 1
+        cost: 0
+        stats: []
+        equipmentSlot: 0
+        spriteId: 0
+      modifiers: []
+    - id: 0
+      amount: 1
+      item:
+        name: New Item
+        icon: {fileID: 0}
+        isDefaultItem: 1
+        cost: 0
+        stats: []
+        equipmentSlot: 0
+        spriteId: 0
+      modifiers: []
+    - id: 0
+      amount: 1
+      item:
+        name: New Item
+        icon: {fileID: 0}
+        isDefaultItem: 1
+        cost: 0
+        stats: []
+        equipmentSlot: 0
+        spriteId: 0
+      modifiers: []
+    - id: 0
+      amount: 1
+      item:
+        name: New Item
+        icon: {fileID: 0}
+        isDefaultItem: 1
+        cost: 0
+        stats: []
+        equipmentSlot: 0
+        spriteId: 0
+      modifiers: []
+--- !u!114 &5596931408496927021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 460541583084220565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0aef4a251d22ef040bc42cc33c075363, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats: []
+--- !u!114 &1188899891191775802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 460541583084220565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 877b877092eb4db8917172982e0a50cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1188899891191775797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 460541583084220565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8ebb29dcfbc45a1829e81e8307e406c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2119013392191034637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 460541583084220565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d22b596f8ea8a04ab17625187e1db19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maleCharacter: {fileID: 2649459682988453678, guid: 13ffb6b04a610664da891f97f223bc14, type: 3}
+  femaleCharacter: {fileID: 2649459682988453678, guid: b986761b625c91642b2a3546e0c77259, type: 3}
+  <activeCharacter>k__BackingField: {fileID: 0}
+  <activeSpriteLib>k__BackingField: 0
+  equipmentManager: {fileID: 1188899891191775796}
+  statsManager: {fileID: 5596931408496927021}
+--- !u!114 &-3192286778083205860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 460541583084220565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4eae4045e5abc84ea0213eae89fc46f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  introDuration: 5
+  isPlayerTeam: 0

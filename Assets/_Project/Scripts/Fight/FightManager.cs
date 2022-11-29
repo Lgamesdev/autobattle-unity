@@ -17,11 +17,11 @@ namespace LGamesDev.Fighting
 
         public static FightManager Instance;
 
-        [SerializeField] private Transform pfCharacterBattle;
+        [SerializeField] private CharacterFight pfCharacterBattle;
 
         public CharacterFight playerCharacterFight;
-        private CharacterFight _activeCharacterFight;
         private CharacterFight _enemyCharacterFight;
+        private CharacterFight _activeCharacterFight;
 
         private Fight _fight;
         [SerializeField] private int currentAction = 0;
@@ -33,12 +33,12 @@ namespace LGamesDev.Fighting
         private void Awake()
         {
             Instance = this;
-            
-            _gameManager = GameManager.Instance;
         }
 
         private void Start()
         {
+            _gameManager = GameManager.Instance;
+            
             if (_gameManager == null)
             {
                 SceneManager.LoadScene((int)SceneIndexes.PersistentScene);
@@ -52,12 +52,15 @@ namespace LGamesDev.Fighting
             yield return StartCoroutine(playerCharacterFight.SetupCharacterFight(fight.Character));
 
             _enemyCharacterFight = SpawnCharacter();
+
             yield return StartCoroutine(_enemyCharacterFight.SetupCharacterFight(fight.Opponent));
         }
 
         public void StartFight()
         {
-            playerCharacterFight.Intro(_enemyCharacterFight, ChooseNextActiveCharacter);
+            //playerCharacterFight.Intro(_enemyCharacterFight, ChooseNextActiveCharacter);
+
+            ChooseNextActiveCharacter();
         }
 
         private CharacterFight SpawnCharacter()
@@ -69,9 +72,9 @@ namespace LGamesDev.Fighting
 
             Vector3 position = new Vector3(camWidth * 0.28f, -30);
 
-            var characterTransform = Instantiate(pfCharacterBattle, position, Quaternion.identity);
+            CharacterFight characterTransform = Instantiate(pfCharacterBattle, position, Quaternion.identity);
 
-            return characterTransform.GetComponent<CharacterFight>();
+            return characterTransform;
         }
 
         private void ChooseNextActiveCharacter()
@@ -80,40 +83,24 @@ namespace LGamesDev.Fighting
 
             FightAction fightAction = _fight.Actions[currentAction];
 
-            //Debug.Log("currentAction damage : " + _fight.Actions[currentAction].damage);
-            
             if (fightAction.playerTeam)
             {
-                //SetActiveCharacterBattle(playerCharacterFight);
-
-                //state = State.Busy;
                 playerCharacterFight.Attack(_enemyCharacterFight, _fight.Actions[currentAction].damage, fightAction.critialHit, ChooseNextActiveCharacter);
-                //Debug.Log("enemy current health : " + _enemyCharacterFight.GetComponent<CharacterHandler>().statsManager.GetCurrentHealth());
             }
             else
             {
-                //SetActiveCharacterBattle(_enemyCharacterFight);
-
-                //state = State.Busy;
                 _enemyCharacterFight.Attack(playerCharacterFight, _fight.Actions[currentAction].damage, fightAction.critialHit, ChooseNextActiveCharacter);
-                //Debug.Log("player current health : " + playerCharacterFight.GetComponent<CharacterHandler>().statsManager.GetCurrentHealth());
             }
 
             currentAction++;
         }
         
-        /*private void SetActiveCharacterBattle(CharacterFight characterFight)
-        {
-            //if (_activeCharacterFight != null) _activeCharacterFight.HideSelectionCircle();
-
-            _activeCharacterFight = characterFight;
-            //_activeCharacterFight.ShowSelectionCircle();
-        }*/
 
         private bool TestBattleOver()
         {
             if (currentAction < _fight.Actions.Count) return false;
             
+            Debug.Log("reward : " + _fight.Reward);
             OnFightOver?.Invoke(_fight.Reward, _fight.PlayerWin);
             HandlePlayerReward();
 
@@ -143,8 +130,6 @@ namespace LGamesDev.Fighting
                 this,
                 result =>
                 {
-                    Debug.Log("fight request result : " + result.ToString());
-
                     _gameManager.LoadFight(result);
                 }
             ));

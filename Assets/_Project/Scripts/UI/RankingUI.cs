@@ -48,7 +48,7 @@ namespace LGamesDev.UI
 
         private void SetupUI()
         {
-            Character playerCharacter = CharacterHandler.Instance.Character;
+            Character playerCharacter = CharacterManager.Instance.Character;
 
             CreateCharacterCard(new Character()
             {

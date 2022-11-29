@@ -11,25 +11,7 @@ namespace LGamesDev
     {
         public List<SpriteSwitcher> spriteSwitchers;
         public List<ColorPickerButton> colorPickers;
-
-        private void Start()
-        {
-            SpriteLibManager.Instance.OnSpriteLibChange += ResetSprites;
-        }
-
-        private void ResetSprites(SpriteLib spriteLib)
-        {
-            foreach (SpriteSwitcher switcher in spriteSwitchers)
-            {
-                switcher.Reset();
-            }
-
-            foreach (ColorPickerButton colorPickerButton in colorPickers)
-            {
-                colorPickerButton.GetComponent<Image>().color = colorPickerButton.activeColor;
-            }
-        }
-
+        
         public void RandomizeSprites()
         {
             foreach (SpriteSwitcher switcher in spriteSwitchers)
@@ -56,7 +38,6 @@ namespace LGamesDev
         Hair,
         Skin,
         Chest,
-        Belt,
         Pants
     }
 }

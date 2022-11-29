@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Project/UI%20Document/Style/Style.uss?fileID=7433441132597879392&amp;guid=d468030223d3af547b485e56249c794e&amp;type=3#Style" />
+    <ui:VisualElement name="Background" style="height: 364px; background-color: rgba(0, 0, 0, 0); flex-grow: 1; align-items: center; justify-content: center;">
+        <ui:VisualElement name="modalBox" style="height: 2200px; width: 1100px; background-color: rgb(255, 255, 255); justify-content: center; align-items: center; position: absolute; top: 250px; left: auto;">
+            <ui:VisualElement style="height: 1792px; width: 1012px; background-color: rgb(255, 255, 255); justify-content: center; align-items: center; position: absolute; top: 102px; left: auto;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

@@ -92,7 +92,17 @@ namespace LGamesDev.Request.Converters
 
             if (equipSlot == EquipmentSlot.Chest) 
             {
-                foreach (SpriteResolver resolver in CharacterHandler.Instance.chestResolvers) 
+                foreach (SpriteResolver resolver in CharacterManager.Instance.activeCharacter.chestResolvers) 
+                {
+                    string category = resolver.GetCategory();
+                    List<string> labels = spriteLib.spriteLibraryAsset.GetCategoryLabelNames(category).ToList();
+                    
+                    sprites.Add(spriteLib.GetSprite(category, labels[spriteId]));
+                }
+            } 
+            else if (equipSlot == EquipmentSlot.Pants)
+            {
+                foreach (SpriteResolver resolver in CharacterManager.Instance.activeCharacter.pantResolvers) 
                 {
                     string category = resolver.GetCategory();
                     List<string> labels = spriteLib.spriteLibraryAsset.GetCategoryLabelNames(category).ToList();
@@ -102,9 +112,8 @@ namespace LGamesDev.Request.Converters
             } else {
                 string category = equipSlot switch
                 {
-                    EquipmentSlot.Helmet => CharacterHandler.Instance.helmetResolver.GetCategory(),
-                    EquipmentSlot.Pants => CharacterHandler.Instance.pantResolver.GetCategory(),
-                    EquipmentSlot.Weapon => CharacterHandler.Instance.weaponResolver.GetCategory(),
+                    EquipmentSlot.Helmet => CharacterManager.Instance.activeCharacter.helmetResolver.GetCategory(),
+                    EquipmentSlot.Weapon => CharacterManager.Instance.activeCharacter.weaponResolver.GetCategory(),
                     _ => ""
                 };
 

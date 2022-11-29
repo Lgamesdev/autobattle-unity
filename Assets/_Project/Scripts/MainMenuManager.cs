@@ -21,10 +21,13 @@ namespace LGamesDev
 
         private void Start()
         {
+            //In start method cause of loading scene
             if (_gameManager == null)
             {
                 SceneManager.LoadScene((int)SceneIndexes.PersistentScene);
-            } else {
+            }
+            else
+            {
                 if (!_gameManager.GetAuthentication().PlayerConf.CreationDone)
                 {
                     _gameManager.LoadCustomization();

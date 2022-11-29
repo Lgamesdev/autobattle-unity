@@ -28,126 +28,85 @@ namespace LGamesDev
         [Header("Chest")]
         public List<SpriteResolver> chestResolvers;
         [Header("Pant")]
-        public SpriteResolver pantResolver;
+        public List<SpriteResolver> pantResolvers;
         
         [Header("Weapon")]
         public SpriteResolver weaponResolver;
         [Header("OffHand")]
         public SpriteResolver offHandResolver;
 
-        private Animator _animator;
-        private int _walkHash = Animator.StringToHash("Walk");
-        private int _runHash = Animator.StringToHash("Run");
-        private int _attackHash = Animator.StringToHash("Attack");
-        
-        [Header("Managers")]
-        public CharacterEquipmentManager equipmentManager;
-        public CharacterStatsManager statsManager;
-        
-        public readonly Character Character = new();
+        private Body _body;
 
-        public static CharacterHandler Instance;
+        private CharacterManager _characterManager;
 
-        private void Awake()
+        private CharacterAnimator _characterAnimator;
+        //private State _state = State.Idle;
+        public float movementSpeed = 10f;
+
+        private Action _onAttackHit;
+        private Action _onAttackComplete;
+
+        private void OnEnable()
         {
-            Instance = this;
-
-            _animator = GetComponent<Animator>();
+            _characterManager = GetComponentInParent<CharacterManager>();
+            _characterAnimator = GetComponent<CharacterAnimator>();
         }
 
         public IEnumerator SetupCharacter(Character character)
         {
-            //Setup Equipments
-            foreach (EquipmentSlot equipmentSlot in (EquipmentSlot[]) Enum.GetValues(typeof(EquipmentSlot)))
-            {
-                Equipment defaultEquipment = new Equipment() { equipmentSlot = equipmentSlot, isDefaultItem = true };
-                        
-                Character.Gear.equipments[(int)equipmentSlot] = new CharacterEquipment()
-                {
-                    item = defaultEquipment
-                };
-                yield return new WaitForEndOfFrame();
-            }
-            
-            foreach (CharacterEquipment characterEquipment in character.Gear.equipments)
-            {
-                Character.Gear.equipments[(int)characterEquipment.item.equipmentSlot] = characterEquipment;
-                yield return new WaitForEndOfFrame();
-            }
-            
-            //Setup Stats
-            foreach (StatType statType in (StatType[])Enum.GetValues(typeof(StatType)))
-            {
-                Character.Stats[(int)statType] = new Stat() { statType = statType };
-                yield return new WaitForEndOfFrame();
-            }
-            
-            foreach (Stat stat in character.Stats)
-            {
-                Character.Stats[(int)stat.statType] = stat;
-                yield return new WaitForEndOfFrame();
-            }
-            
-            //Setup Equipment Manager
-            equipmentManager = GetComponent<CharacterEquipmentManager>();
-            equipmentManager.SetupManager(Character.Gear);
-            equipmentManager.OnEquipmentChanged += UpdateEquipmentTexture;
-
-            //Setup Stat Manager
-            statsManager = GetComponent<CharacterStatsManager>();
-            statsManager.SetupManager(Character.Stats);
-
-            //Setup Wallet/Wallet Manager
-            Character.Wallet = character.Wallet;
-            GetComponent<PlayerWalletManager>()?.SetupManager(Character.Wallet);
-            
-            //Setup Inventory/Inventory Manager
-            Character.Inventory = character.Inventory;
-            GetComponent<PlayerInventoryManager>()?.SetupManager(Character.Inventory);
-            
             //Setup body
-            Character.Body = character.Body;
-            Body body = Character.Body;
-
-            GetComponent<SpriteLibManager>().SwitchLibrary(body.isMaleGender ? SpriteLib.Male : SpriteLib.Female);
+            _body = character.Body;
             
             List<string> labels = hairResolver.spriteLibrary.spriteLibraryAsset.GetCategoryLabelNames(hairResolver.GetCategory()).ToList();
-            hairResolver.SetCategoryAndLabel(hairResolver.GetCategory(), labels[body.hairIndex]);
-            ColorUtility.TryParseHtmlString(body.hairColor, out Color hairColor);
+            hairResolver.SetCategoryAndLabel(hairResolver.GetCategory(), labels[_body.hairIndex]);
+            ColorUtility.TryParseHtmlString(_body.hairColor, out Color hairColor);
             hairResolver.GetComponent<SpriteRenderer>().color = hairColor;
 
             eyeBrowsRenderer.color = hairColor;
 
-            labels = moustacheResolver.spriteLibrary.spriteLibraryAsset.GetCategoryLabelNames(moustacheResolver.GetCategory()).ToList();
-            moustacheResolver.SetCategoryAndLabel(moustacheResolver.GetCategory(), labels[body.isMaleGender ? body.moustacheIndex : 0]);
-            moustacheResolver.GetComponent<SpriteRenderer>().color = hairColor;
+            if (_body.isMaleGender)
+            {
+                labels = moustacheResolver.spriteLibrary.spriteLibraryAsset
+                    .GetCategoryLabelNames(moustacheResolver.GetCategory()).ToList();
+                
+                moustacheResolver.SetCategoryAndLabel(moustacheResolver.GetCategory(),
+                    labels[_body.moustacheIndex]);
+                
+                moustacheResolver.GetComponent<SpriteRenderer>().color = hairColor;
+                
+                labels = beardResolver.spriteLibrary.spriteLibraryAsset
+                    .GetCategoryLabelNames(beardResolver.GetCategory()).ToList();
+                
+                beardResolver.SetCategoryAndLabel(beardResolver.GetCategory(),
+                    labels[_body.beardIndex]);
+                
+                beardResolver.GetComponent<SpriteRenderer>().color = hairColor;
+            }
 
-            labels = beardResolver.spriteLibrary.spriteLibraryAsset.GetCategoryLabelNames(beardResolver.GetCategory()).ToList();
-            beardResolver.SetCategoryAndLabel(beardResolver.GetCategory(), labels[body.isMaleGender ? body.beardIndex : 0]);
-            beardResolver.GetComponent<SpriteRenderer>().color = hairColor;
-
-            ColorUtility.TryParseHtmlString(body.skinColor, out Color skinColor);
+            ColorUtility.TryParseHtmlString(_body.skinColor, out Color skinColor);
             foreach (SpriteResolver bodyResolver in bodyResolvers)
             {
                 bodyResolver.GetComponent<SpriteRenderer>().color = skinColor;
                 yield return new WaitForEndOfFrame();
             }
             
-            if (Character.Gear.equipments[(int)EquipmentSlot.Chest].item.spriteId == 0)
+            if (character.Gear.equipments[(int)EquipmentSlot.Chest].item.spriteId == 0)
             {
-                ColorUtility.TryParseHtmlString(body.chestColor, out Color chestColor);
+                ColorUtility.TryParseHtmlString(_body.chestColor, out Color chestColor);
                 foreach (SpriteResolver chestResolver in chestResolvers) {
                     chestResolver.GetComponent<SpriteRenderer>().color = chestColor;
                 }
             }
 
-            if (Character.Gear.equipments[(int)EquipmentSlot.Pants].item.spriteId == 0)
+            if (character.Gear.equipments[(int)EquipmentSlot.Pants].item.spriteId == 0)
             {
-                ColorUtility.TryParseHtmlString(body.shortColor, out Color shortColor);
-                pantResolver.GetComponent<SpriteRenderer>().color = shortColor;
+                ColorUtility.TryParseHtmlString(_body.shortColor, out Color pantColor);
+                foreach (SpriteResolver pantResolver in pantResolvers) {
+                    pantResolver.GetComponent<SpriteRenderer>().color = pantColor;
+                }
             }
 
-            foreach (CharacterEquipment characterEquipment in Character.Gear.equipments) {
+            foreach (CharacterEquipment characterEquipment in character.Gear.equipments) {
                 if (characterEquipment.item != null)
                 {
                     //Debug.Log("equipment : " + characterEquipment.ToString());
@@ -167,7 +126,7 @@ namespace LGamesDev
             yield return new WaitForEndOfFrame();
         }
 
-        private void UpdateEquipmentTexture(CharacterEquipment newEquipment, CharacterEquipment oldEquipment)
+        public void UpdateEquipmentTexture(CharacterEquipment newEquipment, CharacterEquipment oldEquipment)
         {
             List<string> labels;
             if (newEquipment != null)
@@ -176,7 +135,7 @@ namespace LGamesDev
                 switch (newEquipment.item.equipmentSlot)
                 {
                     case EquipmentSlot.Helmet:
-                        if (Character.Body.isMaleGender)
+                        if (_body.isMaleGender)
                         {
                             labels = hairResolver.spriteLibrary.spriteLibraryAsset
                                 .GetCategoryLabelNames(hairResolver.GetCategory()).ToList();
@@ -199,11 +158,14 @@ namespace LGamesDev
                         break;
                     
                     case EquipmentSlot.Pants:
-                        pantResolver.GetComponent<SpriteRenderer>().color = Color.white;
+                        foreach (SpriteResolver resolver in pantResolvers)
+                        {
+                            resolver.GetComponent<SpriteRenderer>().color = Color.white;
                         
-                        labels = pantResolver.spriteLibrary.spriteLibraryAsset
-                            .GetCategoryLabelNames(pantResolver.GetCategory()).ToList();
-                        pantResolver.SetCategoryAndLabel(pantResolver.GetCategory(), labels[newEquipment.item.spriteId]);
+                            labels = resolver.spriteLibrary.spriteLibraryAsset
+                                .GetCategoryLabelNames(resolver.GetCategory()).ToList();
+                            resolver.SetCategoryAndLabel(resolver.GetCategory(), labels[newEquipment.item.spriteId]);
+                        }
                         break;
                     
                     case EquipmentSlot.Weapon:
@@ -228,7 +190,7 @@ namespace LGamesDev
                         break;
 
                     case EquipmentSlot.Chest:
-                        ColorUtility.TryParseHtmlString(Character.Body.chestColor, out Color chestColor);
+                        ColorUtility.TryParseHtmlString(_body.chestColor, out Color chestColor);
                         
                         foreach (SpriteResolver resolver in chestResolvers) {
                             labels = resolver.spriteLibrary.spriteLibraryAsset
@@ -240,12 +202,16 @@ namespace LGamesDev
                         break;
                     
                     case EquipmentSlot.Pants:
-                        labels = pantResolver.spriteLibrary.spriteLibraryAsset
-                            .GetCategoryLabelNames(pantResolver.GetCategory()).ToList();
-                        pantResolver.SetCategoryAndLabel(pantResolver.GetCategory(), labels[0]);
+                        ColorUtility.TryParseHtmlString(_body.shortColor, out Color pantColor);
+
+                        foreach (SpriteResolver resolver in pantResolvers)
+                        {
+                            labels = resolver.spriteLibrary.spriteLibraryAsset
+                                .GetCategoryLabelNames(resolver.GetCategory()).ToList();
+                            resolver.SetCategoryAndLabel(resolver.GetCategory(), labels[0]);
                         
-                        ColorUtility.TryParseHtmlString(Character.Body.shortColor, out Color shortColor);
-                        pantResolver.GetComponent<SpriteRenderer>().color = shortColor;
+                            resolver.GetComponent<SpriteRenderer>().color = pantColor;
+                        }
                         break;
                     
                     case EquipmentSlot.Weapon:
@@ -260,92 +226,72 @@ namespace LGamesDev
             }
         }
 
-        public void PlayAnimMove(Vector3 moveDir) {
-            /*if (moveVector == Vector3.zero) {
-                // Idle
-                unitAnimation.PlayAnim(idleAnimType, lastMoveDir, idleFrameRate, null, null, null);
-            } else {
-                // Moving
-                lastMoveDir = moveDir;
-                unitAnimation.PlayAnim(walkAnimType, lastMoveDir, walkFrameRate, null, null, null);
-            }*/
+        public void RunToPosition(Vector3 runTargetPosition, Action onRunComplete)
+        {
+            _characterAnimator.PlayRun();
+            _characterAnimator.SetMoveVector(Vector3.zero);
+
+            LTDescr runAnim = LeanTween.move(_characterManager.gameObject, runTargetPosition, 2f);
+
+            if (onRunComplete != null)
+            {
+                runAnim.setOnComplete(() =>
+                {
+                    //_state = State.Idle;
+                    _characterAnimator.StopRun();
+                    onRunComplete?.Invoke();
+                });
+            }
         }
         
-        public void PlayAnimAttack(Vector3 attackDir, Action onHit, Action onComplete) {
-            _animator.SetTrigger(_attackHash);
-            onHit?.Invoke();
-            onComplete?.Invoke();
-
-            /*unitAnimation.PlayAnimForced(attackUnitAnim, attackDir, 1f, (UnitAnim unitAnim) => {
-                if (onComplete != null) onComplete();
-            }, (string trigger) => {
-                if (onHit != null) onHit();
-            }, null);*/
-        }
-
-        private IEnumerator PlayAnim(int animHash, Vector3 attackDir, Action onHit, Action onComplete)
-        {
-            _animator.SetTrigger(animHash);
-
-            float animLength = _animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
-            yield return new WaitForSeconds(animLength);
-
-            onComplete?.Invoke();
-        }
-
-        /*public virtual void PlayAnimIdle() {
-            animatedWalker.SetMoveVector(Vector3.zero);
-        }*/
-
-        /*public virtual void PlayAnimIdle(Vector3 animDir) {
-            animatedWalker.PlayIdleAnim(animDir);
-        }*/
-
-        /*public virtual void PlayAnimSlideRight() {
-            unitAnimation.PlayAnimForced(UnitAnim.GetUnitAnim("dBareHands_SlideRight"), 1f, null);
-        }*/
-
-        /*public virtual void PlayAnimSlideLeft() {
-            unitAnimation.PlayAnimForced(UnitAnim.GetUnitAnim("dBareHands_SlideLeft"), 1f, null);
-        }*/
-
-        /*public virtual void PlayAnimLyingUp() {
-            unitAnimation.PlayAnimForced(UnitAnim.GetUnitAnim("LyingUp"), 1f, null);
-        }*/
-
-        /*public virtual void PlayAnimJump(Vector3 moveDir)
-        {
-            if (moveDir.x >= 0)
+        public void Attack(Vector3 attackDir, Action onHit, Action onComplete) {
+            //_state = State.Busy;
+            Debug.Log("got weapon : " + _characterManager.equipmentManager.GotWeapon());
+            if (_characterManager.equipmentManager.GotWeapon())
             {
-                unitAnimation.PlayAnim(UnitAnim.GetUnitAnim("dBareHands_JumpRight"));
+                _characterAnimator.PlaySwordAttack();
             }
             else
             {
-                unitAnimation.PlayAnim(UnitAnim.GetUnitAnim("dBareHands_JumpLeft"));
+                _characterAnimator.PlayHandAttack();
             }
-        }*/
 
-        /*public virtual void SetAnimsBareHands() {
-            animatedWalker.SetAnimations(UnitAnimType.GetUnitAnimType("dBareHands_Idle"), UnitAnimType.GetUnitAnimType("dBareHands_Walk"), 1f, 1f);
-            attackUnitAnim = UnitAnimType.GetUnitAnimType("dBareHands_PunchQuickAttack");
-        }*/
+            _onAttackHit = onHit;
+            _onAttackComplete = onComplete;
+        }
 
-        /*public virtual void SetAnimsSwordTwoHandedBack() {
-            animatedWalker.SetAnimations(UnitAnimType.GetUnitAnimType("dSwordTwoHandedBack_Idle"), UnitAnimType.GetUnitAnimType("dSwordTwoHandedBack_Walk"), 1f, 1f);
-            attackUnitAnim = UnitAnimType.GetUnitAnimType("dSwordTwoHandedBack_Sword");
-        }*/
+        public void OnAttackHit()
+        {
+            _onAttackHit?.Invoke();
+        }
 
-        /*public virtual void SetAnimsSwordShield() {
-            animatedWalker.SetAnimations(UnitAnimType.GetUnitAnimType("dSwordShield_Idle"), UnitAnimType.GetUnitAnimType("dSwordShield_Walk"), 1f, 1f);
-            attackUnitAnim = UnitAnimType.GetUnitAnimType("dSwordShield_Attack");
-        }*/
+        public void OnAttackComplete()
+        {
+            _onAttackComplete?.Invoke();
+        }
+        
+        public void PlayAnimIdle()
+        {
+            _characterAnimator.SetMoveVector(Vector3.zero);
+        }
 
-        /*public virtual Vector3 GetHandLPosition() {
-            return unitSkeleton.GetBodyPartPosition("HandL");
-        }*/
-
-        /*public virtual Vector3 GetHandRPosition() {
-            return unitSkeleton.GetBodyPartPosition("HandR");
-        }*/
+        /*public void PlayAnimMove(Vector3 moveDir) {
+           if (moveVector == Vector3.zero) {
+               // Idle
+               unitAnimation.PlayAnim(idleAnimType, lastMoveDir, idleFrameRate, null, null, null);
+           } else {
+               // Moving
+               lastMoveDir = moveDir;
+               unitAnimation.PlayAnim(walkAnimType, lastMoveDir, walkFrameRate, null, null, null);
+           }
+       }*/
+        
+        private enum State
+        {
+            Idle,
+            Running,
+            Walking,
+            Busy
+        }
     }
 }

@@ -135,7 +135,7 @@ namespace LGamesDev.UI
 
         private void UnEquipItem()
         {
-            CharacterHandler.Instance.equipmentManager.UnEquip((int)((Equipment)_currentCharacterItem.Item).equipmentSlot);
+            CharacterManager.Instance.equipmentManager.UnEquip((int)((Equipment)_currentCharacterItem.Item).equipmentSlot);
             Hide();
         }
 

@@ -8,16 +8,9 @@ namespace LGamesDev
     {
         public SpriteLib spriteLib;
 
-        public void SwitchLib()
+        public void SwitchCharacter()
         {
-            SpriteLibManager.Instance.SwitchLibrary(spriteLib);
+            CharacterManager.Instance.CreateCharacter(spriteLib);
         }
-    }
-
-
-    public enum SpriteLib
-    {
-        Male,
-        Female
     }
 }

@@ -1,4 +1,5 @@
-﻿using LGamesDev.Core.Request;
+﻿using LGamesDev.Core.Player;
+using LGamesDev.Core.Request;
 using UnityEngine;
 
 namespace LGamesDev.Core.Character
@@ -70,8 +71,11 @@ namespace LGamesDev.Core.Character
                     OnEquipmentChanged?.Invoke(null, oldCharacterEquipment);
                 }
             ));
-            
-            
+        }
+
+        public bool GotWeapon()
+        {
+            return currentGear.equipments[(int)EquipmentSlot.Weapon].item != null;
         }
     }
 }

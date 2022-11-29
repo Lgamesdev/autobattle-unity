@@ -1,5 +1,8 @@
+using System;
+using LGamesDev.Core;
 using LGamesDev.Core.Request;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace LGamesDev
 {
@@ -8,10 +11,15 @@ namespace LGamesDev
         private GameManager _gameManager;
 
         public TabGroup tabGroup;
-        
-        private void Awake()
+
+        private void Start()
         {
             _gameManager = GameManager.Instance;
+            
+            if (_gameManager == null)
+            {
+                SceneManager.LoadScene((int)SceneIndexes.PersistentScene);
+            }
         }
 
         public void SubmitUserBody()
@@ -51,9 +59,6 @@ namespace LGamesDev
                     case SwitchBodyColorPart.Chest:
                         body.chestColor = "#" + ColorUtility.ToHtmlStringRGB(colorPicker.activeColor);
                         break;
-                    /*case SwitchBodyColorPart.Belt:
-                        body.beltColor = "#" + ColorUtility.ToHtmlStringRGB(colorPicker.activeColor);
-                        break;*/
                     case SwitchBodyColorPart.Pants:
                         body.shortColor = "#" + ColorUtility.ToHtmlStringRGB(colorPicker.activeColor);
                         break;

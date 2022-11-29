@@ -52,7 +52,6 @@ namespace LGamesDev
                     },
                     baseCharacterItem =>
                     {
-                        Debug.Log("item successfully buy : " + baseCharacterItem.ToString());
                         SpendCurrency(CurrencyType.Gold, item.cost);
                         PlayerInventoryManager.Instance.AddItem(baseCharacterItem);
                     }

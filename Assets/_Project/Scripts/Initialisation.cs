@@ -46,18 +46,6 @@ namespace LGamesDev
                     character.Body = result;
                 }
             ));
-            /*_coroutinesLoading.Add(InitialisationStage.Infos, PlayerConfigHandler.Load(
-                this,
-                ShowErrorWindow,
-                result =>
-                {
-                    Debug.Log("player config : " + result.ToString());
-                    
-                    _gameManager.SetPlayerConfig(result);
-
-                    if (!result.CreationDone) _gameManager.LoadCustomization();
-                }
-            ));*/
             _coroutinesLoading.Add(InitialisationStage.Progression, PlayerProgressionHandler.Load(
                 this,
                 ShowErrorWindow,
@@ -119,10 +107,10 @@ namespace LGamesDev
                     character.Stats = result;
                 }
             ));
-            
+
             //TODO : change dictionnary to another collection for multiple coroutine on 1 InitialisationStage
             
-            _coroutinesLoading.Add(InitialisationStage.Character, CharacterHandler.Instance.SetupCharacter(character));
+            _coroutinesLoading.Add(InitialisationStage.Character, CharacterManager.Instance.SetupCharacter(character));
             
             StartCoroutine(SetupCoroutines());
         }

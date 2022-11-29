@@ -8,69 +8,71 @@ using Random = UnityEngine.Random;
 
 public class SpriteSwitcher : MonoBehaviour
 {
-    [Header("SpriteResolvers To Switch")]
-    public List<SpriteResolver> bodyParts;
+    public SpriteResolver bodyPart;
 
     public SwitchBodyPart switchBodyPart;
 
     public int activeIndex;
 
-    private void Start()
+    private void OnEnable()
     {
+        InitializeSprite();
+    }
+
+    private void InitializeSprite()
+    {
+        bodyPart = null;
+
+        bodyPart = switchBodyPart switch
+        {
+            SwitchBodyPart.Hair => CharacterManager.Instance.activeCharacter.hairResolver,
+            SwitchBodyPart.Moustache => CharacterManager.Instance.activeCharacter.moustacheResolver,
+            SwitchBodyPart.Beard => CharacterManager.Instance.activeCharacter.beardResolver,
+            _ => bodyPart
+        };
+
         Reset();
     }
 
     public void NextOption()
     {
-        foreach (SpriteResolver sr in bodyParts)
+        List<string> labels = bodyPart.spriteLibrary.spriteLibraryAsset.GetCategoryLabelNames(bodyPart.GetCategory()).ToList();
+
+        activeIndex = labels.FindIndex(a => a.Contains(bodyPart.GetLabel())) + 1;
+        if (activeIndex >= labels.Count - 1)
         {
-            List<string> labels = sr.spriteLibrary.spriteLibraryAsset.GetCategoryLabelNames(sr.GetCategory()).ToList();
-
-            activeIndex = labels.FindIndex(a => a.Contains(sr.GetLabel())) + 1;
-            if (activeIndex >= labels.Count - 1)
-            {
-                activeIndex = 0;
-            }
-
-            sr.SetCategoryAndLabel(sr.GetCategory(), labels[activeIndex]);
+            activeIndex = 0;
         }
+
+        bodyPart.SetCategoryAndLabel(bodyPart.GetCategory(), labels[activeIndex]);
     }
     
     public void PreviousOption()
     {
-        foreach (SpriteResolver sr in bodyParts)
+        List<string> labels = bodyPart.spriteLibrary.spriteLibraryAsset.GetCategoryLabelNames(bodyPart.GetCategory()).ToList();
+
+        activeIndex = labels.FindIndex(a => a.Contains(bodyPart.GetLabel())) - 1;
+        if (activeIndex <= -1)
         {
-            List<string> labels = sr.spriteLibrary.spriteLibraryAsset.GetCategoryLabelNames(sr.GetCategory()).ToList();
-
-            activeIndex = labels.FindIndex(a => a.Contains(sr.GetLabel())) - 1;
-            if (activeIndex <= -1)
-            {
-                activeIndex = labels.Count - 1;
-            }
-
-            sr.SetCategoryAndLabel(sr.GetCategory(), labels[activeIndex]);
+            activeIndex = labels.Count - 1;
         }
+
+        bodyPart.SetCategoryAndLabel(bodyPart.GetCategory(), labels[activeIndex]);
     }
 
     public void Reset()
     {
-        foreach (SpriteResolver sr in bodyParts)
-        {
-            List<string> labels = sr.spriteLibrary.spriteLibraryAsset.GetCategoryLabelNames(sr.GetCategory()).ToList();
-            activeIndex = 0;
+        List<string> labels = bodyPart.spriteLibrary.spriteLibraryAsset.GetCategoryLabelNames(bodyPart.GetCategory()).ToList();
+        activeIndex = 0;
 
-            sr.SetCategoryAndLabel(sr.GetCategory(), labels[activeIndex]);
-        }
+        bodyPart.SetCategoryAndLabel(bodyPart.GetCategory(), labels[activeIndex]);
     }
 
     public void Randomize()
     {
-        foreach (SpriteResolver sr in bodyParts)
-        {
-            List<string> labels = sr.spriteLibrary.spriteLibraryAsset.GetCategoryLabelNames(sr.GetCategory()).ToList();
-            activeIndex = Random.Range(0, labels.Count);
+        List<string> labels = bodyPart.spriteLibrary.spriteLibraryAsset.GetCategoryLabelNames(bodyPart.GetCategory()).ToList();
+        activeIndex = Random.Range(0, labels.Count);
 
-            sr.SetCategoryAndLabel(sr.GetCategory(), labels[activeIndex]);
-        }
+        bodyPart.SetCategoryAndLabel(bodyPart.GetCategory(), labels[activeIndex]);
     }
 }

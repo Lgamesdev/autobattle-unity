@@ -45,6 +45,8 @@ public class ShopItemUI : MonoBehaviour, IPointerClickHandler
                 statSlotRectTransform.Find("values").Find("modifier").gameObject.SetActive(false);
             }
         }
+        
+        content.gameObject.SetActive(false);
     }
 
     public void OnBuyButton()

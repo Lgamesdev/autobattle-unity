@@ -15,9 +15,8 @@ namespace LGamesDev
 
         private Inventory _inventory;
 
-        public List<IBaseCharacterItem> Items => _inventory.Items;
+        public List<IBaseCharacterItem> items => _inventory.Items;
         public int space => _inventory.space;
-        
 
         #region Singleton
         private void Awake()

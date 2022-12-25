@@ -56,7 +56,7 @@ namespace LGamesDev
         {
             //Setup body
             _body = character.Body;
-            
+
             List<string> labels = hairResolver.spriteLibrary.spriteLibraryAsset.GetCategoryLabelNames(hairResolver.GetCategory()).ToList();
             hairResolver.SetCategoryAndLabel(hairResolver.GetCategory(), labels[_body.hairIndex]);
             ColorUtility.TryParseHtmlString(_body.hairColor, out Color hairColor);
@@ -231,7 +231,7 @@ namespace LGamesDev
             _characterAnimator.PlayRun();
             _characterAnimator.SetMoveVector(Vector3.zero);
 
-            LTDescr runAnim = LeanTween.move(_characterManager.gameObject, runTargetPosition, 2f);
+            LTDescr runAnim = LeanTween.move(_characterManager.gameObject, runTargetPosition, 1.4f);
 
             if (onRunComplete != null)
             {

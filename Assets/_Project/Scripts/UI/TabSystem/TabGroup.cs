@@ -21,6 +21,8 @@ public class TabGroup : MonoBehaviour
 
     public void OnTabSelected(TabButton button)
     {
+        if (button == selectedTab) return;
+        
         if (selectedTab != null)
         {
             selectedTab.background.color = new Color(
@@ -35,8 +37,6 @@ public class TabGroup : MonoBehaviour
         {
             objectActive.SetActive(false);
         }
-
-        if (button == selectedTab) return;
 
         selectedTab = button;
         button.background.color = new Color(

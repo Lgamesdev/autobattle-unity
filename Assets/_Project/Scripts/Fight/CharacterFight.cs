@@ -32,7 +32,7 @@ namespace LGamesDev.Fighting
 
         public IEnumerator SetupCharacterFight(Character character)
         {
-            transform.localScale = new Vector3(.4f, .4f, 1);
+            transform.localScale = new Vector3(1.4f, 1.4f, 1);
             
             yield return StartCoroutine(_characterManager.SetupCharacter(character));
             
@@ -41,13 +41,13 @@ namespace LGamesDev.Fighting
             if (isPlayerTeam)
             {
                 _healthBar = FindObjectOfType<HealthPannelUI>().playerHealthBar;
-                //FindObjectOfType<UsernamePanelUI>().playerUsername.text = character.Username;
+                FindObjectOfType<UsernamePanelUI>().playerUsername.text = character.Username;
                 RewardUI.Instance.SetLevelSystem(_levelSystem);
             }
             else
             {
                 _healthBar = FindObjectOfType<HealthPannelUI>().opponentHealthBar;
-                //FindObjectOfType<UsernamePanelUI>().opponentUsername.text = character.Username;
+                FindObjectOfType<UsernamePanelUI>().opponentUsername.text = character.Username;
             }
             
             _healthBar.SetMaxHealth(_characterStatsManager.GetMaxHealth());

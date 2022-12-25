@@ -94,7 +94,6 @@ namespace LGamesDev
                 ShowErrorWindow,
                 result =>
                 {
-                    //Debug.Log(result.ToString());
                     character.Inventory = result;
                 }
             ));

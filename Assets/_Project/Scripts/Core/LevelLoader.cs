@@ -47,15 +47,4 @@ namespace LGamesDev.Core
             SceneManager.LoadScene(sceneIndex);
         }
     }
-
-    public enum SceneIndexes
-    {
-        PersistentScene = 0,
-        Authentication = 1,
-        Customization = 2,
-        MainMenu = 3,
-        Inventory = 4,
-        Shop = 5,
-        Fight = 6
-    }
 }

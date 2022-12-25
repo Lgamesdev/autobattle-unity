@@ -38,10 +38,14 @@ namespace LGamesDev.UI
         private void UpdateInventoryUI()
         {
             for (var i = 0; i < _slots.Length; i++)
-                if (i < _inventoryManager.Items.Count)
-                    _slots[i].AddItem(_inventoryManager.Items[i]);
+                if (i < _inventoryManager.items.Count)
+                {
+                    _slots[i].AddItem(_inventoryManager.items[i]);
+                }
                 else
+                {
                     _slots[i].ClearSlot();
+                }
         }
 
         private void SetupInventoryUI()

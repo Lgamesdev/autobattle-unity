@@ -194,4 +194,13 @@ namespace LGamesDev
             yield return new WaitForSeconds(0.5f);
         }
     }
+    
+    public enum SceneIndexes
+    {
+        PersistentScene = 0,
+        Authentication = 1,
+        Customization = 2,
+        MainMenu = 3,
+        Fight = 4
+    }
 }

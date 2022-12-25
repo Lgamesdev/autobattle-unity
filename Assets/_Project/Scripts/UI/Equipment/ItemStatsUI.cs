@@ -32,8 +32,8 @@ namespace LGamesDev.UI
             _icon = _itemSlot.Find("icon").GetComponent<Image>();
             _itemName = transform.Find("itemName").GetComponent<TextMeshProUGUI>();
 
-            _useButton = transform.Find("useButton");
-            _sellButton = transform.Find("sellButton");
+            _useButton = transform.Find("Buttons").Find("useButton");
+            _sellButton = transform.Find("Buttons").Find("sellButton");
             
             _statsParent = transform.Find("StatsParent");
         }

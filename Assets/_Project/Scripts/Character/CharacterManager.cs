@@ -23,6 +23,8 @@ namespace LGamesDev
         [Header("Managers")] 
         public CharacterEquipmentManager equipmentManager;
         public CharacterStatsManager statsManager;
+        public PlayerInventoryManager inventoryManager;
+        public PlayerWalletManager walletManager;
 
         public readonly Character Character = new();
 
@@ -36,6 +38,10 @@ namespace LGamesDev
 
         public IEnumerator SetupCharacter(Character character)
         {
+            Character.Level = character.Level;
+            Character.Experience = character.Experience;
+            Character.Ranking = character.Ranking;
+            
             //Setup Equipments
             foreach (EquipmentSlot equipmentSlot in (EquipmentSlot[])Enum.GetValues(typeof(EquipmentSlot)))
             {
@@ -77,11 +83,19 @@ namespace LGamesDev
 
             //Setup Wallet/Wallet Manager
             Character.Wallet = character.Wallet;
-            GetComponent<PlayerWalletManager>()?.SetupManager(Character.Wallet);
+            walletManager = GetComponent<PlayerWalletManager>();
+            if (walletManager != null)
+            {
+                walletManager.SetupManager(Character.Wallet);
+            }
 
             //Setup Inventory/Inventory Manager
             Character.Inventory = character.Inventory;
-            GetComponent<PlayerInventoryManager>()?.SetupManager(Character.Inventory);
+            inventoryManager = GetComponent<PlayerInventoryManager>();
+            if (inventoryManager != null)
+            {
+                inventoryManager.SetupManager(Character.Inventory);
+            }
 
             Character.Body = character.Body;
 

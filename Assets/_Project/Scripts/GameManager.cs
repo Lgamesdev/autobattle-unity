@@ -18,6 +18,7 @@ namespace LGamesDev
     {
         public static GameManager Instance;
         
+        [SerializeField] private AudioManager audioManager;
         [SerializeField] private SceneLoader sceneLoader;
 
         public LoadingScreen loadingScreen;
@@ -30,6 +31,8 @@ namespace LGamesDev
         {
             Instance = this;
             
+            //Audio Manager
+            audioManager = GetComponent<AudioManager>();
             //Scene Loader
             sceneLoader = GetComponent<SceneLoader>();
             //Loading Screen
@@ -66,9 +69,19 @@ namespace LGamesDev
             StartCoroutine(sceneLoader.LoadMainMenu());
         }
 
+        public void PlayMainMenuMusic()
+        {
+            audioManager.PlayMainMenuMusic(1.5f);
+        }
+
         public void LoadFight(Fight fight)
         {
             StartCoroutine(sceneLoader.LoadFight(fight));
+        }
+        
+        public void PlayFightMusic()
+        {
+            audioManager.PlayFightMusic(1.5f);
         }
 
         public void Logout()

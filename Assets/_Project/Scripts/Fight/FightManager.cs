@@ -1,12 +1,8 @@
-using System;
 using System.Collections;
-using LGamesDev.Core;
 using LGamesDev.Core.Player;
 using LGamesDev.Core.Request;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
-using Random = UnityEngine.Random;
 
 namespace LGamesDev.Fighting
 {
@@ -61,6 +57,8 @@ namespace LGamesDev.Fighting
             //playerCharacterFight.Intro(_enemyCharacterFight, ChooseNextActiveCharacter);
 
             ChooseNextActiveCharacter();
+            
+            _gameManager.PlayFightMusic();
         }
 
         private CharacterFight SpawnCharacter()

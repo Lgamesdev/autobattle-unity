@@ -37,6 +37,8 @@ namespace LGamesDev
                     Initialisation.Current.LoadMainMenu();
                 }
             }
+            
+            _gameManager.PlayMainMenuMusic();
         }
 
         private void SetupScene()

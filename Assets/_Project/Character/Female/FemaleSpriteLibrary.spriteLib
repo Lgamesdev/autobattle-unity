@@ -320,24 +320,24 @@ MonoBehaviour:
       m_SpriteOverride: {fileID: 0}
     - m_Name: Iron
       m_Hash: 406998946
-      m_Sprite: {fileID: 1884067612158492637, guid: be63bfc74f769124db90ab108749bb17, type: 3}
+      m_Sprite: {fileID: -4192470445588230428, guid: be63bfc74f769124db90ab108749bb17, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: 1884067612158492637, guid: be63bfc74f769124db90ab108749bb17, type: 3}
+      m_SpriteOverride: {fileID: -4192470445588230428, guid: be63bfc74f769124db90ab108749bb17, type: 3}
     - m_Name: Barbarian
       m_Hash: 6889637
-      m_Sprite: {fileID: -4972208248811644285, guid: 0b9916a68298ebb43a58d3659c231756, type: 3}
+      m_Sprite: {fileID: -9195500623820997373, guid: 0b9916a68298ebb43a58d3659c231756, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: -4972208248811644285, guid: 0b9916a68298ebb43a58d3659c231756, type: 3}
+      m_SpriteOverride: {fileID: -9195500623820997373, guid: 0b9916a68298ebb43a58d3659c231756, type: 3}
     - m_Name: Gladiator
       m_Hash: 1026877223
-      m_Sprite: {fileID: 1855188297401158047, guid: 17a1a25dc82a60046ac3b79bd7294d47, type: 3}
+      m_Sprite: {fileID: 2259365767341749840, guid: 17a1a25dc82a60046ac3b79bd7294d47, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: 1855188297401158047, guid: 17a1a25dc82a60046ac3b79bd7294d47, type: 3}
+      m_SpriteOverride: {fileID: 2259365767341749840, guid: 17a1a25dc82a60046ac3b79bd7294d47, type: 3}
     - m_Name: Infantry
       m_Hash: 240587261
-      m_Sprite: {fileID: 0}
+      m_Sprite: {fileID: -3707577752281659116, guid: d58ab7de8eadeb444a0d425c0594011e, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: 0}
+      m_SpriteOverride: {fileID: -3707577752281659116, guid: d58ab7de8eadeb444a0d425c0594011e, type: 3}
     - m_Name: Knight
       m_Hash: 61186950
       m_Sprite: {fileID: 0}
@@ -356,29 +356,29 @@ MonoBehaviour:
       m_SpriteOverride: {fileID: 0}
     - m_Name: Beginner
       m_Hash: 704035469
-      m_Sprite: {fileID: 7625612191243766476, guid: 2e449b1de5b60d146984f3b87c3e791f, type: 3}
+      m_Sprite: {fileID: -8435203955971167259, guid: 2e449b1de5b60d146984f3b87c3e791f, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: 7625612191243766476, guid: 2e449b1de5b60d146984f3b87c3e791f, type: 3}
+      m_SpriteOverride: {fileID: -8435203955971167259, guid: 2e449b1de5b60d146984f3b87c3e791f, type: 3}
     - m_Name: Iron
       m_Hash: 406998946
-      m_Sprite: {fileID: 2752131656051459095, guid: be63bfc74f769124db90ab108749bb17, type: 3}
+      m_Sprite: {fileID: -3712942605473976279, guid: be63bfc74f769124db90ab108749bb17, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: 2752131656051459095, guid: be63bfc74f769124db90ab108749bb17, type: 3}
+      m_SpriteOverride: {fileID: -3712942605473976279, guid: be63bfc74f769124db90ab108749bb17, type: 3}
     - m_Name: Barbarian
       m_Hash: 6889637
-      m_Sprite: {fileID: -5391590699157429504, guid: 0b9916a68298ebb43a58d3659c231756, type: 3}
+      m_Sprite: {fileID: -1696815204981909895, guid: 0b9916a68298ebb43a58d3659c231756, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: -5391590699157429504, guid: 0b9916a68298ebb43a58d3659c231756, type: 3}
+      m_SpriteOverride: {fileID: -1696815204981909895, guid: 0b9916a68298ebb43a58d3659c231756, type: 3}
     - m_Name: Gladiator
       m_Hash: 1026877223
-      m_Sprite: {fileID: -7131988514757834261, guid: 17a1a25dc82a60046ac3b79bd7294d47, type: 3}
+      m_Sprite: {fileID: -7117520190514976573, guid: 17a1a25dc82a60046ac3b79bd7294d47, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: -7131988514757834261, guid: 17a1a25dc82a60046ac3b79bd7294d47, type: 3}
+      m_SpriteOverride: {fileID: -7117520190514976573, guid: 17a1a25dc82a60046ac3b79bd7294d47, type: 3}
     - m_Name: Infantry
       m_Hash: 240587261
-      m_Sprite: {fileID: 0}
+      m_Sprite: {fileID: -2112889023466144130, guid: d58ab7de8eadeb444a0d425c0594011e, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: 0}
+      m_SpriteOverride: {fileID: -2112889023466144130, guid: d58ab7de8eadeb444a0d425c0594011e, type: 3}
     - m_Name: Knight
       m_Hash: 61186950
       m_Sprite: {fileID: 0}
@@ -397,29 +397,29 @@ MonoBehaviour:
       m_SpriteOverride: {fileID: 0}
     - m_Name: Beginner
       m_Hash: 704035469
-      m_Sprite: {fileID: -4814838964722624965, guid: 2e449b1de5b60d146984f3b87c3e791f, type: 3}
+      m_Sprite: {fileID: 3089283007131541555, guid: 2e449b1de5b60d146984f3b87c3e791f, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: -4814838964722624965, guid: 2e449b1de5b60d146984f3b87c3e791f, type: 3}
+      m_SpriteOverride: {fileID: 3089283007131541555, guid: 2e449b1de5b60d146984f3b87c3e791f, type: 3}
     - m_Name: Iron
       m_Hash: 406998946
-      m_Sprite: {fileID: -4115930024572460624, guid: be63bfc74f769124db90ab108749bb17, type: 3}
+      m_Sprite: {fileID: 1884067612158492637, guid: be63bfc74f769124db90ab108749bb17, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: -4115930024572460624, guid: be63bfc74f769124db90ab108749bb17, type: 3}
+      m_SpriteOverride: {fileID: 1884067612158492637, guid: be63bfc74f769124db90ab108749bb17, type: 3}
     - m_Name: Barbarian
       m_Hash: 6889637
-      m_Sprite: {fileID: -4178657843529190746, guid: 0b9916a68298ebb43a58d3659c231756, type: 3}
+      m_Sprite: {fileID: -4972208248811644285, guid: 0b9916a68298ebb43a58d3659c231756, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: -4178657843529190746, guid: 0b9916a68298ebb43a58d3659c231756, type: 3}
+      m_SpriteOverride: {fileID: -4972208248811644285, guid: 0b9916a68298ebb43a58d3659c231756, type: 3}
     - m_Name: Gladiator
       m_Hash: 1026877223
-      m_Sprite: {fileID: 1491118088608976169, guid: 17a1a25dc82a60046ac3b79bd7294d47, type: 3}
+      m_Sprite: {fileID: 1186543805714611041, guid: 17a1a25dc82a60046ac3b79bd7294d47, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: 1491118088608976169, guid: 17a1a25dc82a60046ac3b79bd7294d47, type: 3}
+      m_SpriteOverride: {fileID: 1186543805714611041, guid: 17a1a25dc82a60046ac3b79bd7294d47, type: 3}
     - m_Name: Infantry
       m_Hash: 240587261
-      m_Sprite: {fileID: 0}
+      m_Sprite: {fileID: -6733027808784743207, guid: d58ab7de8eadeb444a0d425c0594011e, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: 0}
+      m_SpriteOverride: {fileID: -6733027808784743207, guid: d58ab7de8eadeb444a0d425c0594011e, type: 3}
     - m_Name: Knight
       m_Hash: 61186950
       m_Sprite: {fileID: 0}
@@ -443,14 +443,14 @@ MonoBehaviour:
       m_SpriteOverride: {fileID: 0}
     - m_Name: Iron
       m_Hash: 406998946
-      m_Sprite: {fileID: -6764449415403115031, guid: be63bfc74f769124db90ab108749bb17, type: 3}
+      m_Sprite: {fileID: -4679512598555206891, guid: be63bfc74f769124db90ab108749bb17, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: -6764449415403115031, guid: be63bfc74f769124db90ab108749bb17, type: 3}
+      m_SpriteOverride: {fileID: -4679512598555206891, guid: be63bfc74f769124db90ab108749bb17, type: 3}
     - m_Name: Barbarian
       m_Hash: 6889637
-      m_Sprite: {fileID: -1209967720542003089, guid: 0b9916a68298ebb43a58d3659c231756, type: 3}
+      m_Sprite: {fileID: 6316612425341276464, guid: 0b9916a68298ebb43a58d3659c231756, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: -1209967720542003089, guid: 0b9916a68298ebb43a58d3659c231756, type: 3}
+      m_SpriteOverride: {fileID: 6316612425341276464, guid: 0b9916a68298ebb43a58d3659c231756, type: 3}
     - m_Name: Gladiator
       m_Hash: 1026877223
       m_Sprite: {fileID: 0}
@@ -458,9 +458,9 @@ MonoBehaviour:
       m_SpriteOverride: {fileID: 0}
     - m_Name: Infantry
       m_Hash: 240587261
-      m_Sprite: {fileID: 0}
+      m_Sprite: {fileID: -6735352992695094079, guid: d58ab7de8eadeb444a0d425c0594011e, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: 0}
+      m_SpriteOverride: {fileID: -6735352992695094079, guid: d58ab7de8eadeb444a0d425c0594011e, type: 3}
     - m_Name: Knight
       m_Hash: 61186950
       m_Sprite: {fileID: 0}
@@ -479,29 +479,29 @@ MonoBehaviour:
       m_SpriteOverride: {fileID: -4948334989382770826, guid: f24fd1b3fd2bd5d46bfa0f2352949b17, type: 3}
     - m_Name: Beginner
       m_Hash: 704035469
-      m_Sprite: {fileID: 4988011806326385172, guid: 2e449b1de5b60d146984f3b87c3e791f, type: 3}
+      m_Sprite: {fileID: 5643991575541181510, guid: 2e449b1de5b60d146984f3b87c3e791f, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: 4988011806326385172, guid: 2e449b1de5b60d146984f3b87c3e791f, type: 3}
+      m_SpriteOverride: {fileID: 5643991575541181510, guid: 2e449b1de5b60d146984f3b87c3e791f, type: 3}
     - m_Name: Iron
       m_Hash: 406998946
-      m_Sprite: {fileID: -4679512598555206891, guid: be63bfc74f769124db90ab108749bb17, type: 3}
+      m_Sprite: {fileID: 1420996322476773686, guid: be63bfc74f769124db90ab108749bb17, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: -4679512598555206891, guid: be63bfc74f769124db90ab108749bb17, type: 3}
+      m_SpriteOverride: {fileID: 1420996322476773686, guid: be63bfc74f769124db90ab108749bb17, type: 3}
     - m_Name: Barbarian
       m_Hash: 6889637
-      m_Sprite: {fileID: 6316612425341276464, guid: 0b9916a68298ebb43a58d3659c231756, type: 3}
+      m_Sprite: {fileID: 4209429998052173637, guid: 0b9916a68298ebb43a58d3659c231756, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: 6316612425341276464, guid: 0b9916a68298ebb43a58d3659c231756, type: 3}
+      m_SpriteOverride: {fileID: 4209429998052173637, guid: 0b9916a68298ebb43a58d3659c231756, type: 3}
     - m_Name: Gladiator
       m_Hash: 1026877223
-      m_Sprite: {fileID: -6537821974207038401, guid: 17a1a25dc82a60046ac3b79bd7294d47, type: 3}
+      m_Sprite: {fileID: 7828250738423425616, guid: 17a1a25dc82a60046ac3b79bd7294d47, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: -6537821974207038401, guid: 17a1a25dc82a60046ac3b79bd7294d47, type: 3}
+      m_SpriteOverride: {fileID: 7828250738423425616, guid: 17a1a25dc82a60046ac3b79bd7294d47, type: 3}
     - m_Name: Infantry
       m_Hash: 240587261
-      m_Sprite: {fileID: 0}
+      m_Sprite: {fileID: 8088573976578888839, guid: d58ab7de8eadeb444a0d425c0594011e, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: 0}
+      m_SpriteOverride: {fileID: 8088573976578888839, guid: d58ab7de8eadeb444a0d425c0594011e, type: 3}
     - m_Name: Knight
       m_Hash: 61186950
       m_Sprite: {fileID: 0}
@@ -540,9 +540,9 @@ MonoBehaviour:
       m_SpriteOverride: {fileID: 6467949590337584793, guid: 17a1a25dc82a60046ac3b79bd7294d47, type: 3}
     - m_Name: Infantry
       m_Hash: 240587261
-      m_Sprite: {fileID: 0}
+      m_Sprite: {fileID: 4411446909827967175, guid: d58ab7de8eadeb444a0d425c0594011e, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: 0}
+      m_SpriteOverride: {fileID: 4411446909827967175, guid: d58ab7de8eadeb444a0d425c0594011e, type: 3}
     - m_Name: Knight
       m_Hash: 61186950
       m_Sprite: {fileID: 0}
@@ -581,9 +581,9 @@ MonoBehaviour:
       m_SpriteOverride: {fileID: -1539737166528126506, guid: 17a1a25dc82a60046ac3b79bd7294d47, type: 3}
     - m_Name: Infantry
       m_Hash: 240587261
-      m_Sprite: {fileID: 0}
+      m_Sprite: {fileID: 8327112641336190203, guid: d58ab7de8eadeb444a0d425c0594011e, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: 0}
+      m_SpriteOverride: {fileID: 8327112641336190203, guid: d58ab7de8eadeb444a0d425c0594011e, type: 3}
     - m_Name: Knight
       m_Hash: 61186950
       m_Sprite: {fileID: 0}
@@ -622,9 +622,9 @@ MonoBehaviour:
       m_SpriteOverride: {fileID: 0}
     - m_Name: Infantry
       m_Hash: 240587261
-      m_Sprite: {fileID: 0}
+      m_Sprite: {fileID: 7048357662784618265, guid: d58ab7de8eadeb444a0d425c0594011e, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: 0}
+      m_SpriteOverride: {fileID: 7048357662784618265, guid: d58ab7de8eadeb444a0d425c0594011e, type: 3}
     - m_Name: Knight
       m_Hash: 61186950
       m_Sprite: {fileID: 0}
@@ -648,24 +648,24 @@ MonoBehaviour:
       m_SpriteOverride: {fileID: 6486653763453603844, guid: 2e449b1de5b60d146984f3b87c3e791f, type: 3}
     - m_Name: Iron
       m_Hash: 406998946
-      m_Sprite: {fileID: -4192470445588230428, guid: be63bfc74f769124db90ab108749bb17, type: 3}
+      m_Sprite: {fileID: -8515251812713354040, guid: be63bfc74f769124db90ab108749bb17, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: -4192470445588230428, guid: be63bfc74f769124db90ab108749bb17, type: 3}
+      m_SpriteOverride: {fileID: -8515251812713354040, guid: be63bfc74f769124db90ab108749bb17, type: 3}
     - m_Name: Barbarian
       m_Hash: 6889637
-      m_Sprite: {fileID: -9195500623820997373, guid: 0b9916a68298ebb43a58d3659c231756, type: 3}
+      m_Sprite: {fileID: 6196789331653857375, guid: 0b9916a68298ebb43a58d3659c231756, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: -9195500623820997373, guid: 0b9916a68298ebb43a58d3659c231756, type: 3}
+      m_SpriteOverride: {fileID: 6196789331653857375, guid: 0b9916a68298ebb43a58d3659c231756, type: 3}
     - m_Name: Gladiator
       m_Hash: 1026877223
-      m_Sprite: {fileID: -1617378423215776295, guid: 17a1a25dc82a60046ac3b79bd7294d47, type: 3}
+      m_Sprite: {fileID: -6844535217767251174, guid: 17a1a25dc82a60046ac3b79bd7294d47, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: -1617378423215776295, guid: 17a1a25dc82a60046ac3b79bd7294d47, type: 3}
+      m_SpriteOverride: {fileID: -6844535217767251174, guid: 17a1a25dc82a60046ac3b79bd7294d47, type: 3}
     - m_Name: Infantry
       m_Hash: 240587261
-      m_Sprite: {fileID: 0}
+      m_Sprite: {fileID: -5498015593617912521, guid: d58ab7de8eadeb444a0d425c0594011e, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: 0}
+      m_SpriteOverride: {fileID: -5498015593617912521, guid: d58ab7de8eadeb444a0d425c0594011e, type: 3}
     - m_Name: Knight
       m_Hash: 61186950
       m_Sprite: {fileID: 0}
@@ -704,9 +704,9 @@ MonoBehaviour:
       m_SpriteOverride: {fileID: 0}
     - m_Name: Infantry
       m_Hash: 240587261
-      m_Sprite: {fileID: 0}
+      m_Sprite: {fileID: -3341051111193333157, guid: d58ab7de8eadeb444a0d425c0594011e, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: 0}
+      m_SpriteOverride: {fileID: -3341051111193333157, guid: d58ab7de8eadeb444a0d425c0594011e, type: 3}
     - m_Name: Knight
       m_Hash: 61186950
       m_Sprite: {fileID: 0}
@@ -745,9 +745,9 @@ MonoBehaviour:
       m_SpriteOverride: {fileID: 1476568451079291254, guid: 17a1a25dc82a60046ac3b79bd7294d47, type: 3}
     - m_Name: Infantry
       m_Hash: 240587261
-      m_Sprite: {fileID: 0}
+      m_Sprite: {fileID: 7424868797437416371, guid: d58ab7de8eadeb444a0d425c0594011e, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: 0}
+      m_SpriteOverride: {fileID: 7424868797437416371, guid: d58ab7de8eadeb444a0d425c0594011e, type: 3}
     - m_Name: Knight
       m_Hash: 61186950
       m_Sprite: {fileID: 0}
@@ -786,9 +786,9 @@ MonoBehaviour:
       m_SpriteOverride: {fileID: 5105489077066542405, guid: 17a1a25dc82a60046ac3b79bd7294d47, type: 3}
     - m_Name: Infantry
       m_Hash: 240587261
-      m_Sprite: {fileID: 0}
+      m_Sprite: {fileID: -1319400657154294048, guid: d58ab7de8eadeb444a0d425c0594011e, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: 0}
+      m_SpriteOverride: {fileID: -1319400657154294048, guid: d58ab7de8eadeb444a0d425c0594011e, type: 3}
     - m_Name: Knight
       m_Hash: 61186950
       m_Sprite: {fileID: 0}
@@ -827,9 +827,9 @@ MonoBehaviour:
       m_SpriteOverride: {fileID: 0}
     - m_Name: Infantry
       m_Hash: 240587261
-      m_Sprite: {fileID: 0}
+      m_Sprite: {fileID: 5941683294911316169, guid: d58ab7de8eadeb444a0d425c0594011e, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: 0}
+      m_SpriteOverride: {fileID: 5941683294911316169, guid: d58ab7de8eadeb444a0d425c0594011e, type: 3}
     - m_Name: Knight
       m_Hash: 61186950
       m_Sprite: {fileID: 0}
@@ -868,9 +868,9 @@ MonoBehaviour:
       m_SpriteOverride: {fileID: -5027701306020155686, guid: 17a1a25dc82a60046ac3b79bd7294d47, type: 3}
     - m_Name: Infantry
       m_Hash: 240587261
-      m_Sprite: {fileID: 0}
+      m_Sprite: {fileID: 7928775101879440207, guid: d58ab7de8eadeb444a0d425c0594011e, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: 0}
+      m_SpriteOverride: {fileID: 7928775101879440207, guid: d58ab7de8eadeb444a0d425c0594011e, type: 3}
     - m_Name: Knight
       m_Hash: 61186950
       m_Sprite: {fileID: 0}
@@ -909,9 +909,9 @@ MonoBehaviour:
       m_SpriteOverride: {fileID: 5806998850182586770, guid: 17a1a25dc82a60046ac3b79bd7294d47, type: 3}
     - m_Name: Infantry
       m_Hash: 240587261
-      m_Sprite: {fileID: 0}
+      m_Sprite: {fileID: -1796498555385537879, guid: d58ab7de8eadeb444a0d425c0594011e, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: 0}
+      m_SpriteOverride: {fileID: -1796498555385537879, guid: d58ab7de8eadeb444a0d425c0594011e, type: 3}
     - m_Name: Knight
       m_Hash: 61186950
       m_Sprite: {fileID: 0}
@@ -930,24 +930,24 @@ MonoBehaviour:
       m_SpriteOverride: {fileID: 0}
     - m_Name: Beginner
       m_Hash: 704035469
-      m_Sprite: {fileID: -8435203955971167259, guid: 2e449b1de5b60d146984f3b87c3e791f, type: 3}
+      m_Sprite: {fileID: -2710202353203776191, guid: 2e449b1de5b60d146984f3b87c3e791f, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: -8435203955971167259, guid: 2e449b1de5b60d146984f3b87c3e791f, type: 3}
+      m_SpriteOverride: {fileID: -2710202353203776191, guid: 2e449b1de5b60d146984f3b87c3e791f, type: 3}
     - m_Name: Iron
       m_Hash: 406998946
-      m_Sprite: {fileID: -3712942605473976279, guid: be63bfc74f769124db90ab108749bb17, type: 3}
+      m_Sprite: {fileID: 2460705511587242056, guid: be63bfc74f769124db90ab108749bb17, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: -3712942605473976279, guid: be63bfc74f769124db90ab108749bb17, type: 3}
+      m_SpriteOverride: {fileID: 2460705511587242056, guid: be63bfc74f769124db90ab108749bb17, type: 3}
     - m_Name: Barbarian
       m_Hash: 6889637
-      m_Sprite: {fileID: -1696815204981909895, guid: 0b9916a68298ebb43a58d3659c231756, type: 3}
+      m_Sprite: {fileID: 2920512526519741133, guid: 0b9916a68298ebb43a58d3659c231756, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: -1696815204981909895, guid: 0b9916a68298ebb43a58d3659c231756, type: 3}
+      m_SpriteOverride: {fileID: 2920512526519741133, guid: 0b9916a68298ebb43a58d3659c231756, type: 3}
     - m_Name: Gladiator
       m_Hash: 1026877223
-      m_Sprite: {fileID: -4827648734124972362, guid: 17a1a25dc82a60046ac3b79bd7294d47, type: 3}
+      m_Sprite: {fileID: -1617378423215776295, guid: 17a1a25dc82a60046ac3b79bd7294d47, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: -4827648734124972362, guid: 17a1a25dc82a60046ac3b79bd7294d47, type: 3}
+      m_SpriteOverride: {fileID: -1617378423215776295, guid: 17a1a25dc82a60046ac3b79bd7294d47, type: 3}
     - m_Name: Infantry
       m_Hash: 240587261
       m_Sprite: {fileID: -6601086959030615362, guid: f24fd1b3fd2bd5d46bfa0f2352949b17, type: 3}

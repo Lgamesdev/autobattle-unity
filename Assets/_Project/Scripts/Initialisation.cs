@@ -128,7 +128,7 @@ namespace LGamesDev
             }
 
             yield return new WaitForSeconds(0.7f);
-            
+
             isDone = true;
         }
 

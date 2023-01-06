@@ -204,7 +204,7 @@ public class ModalWindowPanel : MonoBehaviour
 
         Image panelImage = GetComponent<Image>();
         gameObject.SetActive(true);
-        LeanTween.value(0f, .25f, .5f).setOnUpdate(
+        LeanTween.value(0f, .25f, .25f).setOnUpdate(
         (float val) =>
         {
             Color c = panelImage.color;
@@ -218,7 +218,7 @@ public class ModalWindowPanel : MonoBehaviour
         box.gameObject.SetActive(true);
         if (imageArea != null)
         {
-            LeanTween.scale(imageArea.gameObject, new Vector3(1f, 1f, 1f), .5f).setFrom(new Vector3(.2f, .2f, .2f))
+            LeanTween.scale(imageArea.gameObject, new Vector3(1f, 1f, 1f), .25f).setFrom(new Vector3(.2f, .2f, .2f))
                 .setEase(LeanTweenType.linear).setOnComplete(ShowMainImage);
         }
     }
@@ -226,7 +226,7 @@ public class ModalWindowPanel : MonoBehaviour
     private void ShowMainImage()
     {
         imageArea.gameObject.SetActive(true);
-        LeanTween.scale(box.gameObject, new Vector3(1f, 1f, 1f), .5f).setFrom(new Vector3(.2f, .2f, .2f)).setEase(LeanTweenType.linear);
+        LeanTween.scale(box.gameObject, new Vector3(1f, 1f, 1f), .25f).setFrom(new Vector3(.2f, .2f, .2f)).setEase(LeanTweenType.linear);
     }
 
     public void Close()

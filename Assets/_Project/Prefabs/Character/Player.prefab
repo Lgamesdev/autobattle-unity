@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1188899891191775802}
   - component: {fileID: 1188899891191775797}
   - component: {fileID: 2119013392191034637}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28,9 +28,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 460541583084220565}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.4, y: 1.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -60,6 +60,7 @@ MonoBehaviour:
         stats: []
         equipmentSlot: 0
         spriteId: 0
+        requiredLevel: 0
       modifiers: []
     - id: 0
       amount: 1
@@ -71,6 +72,7 @@ MonoBehaviour:
         stats: []
         equipmentSlot: 0
         spriteId: 0
+        requiredLevel: 0
       modifiers: []
     - id: 0
       amount: 1
@@ -82,6 +84,7 @@ MonoBehaviour:
         stats: []
         equipmentSlot: 0
         spriteId: 0
+        requiredLevel: 0
       modifiers: []
     - id: 0
       amount: 1
@@ -93,6 +96,7 @@ MonoBehaviour:
         stats: []
         equipmentSlot: 0
         spriteId: 0
+        requiredLevel: 0
       modifiers: []
 --- !u!114 &5596931408496927021
 MonoBehaviour:

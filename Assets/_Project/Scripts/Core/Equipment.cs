@@ -13,6 +13,8 @@ namespace LGamesDev.Core.Player
 
         public int spriteId;
 
+        public int requiredLevel;
+
         public int GetStatValue(StatType statType)
         {
             return stats[(int)statType].GetValue();

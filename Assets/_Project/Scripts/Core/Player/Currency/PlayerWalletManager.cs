@@ -74,7 +74,6 @@ namespace LGamesDev
                 },
                 result =>
                 {
-                    Debug.Log("item successfully selled : " + result);
                     AddCurrency(CurrencyType.Gold, characterItem.Item.cost);
                     PlayerInventoryManager.Instance.RemoveItem(characterItem);
                 }

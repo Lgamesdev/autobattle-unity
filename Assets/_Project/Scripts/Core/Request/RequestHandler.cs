@@ -35,7 +35,7 @@ namespace LGamesDev.Core.Request
             else 
             {
                 string error = request.error + "\n";
-                
+
                 if (!string.IsNullOrEmpty(request.downloadHandler.text))
                 {
                     try
@@ -43,6 +43,7 @@ namespace LGamesDev.Core.Request
                         JObject parsedJObjet = JObject.Parse(request.downloadHandler.text);
 
                         error += parsedJObjet["detail"]?.ToString();
+                        error += parsedJObjet["message"]?.ToString();
                     }
                     catch (JsonReaderException)
                     {
@@ -68,7 +69,7 @@ namespace LGamesDev.Core.Request
                     GameManager.Instance.modalWindow.Close, 
                     () =>
                     {
-                        SceneManager.LoadScene((int)SceneIndexes.PersistentScene);
+                        GameManager.Instance.Logout();
                     });
                 
                 onError(error);

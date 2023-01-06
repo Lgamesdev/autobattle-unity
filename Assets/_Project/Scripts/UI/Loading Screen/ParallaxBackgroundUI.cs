@@ -28,13 +28,13 @@ public class ParallaxBackgroundUI : MonoBehaviour
     {
         while (gameObject.activeInHierarchy)
         {
-            _clouds.uvRect = new Rect(_clouds.uvRect.position + new Vector2(0.01f, 0) * Time.deltaTime,
+            _clouds.uvRect = new Rect(_clouds.uvRect.position + new Vector2(.001f, 0) * Time.deltaTime,
                 _clouds.uvRect.size);
-            _farBackTrees.uvRect = new Rect(_farBackTrees.uvRect.position + new Vector2(0.005f, 0) * Time.deltaTime,
+            _farBackTrees.uvRect = new Rect(_farBackTrees.uvRect.position + new Vector2(.002f, 0) * Time.deltaTime,
                 _farBackTrees.uvRect.size);
-            _backTrees.uvRect = new Rect(_backTrees.uvRect.position + new Vector2(0.015f, 0) * Time.deltaTime,
+            _backTrees.uvRect = new Rect(_backTrees.uvRect.position + new Vector2(.003f, 0) * Time.deltaTime,
                 _backTrees.uvRect.size);
-            _ground.uvRect = new Rect(_ground.uvRect.position + new Vector2(0.02f, 0) * Time.deltaTime,
+            _ground.uvRect = new Rect(_ground.uvRect.position + new Vector2(.004f, 0) * Time.deltaTime,
                 _ground.uvRect.size);
 
             yield return new WaitForEndOfFrame();

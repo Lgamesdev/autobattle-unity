@@ -50,6 +50,8 @@ namespace LGamesDev.UI
 
         private void SetupInventoryUI()
         {
+            foreach (Transform child in _itemsParent) Destroy(child.gameObject);
+            
             for (var i = 0; i < _slots.Length; i++)
             {
                 var itemSlotRectTransform = Instantiate(pfUIInventorySlot, _itemsParent).GetComponent<RectTransform>();

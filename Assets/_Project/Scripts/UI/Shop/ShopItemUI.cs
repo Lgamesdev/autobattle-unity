@@ -18,6 +18,8 @@ public class ShopItemUI : MonoBehaviour, IPointerClickHandler
     [SerializeField] private Transform header;
     [SerializeField] private Transform content;
 
+    private string _message;
+
     public void SetupCard(Item item, Action<Item> onBuy)
     {
         _item = item;
@@ -33,17 +35,28 @@ public class ShopItemUI : MonoBehaviour, IPointerClickHandler
         {
             Equipment equipment = item as Equipment;
 
+            header.Find("Item").Find("levelText").GetComponent<TextMeshProUGUI>().text =
+                "Lvl." + equipment.requiredLevel.ToString();
+            
+            _message = "Stats \n";
+
             foreach (Stat stat in equipment.GetStats())
             {
-                RectTransform statSlotRectTransform =
+                _message += stat.statType.ToString() + " : " + stat.GetValue().ToString() + "\n";
+                
+                /*RectTransform statSlotRectTransform =
                     Instantiate(pfUIStatSlot, content.Find("Item Stats")).GetComponent<RectTransform>();
 
                 statSlotRectTransform.Find("label").GetComponent<TextMeshProUGUI>().text =
                     stat.statType.ToString();
                 statSlotRectTransform.Find("values").Find("value").GetComponent<TextMeshProUGUI>().text =
                     stat.GetValue().ToString();
-                statSlotRectTransform.Find("values").Find("modifier").gameObject.SetActive(false);
+                statSlotRectTransform.Find("values").Find("modifier").gameObject.SetActive(false);*/
             }
+        }
+        else
+        {
+            header.Find("Item").Find("levelText").gameObject.SetActive(false);
         }
         
         content.gameObject.SetActive(false);
@@ -56,6 +69,7 @@ public class ShopItemUI : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        content.gameObject.SetActive(!content.gameObject.activeInHierarchy);
+        GameManager.Instance.modalWindow.ShowAsPrompt(_item.name, _item.icon, _message);
+        //content.gameObject.SetActive(!content.gameObject.activeInHierarchy);
     }
 }

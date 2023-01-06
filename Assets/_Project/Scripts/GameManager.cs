@@ -53,8 +53,7 @@ namespace LGamesDev
                 StartCoroutine(sceneLoader.LoadAuthentication(true, true));
             }
             else
-            {  
-                Debug.Log("credentials find");
+            {
                 StartCoroutine(sceneLoader.LoadAuthentication(true, false));
             }
         }

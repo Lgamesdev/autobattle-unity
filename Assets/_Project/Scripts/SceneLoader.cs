@@ -31,6 +31,9 @@ namespace LGamesDev
                     if (SceneManager.GetSceneByBuildIndex((int)SceneIndexes.MainMenu).isLoaded)
                         _scenesLoading.Add(SceneManager.UnloadSceneAsync((int)SceneIndexes.MainMenu));
                     
+                    if (SceneManager.GetSceneByBuildIndex((int)SceneIndexes.Authentication).isLoaded)
+                        _scenesLoading.Add(SceneManager.UnloadSceneAsync((int)SceneIndexes.Authentication));
+                    
                     _scenesLoading.Add(SceneManager.LoadSceneAsync((int)SceneIndexes.Authentication, LoadSceneMode.Additive));
                 },
                 loadingScreenEnabled,

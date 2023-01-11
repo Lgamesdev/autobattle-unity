@@ -7,30 +7,24 @@ namespace LGamesDev.UI
 {
     public class CharacterStatsUI : MonoBehaviour
     {
-        [SerializeField] private Transform pfUIStatSlot;
+        [SerializeField] private StatSlotUI pfUIStatSlot;
 
         private CharacterStatsManager _characterStatsManager;
 
+        private TextMeshProUGUI _statPointText;
+        
         private Transform _defensiveStats;
         private Transform _offensiveStats;
 
         private void Awake()
         {
+            _statPointText = transform.Find("Title").Find("statPoint").GetComponent<TextMeshProUGUI>();
             _defensiveStats = transform.Find("statsParent").Find("Container").Find("Defensive Stats");
             _offensiveStats = transform.Find("statsParent").Find("Container").Find("Offensive Stats");
         }
 
         private void Start()
         {
-            /*transform.Find("attackBtn").GetComponent<Button_UI>().MouseOverOnceFunc = () => Tooltip.ShowTooltip_Static("Attack");
-        transform.Find("attackBtn").GetComponent<Button_UI>().MouseOutOnceFunc = () => Tooltip.HideTooltip_Static();
-
-        transform.Find("defendBtn").GetComponent<Button_UI>().MouseOverOnceFunc = () => Tooltip.ShowTooltip_Static("Defend");
-        transform.Find("defendBtn").GetComponent<Button_UI>().MouseOutOnceFunc = () => Tooltip.HideTooltip_Static();
-
-        transform.Find("patrolBtn").GetComponent<Button_UI>().MouseOverOnceFunc = () => Tooltip.ShowTooltip_Static("Patrol");
-        transform.Find("patrolBtn").GetComponent<Button_UI>().MouseOutOnceFunc = () => Tooltip.HideTooltip_Static();*/
-
             _characterStatsManager = CharacterStatsManager.Instance;
 
             _characterStatsManager.OnStatsUpdated += OnStatsUpdated;
@@ -43,10 +37,18 @@ namespace LGamesDev.UI
             foreach (Transform child in _defensiveStats) Destroy(child.gameObject);
             foreach (Transform child in _offensiveStats) Destroy(child.gameObject);
 
+            if (_characterStatsManager.GetStatPoint() > 0)
+            {
+                _statPointText.gameObject.SetActive(true);
+                _statPointText.text = "(" + _characterStatsManager.GetStatPoint() + " point(s) available)";
+            }
+            else
+            {
+                _statPointText.gameObject.SetActive(false);
+            }
+            
             foreach (var stat in stats)
             {
-                //if (stat.GetValue() != 0)
-                //{
                 switch (stat.statType)
                 {
                     case StatType.Health 
@@ -60,20 +62,13 @@ namespace LGamesDev.UI
                         CreateStatSlot(stat, _offensiveStats);
                         break;
                 }
-                //}
             }
         }
 
         private void CreateStatSlot(Stat stat, Transform parent)
         {
-            var statSlotRectTransform = Instantiate(pfUIStatSlot, parent).GetComponent<RectTransform>();
-
-            var label = statSlotRectTransform.Find("label").GetComponent<TextMeshProUGUI>();
-            var value = statSlotRectTransform.Find("values").Find("value").GetComponent<TextMeshProUGUI>();
-            statSlotRectTransform.Find("values").Find("modifier").gameObject.SetActive(false);
-
-            label.text = stat.GetStatType();
-            value.text = stat.GetValue().ToString();
+            StatSlotUI statSlot = Instantiate(pfUIStatSlot, parent);
+            statSlot.SetupSlot(stat, null, true);
         }
     }
 }

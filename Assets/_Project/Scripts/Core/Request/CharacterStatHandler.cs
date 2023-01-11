@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Text;
 using LGamesDev.Core.Character;
 using LGamesDev.Core.Player;
 using LGamesDev.Request.Converters;
@@ -21,7 +23,7 @@ namespace LGamesDev.Core.Request
                 },
                 response =>
                 {
-                    //Debug.Log("Received player stats : " + response);
+                    //Debug.Log("Received character stats : " + response);
 
                     Stat[] responseRaw =
                         JsonConvert.DeserializeObject<Stat[]>(response);
@@ -42,22 +44,31 @@ namespace LGamesDev.Core.Request
             );
         }
 
-        public static IEnumerator SaveStat(Stat newStat, Stat oldStat)
+        public static IEnumerator AddStatPoint(MonoBehaviour instance, StatType statType, Action<string> onError, Action<string> onResult)
         {
-            if (newStat != null)
-            {
-                //string jsonString = JsonConvert.SerializeObject(newItem, Formatting.Indented);
-                //var jsonString = Serialize(newItem);
+            Dictionary<string, string> form = new Dictionary<string, string>() {
+                {"statType", statType.ToString()},
+            };
+            
+            var bodyRaw = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(form));
 
-                //Debug.Log("json array generated : \n" + jsonString);
-
-                //PlayerPrefs.SetString("PlayerEquipment_" + newItem.equipSlot, jsonString);
-            }
-            else
-            {
-                //PlayerPrefs.SetString("PlayerEquipment_" + oldItem.equipSlot, null);
-            }
-            yield return new WaitForEndOfFrame();
+            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.EnableWaitingScreen());
+            
+            yield return instance.StartCoroutine(RequestHandler.Request("api/user/stats/add",
+                UnityWebRequest.kHttpVerbPUT,
+                error =>
+                {
+                    onError?.Invoke(error);
+                },
+                response =>
+                {
+                    onResult?.Invoke(response);
+                },
+                bodyRaw,
+                GameManager.Instance.GetAuthentication())
+            );
+            
+            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());
         }
     }
 }

@@ -40,6 +40,7 @@ namespace LGamesDev
         {
             Character.Level = character.Level;
             Character.Experience = character.Experience;
+            Character.StatPoint = character.StatPoint;
             Character.Ranking = character.Ranking;
             
             //Setup Equipments

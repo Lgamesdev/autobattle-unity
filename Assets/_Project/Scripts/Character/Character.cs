@@ -11,6 +11,7 @@ namespace LGamesDev
         public string Username;
         public int Level;
         public int Experience;
+        public int StatPoint;
         public int Ranking;
         public Body Body;
         public Wallet Wallet = new();

@@ -75,7 +75,7 @@ namespace LGamesDev.Core.Character
 
         public bool GotWeapon()
         {
-            return currentGear.equipments[(int)EquipmentSlot.Weapon].item != null;
+            return !currentGear.equipments[(int)EquipmentSlot.Weapon].item.isDefaultItem;
         }
     }
 }

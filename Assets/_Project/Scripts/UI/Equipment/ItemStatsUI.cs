@@ -10,7 +10,7 @@ namespace LGamesDev.UI
     public class ItemStatsUI : MonoBehaviour
     {
         public static ItemStatsUI Instance;
-        [SerializeField] private Transform pfUIStatSlot;
+        [SerializeField] private StatSlotUI pfUIStatSlot;
 
         private Transform _itemContainer;
 
@@ -94,29 +94,10 @@ namespace LGamesDev.UI
                     
                     foreach (Stat stat in characterEquipment.item.GetStats())
                     {
-                        RectTransform statSlotRectTransform =
-                            Instantiate(pfUIStatSlot, _statsParent).GetComponent<RectTransform>();
+                        StatSlotUI statSlot = Instantiate(pfUIStatSlot, _statsParent);
 
-                        statSlotRectTransform.Find("label").GetComponent<TextMeshProUGUI>().text =
-                            stat.statType.ToString();
-                        statSlotRectTransform.Find("values").Find("value").GetComponent<TextMeshProUGUI>().text =
-                            stat.GetValue().ToString();
-
-                        TextMeshProUGUI modifierText = statSlotRectTransform.Find("values").Find("modifier")
-                            .GetComponent<TextMeshProUGUI>();
                         Stat statModifier = characterEquipment.GetModifier(stat.statType);
-
-                        if (statModifier != null)
-                        {
-                            modifierText.gameObject.SetActive(true);
-                            modifierText.text =
-                                characterEquipment.GetModifier(stat.statType).GetValue().ToString();
-                        }
-                        else
-                        {
-                            modifierText.gameObject.SetActive(false);
-                        }
-                        
+                        statSlot.SetupSlot(stat, statModifier);
                     }
                 }
             }

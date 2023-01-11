@@ -53,6 +53,7 @@ namespace LGamesDev
                 {
                     character.Level = result.level;
                     character.Experience = result.xp;
+                    character.StatPoint = result.statPoint;
                     character.Ranking = result.ranking;
 
                     InfosUI infosUI = FindObjectOfType<InfosUI>();

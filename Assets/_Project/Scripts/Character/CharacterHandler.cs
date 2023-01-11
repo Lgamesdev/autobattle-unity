@@ -229,9 +229,9 @@ namespace LGamesDev
         public void RunToPosition(Vector3 runTargetPosition, Action onRunComplete)
         {
             _characterAnimator.PlayRun();
-            _characterAnimator.SetMoveVector(Vector3.zero);
+            _characterAnimator.SetMoveVector(runTargetPosition);
 
-            LTDescr runAnim = LeanTween.move(_characterManager.gameObject, runTargetPosition, 1.2f);
+            LTDescr runAnim = LeanTween.move(_characterManager.gameObject, runTargetPosition, .8f);
 
             if (onRunComplete != null)
             {

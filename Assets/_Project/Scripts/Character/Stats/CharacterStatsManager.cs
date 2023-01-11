@@ -1,5 +1,6 @@
 using System;
 using LGamesDev.Core.Character;
+using LGamesDev.Core.Request;
 using UnityEngine;
 
 namespace LGamesDev.Core.Player
@@ -12,6 +13,9 @@ namespace LGamesDev.Core.Player
         
         public delegate void OnStatsUpdatedEvent(Stat[] stats);
         public OnStatsUpdatedEvent OnStatsUpdated;
+        
+        public delegate void OnStatPointAddedEvent();
+        public OnStatPointAddedEvent OnStatPointAdded;
         
         public event EventHandler OnHealthChanged;
 
@@ -39,6 +43,42 @@ namespace LGamesDev.Core.Player
 
             maxHealth = stats[(int)StatType.Health].GetValue();
             currentHealth = maxHealth;
+        }
+
+        public void AddPoint(StatType statType)
+        {
+            if (CharacterManager.Instance.Character.StatPoint > 0)
+            {
+                StartCoroutine(CharacterStatHandler.AddStatPoint(
+                    this,
+                    statType,
+                    error =>
+                    {
+                        Debug.Log("error on adding stat point : " + error);
+                    },
+                    response=>
+                    {
+                        Debug.Log("point stat successfully added : " + response);
+                        CharacterManager.Instance.Character.StatPoint--;
+
+                        stats[(int)statType].value += statType switch
+                        {
+                            StatType.Health => 10,
+                            StatType.Damage => 2,
+                            StatType.Armor 
+                            or StatType.Dodge
+                            or StatType.Speed 
+                            or StatType.Critical => 1,
+                        };
+                        
+                        OnStatsUpdated?.Invoke(stats);
+                    }
+                ));
+            }
+            else
+            {
+                //Todo : you don't have any stat point
+            }
         }
 
         private void OnEquipmentChanged(CharacterEquipment newEquipment, CharacterEquipment oldEquipment)
@@ -117,6 +157,11 @@ namespace LGamesDev.Core.Player
         public int GetStat(StatType statType)
         {
             return stats[(int)statType].GetValue();
+        }
+
+        public int GetStatPoint()
+        {
+            return CharacterManager.Instance.Character.StatPoint;
         }
     }
 }

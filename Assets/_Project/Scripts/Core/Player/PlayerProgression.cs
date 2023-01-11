@@ -4,6 +4,7 @@
     {
         public int level;
         public int xp;
+        public int statPoint;
         public int ranking;
     }
 }

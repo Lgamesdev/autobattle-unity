@@ -98,7 +98,7 @@ namespace LGamesDev.Fighting
         {
             if (currentAction < _fight.Actions.Count) return false;
             
-            Debug.Log("reward : " + _fight.Reward);
+            //Debug.Log("reward : " + _fight.Reward);
             OnFightOver?.Invoke(_fight.Reward, _fight.PlayerWin);
             HandlePlayerReward();
 

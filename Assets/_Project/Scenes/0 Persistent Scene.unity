@@ -273,10 +273,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35bd6143120241d4d9df419e2f000e44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioManager: {fileID: 0}
-  sceneLoader: {fileID: 0}
-  loadingScreen: {fileID: 0}
-  modalWindow: {fileID: 0}
+  sceneLoader: {fileID: 712673851}
+  loadingScreen: {fileID: 1031780216}
+  modalWindow: {fileID: 1278179757310029647}
+  audioManager: {fileID: 712673853}
 --- !u!114 &712673851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -289,6 +289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6926ebc753c4c4b44b054826dfe62401, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeScene: 0
 --- !u!82 &712673852
 AudioSource:
   m_ObjectHideFlags: 0
@@ -300,10 +301,10 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.3
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -398,8 +399,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ambientClip: {fileID: 8300000, guid: 963e50ea35fb6e546accd48c6fd4ba9b, type: 3}
-  musicOneClip: {fileID: 8300000, guid: 45653d187323a09488210f28c1e27e67, type: 3}
-  musicTwoClip: {fileID: 8300000, guid: 531b02426893afa459ce5c52306f88e7, type: 3}
+  musicClips:
+  - {fileID: 8300000, guid: 38cd09f0767d7d64584c72ebf3bc9a6b, type: 3}
+  fightMusicClip: {fileID: 8300000, guid: 798bb9c901a4a2f498c749446f3cdd56, type: 3}
+  winFightMusicClip: {fileID: 8300000, guid: 868e6685e8dc8854d9a44a2f8fc37ad3, type: 3}
+  loseFightMusicClip: {fileID: 8300000, guid: 75be777e616089b47a400fbbb716c784, type: 3}
 --- !u!81 &712673854
 AudioListener:
   m_ObjectHideFlags: 0
@@ -477,27 +481,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3031545649723718060, guid: a37c2e26ef8908c46a0ef9f54f8a6294, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3031545649723718060, guid: a37c2e26ef8908c46a0ef9f54f8a6294, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3031545649723718060, guid: a37c2e26ef8908c46a0ef9f54f8a6294, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 255.12074
       objectReference: {fileID: 0}
     - target: {fileID: 3031545649723718060, guid: a37c2e26ef8908c46a0ef9f54f8a6294, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 3031545649723718060, guid: a37c2e26ef8908c46a0ef9f54f8a6294, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 888.99146
       objectReference: {fileID: 0}
     - target: {fileID: 3031545649723718060, guid: a37c2e26ef8908c46a0ef9f54f8a6294, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -180
       objectReference: {fileID: 0}
     - target: {fileID: 5076573961768072819, guid: a37c2e26ef8908c46a0ef9f54f8a6294, type: 3}
       propertyPath: m_SizeDelta.y
@@ -505,27 +509,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7214582210473440090, guid: a37c2e26ef8908c46a0ef9f54f8a6294, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7214582210473440090, guid: a37c2e26ef8908c46a0ef9f54f8a6294, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7214582210473440090, guid: a37c2e26ef8908c46a0ef9f54f8a6294, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 533.8707
       objectReference: {fileID: 0}
     - target: {fileID: 7214582210473440090, guid: a37c2e26ef8908c46a0ef9f54f8a6294, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 7214582210473440090, guid: a37c2e26ef8908c46a0ef9f54f8a6294, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 366.93536
       objectReference: {fileID: 0}
     - target: {fileID: 7214582210473440090, guid: a37c2e26ef8908c46a0ef9f54f8a6294, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 7965690561762674283, guid: a37c2e26ef8908c46a0ef9f54f8a6294, type: 3}
       propertyPath: m_Pivot.x
@@ -613,6 +617,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a37c2e26ef8908c46a0ef9f54f8a6294, type: 3}
+--- !u!114 &1031780216 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4800116764941572550, guid: a37c2e26ef8908c46a0ef9f54f8a6294, type: 3}
+  m_PrefabInstance: {fileID: 1031780215}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27dfbd871e0b45c468db481bf7c64ea5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &1269005644 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7965690561762674283, guid: a37c2e26ef8908c46a0ef9f54f8a6294, type: 3}
@@ -939,6 +954,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 45bb65ed627e19649a4fc52b4c041de0, type: 3}
+--- !u!114 &1278179757310029647 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7857047947455059743, guid: 45bb65ed627e19649a4fc52b4c041de0, type: 3}
+  m_PrefabInstance: {fileID: 1278179757310029646}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5effffcf0f7716478ed456ca94b0f0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &8986043333722404949 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7857047947455059739, guid: 45bb65ed627e19649a4fc52b4c041de0, type: 3}

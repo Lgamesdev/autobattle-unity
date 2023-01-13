@@ -51,19 +51,20 @@ namespace LGamesDev.Fighting
         }
 
         //Create a Damage Popup
-        public static DamagePopup Create(Vector3 position, int damageAmount, bool isCriticalHit)
+        public static DamagePopup Create(Vector3 position, int damageAmount, bool isCriticalHit, bool dodged)
         {
             var damagePopupTransform = Instantiate(GameAssets.i.pfDamagePopup, position, Quaternion.identity);
 
             var damagePopup = damagePopupTransform.GetComponent<DamagePopup>();
-            damagePopup.Setup(damageAmount, isCriticalHit);
+            damagePopup.Setup(damageAmount, isCriticalHit, dodged);
 
             return damagePopup;
         }
 
-        private void Setup(int damageAmount, bool isCriticalHit)
+        private void Setup(int damageAmount, bool isCriticalHit, bool dodged)
         {
-            _textMesh.text = damageAmount.ToString();
+            _textMesh.text = dodged ? "Dodged" : damageAmount.ToString();
+            
             if (!isCriticalHit)
             {
                 //Normal hit

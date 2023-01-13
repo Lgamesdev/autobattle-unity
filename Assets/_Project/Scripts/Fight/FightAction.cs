@@ -4,7 +4,7 @@
     {
         public bool playerTeam;
         public int damage;
-        public bool critialHit;
+        public bool criticalHit;
         public bool dodged;
         
         public override string ToString()
@@ -12,7 +12,7 @@
             return  "fightAction :  [ \n" +
                     "playerTeam : " + playerTeam + "\n" +
                     "damage : " + damage + "\n" +
-                    "criticalHit : " + critialHit + "\n" +
+                    "criticalHit : " + criticalHit + "\n" +
                     "dodged : " + dodged + "\n";
         }
     }

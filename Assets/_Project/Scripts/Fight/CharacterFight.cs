@@ -81,11 +81,11 @@ namespace LGamesDev.Fighting
             return transform.position;
         }
 
-        private void Damage(int damageAmount, bool isCritical)
+        private void Damage(int damageAmount, bool isCritical, bool dodged)
         {
             _characterStatsManager.TakeDamage(damageAmount);
 
-            DamagePopup.Create(GetPosition(), damageAmount, isCritical);
+            DamagePopup.Create(GetPosition(), damageAmount, isCritical, dodged);
             
             //TODO:  Impact effect
             //CodeMonkey.Utils.UtilsClass.ShakeCamera(.7f, .07f);
@@ -101,9 +101,9 @@ namespace LGamesDev.Fighting
             return _characterStatsManager.IsDead();
         }
 
-        public void Attack(CharacterFight target, int damage, bool isCritical, Action onAttackComplete)
+        public void Attack(CharacterFight target, int damage, bool isCritical, bool dodged, Action onAttackComplete)
         {
-            var runningTargetPosition = target.GetPosition() + (GetPosition() - target.GetPosition()).normalized * 18f;
+            var runningTargetPosition = target.GetPosition() + (GetPosition() - target.GetPosition()).normalized * 14f;
 
             var startingPosition = GetPosition();
 
@@ -115,7 +115,7 @@ namespace LGamesDev.Fighting
                 _characterManager.activeCharacter.Attack(attackDir, () =>
                 {
                     //Target hit
-                    target.Damage(damage, isCritical);
+                    target.Damage(damage, isCritical, dodged);
                 }, () =>
                 {
                     // Slide back to starting position

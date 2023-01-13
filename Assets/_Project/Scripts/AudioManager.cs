@@ -1,53 +1,66 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using LGamesDev;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class AudioManager : MonoBehaviour
 {
     [SerializeField] private AudioClip ambientClip;
-    [SerializeField] private AudioClip musicOneClip;
-    [SerializeField] private AudioClip musicTwoClip;
+    [SerializeField] private AudioClip[] musicClips;
+
+    private int _musicClipIndex;
+    
+    [SerializeField] private AudioClip fightMusicClip;
+    [SerializeField] private AudioClip winFightMusicClip;
+    [SerializeField] private AudioClip loseFightMusicClip;
 
     private AudioSource _audioSource;
 
-    private void Start()
+    private void Awake()
     {
         _audioSource = GetComponent<AudioSource>();
         _audioSource.loop = true;
-    }
-
-    private void PlayAmbient()
-    {
-        _audioSource.PlayOneShot(ambientClip);
-    }
-
-    public void PlayMainMenuMusic(float delay)
-    {
-        _audioSource.clip = musicOneClip;
-        PlayAmbient();
-        _audioSource.PlayDelayed(delay);
-        Invoke(nameof(OnAudioEnd), musicOneClip.length);
         
+        _musicClipIndex = Random.Range(0, musicClips.Length - 1);
+    }
+
+    public void PlayAmbient()
+    {
+        //_audioSource.PlayOneShot(ambientClip);
+    }
+
+    public void PlayMusic(float delay)
+    {
+        PlayAmbient();
+        _audioSource.clip = musicClips[_musicClipIndex];
+        _audioSource.PlayDelayed(delay);
+
+        if (_musicClipIndex < musicClips.Length - 1)
+        {
+            _musicClipIndex++;
+        }
+        else
+        {
+            _musicClipIndex = 0;
+        }
     }
 
     public void PlayFightMusic(float delay)
     {
-        _audioSource.clip = musicTwoClip;
+        PlayAmbient();
+        _audioSource.clip = fightMusicClip;
         _audioSource.PlayDelayed(delay);
-        Invoke(nameof(OnAudioEnd), musicTwoClip.length);
     }
-
-    private void OnAudioEnd()
+    
+    public void PlayWinMusic()
     {
-        Debug.Log("audio finished");
-        if (_audioSource.clip == musicOneClip)
-        {
-            PlayMainMenuMusic(0f);
-        }
-        else
-        {
-            PlayFightMusic(0f);
-        }
+        _audioSource.clip = winFightMusicClip;
+        _audioSource.Play();
+    }
+    
+    public void PlayLoseMusic()
+    {
+        _audioSource.clip = loseFightMusicClip;
+        _audioSource.Play();
     }
 }

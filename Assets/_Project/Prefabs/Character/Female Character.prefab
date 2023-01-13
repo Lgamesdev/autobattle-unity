@@ -4975,10 +4975,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f94f49c770548e49bb21d8b9bb78ab3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkAudioClip: {fileID: 8300000, guid: d0ae7aebc4f53a84ea76b1f16be8e54b, type: 3}
-  runAudioClip: {fileID: 8300000, guid: d0ae7aebc4f53a84ea76b1f16be8e54b, type: 3}
-  handAttackAudioClip: {fileID: 8300000, guid: 7afb0d1b1c339294eb0d40a9942496bf, type: 3}
-  swordAttackAudioClip: {fileID: 8300000, guid: 3b2e9a0d0dd4cf9458886dcd0f994d9d, type: 3}
+  audioSource: {fileID: 3301184718862963405}
+  stepAudioClips:
+  - {fileID: 8300000, guid: 9ea4e9f2ca50a454abbe610b7618d3a5, type: 3}
+  - {fileID: 8300000, guid: 81055d4bcca794d48b9f0cf4f3530671, type: 3}
+  punchAudioClips:
+  - {fileID: 8300000, guid: 20d93a63527ff3d4483c54280234c56f, type: 3}
+  swordAudioClips:
+  - {fileID: 8300000, guid: b4465d268a2db974aa8a467c03d1b3fb, type: 3}
+  - {fileID: 8300000, guid: ab2a7fda34cff814b93d0dc6977fadfe, type: 3}
+  - {fileID: 8300000, guid: 8ea43fd46b8d3b64fb37c25b0d5935d1, type: 3}
+  - {fileID: 8300000, guid: 531660aefc5d9854c852f11c82d0abc6, type: 3}
+  - {fileID: 8300000, guid: 134cff30994b8b041ad416c86c3dede1, type: 3}
 --- !u!82 &3301184718862963405
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4990,10 +4998,10 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.55
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

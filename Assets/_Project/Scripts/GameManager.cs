@@ -17,13 +17,13 @@ namespace LGamesDev
     public class GameManager : MonoBehaviour
     {
         public static GameManager Instance;
-        
-        [SerializeField] private AudioManager audioManager;
+
         [SerializeField] private SceneLoader sceneLoader;
 
         public LoadingScreen loadingScreen;
         public ModalWindowPanel modalWindow;
-        
+        public AudioManager audioManager;
+
         private Authentication _authentication;
         private PlayerConfig _playerConfig;
 
@@ -47,6 +47,8 @@ namespace LGamesDev
 
         private void Start()
         {
+            audioManager.PlayAmbient();
+            
             if (_authentication == null)
             {
                 Debug.Log("authentication is null");
@@ -70,7 +72,7 @@ namespace LGamesDev
 
         public void PlayMainMenuMusic()
         {
-            audioManager.PlayMainMenuMusic(1.5f);
+            audioManager.PlayMusic(1f);
         }
 
         public void LoadFight(Fight fight)
@@ -80,7 +82,7 @@ namespace LGamesDev
         
         public void PlayFightMusic()
         {
-            audioManager.PlayFightMusic(1.5f);
+            audioManager.PlayFightMusic(1f);
         }
 
         public void Logout()
@@ -106,6 +108,11 @@ namespace LGamesDev
             {
                 Debug.LogError("trying to set authentication to null");
             }
+        }
+
+        public SceneIndexes GetActiveScene()
+        {
+            return sceneLoader.activeScene;
         }
     }
 }

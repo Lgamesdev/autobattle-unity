@@ -83,11 +83,23 @@ namespace LGamesDev.Fighting
 
             if (fightAction.playerTeam)
             {
-                playerCharacterFight.Attack(_enemyCharacterFight, _fight.Actions[currentAction].damage, fightAction.critialHit, ChooseNextActiveCharacter);
+                playerCharacterFight.Attack(
+                    _enemyCharacterFight, 
+                    _fight.Actions[currentAction].damage, 
+                    fightAction.criticalHit, 
+                    fightAction.dodged, 
+                    ChooseNextActiveCharacter
+                );
             }
             else
             {
-                _enemyCharacterFight.Attack(playerCharacterFight, _fight.Actions[currentAction].damage, fightAction.critialHit, ChooseNextActiveCharacter);
+                _enemyCharacterFight.Attack(
+                    playerCharacterFight, 
+                    _fight.Actions[currentAction].damage,
+                    fightAction.criticalHit,
+                    fightAction.dodged, 
+                    ChooseNextActiveCharacter
+                );
             }
 
             currentAction++;
@@ -107,6 +119,15 @@ namespace LGamesDev.Fighting
 
         private void HandlePlayerReward()
         {
+            if (_fight.PlayerWin)
+            {
+                _gameManager.audioManager.PlayWinMusic();
+            }
+            else
+            {
+                _gameManager.audioManager.PlayLoseMusic();
+            }
+            
             playerCharacterFight.GetLevelSystem().AddExperience(_fight.Reward.Experience);
 
             foreach (Currency currency in _fight.Reward.Currencies)

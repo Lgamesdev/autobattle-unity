@@ -15,6 +15,8 @@ namespace LGamesDev
         private float _totalSceneProgress;
         private float _totalSetupProgress;
 
+        public SceneIndexes activeScene;
+        
         private GameManager _gameManager;
 
         private void Awake()
@@ -41,6 +43,7 @@ namespace LGamesDev
             );
 
             AuthenticationManager.Instance.SetupAuthentication();
+            activeScene = SceneIndexes.Authentication;
         }
 
         public IEnumerator LoadMainMenu()
@@ -66,6 +69,7 @@ namespace LGamesDev
             ));
 
             SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex((int)SceneIndexes.MainMenu));
+            activeScene = SceneIndexes.MainMenu;
         }
 
         public IEnumerator LoadFight(Fight fight)
@@ -92,6 +96,7 @@ namespace LGamesDev
             yield return StartCoroutine(_gameManager.loadingScreen.DisableLoadingScreen());
 
             FightManager.Instance.StartFight();
+            activeScene = SceneIndexes.Fight;
         }
 
         public IEnumerator LoadCustomization()
@@ -108,6 +113,7 @@ namespace LGamesDev
             ));
             
             SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex((int)SceneIndexes.Customization));
+            activeScene = SceneIndexes.Customization;
         }
 
         private IEnumerator SetupSceneTransition(Action onLoadingScreenFunction, bool loadingScreenEnabled = true, bool loadingScreenDisabled = true, IEnumerator onSceneLoadComplete = null)

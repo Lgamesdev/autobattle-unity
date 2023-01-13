@@ -246,7 +246,6 @@ namespace LGamesDev
         
         public void Attack(Vector3 attackDir, Action onHit, Action onComplete) {
             //_state = State.Busy;
-            Debug.Log("got weapon : " + _characterManager.equipmentManager.GotWeapon());
             if (_characterManager.equipmentManager.GotWeapon())
             {
                 _characterAnimator.PlaySwordAttack();

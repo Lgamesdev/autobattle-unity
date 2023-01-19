@@ -1,66 +1,89 @@
 using System;
 using LGamesDev;
+using LGamesDev.UI;
 using UnityEngine;
+using UnityEngine.Audio;
 using Random = UnityEngine.Random;
 
-public class AudioManager : MonoBehaviour
+namespace LGamesDev
 {
-    [SerializeField] private AudioClip ambientClip;
-    [SerializeField] private AudioClip[] musicClips;
-
-    private int _musicClipIndex;
-    
-    [SerializeField] private AudioClip fightMusicClip;
-    [SerializeField] private AudioClip winFightMusicClip;
-    [SerializeField] private AudioClip loseFightMusicClip;
-
-    private AudioSource _audioSource;
-
-    private void Awake()
+    public class AudioManager : MonoBehaviour
     {
-        _audioSource = GetComponent<AudioSource>();
-        _audioSource.loop = true;
-        
-        _musicClipIndex = Random.Range(0, musicClips.Length - 1);
-    }
+        [SerializeField] private AudioMixer mixer;
 
-    public void PlayAmbient()
-    {
-        //_audioSource.PlayOneShot(ambientClip);
-    }
+        //[SerializeField] private AudioClip ambientClip;
+        [SerializeField] private AudioClip[] musicClips;
 
-    public void PlayMusic(float delay)
-    {
-        PlayAmbient();
-        _audioSource.clip = musicClips[_musicClipIndex];
-        _audioSource.PlayDelayed(delay);
+        private int _musicClipIndex;
 
-        if (_musicClipIndex < musicClips.Length - 1)
+        [SerializeField] private AudioClip fightMusicClip;
+        [SerializeField] private AudioClip winFightMusicClip;
+        [SerializeField] private AudioClip loseFightMusicClip;
+
+        private AudioSource _audioSource;
+
+        private void Awake()
         {
-            _musicClipIndex++;
-        }
-        else
-        {
-            _musicClipIndex = 0;
-        }
-    }
+            _audioSource = GetComponent<AudioSource>();
+            _audioSource.loop = true;
 
-    public void PlayFightMusic(float delay)
-    {
-        PlayAmbient();
-        _audioSource.clip = fightMusicClip;
-        _audioSource.PlayDelayed(delay);
+            _musicClipIndex = Random.Range(0, musicClips.Length - 1);
+        }
+
+        /*public void PlayAmbient()
+        {
+            _audioSource.PlayOneShot(ambientClip);
+        }*/
+
+        public void PlayMusic(float delay)
+        {
+            _audioSource.clip = musicClips[_musicClipIndex];
+            _audioSource.PlayDelayed(delay);
+
+            if (_musicClipIndex < musicClips.Length - 1)
+            {
+                _musicClipIndex++;
+            }
+            else
+            {
+                _musicClipIndex = 0;
+            }
+        }
+
+        public void PlayFightMusic(float delay)
+        {
+            _audioSource.clip = fightMusicClip;
+            _audioSource.PlayDelayed(delay);
+        }
+
+        public void PlayWinMusic()
+        {
+            _audioSource.clip = winFightMusicClip;
+            _audioSource.Play();
+        }
+
+        public void PlayLoseMusic()
+        {
+            _audioSource.clip = loseFightMusicClip;
+            _audioSource.Play();
+        }
+
+        public void SetMixerVolume(AudioTrack track, float value)
+        {
+            if (mixer != null)
+            {
+                mixer.SetFloat(track.ToString(), Mathf.Log(value) * 20f);
+            }
+            else
+            {
+                Debug.Log("mixer is not set");
+            }
+        }
     }
     
-    public void PlayWinMusic()
+    public enum AudioTrack
     {
-        _audioSource.clip = winFightMusicClip;
-        _audioSource.Play();
-    }
-    
-    public void PlayLoseMusic()
-    {
-        _audioSource.clip = loseFightMusicClip;
-        _audioSource.Play();
+        Music,
+        Effects
     }
 }

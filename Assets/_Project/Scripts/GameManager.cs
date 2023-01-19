@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Core.Player;
 using LGamesDev.Core;
+using LGamesDev.Core.Player;
 using LGamesDev.Core.Request;
 using LGamesDev.Fighting;
 using LGamesDev.UI;
@@ -25,7 +26,9 @@ namespace LGamesDev
         public AudioManager audioManager;
 
         private Authentication _authentication;
-        private PlayerConfig _playerConfig;
+        private const string AuthenticationKey = "authentication";
+        private PlayerOptions _playerOptions;
+        private const string OptionsKey = "options";
 
         private void Awake()
         {
@@ -42,22 +45,25 @@ namespace LGamesDev
             modalWindow.Close();
 
             //Authentication
-            _authentication = JsonConvert.DeserializeObject<Authentication>(PlayerPrefs.GetString("authentication"));
+            _authentication = JsonConvert.DeserializeObject<Authentication>(PlayerPrefs.GetString(AuthenticationKey));
+            
+            //Player Options
+            _playerOptions = JsonConvert.DeserializeObject<PlayerOptions>(PlayerPrefs.GetString(OptionsKey)) ?? new PlayerOptions();
         }
 
         private void Start()
         {
-            audioManager.PlayAmbient();
-            
             if (_authentication == null)
             {
-                Debug.Log("authentication is null");
                 StartCoroutine(sceneLoader.LoadAuthentication(true, true));
             }
             else
             {
                 StartCoroutine(sceneLoader.LoadAuthentication(true, false));
             }
+            
+            audioManager.SetMixerVolume(AudioTrack.Music, _playerOptions.MusicVolume);
+            audioManager.SetMixerVolume(AudioTrack.Effects, _playerOptions.EffectsVolume);
         }
 
         public void LoadCustomization()
@@ -102,11 +108,29 @@ namespace LGamesDev
             if (authentication != null)
             {
                 _authentication = authentication;
-                PlayerPrefs.SetString("authentication", JsonUtility.ToJson(authentication));
+                PlayerPrefs.SetString(AuthenticationKey, JsonUtility.ToJson(authentication));
             }
             else
             {
                 Debug.LogError("trying to set authentication to null");
+            }
+        }
+
+        public PlayerOptions GetPlayerOptions()
+        {
+            return _playerOptions;
+        }
+        
+        public void SetPlayerOptions(PlayerOptions playerOptions)
+        {
+            if (playerOptions != null)
+            {
+                _playerOptions = playerOptions;
+                PlayerPrefs.SetString(OptionsKey, JsonUtility.ToJson(_playerOptions));
+            }
+            else
+            {
+                Debug.LogError("trying to set options to null");
             }
         }
 

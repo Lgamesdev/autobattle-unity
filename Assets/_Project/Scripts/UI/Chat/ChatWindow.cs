@@ -1,77 +1,68 @@
-using System.Collections;
 using System.Collections.Generic;
+using NativeWebSocket;
+using TMPro;
 using UnityEngine;
-using WebSocketSharp;
 
 namespace LGamesDev.UI
 {
     public class ChatWindow : MonoBehaviour
     {
-        [SerializeField] private Transform pfUIMessageBox;
-
+        [SerializeField] private MessageUI pfUIMessage;
         [SerializeField] private Transform itemsParent;
 
-        private InventorySlotUI[] _slots;
-
-        private WebSocket _ws;
+        [SerializeField] private TMP_InputField inputField;
+        
+        private WebSocket _websocket;
 
         private void Awake()
         {
-            itemsParent = transform.Find("DialogBox").Find("itemsParent");
-            
             Hide();
         }
 
-        private void Start()
+        // Start is called before the first frame update
+        async void Start()
         {
-            Debug.Log("connecting to websocket server ...");
-            
-            _ws = new WebSocket("ws://autobattle.hopto.org:35080/echo");
-            _ws.Connect();
-            _ws.OnMessage += (sender, e) =>
+            _websocket = new WebSocket("ws://autobattle.hopto.org:35120");
+
+            _websocket.OnOpen += () =>
             {
-                Debug.Log("Message Received from "+((WebSocket)sender).Url+", Data : "+e.Data);
+                Debug.Log("Connection open!");
             };
-            _ws.OnOpen += (sender, e) =>
+
+            _websocket.OnError += (e) =>
             {
-                _ws.Send("Hello Me !");
+                Debug.Log("Error! " + e);
             };
-            
-            Debug.Log("connected...");
+
+            _websocket.OnClose += (e) =>
+            {
+                Debug.Log("Connection closed!");
+            };
+
+            _websocket.OnMessage += (bytes) =>
+            {
+                // getting the message as a string
+                string content = System.Text.Encoding.UTF8.GetString(bytes);
+
+                UpdateChatUI("author", content);
+            };
+
+            // waiting for messages
+            await _websocket.Connect();
         }
 
-        /*private void Inventory_OnItemChanged(List<IBaseCharacterItem> items)
+        private void Update()
         {
-            UpdateInventoryUI();
-        }*/
-
-        private void UpdateInventoryUI()
-        {
-            /*for (var i = 0; i < _slots.Length; i++)
-                if (i < _inventoryManager.items.Count)
-                {
-                    _slots[i].AddItem(_inventoryManager.items[i]);
-                }
-                else
-                {
-                    _slots[i].ClearSlot();
-                }*/
+            #if !UNITY_WEBGL || UNITY_EDITOR
+                _websocket.DispatchMessageQueue();
+            #endif
         }
 
-        private void SetupInventoryUI()
+        private void UpdateChatUI(string author, string content)
         {
-            //foreach (Transform child in itemsParent) Destroy(child.gameObject);
-            
-            /*for (var i = 0; i < _slots.Length; i++)
-            {
-                var itemSlotRectTransform = Instantiate(pfUIInventorySlot, _itemsParent).GetComponent<RectTransform>();
+            MessageUI messageUI = Instantiate(pfUIMessage, itemsParent);
 
-                var slot = itemSlotRectTransform.GetComponent<InventorySlotUI>();
-
-                _slots[i] = slot;
-            }
-
-            UpdateInventoryUI();*/
+            messageUI.Setup(author, content);
         }
 
         public void Show()
@@ -84,16 +75,31 @@ namespace LGamesDev.UI
             gameObject.SetActive(false);
         }
 
-        public void SendHello()
+        public void SendMessage()
         {
-            if(_ws == null)
+            if(_websocket == null)
             {
                 return;
             }
-            if (Input.GetKeyDown(KeyCode.Space))
+            else
             {
-                
-            }  
+                SendWebSocketMessage(inputField.text);
+                inputField.text = "";
+            }
+        }
+        
+        async void SendWebSocketMessage(string message)
+        {
+            if (_websocket.State == WebSocketState.Open)
+            {
+                // Sending plain text
+                await _websocket.SendText(message);
+            }
+        }
+
+        private async void OnApplicationQuit()
+        {
+            await _websocket.Close();
         }
     }
 }

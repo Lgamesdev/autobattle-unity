@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.endel.nativewebsocket": "https://github.com/endel/NativeWebSocket.git#upm",
     "com.unity.adaptiveperformance": "4.0.1",
     "com.unity.adaptiveperformance.samsung.android": "4.0.1",
     "com.unity.addressables": "1.19.19",

@@ -402,8 +402,8 @@ ScriptedImporter:
     - name: Shoulder_L Bone
       guid: d6e78d9dd9f955d43a5bbc35497cf725
       position: {x: 125.61914, y: 307.0166, z: 0}
-      rotation: {x: 0, y: 0, z: 0.7819977, w: -0.62328136}
-      length: 306.12766
+      rotation: {x: 0, y: 0, z: 0.78199774, w: -0.62328136}
+      length: 306.12772
       parentId: -1
       color:
         serializedVersion: 2
@@ -843,9 +843,9 @@ ScriptedImporter:
     spriteBone:
     - name: Arm_L Bone
       guid: 80ef168e1a2a0b24e8a471a9b5fe7058
-      position: {x: 72.34009, y: 139.60046, z: 0}
-      rotation: {x: 0, y: 0, z: 0.6999891, w: -0.71415365}
-      length: 259.83954
+      position: {x: 72.34021, y: 139.60046, z: 0}
+      rotation: {x: 0, y: 0, z: 0.6999891, w: -0.7141536}
+      length: 259.83948
       parentId: -1
       color:
         serializedVersion: 2
@@ -1191,9 +1191,9 @@ ScriptedImporter:
     spriteBone:
     - name: Hand_L Bone
       guid: 6d9339603696cdb4f87a53987d2e26ae
-      position: {x: 96.54492, y: 143.81305, z: 0}
-      rotation: {x: 0, y: 0, z: 0.68055546, w: -0.7326966}
-      length: 77.52811
+      position: {x: 96.54498, y: 143.81305, z: 0}
+      rotation: {x: 0, y: 0, z: 0.6805555, w: -0.7326966}
+      length: 77.5281
       parentId: -1
       color:
         serializedVersion: 2
@@ -1683,9 +1683,9 @@ ScriptedImporter:
     spriteBone:
     - name: Chest Bone
       guid: e4ab0d90bd7e25c4facf885596471003
-      position: {x: 287.30237, y: 65.05823, z: 0}
+      position: {x: 287.3025, y: 65.05823, z: 0}
       rotation: {x: 0, y: 0, z: 0.705699, w: 0.7085118}
-      length: 390.2603
+      length: 390.26035
       parentId: -1
       color:
         serializedVersion: 2
@@ -2186,7 +2186,7 @@ ScriptedImporter:
     - name: Pelvis Bone
       guid: 60fba1ae46412cd4895ecd9ac3520b7f
       position: {x: 226.50342, y: 39.987915, z: 0}
-      rotation: {x: 0, y: 0, z: 0.73022985, w: 0.68320155}
+      rotation: {x: 0, y: 0, z: 0.7302304, w: 0.683201}
       length: 78.24336
       parentId: -1
       color:
@@ -2717,9 +2717,9 @@ ScriptedImporter:
     spriteBone:
     - name: Thigh_L Bone
       guid: cf0e9b9d8df7433418f058168a0c8c12
-      position: {x: 102.32385, y: 309.27887, z: 0}
-      rotation: {x: 0, y: 0, z: 0.6914441, w: -0.72243}
-      length: 308.91843
+      position: {x: 102.32385, y: 309.2787, z: 0}
+      rotation: {x: 0, y: 0, z: 0.69144356, w: -0.7224305}
+      length: 308.91846
       parentId: -1
       color:
         serializedVersion: 2
@@ -3208,9 +3208,9 @@ ScriptedImporter:
     spriteBone:
     - name: Calf_L Bone
       guid: 8e3e1c651d8fbc948837ff223d878986
-      position: {x: 79.85803, y: 190.65704, z: 0}
-      rotation: {x: 0, y: 0, z: 0.73800135, w: -0.6747993}
-      length: 209.83853
+      position: {x: 79.85852, y: 190.65689, z: 0}
+      rotation: {x: 0, y: 0, z: 0.7380008, w: -0.67479986}
+      length: 209.8385
       parentId: -1
       color:
         serializedVersion: 2
@@ -3651,9 +3651,9 @@ ScriptedImporter:
     spriteBone:
     - name: Foot_L Bone
       guid: 9649944c43b5217409c20ba73598168a
-      position: {x: 59.121277, y: 82.65674, z: 0}
-      rotation: {x: 0, y: 0, z: 0.22836521, w: -0.97357553}
-      length: 90.88326
+      position: {x: 59.12207, y: 82.656494, z: 0}
+      rotation: {x: 0, y: 0, z: 0.22836448, w: -0.9735757}
+      length: 90.883286
       parentId: -1
       color:
         serializedVersion: 2
@@ -4119,9 +4119,9 @@ ScriptedImporter:
     spriteBone:
     - name: Thigh_R Bone
       guid: bbf8f92fafaf4c94ab795f8ae24e4ad9
-      position: {x: 127.20325, y: 312.02576, z: 0}
-      rotation: {x: 0, y: 0, z: 0.7038827, w: -0.7103163}
-      length: 297.69693
+      position: {x: 127.20325, y: 312.02594, z: 0}
+      rotation: {x: 0, y: 0, z: 0.7038814, w: -0.71031755}
+      length: 297.69705
       parentId: -1
       color:
         serializedVersion: 2
@@ -4519,9 +4519,9 @@ ScriptedImporter:
     spriteBone:
     - name: Calf_R Bone
       guid: c2e94bdf91e324b409d46bdda1d2c533
-      position: {x: 82.91199, y: 207.34106, z: 0}
-      rotation: {x: 0, y: 0, z: 0.7363564, w: -0.67659396}
-      length: 221.86145
+      position: {x: 82.912476, y: 207.34125, z: 0}
+      rotation: {x: 0, y: 0, z: 0.73635596, w: -0.6765944}
+      length: 221.86143
       parentId: -1
       color:
         serializedVersion: 2
@@ -4939,9 +4939,9 @@ ScriptedImporter:
     spriteBone:
     - name: Foot_R Bone
       guid: 40648b5b64857604b9064057719e3837
-      position: {x: 57.177612, y: 85.27197, z: 0}
-      rotation: {x: 0, y: 0, z: 0.19075306, w: -0.9816381}
-      length: 100.40008
+      position: {x: 57.178467, y: 85.272095, z: 0}
+      rotation: {x: 0, y: 0, z: 0.19075221, w: -0.98163825}
+      length: 100.40005
       parentId: -1
       color:
         serializedVersion: 2
@@ -5337,9 +5337,9 @@ ScriptedImporter:
     spriteBone:
     - name: Shoulder_R Bone
       guid: 5ea2c04507e75684e956b46a6943c696
-      position: {x: 97.81152, y: 307.47424, z: 0}
+      position: {x: 97.811646, y: 307.47424, z: 0}
       rotation: {x: 0, y: 0, z: -0.64782465, w: 0.76178956}
-      length: 303.17987
+      length: 303.17978
       parentId: -1
       color:
         serializedVersion: 2
@@ -5768,9 +5768,9 @@ ScriptedImporter:
     spriteBone:
     - name: Arm_R Bone
       guid: 9dc03d6f6f8ee6b4f94a8bcf5069021b
-      position: {x: 61.516357, y: 119.23218, z: 0}
-      rotation: {x: 0, y: 0, z: -0.5656191, w: 0.8246666}
-      length: 227.15588
+      position: {x: 61.51648, y: 119.232056, z: 0}
+      rotation: {x: 0, y: 0, z: -0.56561935, w: 0.82466644}
+      length: 227.15579
       parentId: -1
       color:
         serializedVersion: 2
@@ -6160,16 +6160,16 @@ ScriptedImporter:
     - name: Pelvis Bone
       guid: 60fba1ae46412cd4895ecd9ac3520b7f
       position: {x: 1044.5034, y: 830.9879, z: 0}
-      rotation: {x: 0, y: 0, z: 0.7302294, w: 0.68320215}
-      length: 78.24335
+      rotation: {x: 0, y: 0, z: 0.73022985, w: 0.68320155}
+      length: 78.24336
       parentId: -1
       color:
         serializedVersion: 2
         rgba: 4278190335
     - name: Chest Bone
       guid: e4ab0d90bd7e25c4facf885596471003
-      position: {x: 78.243355, y: 0.00007699786, z: 0}
-      rotation: {x: 0, y: 0, z: -0.03524106, w: 0.99937886}
+      position: {x: 78.24338, y: 0.00010553707, z: 0}
+      rotation: {x: 0, y: 0, z: -0.03524182, w: 0.99937886}
       length: 390.2603
       parentId: 0
       color:
@@ -6188,24 +6188,24 @@ ScriptedImporter:
       guid: d6e78d9dd9f955d43a5bbc35497cf725
       position: {x: 476.9932, y: 243.58258, z: 0}
       rotation: {x: 0, y: -0, z: 0.9939036, w: 0.110252805}
-      length: 306.12753
+      length: 306.12766
       parentId: 1
       color:
         serializedVersion: 2
         rgba: 4294967040
     - name: Arm_L Bone
       guid: 80ef168e1a2a0b24e8a471a9b5fe7058
-      position: {x: 306.12762, y: -0.00003943176, z: 0}
+      position: {x: 306.12772, y: -0.00007103385, z: 0}
       rotation: {x: 0, y: 0, z: 0.12217635, w: 0.9925084}
-      length: 259.83954
+      length: 259.83957
       parentId: 3
       color:
         serializedVersion: 2
         rgba: 4294901760
     - name: Hand_L Bone
       guid: 6d9339603696cdb4f87a53987d2e26ae
-      position: {x: 259.83957, y: -0.000041405216, z: 0}
-      rotation: {x: 0, y: 0, z: 0.026858468, w: 0.99963933}
+      position: {x: 259.83954, y: -0.000025743851, z: 0}
+      rotation: {x: 0, y: 0, z: 0.02685846, w: 0.9996393}
       length: 77.5281
       parentId: 4
       color:
@@ -6214,7 +6214,7 @@ ScriptedImporter:
     - name: Shoulder_R Bone
       guid: 5ea2c04507e75684e956b46a6943c696
       position: {x: 474.9712, y: -138.62094, z: 0}
-      rotation: {x: 0, y: -0, z: -0.9965855, w: 0.082567714}
+      rotation: {x: 0, y: -0, z: -0.9965855, w: 0.08256772}
       length: 303.17978
       parentId: 1
       color:
@@ -6222,17 +6222,17 @@ ScriptedImporter:
         rgba: 4278223103
     - name: Arm_R Bone
       guid: 9dc03d6f6f8ee6b4f94a8bcf5069021b
-      position: {x: 303.17975, y: -0.000019652416, z: 0}
-      rotation: {x: 0, y: 0, z: 0.10335644, w: 0.9946444}
-      length: 227.15588
+      position: {x: 303.17972, y: 0.000047225967, z: 0}
+      rotation: {x: 0, y: 0, z: 0.103356615, w: 0.9946444}
+      length: 227.15585
       parentId: 6
       color:
         serializedVersion: 2
         rgba: 4278255488
     - name: Hand_R Bone
       guid: 35347cb6f6c21a54cb09d33f4ac762cd
-      position: {x: 227.15587, y: -0.000024287814, z: 0}
-      rotation: {x: 0, y: 0, z: -0.06492417, w: 0.99789023}
+      position: {x: 227.15576, y: -0.000136297, z: 0}
+      rotation: {x: 0, y: 0, z: -0.064924344, w: 0.9978902}
       length: 72.30286
       parentId: 7
       color:
@@ -6241,16 +6241,16 @@ ScriptedImporter:
     - name: Thigh_L Bone
       guid: cf0e9b9d8df7433418f058168a0c8c12
       position: {x: -10.745614, y: 120.15962, z: 0}
-      rotation: {x: 0, y: -0, z: 0.9999356, w: 0.011347842}
-      length: 308.9184
+      rotation: {x: 0, y: -0, z: 0.9999356, w: 0.0113478415}
+      length: 308.91843
       parentId: 0
       color:
         serializedVersion: 2
         rgba: 4294934528
     - name: Calf_L Bone
       guid: 8e3e1c651d8fbc948837ff223d878986
-      position: {x: 308.9184, y: 0.00041151655, z: 0}
-      rotation: {x: 0, y: 0, z: -0.066567846, w: 0.99778193}
+      position: {x: 308.91843, y: 0.00039487315, z: 0}
+      rotation: {x: 0, y: 0, z: -0.066568285, w: 0.9977819}
       length: 209.83856
       parentId: 9
       color:
@@ -6258,8 +6258,8 @@ ScriptedImporter:
         rgba: 4294901888
     - name: Foot_L Bone
       guid: 9649944c43b5217409c20ba73598168a
-      position: {x: 209.83855, y: -0.00011105556, z: 0}
-      rotation: {x: 0, y: 0, z: 0.564399, w: 0.8255021}
+      position: {x: 209.83849, y: 0.00009344857, z: 0}
+      rotation: {x: 0, y: 0, z: 0.56439936, w: 0.825502}
       length: 90.883255
       parentId: 10
       color:
@@ -6268,16 +6268,16 @@ ScriptedImporter:
     - name: Thigh_R Bone
       guid: bbf8f92fafaf4c94ab795f8ae24e4ad9
       position: {x: -18.895239, y: -103.6731, z: 0}
-      rotation: {x: 0, y: -0, z: 0.9995879, w: 0.028706973}
-      length: 297.69687
+      rotation: {x: 0, y: -0, z: 0.9995879, w: 0.028706975}
+      length: 297.69693
       parentId: 0
       color:
         serializedVersion: 2
         rgba: 4278255615
     - name: Calf_R Bone
       guid: c2e94bdf91e324b409d46bdda1d2c533
-      position: {x: 297.6969, y: 0.00012683617, z: 0}
-      rotation: {x: 0, y: 0, z: -0.046803422, w: 0.9989041}
+      position: {x: 297.69696, y: 0.00016243335, z: 0}
+      rotation: {x: 0, y: 0, z: -0.046803106, w: 0.99890417}
       length: 221.86145
       parentId: 12
       color:
@@ -6285,8 +6285,8 @@ ScriptedImporter:
         rgba: 4278255360
     - name: Foot_R Bone
       guid: 40648b5b64857604b9064057719e3837
-      position: {x: 221.86145, y: 0.00013245807, z: 0}
-      rotation: {x: 0, y: 0, z: 0.5937733, w: 0.8046324}
+      position: {x: 221.86147, y: -0.00008111917, z: 0}
+      rotation: {x: 0, y: 0, z: 0.59377307, w: 0.8046326}
       length: 100.400055
       parentId: 13
       color:

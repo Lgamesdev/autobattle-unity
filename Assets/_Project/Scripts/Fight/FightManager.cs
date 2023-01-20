@@ -22,6 +22,8 @@ namespace LGamesDev.Fighting
         private Fight _fight;
         [SerializeField] private int currentAction = 0;
 
+        private int _fightSpeed = 1;
+
         //[SerializeField] private State state = State.Busy;
 
         private GameManager _gameManager; 
@@ -44,7 +46,7 @@ namespace LGamesDev.Fighting
         public IEnumerator SetupFight(Fight fight)
         {
             _fight = fight;
-            
+
             yield return StartCoroutine(playerCharacterFight.SetupCharacterFight(fight.Character));
 
             _enemyCharacterFight = SpawnCharacter();
@@ -109,8 +111,13 @@ namespace LGamesDev.Fighting
         private bool TestBattleOver()
         {
             if (currentAction < _fight.Actions.Count) return false;
+
+            PlayerOptions playerOptions = _gameManager.GetPlayerOptions();
+            playerOptions.FightSpeed = _fightSpeed;
+            _gameManager.SetPlayerOptions(playerOptions);
+            // reset fight speed on battle over window
+            SetFightSpeed(1);
             
-            //Debug.Log("reward : " + _fight.Reward);
             OnFightOver?.Invoke(_fight.Reward, _fight.PlayerWin);
             HandlePlayerReward();
 
@@ -136,6 +143,12 @@ namespace LGamesDev.Fighting
                     currency.currencyType, currency.amount
                 );
             }
+        }
+
+        public void SetFightSpeed(int fightSpeed)
+        {
+            _fightSpeed = fightSpeed;
+            Time.timeScale = _fightSpeed;
         }
 
         public void BackToMainMenu()

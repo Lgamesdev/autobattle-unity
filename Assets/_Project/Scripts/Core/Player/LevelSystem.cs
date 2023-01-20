@@ -61,8 +61,10 @@ namespace LGamesDev.Core.Player
         {
             var solveForRequiredXp = 0;
             for (var levelCycle = 1; levelCycle <= level; levelCycle++)
+            {
                 solveForRequiredXp += Mathf.FloorToInt(levelCycle + XpAdditionMultiplier *
                     Mathf.Pow(XpPowerMultiplier, levelCycle / XpDivisionMultiplier));
+            }
 
             return solveForRequiredXp / 4;
         }

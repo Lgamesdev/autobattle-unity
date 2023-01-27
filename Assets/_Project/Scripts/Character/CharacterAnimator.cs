@@ -22,6 +22,10 @@ public class CharacterAnimator : MonoBehaviour
     private static readonly int OnRun = Animator.StringToHash("isRunning");
     private static readonly int OnHandHit = Animator.StringToHash("Hand_Attack");
     private static readonly int OnSwordHit = Animator.StringToHash("Sword_Attack");
+    private static readonly int OnHit = Animator.StringToHash("Attack_Hit");
+    private static readonly int OnDodge = Animator.StringToHash("Attack_Dodge");
+    private static readonly int OnWin = Animator.StringToHash("Win");
+    private static readonly int OnLose = Animator.StringToHash("Lose");
     
     private void Start()
     {
@@ -32,12 +36,6 @@ public class CharacterAnimator : MonoBehaviour
         _punchClipIndex = Random.Range(0, punchAudioClips.Length - 1);
         _swordClipIndex = Random.Range(0, swordAudioClips.Length - 1);
     }
-
-    /*public void PlayIdle()
-    {
-        Debug.Log("Idle animation");
-        _animator.SetTrigger(OnIdle);
-    }*/
 
     public void PlayWalk()
     {
@@ -108,6 +106,26 @@ public class CharacterAnimator : MonoBehaviour
         {
             _swordClipIndex = 0;
         }
+    }
+    
+    public void PlayHitted()
+    {
+        _animator.SetTrigger(OnHit);
+    }
+    
+    public void PlayDodge()
+    {
+        _animator.SetTrigger(OnDodge);
+    }
+    
+    public void PlayWin()
+    {
+        _animator.SetBool(OnWin, true);
+    }
+    
+    public void PlayLose()
+    {
+        _animator.SetBool(OnLose, true);
     }
 
     public void SetMoveVector(Vector3 position)

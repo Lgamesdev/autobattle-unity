@@ -258,7 +258,7 @@ namespace LGamesDev
             _onAttackHit = onHit;
             _onAttackComplete = onComplete;
         }
-
+        
         public void OnAttackHit()
         {
             _onAttackHit?.Invoke();
@@ -268,22 +268,31 @@ namespace LGamesDev
         {
             _onAttackComplete?.Invoke();
         }
-        
+
+        public void Dodge()
+        {
+            _characterAnimator.PlayDodge();
+        }
+
+        public void TakeHit()
+        {
+            _characterAnimator.PlayHitted();
+        }
+
         public void PlayAnimIdle()
         {
             _characterAnimator.SetMoveVector(Vector3.zero);
         }
 
-        /*public void PlayAnimMove(Vector3 moveDir) {
-           if (moveVector == Vector3.zero) {
-               // Idle
-               unitAnimation.PlayAnim(idleAnimType, lastMoveDir, idleFrameRate, null, null, null);
-           } else {
-               // Moving
-               lastMoveDir = moveDir;
-               unitAnimation.PlayAnim(walkAnimType, lastMoveDir, walkFrameRate, null, null, null);
-           }
-       }*/
+        public void PlayWin()
+        {
+            _characterAnimator.PlayWin();
+        }
+        
+        public void PlayLose()
+        {
+            _characterAnimator.PlayLose();
+        }
         
         private enum State
         {

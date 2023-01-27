@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1633740095180548342}
   - component: {fileID: 1188899891191775796}
   - component: {fileID: 5596931408496927021}
-  - component: {fileID: 1188899891191775797}
   - component: {fileID: 2119013392191034637}
   - component: {fileID: -5419989461987444300}
   m_Layer: 0
@@ -60,6 +59,7 @@ MonoBehaviour:
         stats: []
         equipmentSlot: 0
         spriteId: 0
+        requiredLevel: 0
       modifiers: []
     - id: 0
       amount: 1
@@ -71,6 +71,7 @@ MonoBehaviour:
         stats: []
         equipmentSlot: 0
         spriteId: 0
+        requiredLevel: 0
       modifiers: []
     - id: 0
       amount: 1
@@ -82,6 +83,7 @@ MonoBehaviour:
         stats: []
         equipmentSlot: 0
         spriteId: 0
+        requiredLevel: 0
       modifiers: []
     - id: 0
       amount: 1
@@ -93,6 +95,7 @@ MonoBehaviour:
         stats: []
         equipmentSlot: 0
         spriteId: 0
+        requiredLevel: 0
       modifiers: []
 --- !u!114 &5596931408496927021
 MonoBehaviour:
@@ -107,18 +110,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: []
---- !u!114 &1188899891191775797
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 460541583084220565}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8ebb29dcfbc45a1829e81e8307e406c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2119013392191034637
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,6 +128,8 @@ MonoBehaviour:
   <activeSpriteLib>k__BackingField: 0
   equipmentManager: {fileID: 1188899891191775796}
   statsManager: {fileID: 5596931408496927021}
+  inventoryManager: {fileID: 0}
+  walletManager: {fileID: 0}
 --- !u!114 &-5419989461987444300
 MonoBehaviour:
   m_ObjectHideFlags: 0

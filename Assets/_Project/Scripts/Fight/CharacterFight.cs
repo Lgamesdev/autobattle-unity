@@ -85,18 +85,25 @@ namespace LGamesDev.Fighting
         {
             _characterStatsManager.TakeDamage(damageAmount);
 
+            if (dodged)
+            {
+                _characterManager.activeCharacter.Dodge();
+            }
+            else
+            {
+                _characterManager.activeCharacter.TakeHit();
+            }
+
             DamagePopup.Create(GetPosition(), damageAmount, isCritical, dodged);
-            
             //TODO:  Impact effect
-            //CodeMonkey.Utils.UtilsClass.ShakeCamera(.7f, .07f);
 
             if (IsDead()) {
-                //Died
-                //_characterHandler.PlayAnimLyingUp();
+                //Lose
+                _characterManager.activeCharacter.PlayLose();
             }
         }
 
-        public bool IsDead()
+        private bool IsDead()
         {
             return _characterStatsManager.IsDead();
         }
@@ -118,12 +125,20 @@ namespace LGamesDev.Fighting
                     target.Damage(damage, isCritical, dodged);
                 }, () =>
                 {
-                    // Slide back to starting position
-                    _characterManager.activeCharacter.RunToPosition(startingPosition, () =>
+                    if (!target.IsDead())
                     {
-                        _characterManager.activeCharacter.PlayAnimIdle();
+                        // Slide back to starting position
+                        _characterManager.activeCharacter.RunToPosition(startingPosition, () =>
+                        {
+                            _characterManager.activeCharacter.PlayAnimIdle();
+                            onAttackComplete();
+                        });
+                    }
+                    else
+                    {
+                        _characterManager.activeCharacter.PlayWin();
                         onAttackComplete();
-                    });
+                    }
                 });
             });
         }

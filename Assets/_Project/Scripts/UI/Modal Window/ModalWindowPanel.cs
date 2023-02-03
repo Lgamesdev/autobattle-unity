@@ -147,6 +147,7 @@ public class ModalWindowPanel : MonoBehaviour
     
     public void ShowAsTextPopup(string title, string message, string confirmMessage, string declineMessage, Action confirmAction = null, Action declineAction = null, Action alternateAction = null)
     {
+        if (gameObject == null) return;
         LeanTween.cancel(gameObject);
 
         horizontalLayoutArea.gameObject.SetActive(false);
@@ -157,7 +158,7 @@ public class ModalWindowPanel : MonoBehaviour
         bool hasTitle = !string.IsNullOrEmpty(title);
         headerArea.gameObject.SetActive(hasTitle);
         titleField.text = title;
-        
+
         heroText.text = message;
 
         bool hasConfirm = (confirmAction != null);
@@ -173,7 +174,7 @@ public class ModalWindowPanel : MonoBehaviour
         bool hasAlternate = (alternateAction != null);
         alternateButton.gameObject.SetActive(hasAlternate);
         _onAlternateAction = alternateAction;
-        
+
         Show();
     }
 

@@ -1,14 +1,13 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
+using LGamesDev.Helper;
 using NativeWebSocket;
 using Newtonsoft.Json;
 using TMPro;
 using UnityEngine;
-using Newtonsoft.Json.Linq;
 using UnityEngine.UI;
-using Websocket.Client;
 
 namespace LGamesDev.UI
 {
@@ -29,9 +28,18 @@ namespace LGamesDev.UI
         }
 
         // Start is called before the first frame update
-        private async void Start()
+        private void Start()
         {
-            _ws = new WebSocket("ws://autobattle.hopto.org:35120?access_token=" + GameManager.Instance.GetAuthentication().refresh_token);
+            Connect();
+        }
+        
+        private async void Connect()
+        {
+            _ws = new WebSocket("ws://autobattle.hopto.org:35120", new Dictionary<string, string>()
+            {
+                { "Client", "Unity" },
+                { "Authorization", GameManager.Instance.GetAuthentication().token },
+            });
 
             _ws.OnOpen += () =>
             {
@@ -46,12 +54,32 @@ namespace LGamesDev.UI
 
             _ws.OnError += (e) =>
             {
+                GameManager.Instance.modalWindow.ShowAsTextPopup(
+                    "Something get wrong...",
+                    e,
+                    "Retry",
+                    "Disconnect",
+                    Connect,
+                    GameManager.Instance.Logout
+                );
                 Debug.Log("Error! " + e);
             };
 
             _ws.OnClose += (e) =>
             {
                 Debug.Log("Connection closed!");
+                if (Application.isPlaying)
+                {
+                    GameManager.Instance.modalWindow.ShowAsTextPopup(
+                        "Something get wrong...",
+                        e.GetTypeCode().ToString(),
+                        "Retry",
+                        "Disconnect",
+                        Connect,
+                        GameManager.Instance.Logout
+                    );
+                    //Invoke(nameof(Connect), 10.0f);
+                }
             };
 
             _ws.OnMessage += (bytes) =>
@@ -64,7 +92,7 @@ namespace LGamesDev.UI
                     JsonConvert.DeserializeObject<Dictionary<string, string>>(message);
                 AddMessageToChannel(socketMessage?["user"], socketMessage?["message"]);
             };
-
+            
             // waiting for messages
             await _ws.Connect();
         }

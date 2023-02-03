@@ -76,7 +76,7 @@ namespace LGamesDev.Fighting
             _healthBar.SetCurrentHealth(_characterStatsManager.GetCurrentHealth());
         }
 
-        private Vector3 GetPosition()
+        public Vector3 GetPosition()
         {
             return transform.position;
         }
@@ -141,6 +141,11 @@ namespace LGamesDev.Fighting
                     }
                 });
             });
+        }
+
+        public void LookAt(Vector3 position)
+        {
+            _characterManager.activeCharacter.LookAt(position);
         }
 
         /*public void HideSelectionCircle()

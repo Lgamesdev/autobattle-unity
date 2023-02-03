@@ -284,6 +284,11 @@ namespace LGamesDev
             _characterAnimator.SetMoveVector(Vector3.zero);
         }
 
+        public void LookAt(Vector3 position)
+        {
+            _characterAnimator.SetMoveVector(position);
+        }
+
         public void PlayWin()
         {
             _characterAnimator.PlayWin();

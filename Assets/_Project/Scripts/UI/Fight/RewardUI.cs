@@ -1,5 +1,6 @@
 using System;
 using LGamesDev.Core.Player;
+using LGamesDev.Helper;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -53,15 +54,15 @@ namespace LGamesDev.Fighting
                 switch (currency.currencyType)
                 {
                     case CurrencyType.Gold:
-                        _goldGain.text = currency.amount.ToString();
+                        _goldGain.text = ConvertNumber.ToString(currency.amount);
                         break;
                     case CurrencyType.Crystal:
-                        Debug.Log("crystal gained : +" +  currency.amount.ToString());
+                        Debug.Log("crystal gained : +" +  ConvertNumber.ToString(currency.amount));
                         break;
                 }
             }
 
-            _rankGain.text = "+" + reward.Ranking.ToString();
+            _rankGain.text = "+" + ConvertNumber.ToString(reward.Ranking);
         }
 
         private void AddToExperienceBar(int xpGained)
@@ -125,7 +126,7 @@ namespace LGamesDev.Fighting
 
         private void SetGainedExperience(float xpNumber)
         {
-            _experienceGain.text = "+" + xpNumber;
+            _experienceGain.text = "+" + ConvertNumber.ToString(xpNumber);
         }
 
         public void SetLevelSystem(LevelSystem levelSystem)

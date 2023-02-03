@@ -1,5 +1,6 @@
 using System;
 using LGamesDev.Core.Player;
+using LGamesDev.Helper;
 using TMPro;
 using UnityEngine;
 
@@ -9,8 +10,6 @@ namespace LGamesDev.UI
     {
         public Transform goldAmount;
         public Transform crystalAmount;
-        
-        private IShopCustomer _shopCustomer;
 
         private PlayerWalletManager _walletManager;
 
@@ -21,20 +20,15 @@ namespace LGamesDev.UI
             if (_walletManager != null) _walletManager.OnCurrencyChanged += OnCurrencyChanged;
         }
 
-        public void SetShopCustomer(IShopCustomer shopCustomer)
-        {
-            this._shopCustomer = shopCustomer;
-        }
-
         private void OnCurrencyChanged(Currency currency)
         {
             switch (currency.currencyType)
             {
                 case CurrencyType.Gold:
-                    goldAmount.GetComponent<TextMeshProUGUI>().text = currency.amount.ToString();
+                    goldAmount.GetComponent<TextMeshProUGUI>().text = ConvertNumber.ToString(currency.amount);
                     break;
                 case CurrencyType.Crystal:
-                    crystalAmount.GetComponent<TextMeshProUGUI>().text = currency.amount.ToString();
+                    crystalAmount.GetComponent<TextMeshProUGUI>().text = ConvertNumber.ToString(currency.amount);
                     break;
             }
         }

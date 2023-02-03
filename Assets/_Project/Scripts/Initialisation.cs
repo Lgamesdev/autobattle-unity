@@ -6,6 +6,7 @@ using LGamesDev.Core;
 using LGamesDev.Core.Character;
 using LGamesDev.Core.Player;
 using LGamesDev.Core.Request;
+using LGamesDev.Helper;
 using LGamesDev.UI;
 using TMPro;
 using UnityEngine;
@@ -62,7 +63,7 @@ namespace LGamesDev
                         = GameManager.Instance.GetAuthentication().username;
                     
                     infosUI.level.GetComponent<TextMeshProUGUI>().text 
-                        = "Level : " + result.level.ToString();
+                        = "Level : " + ConvertNumber.ToString(result.level);
                 }
             ));
             _coroutinesLoading.Add(InitialisationStage.Wallet, PlayerWalletHandler.Load(
@@ -75,10 +76,10 @@ namespace LGamesDev
                     WalletUI walletUI = FindObjectOfType<WalletUI>();
                     
                     walletUI.goldAmount.GetComponent<TextMeshProUGUI>().text 
-                     = result.GetAmount(CurrencyType.Gold).ToString();
+                     = ConvertNumber.ToString(result.GetAmount(CurrencyType.Gold));
                     
                     walletUI.crystalAmount.GetComponent<TextMeshProUGUI>().text
-                        = result.GetAmount(CurrencyType.Crystal).ToString();
+                        = ConvertNumber.ToString(result.GetAmount(CurrencyType.Crystal));
                 }
             ));
             _coroutinesLoading.Add(InitialisationStage.Equipment, GearHandler.Load(

@@ -1,18 +1,27 @@
+using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using NativeWebSocket;
+using Newtonsoft.Json;
 using TMPro;
 using UnityEngine;
+using Newtonsoft.Json.Linq;
+using UnityEngine.UI;
+using Websocket.Client;
 
 namespace LGamesDev.UI
 {
     public class ChatWindow : MonoBehaviour
     {
+        private string _defaultChannel = "general";
+
         [SerializeField] private MessageUI pfUIMessage;
         [SerializeField] private Transform itemsParent;
 
         [SerializeField] private TMP_InputField inputField;
-        
-        private WebSocket _websocket;
+
+        private WebSocket _ws;
 
         private void Awake()
         {
@@ -20,49 +29,58 @@ namespace LGamesDev.UI
         }
 
         // Start is called before the first frame update
-        async void Start()
+        private async void Start()
         {
-            _websocket = new WebSocket("ws://autobattle.hopto.org:35120");
+            _ws = new WebSocket("ws://autobattle.hopto.org:35120?access_token=" + GameManager.Instance.GetAuthentication().refresh_token);
 
-            _websocket.OnOpen += () =>
+            _ws.OnOpen += () =>
             {
                 Debug.Log("Connection open!");
+                _ws.SendText(JsonConvert.SerializeObject(new Dictionary<string, string>
+                {
+                    { "action", "subscribe" },
+                    { "channel", _defaultChannel },
+                    { "user", GameManager.Instance.GetAuthentication().username }
+                }));
             };
 
-            _websocket.OnError += (e) =>
+            _ws.OnError += (e) =>
             {
                 Debug.Log("Error! " + e);
             };
 
-            _websocket.OnClose += (e) =>
+            _ws.OnClose += (e) =>
             {
                 Debug.Log("Connection closed!");
             };
 
-            _websocket.OnMessage += (bytes) =>
+            _ws.OnMessage += (bytes) =>
             {
                 // getting the message as a string
-                string content = System.Text.Encoding.UTF8.GetString(bytes);
-
-                UpdateChatUI("author", content);
+                var message = System.Text.Encoding.UTF8.GetString(bytes);
+                Debug.Log("OnMessage! " + message);
+                
+                Dictionary<string, string> socketMessage =
+                    JsonConvert.DeserializeObject<Dictionary<string, string>>(message);
+                AddMessageToChannel(socketMessage?["user"], socketMessage?["message"]);
             };
 
             // waiting for messages
-            await _websocket.Connect();
+            await _ws.Connect();
         }
 
-        private void Update()
+        void Update()
         {
             #if !UNITY_WEBGL || UNITY_EDITOR
-                _websocket.DispatchMessageQueue();
+                _ws.DispatchMessageQueue();
             #endif
         }
-
-        private void UpdateChatUI(string author, string content)
+        
+        private void AddMessageToChannel(string author, string content)
         {
             MessageUI messageUI = Instantiate(pfUIMessage, itemsParent);
-
             messageUI.Setup(author, content);
+            LayoutRebuilder.ForceRebuildLayoutImmediate(messageUI.transform as RectTransform);
         }
 
         public void Show()
@@ -77,7 +95,7 @@ namespace LGamesDev.UI
 
         public void SendMessage()
         {
-            if(_websocket == null)
+            if(_ws == null)
             {
                 return;
             }
@@ -87,19 +105,25 @@ namespace LGamesDev.UI
                 inputField.text = "";
             }
         }
-        
+
         async void SendWebSocketMessage(string message)
         {
-            if (_websocket.State == WebSocketState.Open)
+            if (_ws.State == WebSocketState.Open)
             {
-                // Sending plain text
-                await _websocket.SendText(message);
+                // Sending plain text to json
+                await _ws.SendText(JsonConvert.SerializeObject(new Dictionary<string, string>
+                {
+                    {"action", "message" },
+                    {"channel", _defaultChannel },
+                    {"user", GameManager.Instance.GetAuthentication().username },
+                    {"message", message }
+                }));
             }
         }
 
         private async void OnApplicationQuit()
         {
-            await _websocket.Close();
+            await _ws.Close();
         }
     }
 }

@@ -48,10 +48,22 @@ namespace LGamesDev.Fighting
             _fight = fight;
 
             yield return StartCoroutine(playerCharacterFight.SetupCharacterFight(fight.Character));
+            
 
             _enemyCharacterFight = SpawnCharacter();
 
             yield return StartCoroutine(_enemyCharacterFight.SetupCharacterFight(fight.Opponent));
+            
+            var cam = Camera.main;
+
+            var camHeight = cam.orthographicSize * 2f;
+            var camWidth = camHeight * cam.aspect;
+
+            playerCharacterFight.transform.position = new Vector3(camWidth * -0.28f, -30);
+            _enemyCharacterFight.transform.position = new Vector3(camWidth * 0.28f, -30);
+            
+            playerCharacterFight.LookAt(_enemyCharacterFight.GetPosition());
+            _enemyCharacterFight.LookAt(playerCharacterFight.GetPosition());
         }
 
         public void StartFight()
@@ -65,16 +77,9 @@ namespace LGamesDev.Fighting
 
         private CharacterFight SpawnCharacter()
         {
-            var cam = Camera.main;
+            CharacterFight characterFight = Instantiate(pfCharacterBattle, transform.position, Quaternion.identity);
 
-            var camHeight = cam.orthographicSize * 2f;
-            var camWidth = camHeight * cam.aspect;
-
-            Vector3 position = new Vector3(camWidth * 0.28f, -30);
-
-            CharacterFight characterTransform = Instantiate(pfCharacterBattle, position, Quaternion.identity);
-
-            return characterTransform;
+            return characterFight;
         }
 
         private void ChooseNextActiveCharacter()

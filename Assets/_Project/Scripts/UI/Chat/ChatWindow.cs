@@ -109,6 +109,7 @@ namespace LGamesDev.UI
             MessageUI messageUI = Instantiate(pfUIMessage, itemsParent);
             messageUI.Setup(author, content);
             LayoutRebuilder.ForceRebuildLayoutImmediate(messageUI.transform as RectTransform);
+            LayoutRebuilder.ForceRebuildLayoutImmediate(itemsParent.transform as RectTransform);
         }
 
         public void Show()

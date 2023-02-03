@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using Unity.Plastic.Newtonsoft.Json.Serialization;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 namespace LGamesDev.Helper

@@ -19,7 +19,7 @@ namespace LGamesDev.Core.Character
         {
             //Equip the item 
             //Debug.Log("Equip the item");
-            CharacterManager.Instance.equipmentManager.Equip(this);
+            CharacterManager.Instance.equipmentManager.TryEquip(this);
         }
 
         public override void Sell()

@@ -1,20 +1,13 @@
 using System.Collections.Generic;
-using CodeMonkey.Utils;
-using LGamesDev.Core.Character;
 using LGamesDev.Core.Player;
 using LGamesDev.Core.Request;
-using LGamesDev.Request.Converters;
-using Newtonsoft.Json;
-using TMPro;
 using UnityEngine;
-using UnityEngine.Networking;
-using UnityEngine.UI;
 
 namespace LGamesDev.UI
 {
     public class ShopUI : MonoBehaviour
     {
-        [SerializeField] public PlayerCustomer shopCustomer;
+        public static ShopUI Instance;
         
         [SerializeField] private Transform pfShopCardUI;
 
@@ -23,10 +16,22 @@ namespace LGamesDev.UI
 
         private PlayerWalletManager _walletManager;
 
-        [SerializeField] private List<Item> shopItems = new();
+        private List<Item> _shopItems = new();
+
+        public List<Item> ShopItems
+        {
+            get => _shopItems;
+            set
+            {
+                _shopItems = value;
+                SetupUI();
+            }
+        }
 
         private void Awake()
         {
+            Instance = this;
+            
             _containerWrapper = transform.Find("Container Scroll Rect");
             _container = _containerWrapper.Find("Container");
 
@@ -35,14 +40,15 @@ namespace LGamesDev.UI
 
         private void Start()
         {
-            StartCoroutine(ShopHandler.Load(
+            GameManager.Instance.networkManager.GetItemsList();
+            /*StartCoroutine(ShopHandler.Load(
                 this,
                 result =>
                 {
-                    shopItems = result;
+                    _shopItems = result;
                     SetupUI();
                 }
-            ));
+            ));*/
         }
 
         private void SetupUI(EquipmentSlot? equipmentSlot = null)
@@ -51,7 +57,7 @@ namespace LGamesDev.UI
             
             if (equipmentSlot.HasValue)
             {
-                foreach (Item shopItem in shopItems) 
+                foreach (Item shopItem in _shopItems) 
                 {
                     if(shopItem.GetType() != typeof(Equipment)) continue;
                     Equipment equipment = shopItem as Equipment;
@@ -63,7 +69,7 @@ namespace LGamesDev.UI
             }
             else
             {
-                foreach (Item shopItem in shopItems) 
+                foreach (Item shopItem in _shopItems) 
                 {
                     CreateItemButton(shopItem);
                 }

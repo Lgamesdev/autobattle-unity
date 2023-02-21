@@ -38,6 +38,9 @@ namespace LGamesDev
 
             Character character = new Character();
             
+            if(!_gameManager.networkManager.isConnected)
+                _gameManager.networkManager.Connect();
+            
             // Load coroutines to setup main menu
             _coroutinesLoading.Add(InitialisationStage.Body, CharacterBodyHandler.Load(
                 this,
@@ -118,6 +121,8 @@ namespace LGamesDev
 
         private IEnumerator SetupCoroutines()
         {
+            yield return new WaitUntil(() => _gameManager.networkManager.isConnected);
+            
             for (var i = 0; i < _coroutinesLoading.Count; i++)
             {
                 currentStage = _coroutinesLoading.ElementAt(i).Key;

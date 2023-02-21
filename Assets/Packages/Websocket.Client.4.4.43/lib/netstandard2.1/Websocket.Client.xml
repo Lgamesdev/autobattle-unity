@@ -84,7 +84,7 @@
         </member>
         <member name="P:Websocket.Client.IWebsocketClient.IsRunning">
             <summary>
-            Returns true if client is running and connected to the server
+            Returns true if client is running and isConnected to the server
             </summary>
         </member>
         <member name="P:Websocket.Client.IWebsocketClient.IsReconnectionEnabled">
@@ -463,7 +463,7 @@
             A simple websocket client with built-in reconnection and error handling
             </summary>
             <param name="url">Target websocket url (wss://)</param>
-            <param name="connectionFactory">Optional factory for native creating and connecting to a websocket. The method should return a <see cref="T:System.Net.WebSockets.WebSocket"/> which is connected. Use it whenever you need some custom features (proxy, settings, etc)</param>
+            <param name="connectionFactory">Optional factory for native creating and connecting to a websocket. The method should return a <see cref="T:System.Net.WebSockets.WebSocket"/> which is isConnected. Use it whenever you need some custom features (proxy, settings, etc)</param>
         </member>
         <member name="P:Websocket.Client.WebsocketClient.Url">
             <inheritdoc />
@@ -515,7 +515,7 @@
         </member>
         <member name="P:Websocket.Client.WebsocketClient.IsRunning">
             <summary>
-            Returns true if client is running and connected to the server
+            Returns true if client is running and isConnected to the server
             </summary>
         </member>
         <member name="P:Websocket.Client.WebsocketClient.IsTextMessageConversionEnabled">

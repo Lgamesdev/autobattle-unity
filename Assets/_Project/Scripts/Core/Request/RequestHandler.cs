@@ -12,8 +12,8 @@ namespace LGamesDev.Core.Request
     {
         private const string BaseURL = @"http://autobattle.hopto.org:35080/";
 
-        public delegate void OnRequestErrorEvent(string error);
-        public static OnRequestErrorEvent OnRequestError;
+        public delegate void RequestErrorEvent(string error);
+        public static RequestErrorEvent RequestError;
 
         public static IEnumerator Request(string url, string httpVerb, Action<string> onError, Action<string> onSuccess,
             byte[] bodyRaw = null,

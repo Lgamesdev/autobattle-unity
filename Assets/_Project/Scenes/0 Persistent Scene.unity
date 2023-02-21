@@ -235,6 +235,7 @@ GameObject:
   m_Component:
   - component: {fileID: 712673849}
   - component: {fileID: 712673850}
+  - component: {fileID: 712673855}
   - component: {fileID: 712673851}
   - component: {fileID: 712673853}
   - component: {fileID: 712673852}
@@ -274,6 +275,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneLoader: {fileID: 712673851}
+  networkManager: {fileID: 0}
   loadingScreen: {fileID: 1031780216}
   modalWindow: {fileID: 7857047947455059743, guid: 45bb65ed627e19649a4fc52b4c041de0, type: 3}
   audioManager: {fileID: 712673853}
@@ -412,6 +414,18 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 712673848}
   m_Enabled: 1
+--- !u!114 &712673855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 712673848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f22c0c0b8f4afe498e73f9b6e5e6ecc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1031780215
 PrefabInstance:
   m_ObjectHideFlags: 0

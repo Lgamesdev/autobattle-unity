@@ -44,7 +44,7 @@ namespace LGamesDev.Fighting
             _goldGain = transform.Find("Rewards").Find("ExperienceAndGold").Find("Gold").Find("goldText").GetComponent<TextMeshProUGUI>();
             _rankGain = transform.Find("Rewards").Find("RankingAndItems").Find("Ranking").Find("rankingText").GetComponent<TextMeshProUGUI>();
 
-            FightManager.Instance.OnFightOver += OnFightOver;
+            FightManager.Instance.FightOver += OnFightOver;
         }
 
         private void OnFightOver(Reward reward, bool playerWin)

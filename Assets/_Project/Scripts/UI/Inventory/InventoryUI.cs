@@ -23,7 +23,7 @@ namespace LGamesDev.UI
         private void Start()
         {
             _inventoryManager = PlayerInventoryManager.Instance;
-            _inventoryManager.OnItemChanged += Inventory_OnItemChanged;
+            _inventoryManager.ItemChanged += Inventory_OnItemChanged;
             
             _slots = new InventorySlotUI[_inventoryManager.space];
             

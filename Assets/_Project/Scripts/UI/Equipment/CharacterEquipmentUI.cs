@@ -32,7 +32,7 @@ namespace LGamesDev.UI
         public void Start()
         {
             _equipmentManager = CharacterManager.Instance.equipmentManager;//CharacterEquipmentManager.Instance;
-            _equipmentManager.OnEquipmentChanged += CharacterEquipment_OnEquipmentChanged;
+            _equipmentManager.EquipmentChanged += CharacterEquipment_OnEquipmentChanged;
             
             SetupVisual();
         }

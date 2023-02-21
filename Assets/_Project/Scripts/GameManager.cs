@@ -1,17 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Core.Player;
 using LGamesDev.Core;
 using LGamesDev.Core.Player;
-using LGamesDev.Core.Request;
 using LGamesDev.Fighting;
-using LGamesDev.UI;
 using Newtonsoft.Json;
-using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+using UnityEngine.Serialization;
 
 namespace LGamesDev
 {
@@ -21,6 +13,7 @@ namespace LGamesDev
 
         [SerializeField] private SceneLoader sceneLoader;
 
+        public NetworkManager networkManager;
         public LoadingScreen loadingScreen;
         public ModalWindowPanel modalWindow;
         public AudioManager audioManager;
@@ -34,6 +27,8 @@ namespace LGamesDev
         {
             Instance = this;
             
+            //Network Manager
+            networkManager = GetComponent<NetworkManager>();
             //Audio Manager
             audioManager = GetComponent<AudioManager>();
             //Scene Loader

@@ -103,14 +103,14 @@ namespace LGamesDev.Fighting
             }
         }
 
-        private bool IsDead()
+        public bool IsDead()
         {
             return _characterStatsManager.IsDead();
         }
 
         public void Attack(CharacterFight target, int damage, bool isCritical, bool dodged, Action onAttackComplete)
         {
-            var runningTargetPosition = target.GetPosition() + (GetPosition() - target.GetPosition()).normalized * 14f;
+            var runningTargetPosition = target.GetPosition() + (GetPosition() - target.GetPosition()).normalized * 15f;
 
             var startingPosition = GetPosition();
 
@@ -131,13 +131,13 @@ namespace LGamesDev.Fighting
                         _characterManager.activeCharacter.RunToPosition(startingPosition, () =>
                         {
                             _characterManager.activeCharacter.PlayAnimIdle();
-                            onAttackComplete();
+                            onAttackComplete?.Invoke();
                         });
                     }
                     else
                     {
                         _characterManager.activeCharacter.PlayWin();
-                        onAttackComplete();
+                        onAttackComplete?.Invoke();
                     }
                 });
             });

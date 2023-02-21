@@ -16,7 +16,7 @@ public class SpeedButton : MonoBehaviour
     {
         SetButtonSpeed(GameManager.Instance.GetPlayerOptions().FightSpeed);
         
-        FightManager.Instance.OnFightOver += (_, _) =>
+        FightManager.Instance.FightOver += (_, _) =>
         {
             transform.gameObject.SetActive(false);
         };

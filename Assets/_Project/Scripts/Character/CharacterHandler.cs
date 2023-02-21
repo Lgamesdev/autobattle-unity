@@ -231,7 +231,7 @@ namespace LGamesDev
             _characterAnimator.PlayRun();
             _characterAnimator.SetMoveVector(runTargetPosition);
 
-            LTDescr runAnim = LeanTween.move(_characterManager.gameObject, runTargetPosition, .8f);
+            LTDescr runAnim = LeanTween.move(_characterManager.gameObject, runTargetPosition, .7f);
 
             if (onRunComplete != null)
             {

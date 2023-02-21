@@ -14,15 +14,27 @@ namespace LGamesDev.UI
 {
     public class RankingUI : MonoBehaviour
     {
+        public static RankingUI Instance;
+        
         private Transform _container;
 
         private Transform _goldAmount;
         private Transform _playerCardTemplate;
 
         private List<Character> _characters = new();
+        public List<Character> CharacterList
+        {
+            get => _characters;
+            set
+            {
+                _characters = value;
+                SetupUI();
+            }
+        }
 
         private void Awake()
         {
+            Instance = this;
             _container = transform.Find("container");
             _playerCardTemplate = _container.Find("playerCardTemplate");
             _playerCardTemplate.gameObject.SetActive(false);
@@ -30,7 +42,8 @@ namespace LGamesDev.UI
 
         private void Start()
         {
-            StartCoroutine(RequestHandler.Request("api/user/ranking",
+            GameManager.Instance.networkManager.GetRankList();
+            /*StartCoroutine(RequestHandler.Request("api/user/ranking",
                 UnityWebRequest.kHttpVerbGET,
                 error => { Debug.Log("Error on /user/ranking : " + error); },
                 response =>
@@ -43,7 +56,7 @@ namespace LGamesDev.UI
                 },
                 null,
                 GameManager.Instance.GetAuthentication())
-            );
+            );*/
         }
 
         private void SetupUI()
@@ -79,6 +92,9 @@ namespace LGamesDev.UI
 
             playerCardTransform.GetComponent<Button_UI>().ClickFunc = () =>
             {
+                GameManager.Instance.modalWindow.ShowAsPrompt(character.Username, null, 
+                    "level : " + character.Level + "\n Experience : " + character.Experience
+                );
                 //Clicked on shop item button
                 Debug.Log("popup details playerCard");
             };

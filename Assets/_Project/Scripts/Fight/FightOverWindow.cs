@@ -16,7 +16,7 @@ namespace LGamesDev.Fighting
         {
             Hide();
             
-            FightManager.Instance.OnFightOver += OnFightOver;
+            FightManager.Instance.FightOver += OnFightOver;
         }
 
         private void OnFightOver(Reward reward, bool playerWin)

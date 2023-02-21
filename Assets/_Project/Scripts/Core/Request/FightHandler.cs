@@ -11,6 +11,8 @@ namespace LGamesDev.Core.Request
     {
         public static IEnumerator Load(MonoBehaviour instance, Action<Fight> setResult)
         {
+            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.EnableWaitingScreen());
+            
             yield return instance.StartCoroutine(RequestHandler.Request("api/user/fight",
                 UnityWebRequest.kHttpVerbGET,
                 error => { Debug.Log("Error on fight load : " + error); },
@@ -25,6 +27,8 @@ namespace LGamesDev.Core.Request
                 null,
                 GameManager.Instance.GetAuthentication())
             );
+            
+            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());
         }
     }
 }

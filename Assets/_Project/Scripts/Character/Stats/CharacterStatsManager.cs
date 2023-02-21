@@ -31,7 +31,7 @@ namespace LGamesDev.Core.Player
         public void SetupManager(Stat[] characterStats)
         {
             _equipmentManager = GetComponent<CharacterEquipmentManager>();
-            _equipmentManager.OnEquipmentChanged += OnEquipmentChanged;
+            _equipmentManager.EquipmentChanged += OnEquipmentChanged;
             
             stats = characterStats;
 
@@ -58,7 +58,7 @@ namespace LGamesDev.Core.Player
                     },
                     response=>
                     {
-                        Debug.Log("point stat successfully added : " + response);
+                        //Debug.Log("point stat successfully added : " + response);
                         CharacterManager.Instance.Character.StatPoint--;
 
                         stats[(int)statType].value += statType switch
@@ -106,9 +106,6 @@ namespace LGamesDev.Core.Player
 
         public void TakeDamage(int damage)
         {
-            /*damage -= stats[(int)StatType.Armor].GetValue();
-            damage = Mathf.Clamp(damage, 0, int.MaxValue);*/
-
             currentHealth -= damage;
                 
             //Debug.Log(transform.name + " takes " + damage + " damage. \n current health : " + currentHealth);

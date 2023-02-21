@@ -10,10 +10,10 @@ namespace LGamesDev.UI
 
         private string _message;
 
-        public void Setup(string author, string content)
+        public void Setup(string username, string message)
         {
-            this.author.text = author;
-            this.content.text = content;
+            this.author.text = username;
+            this.content.text = message;
         }
     }
 }

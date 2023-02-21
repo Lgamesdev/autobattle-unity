@@ -30,11 +30,7 @@ namespace LGamesDev
                 () =>
                 {
                     // Load / unload scene below to load authentication
-                    if (SceneManager.GetSceneByBuildIndex((int)SceneIndexes.MainMenu).isLoaded)
-                        _scenesLoading.Add(SceneManager.UnloadSceneAsync((int)SceneIndexes.MainMenu));
-                    
-                    if (SceneManager.GetSceneByBuildIndex((int)SceneIndexes.Authentication).isLoaded)
-                        _scenesLoading.Add(SceneManager.UnloadSceneAsync((int)SceneIndexes.Authentication));
+                    UnloadAdditiveScenes();
                     
                     _scenesLoading.Add(SceneManager.LoadSceneAsync((int)SceneIndexes.Authentication, LoadSceneMode.Additive));
                 },
@@ -52,14 +48,7 @@ namespace LGamesDev
                 () =>
                 {
                     // Load / unload scene below to load Main menu
-                    if (SceneManager.GetSceneByBuildIndex((int)SceneIndexes.Authentication).isLoaded)
-                        _scenesLoading.Add(SceneManager.UnloadSceneAsync((int)SceneIndexes.Authentication));
-
-                    if (SceneManager.GetSceneByBuildIndex((int)SceneIndexes.Customization).isLoaded)
-                        _scenesLoading.Add(SceneManager.UnloadSceneAsync((int)SceneIndexes.Customization));
-
-                    if (SceneManager.GetSceneByBuildIndex((int)SceneIndexes.Fight).isLoaded)
-                        _scenesLoading.Add(SceneManager.UnloadSceneAsync((int)SceneIndexes.Fight));
+                    UnloadAdditiveScenes();
 
                     _scenesLoading.Add(SceneManager.LoadSceneAsync((int)SceneIndexes.MainMenu, LoadSceneMode.Additive));
                 },
@@ -77,11 +66,7 @@ namespace LGamesDev
             yield return StartCoroutine(_gameManager.loadingScreen.EnableLoadingScreen());
 
             // Load / unload scene below to load Fight
-            if (SceneManager.GetSceneByBuildIndex((int)SceneIndexes.MainMenu).isLoaded)
-                _scenesLoading.Add(SceneManager.UnloadSceneAsync((int)SceneIndexes.MainMenu));
-                    
-            if (SceneManager.GetSceneByBuildIndex((int)SceneIndexes.Fight).isLoaded)
-                _scenesLoading.Add(SceneManager.UnloadSceneAsync((int)SceneIndexes.Fight));
+            UnloadAdditiveScenes();
                     
             _scenesLoading.Add(SceneManager.LoadSceneAsync((int)SceneIndexes.Fight, LoadSceneMode.Additive));
             
@@ -105,8 +90,7 @@ namespace LGamesDev
                 () =>
                 {
                     // Load / unload scene below to load Customization
-                    if (SceneManager.GetSceneByBuildIndex((int)SceneIndexes.MainMenu).isLoaded)
-                        _scenesLoading.Add(SceneManager.UnloadSceneAsync((int)SceneIndexes.MainMenu));
+                    UnloadAdditiveScenes();
                     
                     _scenesLoading.Add(SceneManager.LoadSceneAsync((int)SceneIndexes.Customization, LoadSceneMode.Additive));
                 }    
@@ -201,6 +185,21 @@ namespace LGamesDev
             }
 
             yield return new WaitForSeconds(0.5f);
+        }
+
+        private void UnloadAdditiveScenes()
+        {
+            if (SceneManager.GetSceneByBuildIndex((int)SceneIndexes.MainMenu).isLoaded)
+                _scenesLoading.Add(SceneManager.UnloadSceneAsync((int)SceneIndexes.MainMenu));
+                    
+            if (SceneManager.GetSceneByBuildIndex((int)SceneIndexes.Authentication).isLoaded)
+                _scenesLoading.Add(SceneManager.UnloadSceneAsync((int)SceneIndexes.Authentication));
+                    
+            if (SceneManager.GetSceneByBuildIndex((int)SceneIndexes.Fight).isLoaded)
+                _scenesLoading.Add(SceneManager.UnloadSceneAsync((int)SceneIndexes.Fight));
+                    
+            if (SceneManager.GetSceneByBuildIndex((int)SceneIndexes.Customization).isLoaded)
+                _scenesLoading.Add(SceneManager.UnloadSceneAsync((int)SceneIndexes.Customization));
         }
     }
     

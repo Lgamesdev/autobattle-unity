@@ -2,18 +2,18 @@
 {
     public class FightAction
     {
-        public bool playerTeam;
-        public int damage;
-        public bool criticalHit;
-        public bool dodged;
+        public bool PlayerTeam;
+        public int Damage;
+        public bool CriticalHit;
+        public bool Dodged;
         
         public override string ToString()
         {
             return  "fightAction :  [ \n" +
-                    "playerTeam : " + playerTeam + "\n" +
-                    "damage : " + damage + "\n" +
-                    "criticalHit : " + criticalHit + "\n" +
-                    "dodged : " + dodged + "\n";
+                    "playerTeam : " + PlayerTeam + "\n" +
+                    "damage : " + Damage + "\n" +
+                    "criticalHit : " + CriticalHit + "\n" +
+                    "dodged : " + Dodged + "\n";
         }
     }
 }

@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using LGamesDev.Core.Player;
 using LGamesDev.Core.Request;
 using UnityEngine;
@@ -8,8 +10,8 @@ namespace LGamesDev.Fighting
 {
     public class FightManager : MonoBehaviour
     {
-        public delegate void OnFightOverEvent(Reward reward, bool playerWin);
-        public OnFightOverEvent OnFightOver;
+        public delegate void FightOverEvent(Reward reward, bool playerWin);
+        public FightOverEvent FightOver;
 
         public static FightManager Instance;
 
@@ -19,8 +21,9 @@ namespace LGamesDev.Fighting
         private CharacterFight _enemyCharacterFight;
         private CharacterFight _activeCharacterFight;
 
-        private Fight _fight;
-        [SerializeField] private int currentAction = 0;
+        public Fight Fight;
+        private int _currentAction = 0;
+        private Action _actionsComplete;
 
         private int _fightSpeed = 1;
 
@@ -45,7 +48,7 @@ namespace LGamesDev.Fighting
 
         public IEnumerator SetupFight(Fight fight)
         {
-            _fight = fight;
+            Fight = fight;
 
             yield return StartCoroutine(playerCharacterFight.SetupCharacterFight(fight.Character));
             
@@ -59,8 +62,8 @@ namespace LGamesDev.Fighting
             var camHeight = cam.orthographicSize * 2f;
             var camWidth = camHeight * cam.aspect;
 
-            playerCharacterFight.transform.position = new Vector3(camWidth * -0.28f, -30);
-            _enemyCharacterFight.transform.position = new Vector3(camWidth * 0.28f, -30);
+            playerCharacterFight.transform.position = new Vector3(camWidth * -0.30f, -25);
+            _enemyCharacterFight.transform.position = new Vector3(camWidth * 0.30f, -25);
             
             playerCharacterFight.LookAt(_enemyCharacterFight.GetPosition());
             _enemyCharacterFight.LookAt(playerCharacterFight.GetPosition());
@@ -69,10 +72,10 @@ namespace LGamesDev.Fighting
         public void StartFight()
         {
             //playerCharacterFight.Intro(_enemyCharacterFight, ChooseNextActiveCharacter);
-
-            ChooseNextActiveCharacter();
             
             _gameManager.PlayFightMusic();
+            
+            ChooseNextActiveCharacter();
         }
 
         private CharacterFight SpawnCharacter()
@@ -86,44 +89,48 @@ namespace LGamesDev.Fighting
         {
             if (TestBattleOver()) return;
 
-            FightAction fightAction = _fight.Actions[currentAction];
-
-            if (fightAction.playerTeam)
+            if (_currentAction < Fight.Actions.Count)
             {
-                playerCharacterFight.Attack(
-                    _enemyCharacterFight, 
-                    _fight.Actions[currentAction].damage, 
-                    fightAction.criticalHit, 
-                    fightAction.dodged, 
-                    ChooseNextActiveCharacter
-                );
+                FightAction fightAction = Fight.Actions[_currentAction];
+
+                if (fightAction.PlayerTeam)
+                {
+                    playerCharacterFight.Attack(
+                        _enemyCharacterFight,
+                        Fight.Actions[_currentAction].Damage,
+                        fightAction.CriticalHit,
+                        fightAction.Dodged,
+                        ChooseNextActiveCharacter
+                    );
+                }
+                else
+                {
+                    _enemyCharacterFight.Attack(
+                        playerCharacterFight,
+                        Fight.Actions[_currentAction].Damage,
+                        fightAction.CriticalHit,
+                        fightAction.Dodged,
+                        ChooseNextActiveCharacter
+                    );
+                }
+
+                _currentAction++;
             }
             else
             {
-                _enemyCharacterFight.Attack(
-                    playerCharacterFight, 
-                    _fight.Actions[currentAction].damage,
-                    fightAction.criticalHit,
-                    fightAction.dodged, 
-                    ChooseNextActiveCharacter
-                );
+                _actionsComplete?.Invoke();
             }
-
-            currentAction++;
         }
         
 
         private bool TestBattleOver()
         {
-            if (currentAction < _fight.Actions.Count) return false;
-
-            PlayerOptions playerOptions = _gameManager.GetPlayerOptions();
-            playerOptions.FightSpeed = _fightSpeed;
-            _gameManager.SetPlayerOptions(playerOptions);
+            if (!playerCharacterFight.IsDead() && !_enemyCharacterFight.IsDead()) return false;
+            
             // reset fight speed on battle over window
             SetFightSpeed(1);
-            
-            OnFightOver?.Invoke(_fight.Reward, _fight.PlayerWin);
+
+            FightOver?.Invoke(Fight.Reward, Fight.PlayerWin);
             HandlePlayerReward();
 
             return true;
@@ -131,7 +138,7 @@ namespace LGamesDev.Fighting
 
         private void HandlePlayerReward()
         {
-            if (_fight.PlayerWin)
+            if (Fight.PlayerWin)
             {
                 _gameManager.audioManager.PlayWinMusic();
             }
@@ -140,9 +147,9 @@ namespace LGamesDev.Fighting
                 _gameManager.audioManager.PlayLoseMusic();
             }
             
-            playerCharacterFight.GetLevelSystem().AddExperience(_fight.Reward.Experience);
+            playerCharacterFight.GetLevelSystem().AddExperience(Fight.Reward.Experience);
 
-            foreach (Currency currency in _fight.Reward.Currencies)
+            foreach (Currency currency in Fight.Reward.Currencies)
             {
                 PlayerWalletManager.Instance.AddCurrency(
                     currency.currencyType, currency.amount
@@ -150,10 +157,21 @@ namespace LGamesDev.Fighting
             }
         }
 
+        public void Attack(IEnumerable<FightAction> fightActions, Action onAttackComplete)
+        {
+            _actionsComplete = onAttackComplete;
+            Fight.Actions.AddRange(fightActions);
+            ChooseNextActiveCharacter();
+        }
+
         public void SetFightSpeed(int fightSpeed)
         {
             _fightSpeed = fightSpeed;
             Time.timeScale = _fightSpeed;
+            
+            PlayerOptions playerOptions = _gameManager.GetPlayerOptions();
+            playerOptions.FightSpeed = _fightSpeed;
+            _gameManager.SetPlayerOptions(playerOptions);
         }
 
         public void BackToMainMenu()
@@ -163,13 +181,14 @@ namespace LGamesDev.Fighting
 
         public void FightAgain()
         {
-            StartCoroutine(FightHandler.Load(
+            _gameManager.networkManager.SearchFight();
+            /*StartCoroutine(FightHandler.Load(
                 this,
                 result =>
                 {
                     _gameManager.LoadFight(result);
                 }
-            ));
+            ));*/
         }
 
         private enum State

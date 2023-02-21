@@ -6972,32 +6972,32 @@
         </member>
         <member name="M:System.Reactive.Linq.Observable.RefCount``1(System.Reactive.Subjects.IConnectableObservable{``0})">
             <summary>
-            Returns an observable sequence that stays connected to the source as long as there is at least one subscription to the observable sequence.
+            Returns an observable sequence that stays isConnected to the source as long as there is at least one subscription to the observable sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">Connectable observable sequence.</param>
-            <returns>An observable sequence that stays connected to the source as long as there is at least one subscription to the observable sequence.</returns>
+            <returns>An observable sequence that stays isConnected to the source as long as there is at least one subscription to the observable sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> is null.</exception>
         </member>
         <member name="M:System.Reactive.Linq.Observable.RefCount``1(System.Reactive.Subjects.IConnectableObservable{``0},System.TimeSpan)">
             <summary>
-            Returns an observable sequence that stays connected to the source as long as there is at least one subscription to the observable sequence.
+            Returns an observable sequence that stays isConnected to the source as long as there is at least one subscription to the observable sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">Connectable observable sequence.</param>
             <param name="disconnectDelay">The time span that should be waited before possibly unsubscribing from the connectable observable.</param>
-            <returns>An observable sequence that stays connected to the source as long as there is at least one subscription to the observable sequence.</returns>
+            <returns>An observable sequence that stays isConnected to the source as long as there is at least one subscription to the observable sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> is null.</exception>
         </member>
         <member name="M:System.Reactive.Linq.Observable.RefCount``1(System.Reactive.Subjects.IConnectableObservable{``0},System.TimeSpan,System.Reactive.Concurrency.IScheduler)">
             <summary>
-            Returns an observable sequence that stays connected to the source as long as there is at least one subscription to the observable sequence.
+            Returns an observable sequence that stays isConnected to the source as long as there is at least one subscription to the observable sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">Connectable observable sequence.</param>
             <param name="disconnectDelay">The time span that should be waited before possibly unsubscribing from the connectable observable.</param>
             <param name="scheduler">The scheduler to use for delayed unsubscription.</param>
-            <returns>An observable sequence that stays connected to the source as long as there is at least one subscription to the observable sequence.</returns>
+            <returns>An observable sequence that stays isConnected to the source as long as there is at least one subscription to the observable sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> is null.</exception>
         </member>
         <member name="M:System.Reactive.Linq.Observable.AutoConnect``1(System.Reactive.Subjects.IConnectableObservable{``0},System.Int32,System.Action{System.IDisposable})">
@@ -7031,7 +7031,7 @@
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">Source sequence whose elements will be multicasted through a single shared subscription.</param>
-            <param name="scheduler">Scheduler where connected observers will be invoked on.</param>
+            <param name="scheduler">Scheduler where isConnected observers will be invoked on.</param>
             <returns>A connectable observable sequence that shares a single subscription to the underlying sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="scheduler"/> is null.</exception>
             <remarks>Subscribers will receive all the notifications of the source.</remarks>
@@ -7059,7 +7059,7 @@
             <typeparam name="TResult">The type of the elements in the result sequence.</typeparam>
             <param name="source">Source sequence whose elements will be multicasted through a single shared subscription.</param>
             <param name="selector">Selector function which can use the multicasted source sequence as many times as needed, without causing multiple subscriptions to the source sequence. Subscribers to the given source will receive all the notifications of the source.</param>
-            <param name="scheduler">Scheduler where connected observers within the selector function will be invoked on.</param>
+            <param name="scheduler">Scheduler where isConnected observers within the selector function will be invoked on.</param>
             <returns>An observable sequence that contains the elements of a sequence produced by multicasting the source sequence within a selector function.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> or <paramref name="scheduler"/> is null.</exception>
             <seealso cref="T:System.Reactive.Subjects.ReplaySubject`1"/>
@@ -7101,7 +7101,7 @@
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">Source sequence whose elements will be multicasted through a single shared subscription.</param>
             <param name="window">Maximum time length of the replay buffer.</param>
-            <param name="scheduler">Scheduler where connected observers will be invoked on.</param>
+            <param name="scheduler">Scheduler where isConnected observers will be invoked on.</param>
             <returns>A connectable observable sequence that shares a single subscription to the underlying sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="scheduler"/> is null.</exception>
             <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="window"/> is less than TimeSpan.Zero.</exception>
@@ -7118,7 +7118,7 @@
             <param name="source">Source sequence whose elements will be multicasted through a single shared subscription.</param>
             <param name="selector">Selector function which can use the multicasted source sequence as many times as needed, without causing multiple subscriptions to the source sequence. Subscribers to the given source will receive all the notifications of the source subject to the specified replay buffer trimming policy.</param>
             <param name="window">Maximum time length of the replay buffer.</param>
-            <param name="scheduler">Scheduler where connected observers within the selector function will be invoked on.</param>
+            <param name="scheduler">Scheduler where isConnected observers within the selector function will be invoked on.</param>
             <returns>An observable sequence that contains the elements of a sequence produced by multicasting the source sequence within a selector function.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> or <paramref name="scheduler"/> is null.</exception>
             <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="window"/> is less than TimeSpan.Zero.</exception>
@@ -7132,7 +7132,7 @@
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">Source sequence whose elements will be multicasted through a single shared subscription.</param>
             <param name="bufferSize">Maximum element count of the replay buffer.</param>
-            <param name="scheduler">Scheduler where connected observers will be invoked on.</param>
+            <param name="scheduler">Scheduler where isConnected observers will be invoked on.</param>
             <returns>A connectable observable sequence that shares a single subscription to the underlying sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="scheduler"/> is null.</exception>
             <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="bufferSize"/> is less than zero.</exception>
@@ -7149,7 +7149,7 @@
             <param name="source">Source sequence whose elements will be multicasted through a single shared subscription.</param>
             <param name="selector">Selector function which can use the multicasted source sequence as many times as needed, without causing multiple subscriptions to the source sequence. Subscribers to the given source will receive all the notifications of the source subject to the specified replay buffer trimming policy.</param>
             <param name="bufferSize">Maximum element count of the replay buffer.</param>
-            <param name="scheduler">Scheduler where connected observers within the selector function will be invoked on.</param>
+            <param name="scheduler">Scheduler where isConnected observers within the selector function will be invoked on.</param>
             <returns>An observable sequence that contains the elements of a sequence produced by multicasting the source sequence within a selector function.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> or <paramref name="scheduler"/> is null.</exception>
             <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="bufferSize"/> is less than zero.</exception>
@@ -7226,7 +7226,7 @@
             <param name="source">Source sequence whose elements will be multicasted through a single shared subscription.</param>
             <param name="bufferSize">Maximum element count of the replay buffer.</param>
             <param name="window">Maximum time length of the replay buffer.</param>
-            <param name="scheduler">Scheduler where connected observers will be invoked on.</param>
+            <param name="scheduler">Scheduler where isConnected observers will be invoked on.</param>
             <returns>A connectable observable sequence that shares a single subscription to the underlying sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="scheduler"/> is null.</exception>
             <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="bufferSize"/> is less than zero.</exception>
@@ -7245,7 +7245,7 @@
             <param name="selector">Selector function which can use the multicasted source sequence as many times as needed, without causing multiple subscriptions to the source sequence. Subscribers to the given source will receive all the notifications of the source subject to the specified replay buffer trimming policy.</param>
             <param name="bufferSize">Maximum element count of the replay buffer.</param>
             <param name="window">Maximum time length of the replay buffer.</param>
-            <param name="scheduler">Scheduler where connected observers within the selector function will be invoked on.</param>
+            <param name="scheduler">Scheduler where isConnected observers within the selector function will be invoked on.</param>
             <returns>An observable sequence that contains the elements of a sequence produced by multicasting the source sequence within a selector function.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> or <paramref name="scheduler"/> is null.</exception>
             <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="bufferSize"/> is less than zero.</exception>
@@ -17508,37 +17508,37 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.RefCount``1(System.Reactive.Linq.IQbservableProvider,System.Reactive.Subjects.IConnectableObservable{``0})">
             <summary>
-            Returns an observable sequence that stays connected to the source as long as there is at least one subscription to the observable sequence.
+            Returns an observable sequence that stays isConnected to the source as long as there is at least one subscription to the observable sequence.
             </summary>
             <param name="provider">Query provider used to construct the <see cref="T:System.Reactive.Linq.IQbservable`1"/> data source.</param>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">Connectable observable sequence.</param>
-            <returns>An observable sequence that stays connected to the source as long as there is at least one subscription to the observable sequence.</returns>
+            <returns>An observable sequence that stays isConnected to the source as long as there is at least one subscription to the observable sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> is null.</exception>
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.RefCount``1(System.Reactive.Linq.IQbservableProvider,System.Reactive.Subjects.IConnectableObservable{``0},System.TimeSpan)">
             <summary>
-            Returns an observable sequence that stays connected to the source as long as there is at least one subscription to the observable sequence.
+            Returns an observable sequence that stays isConnected to the source as long as there is at least one subscription to the observable sequence.
             </summary>
             <param name="provider">Query provider used to construct the <see cref="T:System.Reactive.Linq.IQbservable`1"/> data source.</param>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">Connectable observable sequence.</param>
             <param name="disconnectDelay">The time span that should be waited before possibly unsubscribing from the connectable observable.</param>
-            <returns>An observable sequence that stays connected to the source as long as there is at least one subscription to the observable sequence.</returns>
+            <returns>An observable sequence that stays isConnected to the source as long as there is at least one subscription to the observable sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> is null.</exception>
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.RefCount``1(System.Reactive.Linq.IQbservableProvider,System.Reactive.Subjects.IConnectableObservable{``0},System.TimeSpan,System.Reactive.Concurrency.IScheduler)">
             <summary>
-            Returns an observable sequence that stays connected to the source as long as there is at least one subscription to the observable sequence.
+            Returns an observable sequence that stays isConnected to the source as long as there is at least one subscription to the observable sequence.
             </summary>
             <param name="provider">Query provider used to construct the <see cref="T:System.Reactive.Linq.IQbservable`1"/> data source.</param>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">Connectable observable sequence.</param>
             <param name="disconnectDelay">The time span that should be waited before possibly unsubscribing from the connectable observable.</param>
             <param name="scheduler">The scheduler to use for delayed unsubscription.</param>
-            <returns>An observable sequence that stays connected to the source as long as there is at least one subscription to the observable sequence.</returns>
+            <returns>An observable sequence that stays isConnected to the source as long as there is at least one subscription to the observable sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> is null.</exception>
         </member>
@@ -17670,7 +17670,7 @@
             <param name="source">Source sequence whose elements will be multicasted through a single shared subscription.</param>
             <param name="selector">Selector function which can use the multicasted source sequence as many times as needed, without causing multiple subscriptions to the source sequence. Subscribers to the given source will receive all the notifications of the source subject to the specified replay buffer trimming policy.</param>
             <param name="bufferSize">Maximum element count of the replay buffer.</param>
-            <param name="scheduler">Scheduler where connected observers within the selector function will be invoked on.</param>
+            <param name="scheduler">Scheduler where isConnected observers within the selector function will be invoked on.</param>
             <returns>An observable sequence that contains the elements of a sequence produced by multicasting the source sequence within a selector function.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> or <paramref name="scheduler" /> is null.</exception>
@@ -17709,7 +17709,7 @@
             <param name="selector">Selector function which can use the multicasted source sequence as many times as needed, without causing multiple subscriptions to the source sequence. Subscribers to the given source will receive all the notifications of the source subject to the specified replay buffer trimming policy.</param>
             <param name="bufferSize">Maximum element count of the replay buffer.</param>
             <param name="window">Maximum time length of the replay buffer.</param>
-            <param name="scheduler">Scheduler where connected observers within the selector function will be invoked on.</param>
+            <param name="scheduler">Scheduler where isConnected observers within the selector function will be invoked on.</param>
             <returns>An observable sequence that contains the elements of a sequence produced by multicasting the source sequence within a selector function.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> or <paramref name="scheduler" /> is null.</exception>
@@ -17728,7 +17728,7 @@
             <typeparam name="TResult">The type of the elements in the result sequence.</typeparam>
             <param name="source">Source sequence whose elements will be multicasted through a single shared subscription.</param>
             <param name="selector">Selector function which can use the multicasted source sequence as many times as needed, without causing multiple subscriptions to the source sequence. Subscribers to the given source will receive all the notifications of the source.</param>
-            <param name="scheduler">Scheduler where connected observers within the selector function will be invoked on.</param>
+            <param name="scheduler">Scheduler where isConnected observers within the selector function will be invoked on.</param>
             <returns>An observable sequence that contains the elements of a sequence produced by multicasting the source sequence within a selector function.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> or <paramref name="scheduler" /> is null.</exception>
@@ -17761,7 +17761,7 @@
             <param name="source">Source sequence whose elements will be multicasted through a single shared subscription.</param>
             <param name="selector">Selector function which can use the multicasted source sequence as many times as needed, without causing multiple subscriptions to the source sequence. Subscribers to the given source will receive all the notifications of the source subject to the specified replay buffer trimming policy.</param>
             <param name="window">Maximum time length of the replay buffer.</param>
-            <param name="scheduler">Scheduler where connected observers within the selector function will be invoked on.</param>
+            <param name="scheduler">Scheduler where isConnected observers within the selector function will be invoked on.</param>
             <returns>An observable sequence that contains the elements of a sequence produced by multicasting the source sequence within a selector function.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> or <paramref name="scheduler" /> is null.</exception>
@@ -24514,16 +24514,16 @@
         </member>
         <member name="T:System.Reactive.Subjects.ConnectableObservable`2">
             <summary>
-            Represents an observable wrapper that can be connected and disconnected from its underlying observable sequence.
+            Represents an observable wrapper that can be isConnected and disconnected from its underlying observable sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <typeparam name="TResult">The type of the elements in the resulting sequence, after transformation through the subject.</typeparam>
         </member>
         <member name="M:System.Reactive.Subjects.ConnectableObservable`2.#ctor(System.IObservable{`0},System.Reactive.Subjects.ISubject{`0,`1})">
             <summary>
-            Creates an observable that can be connected and disconnected from its source.
+            Creates an observable that can be isConnected and disconnected from its source.
             </summary>
-            <param name="source">Underlying observable source sequence that can be connected and disconnected from the wrapper.</param>
+            <param name="source">Underlying observable source sequence that can be isConnected and disconnected from the wrapper.</param>
             <param name="subject">Subject exposed by the connectable observable, receiving data from the underlying source sequence upon connection.</param>
         </member>
         <member name="M:System.Reactive.Subjects.ConnectableObservable`2.Connect">
@@ -24536,12 +24536,12 @@
             <summary>
             Subscribes an observer to the observable sequence. No values from the underlying observable source will be received unless a connection was established through the Connect method.
             </summary>
-            <param name="observer">Observer that will receive values from the underlying observable source when the current ConnectableObservable instance is connected through a call to Connect.</param>
+            <param name="observer">Observer that will receive values from the underlying observable source when the current ConnectableObservable instance is isConnected through a call to Connect.</param>
             <returns>Disposable used to unsubscribe from the observable sequence.</returns>
         </member>
         <member name="T:System.Reactive.Subjects.IConnectableObservable`1">
             <summary>
-            Represents an observable wrapper that can be connected and disconnected from its underlying observable sequence.
+            Represents an observable wrapper that can be isConnected and disconnected from its underlying observable sequence.
             </summary>
             <typeparam name="T">
             The type of the elements in the sequence.

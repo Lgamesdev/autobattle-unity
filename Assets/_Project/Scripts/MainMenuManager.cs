@@ -60,7 +60,8 @@ namespace LGamesDev
 
         public void LoadPvpFight()
         {
-            StartCoroutine(FightHandler.Load(
+            _gameManager.networkManager.SearchFight();
+            /*StartCoroutine(FightHandler.Load(
                 this,
                 result =>
                 {
@@ -68,13 +69,14 @@ namespace LGamesDev
 
                     _gameManager.LoadFight(result);
                 }
-            ));
+            ));*/
             
         }
         
         public void LoadPveFight()
         {
-            StartCoroutine(FightHandler.Load(
+            _gameManager.networkManager.SearchFight();
+            /*StartCoroutine(FightHandler.Load(
                 this,
                 result =>
                 {
@@ -82,7 +84,7 @@ namespace LGamesDev
 
                     _gameManager.LoadFight(result);
                 }
-            ));
+            ));*/
         }
     }
 }

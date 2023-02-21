@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using LGamesDev.Core.Character;
 using LGamesDev.Core.Player;
 using UnityEngine;
@@ -8,8 +9,8 @@ namespace LGamesDev
 {
     public class PlayerInventoryManager : MonoBehaviour
     {
-        public delegate void OnItemChangedEvent(List<IBaseCharacterItem> items);
-        public OnItemChangedEvent OnItemChanged;
+        public delegate void ItemChangedEvent(List<IBaseCharacterItem> items);
+        public ItemChangedEvent ItemChanged;
 
         public static PlayerInventoryManager Instance;
 
@@ -40,14 +41,19 @@ namespace LGamesDev
         {
             _inventory.AddItem(item);
             
-            OnItemChanged?.Invoke(_inventory.Items);
+            ItemChanged?.Invoke(_inventory.Items);
         }
 
         public void RemoveItem(IBaseCharacterItem item)
         {
             _inventory.RemoveItem(item);
 
-            OnItemChanged?.Invoke(_inventory.Items);
+            ItemChanged?.Invoke(_inventory.Items);
+        }
+
+        public IBaseCharacterItem GetItemById(int id)
+        {
+            return items.Find(element => element.Id == id);
         }
     }
 }

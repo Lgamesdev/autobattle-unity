@@ -10,9 +10,8 @@ namespace LGamesDev
     {
         public static CharacterManager Instance;
 
-        public delegate void OnCharacterSwitchChangeEvent();
-
-        public OnCharacterSwitchChangeEvent OnCharacterSwitchChange;
+        public delegate void CharacterSwitchChangeEvent();
+        public CharacterSwitchChangeEvent CharacterSwitchChange;
 
         [SerializeField] private CharacterHandler maleCharacter;
         [SerializeField] private CharacterHandler femaleCharacter;
@@ -102,7 +101,7 @@ namespace LGamesDev
 
             CreateCharacter(Character.Body.isMaleGender ? SpriteLib.Male : SpriteLib.Female);
 
-            equipmentManager.OnEquipmentChanged += activeCharacter.UpdateEquipmentTexture;
+            equipmentManager.EquipmentChanged += activeCharacter.UpdateEquipmentTexture;
             yield return activeCharacter.SetupCharacter(Character);
         }
 
@@ -116,7 +115,7 @@ namespace LGamesDev
             }
 
             activeCharacter = Instantiate(spriteLib == SpriteLib.Male ? maleCharacter : femaleCharacter, transform);
-            OnCharacterSwitchChange?.Invoke();
+            CharacterSwitchChange?.Invoke();
         }
     }
     

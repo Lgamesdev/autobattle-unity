@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Core.Player;
 using TMPro;
 using UnityEngine;
@@ -8,10 +6,19 @@ namespace LGamesDev.UI
 {
     public class InfosUI : MonoBehaviour
     {
-        public Transform username;
-        public Transform level;
+        public TextMeshProUGUI username;
+        public TextMeshProUGUI level;
 
-        private PlayerProgression _playerProgression;
+        private void Start()
+        {
+            CharacterManager.Instance.PlayerInfosUpdate += UpdateUI;
+        }
+
+        private void UpdateUI(Character character)
+        {
+            username.text = character.Username;
+            level.text = "Level : " + character.Level;
+        }
     }
 }
 

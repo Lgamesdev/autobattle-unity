@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Core.Player;
 using LGamesDev.Core.Character;
 using LGamesDev.Core.Player;
 using UnityEngine;
@@ -15,9 +16,9 @@ namespace LGamesDev
 
         [SerializeField] private CharacterHandler maleCharacter;
         [SerializeField] private CharacterHandler femaleCharacter;
-        [field: SerializeField] public CharacterHandler activeCharacter { get; private set; }
+        public CharacterHandler activeCharacter { get; private set; }
         
-        [field: SerializeField] public SpriteLib activeSpriteLib { get; private set; }
+        public SpriteLib activeSpriteLib { get; private set; }
 
         [Header("Managers")] 
         public CharacterEquipmentManager equipmentManager;
@@ -26,6 +27,8 @@ namespace LGamesDev
         public PlayerWalletManager walletManager;
 
         public readonly Character Character = new();
+
+        public Action<Character> PlayerInfosUpdate;
 
         private void Awake()
         {
@@ -37,11 +40,12 @@ namespace LGamesDev
 
         public IEnumerator SetupCharacter(Character character)
         {
+            Character.Username = GameManager.Instance.GetAuthentication().username;
             Character.Level = character.Level;
             Character.Experience = character.Experience;
             Character.StatPoint = character.StatPoint;
             Character.Ranking = character.Ranking;
-            
+
             //Setup Equipments
             foreach (EquipmentSlot equipmentSlot in (EquipmentSlot[])Enum.GetValues(typeof(EquipmentSlot)))
             {
@@ -98,6 +102,8 @@ namespace LGamesDev
             }
 
             Character.Body = character.Body;
+            
+            PlayerInfosUpdate?.Invoke(Character);
 
             CreateCharacter(Character.Body.isMaleGender ? SpriteLib.Male : SpriteLib.Female);
 

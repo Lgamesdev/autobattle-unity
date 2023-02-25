@@ -38,7 +38,6 @@ namespace LGamesDev
         private Body _body;
 
         private CharacterManager _characterManager;
-
         private CharacterAnimator _characterAnimator;
         //private State _state = State.Idle;
         public float movementSpeed = 10f;
@@ -131,7 +130,7 @@ namespace LGamesDev
             List<string> labels;
             if (newEquipment != null)
             {
-                // Equip Item
+                // TryEquip Item
                 switch (newEquipment.item.equipmentSlot)
                 {
                     case EquipmentSlot.Helmet:

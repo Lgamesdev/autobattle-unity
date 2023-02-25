@@ -71,7 +71,7 @@ namespace LGamesDev.UI
             _useButton.GetComponent<Button>().onClick.AddListener(UnEquipItem);
             _sellButton.gameObject.SetActive(false);
 
-            SetupUI("UnEquip");
+            SetupUI("TryUnEquip");
         }
         
         private void SetupUI(string useButtonText)

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 using LGamesDev.Core;
 using LGamesDev.Core.Character;
 using LGamesDev.Core.Player;
@@ -21,7 +22,6 @@ namespace LGamesDev
         public MessageReceivedEvent MessageReceived;
 
         //private Action _messageCallback;
-        private Action _onAttackCallback;
 
         public bool isConnected { get; private set; }
         private bool _isError;
@@ -41,7 +41,6 @@ namespace LGamesDev
             {
                 _isError = false;
                 //Debug.Log("Connection open!");
-                
                 isConnected = true;
             };
 
@@ -82,7 +81,7 @@ namespace LGamesDev
             _ws.OnMessage += (bytes) =>
             {
                 // getting the message as a string
-                string response = System.Text.Encoding.UTF8.GetString(bytes);
+                string response = Encoding.UTF8.GetString(bytes);
                 //Debug.Log("OnMessage! " + response);
                 
                 SocketMessage socketMessage = JsonConvert.DeserializeObject<SocketMessage>(response);
@@ -105,41 +104,65 @@ namespace LGamesDev
             switch (socketMessage.Channel)
             {
                 case SocketChannel.DefaultChannel:
+                    JsonSerializerSettings settings = new JsonSerializerSettings();
                     switch (socketMessage.Action)
                     {
-                        case SocketAction.Equip:
+                        case SocketReceiveAction.Initialisation:
+                            InitialisationResult result =
+                                JsonConvert.DeserializeObject<InitialisationResult>(socketMessage.Content);
+                            Initialisation.Current.SetResult(result);
+                            break;
+                        
+                        case SocketReceiveAction.Equip:
                             CharacterManager.Instance.equipmentManager.Equip(int.Parse(socketMessage.Content));
                             break;
-                        case SocketAction.UnEquip:
+                        
+                        case SocketReceiveAction.UnEquip:
                             CharacterManager.Instance.equipmentManager.UnEquip((int)Enum.Parse<EquipmentSlot>(socketMessage.Content));
                             break;
-                        case SocketAction.ShopList:
-                            JsonSerializerSettings settings = new JsonSerializerSettings();
+                        
+                        case SocketReceiveAction.AddStatPoint:
+                            Stat stat = JsonConvert.DeserializeObject<Stat>(socketMessage.Content);
+                            CharacterManager.Instance.statsManager.AddStatPoint(stat);
+                            break;
+                        
+                        case SocketReceiveAction.ShopList:
                             settings.Converters.Add(new ItemConverter());
                             List<Item> shopItems = JsonConvert.DeserializeObject<List<Item>>(socketMessage.Content, settings);
                             ShopUI.Instance.ShopItems = shopItems;
                             break;
-                        case SocketAction.RankList:
+                        
+                        case SocketReceiveAction.BuyItem:
+                            settings.Converters.Add(new BaseCharacterItemConverter());
+                            IBaseCharacterItem characterItem = JsonConvert.DeserializeObject<IBaseCharacterItem>(socketMessage.Content, settings);
+                            CharacterManager.Instance.walletManager.BuyItem(characterItem);
+                            break;
+                        
+                        case SocketReceiveAction.SellItem:
+                            CharacterManager.Instance.walletManager.SellCharacterItem(int.Parse(socketMessage.Content));
+                            break;
+                        
+                        case SocketReceiveAction.RankList:
                             List<Character> characterList = JsonConvert.DeserializeObject<List<Character>>(socketMessage.Content);
                             RankingUI.Instance.CharacterList = characterList;
                             break;
-                        case SocketAction.Error:
+                        
+                        case SocketReceiveAction.Error:
                             GameManager.Instance.modalWindow.ShowAsTextPopup(
                                 "Error",
                                 socketMessage.Content,
+                                null,
                                 "Ok",
-                                "Disconnect",
-                                GameManager.Instance.modalWindow.Close,
-                                GameManager.Instance.Logout
+                                null,
+                                GameManager.Instance.modalWindow.Close
                             );
                             break;
-                        
                     }
                     break;
                 case SocketChannel.DefaultChatChannel:
                     switch (socketMessage.Action)
                     {
-                        case SocketAction.MessageList:
+                        case SocketReceiveAction.MessageList:
                             List<Message> messages = JsonConvert.DeserializeObject<List<Message>>(socketMessage.Content);
                             if (messages != null)
                             {
@@ -149,7 +172,7 @@ namespace LGamesDev
                                 }
                             }
                             break;
-                        case SocketAction.Message:
+                        case SocketReceiveAction.Message:
                             MessageReceived.Invoke(new Message()
                             {
                                 Username = socketMessage.Username,
@@ -161,15 +184,15 @@ namespace LGamesDev
                 case var value when string.Equals(value, string.Concat(SocketChannel.FightChannelSuffix, GameManager.Instance.GetAuthentication().username)):
                     switch (socketMessage.Action)
                     {
-                        case SocketAction.StartFight:
+                        case SocketReceiveAction.StartFight:
                             Fight fight = JsonConvert.DeserializeObject<Fight>(socketMessage.Content);
                             GameManager.Instance.LoadFight(fight);
                             break;
-                        case SocketAction.Attack:
+                        case SocketReceiveAction.Attack:
                             List<FightAction> fightActions = JsonConvert.DeserializeObject<List<FightAction>>(socketMessage.Content);
-                            FightManager.Instance.Attack(fightActions, _onAttackCallback);
+                            FightManager.Instance.Attack(fightActions);
                             break;
-                        case SocketAction.EndFight:
+                        case SocketReceiveAction.EndFight:
                             Reward reward = JsonConvert.DeserializeObject<Reward>(socketMessage.Content);
                             FightManager.Instance.Fight.Reward = reward;
                             break;
@@ -185,14 +208,14 @@ namespace LGamesDev
             #endif
         }
         
-        //Body
-        public void GetBody()
+        //Default
+        public void SubscribeToMainChannel()
         {
             _ws.SendText(JsonConvert.SerializeObject(new Dictionary<string, string>
             {
-                { "action", SocketAction.ShopList },
-                { "channel", SocketChannel.DefaultChannel },
+                { "action", SocketSendAction.TrySubscribe },
                 { "username", GameManager.Instance.GetAuthentication().username },
+                { "content", SocketChannel.DefaultChannel }
             }));
         }
 
@@ -201,7 +224,7 @@ namespace LGamesDev
         {
             _ws.SendText(JsonConvert.SerializeObject(new Dictionary<string, string>
             {
-                { "action", SocketAction.Subscribe },
+                { "action", SocketSendAction.TrySubscribe },
                 { "channel", SocketChannel.DefaultChannel },
                 { "username", GameManager.Instance.GetAuthentication().username },
                 { "content", SocketChannel.DefaultChatChannel }
@@ -217,7 +240,7 @@ namespace LGamesDev
                 // Sending plain text to json
                 await _ws.SendText(JsonConvert.SerializeObject(new Dictionary<string, string>
                 {
-                    { "action", "message" },
+                    { "action", SocketSendAction.SendMessage },
                     { "channel", SocketChannel.DefaultChatChannel },
                     { "username", GameManager.Instance.GetAuthentication().username },
                     { "content", message }
@@ -229,7 +252,7 @@ namespace LGamesDev
         {
             _ws?.SendText(JsonConvert.SerializeObject(new Dictionary<string, string>
             {
-                { "action", SocketAction.Unsubscribe },
+                { "action", SocketSendAction.TryUnsubscribe },
                 { "channel", SocketChannel.DefaultChannel },
                 { "username", GameManager.Instance.GetAuthentication().username },
                 { "content", SocketChannel.DefaultChatChannel }
@@ -237,25 +260,37 @@ namespace LGamesDev
         }
         
         //Gear
-        public void Equip(CharacterEquipment newEquipment)
+        public void TryEquip(CharacterEquipment newEquipment)
         {
             _ws.SendText(JsonConvert.SerializeObject(new Dictionary<string, string>
             {
-                { "action", SocketAction.Equip },
+                { "action", SocketSendAction.TryEquip },
                 { "channel", SocketChannel.DefaultChannel },
                 { "username", GameManager.Instance.GetAuthentication().username },
                 { "content", newEquipment.id.ToString() }
             }));
         }
         
-        public void UnEquip(CharacterEquipment characterEquipment)
+        public void TryUnEquip(CharacterEquipment characterEquipment)
         {
             _ws.SendText(JsonConvert.SerializeObject(new Dictionary<string, string>
             {
-                { "action", SocketAction.UnEquip },
+                { "action", SocketSendAction.TryUnEquip },
                 { "channel", SocketChannel.DefaultChannel },
                 { "username", GameManager.Instance.GetAuthentication().username },
                 { "content", characterEquipment.id.ToString() }
+            }));
+        }
+        
+        //Stats
+        public void TryAddStatPoint(StatType statType)
+        {
+            _ws.SendText(JsonConvert.SerializeObject(new Dictionary<string, string>
+            {
+                { "action", SocketSendAction.TryAddStatPoint },
+                { "channel", SocketChannel.DefaultChannel },
+                { "username", GameManager.Instance.GetAuthentication().username },
+                { "content", JsonConvert.SerializeObject(statType.ToString()) }
             }));
         }
         
@@ -264,9 +299,31 @@ namespace LGamesDev
         {
             _ws.SendText(JsonConvert.SerializeObject(new Dictionary<string, string>
             {
-                { "action", SocketAction.ShopList },
+                { "action", SocketSendAction.GetShopList },
                 { "channel", SocketChannel.DefaultChannel },
                 { "username", GameManager.Instance.GetAuthentication().username },
+            }));
+        }
+        
+        public void TryBuyItem(Item item)
+        {
+            _ws.SendText(JsonConvert.SerializeObject(new Dictionary<string, string>
+            {
+                { "action", SocketSendAction.TryBuyItem },
+                { "channel", SocketChannel.DefaultChannel },
+                { "username", GameManager.Instance.GetAuthentication().username },
+                { "content", item.ID.ToString() }
+            }));
+        }
+        
+        public void TrySellItem(IBaseCharacterItem characterItem)
+        {
+            _ws.SendText(JsonConvert.SerializeObject(new Dictionary<string, string>
+            {
+                { "action", SocketSendAction.TrySellItem },
+                { "channel", SocketChannel.DefaultChannel },
+                { "username", GameManager.Instance.GetAuthentication().username },
+                { "content", characterItem.Id.ToString() }
             }));
         }
         
@@ -275,7 +332,7 @@ namespace LGamesDev
         {
             _ws.SendText(JsonConvert.SerializeObject(new Dictionary<string, string>
             {
-                { "action", SocketAction.RankList },
+                { "action", SocketSendAction.GetRankList },
                 { "channel", SocketChannel.DefaultChannel },
                 { "username", GameManager.Instance.GetAuthentication().username },
             }));
@@ -286,19 +343,18 @@ namespace LGamesDev
         {
             _ws.SendText(JsonConvert.SerializeObject(new Dictionary<string, string>
             {
-                { "action", SocketAction.Subscribe },
+                { "action", SocketSendAction.TrySubscribe },
                 { "channel", SocketChannel.DefaultChannel },
                 { "username", GameManager.Instance.GetAuthentication().username },
                 { "content", string.Concat(SocketChannel.FightChannelSuffix, GameManager.Instance.GetAuthentication().username) }
             }));
         }
 
-        public void Attack(Action onAttackCallback)
+        public void Attack()
         {
-            _onAttackCallback = onAttackCallback;
             _ws.SendText(JsonConvert.SerializeObject(new Dictionary<string, string>
             {
-                { "action", SocketAction.Attack },
+                { "action", SocketSendAction.TryAttack },
                 { "channel", string.Concat(SocketChannel.FightChannelSuffix, GameManager.Instance.GetAuthentication().username) },
                 { "username", GameManager.Instance.GetAuthentication().username },
             }));
@@ -317,16 +373,34 @@ namespace LGamesDev
         public const string FightChannelSuffix = "fight_";
     }
     
-    public class SocketAction
+    public class SocketSendAction
     {
-        public const string Subscribe = "subscribe";
-        public const string Unsubscribe = "unsubscribe";
-        public const string GetBody = "message";
+        public const string TrySubscribe = "trySubscribe";
+        public const string TryUnsubscribe = "tryUnsubscribe";
+        public const string SendMessage = "sendMessage";
+        public const string TryEquip = "tryEquip";
+        public const string TryUnEquip = "TryUnEquip";
+        public const string TryAddStatPoint = "tryAddStatPoint";
+        public const string GetShopList = "getShopList";
+        public const string TryBuyItem = "tryBuyItem";
+        public const string TrySellItem = "trySellItem";
+        public const string GetRankList = "getRankList";
+        public const string TryAttack = "tryAttack";
+    }
+    
+    public class SocketReceiveAction
+    {
+        public const string Initialisation = "initialisation";
+        /*public const string Subscribe = "subscribe";
+        public const string Unsubscribe = "unsubscribe";*/
         public const string Message = "message";
         public const string MessageList = "messageList";
         public const string Equip = "equip";
         public const string UnEquip = "unEquip";
+        public const string AddStatPoint = "addStatPoint";
         public const string ShopList = "shopList";
+        public const string BuyItem = "buyItem";
+        public const string SellItem = "sellItem";
         public const string RankList = "rankList";
         public const string StartFight = "fightStart";
         public const string Attack = "attack";

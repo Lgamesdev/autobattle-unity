@@ -25,7 +25,7 @@ namespace LGamesDev.UI
             if (buttonActive)
             {
                 button.gameObject.SetActive(CharacterStatsManager.Instance.GetStatPoint() > 0);
-                CharacterStatsManager.Instance.OnStatPointAdded += OnStatPointAdded;
+                CharacterStatsManager.Instance.StatPointAdded += OnStatPointAdded;
             }
             else
             {
@@ -42,15 +42,15 @@ namespace LGamesDev.UI
         {
             button.gameObject.SetActive(true);
         }
-        
-        public void HideStatPointButton()
+
+        private void HideStatPointButton()
         {
             button.gameObject.SetActive(false);
         }
 
         public void OnStatPointButton()
         {
-            CharacterManager.Instance.statsManager.AddPoint(_stat.statType);
+            CharacterManager.Instance.statsManager.TryAddStatPoint(_stat.statType);
         }
     }
 }

@@ -2,9 +2,9 @@
 {
     public class PlayerProgression
     {
-        public int level;
-        public int xp;
-        public int statPoint;
-        public int ranking;
+        public int Level;
+        public int Xp;
+        public int StatPoint;
+        public int Ranking;
     }
 }

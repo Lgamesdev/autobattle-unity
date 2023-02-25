@@ -17,14 +17,14 @@ namespace LGamesDev.Core.Character
 
         public override void Use()
         {
-            //Equip the item 
-            //Debug.Log("Equip the item");
+            //TryEquip the item 
+            //Debug.Log("TryEquip the item");
             CharacterManager.Instance.equipmentManager.TryEquip(this);
         }
 
         public override void Sell()
         {
-            PlayerWalletManager.Instance.SellCharacterItem(this);
+            PlayerWalletManager.Instance.TrySellCharacterItem(this);
             //Debug.Log(item.name + " selled.");
         }
 

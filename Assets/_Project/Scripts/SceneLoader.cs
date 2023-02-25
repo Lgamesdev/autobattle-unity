@@ -135,7 +135,7 @@ namespace LGamesDev
 
                     _totalSceneProgress = _totalSceneProgress / _scenesLoading.Count * 100f;
 
-                    _gameManager.loadingScreen.progressBar.progressText.text = "Loading ...";
+                    _gameManager.loadingScreen.progressBar.progressText.text = "Loading";
                     _gameManager.loadingScreen.progressBar.current = Mathf.RoundToInt(_totalSceneProgress);
                     _gameManager.loadingScreen.progressBar.percentageText.text = Mathf.RoundToInt(_totalSceneProgress).ToString() + "%";
 
@@ -161,25 +161,24 @@ namespace LGamesDev
                 }
                 else
                 {
-                    _totalSetupProgress = Mathf.Round(Initialisation.Current.progress * 100f);
+                    _totalSetupProgress = Initialisation.Current.progress;
 
                     _gameManager.loadingScreen.progressBar.progressText.text = Initialisation.Current.currentStage switch
                     {
                         InitialisationStage.Body => "Loading Body",
-                        InitialisationStage.Infos => "Loading Player Infos",
                         InitialisationStage.Progression => "Loading Player Infos",
                         InitialisationStage.Wallet => "Loading Wallet",
                         InitialisationStage.Equipment => "Loading Equipment",
                         InitialisationStage.Inventory => "Loading Inventory",
                         InitialisationStage.Character or InitialisationStage.CharacterStats => "Loading Character",
-                        _ => "Loading some things..."
+                        _ => "Loading some things"
                     };
                 }
 
-                var totalProgress = Mathf.Round((_totalSceneProgress + _totalSetupProgress) / 2f);
+                int totalProgress = Mathf.RoundToInt((_totalSceneProgress + _totalSetupProgress) / 2f);
 
                 _gameManager.loadingScreen.progressBar.current = Mathf.RoundToInt(totalProgress);
-                _gameManager.loadingScreen.progressBar.percentageText.text = Mathf.RoundToInt(totalProgress).ToString() + "%";
+                _gameManager.loadingScreen.progressBar.percentageText.text = Mathf.RoundToInt(totalProgress) + "%";
 
                 yield return new WaitForEndOfFrame();
             }

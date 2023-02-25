@@ -11,16 +11,15 @@ public class AttackButton : MonoBehaviour
     
     private void Start()
     {
+        FightManager.Instance.ActionsComplete += () => _button.interactable = true;
+        
         _button = GetComponent<Button>();
+        _button.interactable = false;
     }
 
     public void Attack()
     {
+        GameManager.Instance.networkManager.Attack();
         _button.interactable = false;
-        GameManager.Instance.networkManager.Attack(() =>
-        {
-            _button.interactable = true;
-        });
-        
     }
 }

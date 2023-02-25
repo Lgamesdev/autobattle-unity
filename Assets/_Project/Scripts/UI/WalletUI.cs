@@ -17,7 +17,7 @@ namespace LGamesDev.UI
         {
             _walletManager = PlayerWalletManager.Instance;
 
-            if (_walletManager != null) _walletManager.OnCurrencyChanged += OnCurrencyChanged;
+            if (_walletManager != null) _walletManager.CurrencyChanged += OnCurrencyChanged;
         }
 
         private void OnCurrencyChanged(Currency currency)

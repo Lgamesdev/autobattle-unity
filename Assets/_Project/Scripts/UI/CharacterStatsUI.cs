@@ -27,7 +27,7 @@ namespace LGamesDev.UI
         {
             _characterStatsManager = CharacterStatsManager.Instance;
 
-            _characterStatsManager.OnStatsUpdated += OnStatsUpdated;
+            _characterStatsManager.StatsUpdated += OnStatsUpdated;
 
             OnStatsUpdated(_characterStatsManager.stats);
         }

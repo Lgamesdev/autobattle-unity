@@ -100,7 +100,7 @@ namespace LGamesDev.Core
         /*public void UpdateEquipmentTexture(Player.Equipment newEquipment, Player.Equipment oldEquipment)
         {
             if (newEquipment != null)
-                // Equip Item
+                // TryEquip Item
                 switch (newEquipment.equipmentType)
                 {
                     /*case EquipmentSlot.Weapon:

@@ -12,8 +12,8 @@ namespace LGamesDev
     {
         public static PlayerWalletManager Instance;
         
-        public delegate void OnCurrencyChangedEvent(Currency currency);
-        public OnCurrencyChangedEvent OnCurrencyChanged;
+        public delegate void CurrencyChangedEvent(Currency currency);
+        public CurrencyChangedEvent CurrencyChanged;
 
         private Wallet _wallet = new();
         
@@ -31,6 +31,8 @@ namespace LGamesDev
         public void SetupManager(Wallet wallet)
         {
             _wallet = wallet;
+            CurrencyChanged?.Invoke(_wallet.GetCurrency(CurrencyType.Gold));
+            CurrencyChanged?.Invoke(_wallet.GetCurrency(CurrencyType.Crystal));
         }
 
         public int GetAmount(CurrencyType currencyType)
@@ -42,8 +44,10 @@ namespace LGamesDev
         {
             if (GetAmount(CurrencyType.Gold) > item.cost)
             {
+                GameManager.Instance.networkManager.TryBuyItem(item);
+                
                 //Can afford cost
-                StartCoroutine(PlayerWalletHandler.Buy(
+                /*StartCoroutine(PlayerWalletHandler.Buy(
                     this,
                     item,
                     error =>
@@ -55,17 +59,24 @@ namespace LGamesDev
                         SpendCurrency(CurrencyType.Gold, item.cost);
                         PlayerInventoryManager.Instance.AddItem(baseCharacterItem);
                     }
-                ));
+                ));*/
             }
             else
             {
                 Tooltip_Warning.ShowTooltip_Static("Cannot afford " + item.cost + " gold !");
             }
         }
-        
-        public void SellCharacterItem(IBaseCharacterItem characterItem)
+
+        public void BuyItem(IBaseCharacterItem characterItem)
         {
-            StartCoroutine(PlayerWalletHandler.Sell(
+            SpendCurrency(CurrencyType.Gold, characterItem.Item.cost);
+            PlayerInventoryManager.Instance.AddItem(characterItem);
+        }
+        
+        public void TrySellCharacterItem(IBaseCharacterItem characterItem)
+        {
+            GameManager.Instance.networkManager.TrySellItem(characterItem);
+            /*StartCoroutine(PlayerWalletHandler.Sell(
                 this,
                 characterItem,
                 error =>
@@ -77,19 +88,27 @@ namespace LGamesDev
                     AddCurrency(CurrencyType.Gold, characterItem.Item.cost);
                     PlayerInventoryManager.Instance.RemoveItem(characterItem);
                 }
-            ));
+            ));*/
+        }
+
+        public void SellCharacterItem(int id)
+        {
+            IBaseCharacterItem characterItem = CharacterManager.Instance.inventoryManager.GetItemById(id);
+            
+            AddCurrency(CurrencyType.Gold, characterItem.Item.cost);
+            PlayerInventoryManager.Instance.RemoveItem(characterItem);
         }
 
         private void SpendCurrency(CurrencyType currencyType, int amount)
         {
             _wallet.SpendCurrency(currencyType, amount);
-            OnCurrencyChanged?.Invoke(_wallet.GetCurrency(currencyType));
+            CurrencyChanged?.Invoke(_wallet.GetCurrency(currencyType));
         }
 
         public void AddCurrency(CurrencyType currencyType, int amount)
         {
             _wallet.AddCurrency(currencyType, amount);
-            OnCurrencyChanged?.Invoke(_wallet.GetCurrency(currencyType));
+            CurrencyChanged?.Invoke(_wallet.GetCurrency(currencyType));
         }
     }
 }

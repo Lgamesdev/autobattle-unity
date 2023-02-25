@@ -2,12 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using LGamesDev.Core;
+using Core.Player;
 using LGamesDev.Core.Character;
 using LGamesDev.Core.Player;
 using LGamesDev.Core.Request;
 using LGamesDev.Helper;
+using LGamesDev.Request.Converters;
 using LGamesDev.UI;
+using Newtonsoft.Json;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -21,10 +23,13 @@ namespace LGamesDev
         public float progress;
         public bool isDone;
         public InitialisationStage currentStage;
+        private float _finishedStage;
 
         private readonly Dictionary<InitialisationStage, IEnumerator> _coroutinesLoading = new();
 
         private GameManager _gameManager;
+        
+        private readonly Character _character = new();
 
         private void Awake()
         {
@@ -35,108 +40,79 @@ namespace LGamesDev
         public void LoadMainMenu()
         {
             isDone = false;
+            progress = 0f;
 
-            Character character = new Character();
-            
             if(!_gameManager.networkManager.isConnected)
                 _gameManager.networkManager.Connect();
-            
-            // Load coroutines to setup main menu
-            _coroutinesLoading.Add(InitialisationStage.Body, CharacterBodyHandler.Load(
-                this,
-                ShowErrorWindow,
-                result =>
-                {
-                    character.Body = result;
-                }
-            ));
-            _coroutinesLoading.Add(InitialisationStage.Progression, PlayerProgressionHandler.Load(
-                this,
-                ShowErrorWindow,
-                result =>
-                {
-                    character.Level = result.level;
-                    character.Experience = result.xp;
-                    character.StatPoint = result.statPoint;
-                    character.Ranking = result.ranking;
 
-                    InfosUI infosUI = FindObjectOfType<InfosUI>();
-                    
-                    infosUI.username.GetComponent<TextMeshProUGUI>().text
-                        = GameManager.Instance.GetAuthentication().username;
-                    
-                    infosUI.level.GetComponent<TextMeshProUGUI>().text 
-                        = "Level : " + ConvertNumber.ToString(result.level);
-                }
-            ));
-            _coroutinesLoading.Add(InitialisationStage.Wallet, PlayerWalletHandler.Load(
-                this,
-                ShowErrorWindow,
-                result =>
-                {
-                    character.Wallet = result;
-                    
-                    WalletUI walletUI = FindObjectOfType<WalletUI>();
-                    
-                    walletUI.goldAmount.GetComponent<TextMeshProUGUI>().text 
-                     = ConvertNumber.ToString(result.GetAmount(CurrencyType.Gold));
-                    
-                    walletUI.crystalAmount.GetComponent<TextMeshProUGUI>().text
-                        = ConvertNumber.ToString(result.GetAmount(CurrencyType.Crystal));
-                }
-            ));
-            _coroutinesLoading.Add(InitialisationStage.Equipment, GearHandler.Load(
-                this,
-                ShowErrorWindow,
-                result =>
-                {
-                    //foreach (CharacterEquipment characterEquipment in result) Debug.Log(characterEquipment.ToString());
-                    character.Gear = result;
-                }
-            ));
-            _coroutinesLoading.Add(InitialisationStage.Inventory, PlayerInventoryHandler.Load(
-                this,
-                ShowErrorWindow,
-                result =>
-                {
-                    character.Inventory = result;
-                }
-            ));
-            _coroutinesLoading.Add(InitialisationStage.CharacterStats, CharacterStatHandler.Load(
-                this,
-                ShowErrorWindow,
-                result =>
-                {
-                    //Debug.Log(result.ToString());
-                    character.Stats = result;
-                }
-            ));
-
-            //TODO : change dictionnary to another collection for multiple coroutine on 1 InitialisationStage
-            
-            _coroutinesLoading.Add(InitialisationStage.Character, CharacterManager.Instance.SetupCharacter(character));
-            
-            StartCoroutine(SetupCoroutines());
+            StartCoroutine(SetupInitialisation());
         }
 
-        private IEnumerator SetupCoroutines()
+        private IEnumerator SetupInitialisation()
         {
-            yield return new WaitUntil(() => _gameManager.networkManager.isConnected);
+            _finishedStage = 0;
             
-            for (var i = 0; i < _coroutinesLoading.Count; i++)
+            yield return new WaitUntil(() => _gameManager.networkManager.isConnected);
+            _gameManager.networkManager.SubscribeToMainChannel();
+
+            int totalStages = Enum.GetValues(typeof(InitialisationStage)).Length - 1;
+
+            while (_finishedStage < totalStages) 
             {
-                currentStage = _coroutinesLoading.ElementAt(i).Key;
-
-                yield return StartCoroutine(_coroutinesLoading.ElementAt(i).Value);
-
-                progress += i / _coroutinesLoading.Count * 100f;
-
                 yield return new WaitForEndOfFrame();
             }
 
-            yield return new WaitForSeconds(0.7f);
+            currentStage = InitialisationStage.Character;
+            yield return StartCoroutine(CharacterManager.Instance.SetupCharacter(_character));
+
+            yield return new WaitForSeconds(0.75f);
 
             isDone = true;
+        }
+        
+        public void SetResult(InitialisationResult result)
+        {
+            currentStage = result.Stage;
+            
+            JsonSerializerSettings settings;
+            switch (result.Stage)
+            {
+                case InitialisationStage.Body:
+                    Body playerBody = JsonConvert.DeserializeObject<Body>(result.Value);
+                    _character.Body = playerBody;
+                    break;
+                case InitialisationStage.Progression:
+                    PlayerProgression playerProgression = JsonConvert.DeserializeObject<PlayerProgression>(result.Value);
+                    _character.Level = playerProgression.Level;
+                    _character.Experience = playerProgression.Xp;
+                    _character.StatPoint = playerProgression.StatPoint;
+                    _character.Ranking = playerProgression.Ranking;
+                    break;
+                case InitialisationStage.Wallet:
+                    Wallet wallet = JsonConvert.DeserializeObject<Wallet>(result.Value);
+                    _character.Wallet = wallet;
+                    break;
+                case InitialisationStage.Equipment:
+                    settings = new JsonSerializerSettings();
+                    settings.Converters.Add(new ItemConverter());
+
+                    Gear gear = JsonConvert.DeserializeObject<Gear>(result.Value, settings);
+                    _character.Gear = gear;
+                    break;
+                case InitialisationStage.Inventory:
+                    settings = new JsonSerializerSettings();
+                    settings.Converters.Add(new BaseCharacterItemConverter());
+                    Inventory inventory = JsonConvert.DeserializeObject<Inventory>(result.Value, settings);
+                    _character.Inventory = inventory;
+                    break;
+                case InitialisationStage.CharacterStats:
+                    Stat[] stats = JsonConvert.DeserializeObject<Stat[]>(result.Value);
+                    _character.Stats = stats;
+                    break;
+            }
+
+            _finishedStage++;
+            progress = (_finishedStage / (Enum.GetValues(typeof(InitialisationStage)).Length - 1)) * 100f;
         }
 
         private void ShowErrorWindow(string error)
@@ -158,7 +134,6 @@ namespace LGamesDev
     public enum InitialisationStage
     {
         Body,
-        Infos,
         Progression,
         Wallet,
         Equipment,
@@ -166,4 +141,15 @@ namespace LGamesDev
         CharacterStats,
         Character
     }
+    
+    /*public class InitialisationStage
+    {
+        public const string Body = "Body";
+        public const string Progression = "Progression";
+        public const string Wallet = "Wallet";
+        public const string Equipment = "Equipment";
+        public const string Inventory = "Inventory";
+        public const string CharacterStats = "CharacterStats";
+        public const string Character = "Character";
+    }*/
 }

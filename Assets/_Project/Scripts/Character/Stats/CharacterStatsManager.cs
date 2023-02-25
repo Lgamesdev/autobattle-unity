@@ -1,6 +1,9 @@
 using System;
+using System.Collections.Generic;
+using System.Text;
 using LGamesDev.Core.Character;
 using LGamesDev.Core.Request;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace LGamesDev.Core.Player
@@ -11,11 +14,11 @@ namespace LGamesDev.Core.Player
         private int maxHealth { get; set; }
         private int currentHealth { get; set; }
         
-        public delegate void OnStatsUpdatedEvent(Stat[] stats);
-        public OnStatsUpdatedEvent OnStatsUpdated;
+        public delegate void StatsUpdatedEvent(Stat[] stats);
+        public StatsUpdatedEvent StatsUpdated;
         
-        public delegate void OnStatPointAddedEvent();
-        public OnStatPointAddedEvent OnStatPointAdded;
+        public delegate void StatPointAddedEvent();
+        public StatPointAddedEvent StatPointAdded;
         
         public event EventHandler OnHealthChanged;
 
@@ -45,40 +48,25 @@ namespace LGamesDev.Core.Player
             currentHealth = maxHealth;
         }
 
-        public void AddPoint(StatType statType)
+        public void TryAddStatPoint(StatType statType)
         {
             if (CharacterManager.Instance.Character.StatPoint > 0)
             {
-                StartCoroutine(CharacterStatHandler.AddStatPoint(
-                    this,
-                    statType,
-                    error =>
-                    {
-                        Debug.Log("error on adding stat point : " + error);
-                    },
-                    response=>
-                    {
-                        //Debug.Log("point stat successfully added : " + response);
-                        CharacterManager.Instance.Character.StatPoint--;
-
-                        stats[(int)statType].value += statType switch
-                        {
-                            StatType.Health => 10,
-                            StatType.Damage => 2,
-                            StatType.Armor 
-                            or StatType.Dodge
-                            or StatType.Speed 
-                            or StatType.Critical => 1,
-                        };
-                        
-                        OnStatsUpdated?.Invoke(stats);
-                    }
-                ));
+                GameManager.Instance.networkManager.TryAddStatPoint(statType);
             }
             else
             {
                 //Todo : you don't have any stat point
             }
+        }
+
+        public void AddStatPoint(Stat stat)
+        {
+            //Debug.Log(stat.value + " points stat added in " + stat.statType);
+            CharacterManager.Instance.Character.StatPoint--;
+            stats[(int)stat.statType].value += stat.value;
+                        
+            StatsUpdated?.Invoke(stats);
         }
 
         private void OnEquipmentChanged(CharacterEquipment newEquipment, CharacterEquipment oldEquipment)
@@ -101,7 +89,7 @@ namespace LGamesDev.Core.Player
                 }
             }
 
-            OnStatsUpdated?.Invoke(stats);
+            StatsUpdated?.Invoke(stats);
         }
 
         public void TakeDamage(int damage)

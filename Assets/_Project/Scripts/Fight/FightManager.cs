@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using LGamesDev.Core.Player;
-using LGamesDev.Core.Request;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -23,7 +22,7 @@ namespace LGamesDev.Fighting
 
         public Fight Fight;
         private int _currentAction = 0;
-        private Action _actionsComplete;
+        public Action ActionsComplete;
 
         private int _fightSpeed = 1;
 
@@ -118,7 +117,7 @@ namespace LGamesDev.Fighting
             }
             else
             {
-                _actionsComplete?.Invoke();
+                ActionsComplete?.Invoke();
             }
         }
         
@@ -157,9 +156,8 @@ namespace LGamesDev.Fighting
             }
         }
 
-        public void Attack(IEnumerable<FightAction> fightActions, Action onAttackComplete)
+        public void Attack(IEnumerable<FightAction> fightActions)
         {
-            _actionsComplete = onAttackComplete;
             Fight.Actions.AddRange(fightActions);
             ChooseNextActiveCharacter();
         }

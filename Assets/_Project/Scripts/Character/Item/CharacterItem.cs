@@ -14,7 +14,7 @@ namespace LGamesDev.Core.Character
 
         public override void Sell()
         {
-            PlayerWalletManager.Instance.SellCharacterItem(this);
+            PlayerWalletManager.Instance.TrySellCharacterItem(this);
             //Debug.Log(item.name + " selled.");
         }
 

@@ -18,7 +18,7 @@ namespace LGamesDev.Core.Character
 
         public void TryEquip(CharacterEquipment newCharacterEquipment) 
         {
-            GameManager.Instance.networkManager.Equip(newCharacterEquipment);
+            GameManager.Instance.networkManager.TryEquip(newCharacterEquipment);
         }
 
         public void Equip(int id)
@@ -43,7 +43,7 @@ namespace LGamesDev.Core.Character
             currentGear.equipments[slotIndex] = newCharacterEquipment;
             EquipmentChanged?.Invoke(newCharacterEquipment, oldCharacterEquipment);
             
-            /*StartCoroutine(GearHandler.Equip(
+            /*StartCoroutine(GearHandler.TryEquip(
                 this,
                 newCharacterEquipment,
                 error =>
@@ -67,7 +67,7 @@ namespace LGamesDev.Core.Character
         
         public void TryUnEquip(int slotIndex) 
         {
-            GameManager.Instance.networkManager.UnEquip(currentGear.equipments[slotIndex]);
+            GameManager.Instance.networkManager.TryUnEquip(currentGear.equipments[slotIndex]);
         }
 
         public void UnEquip(int slotIndex)
@@ -81,7 +81,7 @@ namespace LGamesDev.Core.Character
             currentGear.equipments[slotIndex] = null;
             EquipmentChanged?.Invoke(null, oldCharacterEquipment);
             
-            /*StartCoroutine(GearHandler.UnEquip(
+            /*StartCoroutine(GearHandler.TryUnEquip(
                 this,
                 oldCharacterEquipment,
                 error =>

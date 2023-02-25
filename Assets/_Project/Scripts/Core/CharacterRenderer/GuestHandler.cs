@@ -53,7 +53,7 @@ namespace LGamesDev.Core.CharacterRenderer
         public void SetEquipment(Equipment equipment)
         {
             if (equipment != null)
-                // Equip Item
+                // TryEquip Item
                 switch (equipment.equipmentSlot)
                 {
                     case EquipmentSlot.Weapon:

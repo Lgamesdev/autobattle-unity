@@ -61,8 +61,8 @@ namespace LGamesDev.Fighting
             var camHeight = cam.orthographicSize * 2f;
             var camWidth = camHeight * cam.aspect;
 
-            playerCharacterFight.transform.position = new Vector3(camWidth * -0.30f, -25);
-            _enemyCharacterFight.transform.position = new Vector3(camWidth * 0.30f, -25);
+            playerCharacterFight.transform.position = new Vector3(camWidth * -0.30f, -20);
+            _enemyCharacterFight.transform.position = new Vector3(camWidth * 0.30f, -20);
             
             playerCharacterFight.LookAt(_enemyCharacterFight.GetPosition());
             _enemyCharacterFight.LookAt(playerCharacterFight.GetPosition());

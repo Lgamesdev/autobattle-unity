@@ -68,6 +68,11 @@ namespace LGamesDev
             _audioSource.Play();
         }
 
+        public void StopMusic()
+        {
+            _audioSource.Stop();
+        }
+
         public void SetMixerVolume(AudioTrack track, float value)
         {
             if (mixer != null)

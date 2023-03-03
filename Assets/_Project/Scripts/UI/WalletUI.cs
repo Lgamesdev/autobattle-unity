@@ -25,11 +25,13 @@ namespace LGamesDev.UI
             switch (currency.currencyType)
             {
                 case CurrencyType.Gold:
-                    goldAmount.GetComponent<TextMeshProUGUI>().text = ConvertNumber.ToString(currency.amount);
+                    goldAmount.GetComponent<TextMeshProUGUI>().text = AbbreviationUtility.AbbreviateNumber(currency.amount);
                     break;
                 case CurrencyType.Crystal:
-                    crystalAmount.GetComponent<TextMeshProUGUI>().text = ConvertNumber.ToString(currency.amount);
+                    crystalAmount.GetComponent<TextMeshProUGUI>().text = AbbreviationUtility.AbbreviateNumber(currency.amount);
                     break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
     }

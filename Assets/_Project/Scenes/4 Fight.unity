@@ -743,7 +743,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1633740095180548342, guid: c33b608953338444d97e0f7478add7ab, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -25
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 1633740095180548342, guid: c33b608953338444d97e0f7478add7ab, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3006,7 +3006,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pfCharacterBattle: {fileID: -5419989461987444300, guid: 9956c7ecb8f2f5c4f95fb865b9837374, type: 3}
   playerCharacterFight: {fileID: 344218452}
-  currentAction: 0
 --- !u!4 &987400102
 Transform:
   m_ObjectHideFlags: 0

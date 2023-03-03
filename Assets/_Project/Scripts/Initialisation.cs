@@ -24,6 +24,7 @@ namespace LGamesDev
         public bool isDone;
         public InitialisationStage currentStage;
         private float _finishedStage;
+        private Action _onInitialisationEnd;
 
         private readonly Dictionary<InitialisationStage, IEnumerator> _coroutinesLoading = new();
 
@@ -37,8 +38,9 @@ namespace LGamesDev
             _gameManager = GameManager.Instance;
         }
 
-        public void LoadMainMenu()
+        public void LoadMainMenu(Action onInitialisationEnd)
         {
+            _onInitialisationEnd = onInitialisationEnd;
             isDone = false;
             progress = 0f;
 
@@ -68,6 +70,7 @@ namespace LGamesDev
             yield return new WaitForSeconds(0.75f);
 
             isDone = true;
+            _onInitialisationEnd?.Invoke();
         }
         
         public void SetResult(InitialisationResult result)
@@ -141,15 +144,4 @@ namespace LGamesDev
         CharacterStats,
         Character
     }
-    
-    /*public class InitialisationStage
-    {
-        public const string Body = "Body";
-        public const string Progression = "Progression";
-        public const string Wallet = "Wallet";
-        public const string Equipment = "Equipment";
-        public const string Inventory = "Inventory";
-        public const string CharacterStats = "CharacterStats";
-        public const string Character = "Character";
-    }*/
 }

@@ -17,6 +17,7 @@ namespace LGamesDev
         public LoadingScreen loadingScreen;
         public ModalWindowPanel modalWindow;
         public AudioManager audioManager;
+        public DialogManager dialogManager;
 
         private Authentication _authentication;
         private const string AuthenticationKey = "authentication";
@@ -63,6 +64,7 @@ namespace LGamesDev
 
         public void LoadCustomization()
         {
+            networkManager.
             StartCoroutine(sceneLoader.LoadCustomization());
         }
         
@@ -88,8 +90,13 @@ namespace LGamesDev
 
         public void Logout()
         {
+            networkManager.Disconnect();
+            
             PlayerPrefs.DeleteKey("authentication");
             _authentication = null;
+            
+            audioManager.StopMusic();
+            
             StartCoroutine(sceneLoader.LoadAuthentication(true, true));
         }
 

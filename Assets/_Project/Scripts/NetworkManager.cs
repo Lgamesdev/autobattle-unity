@@ -61,10 +61,10 @@ namespace LGamesDev
             _ws.OnClose += (e) =>
             {
                 //Debug.Log("Connection closed!");
-                isConnected = false;
+                
                 if (!Application.isPlaying) return;
                 
-                if (!_isError)
+                if (!_isError && isConnected)
                 {
                     GameManager.Instance.modalWindow.ShowAsTextPopup(
                         "Something get wrong...",
@@ -76,6 +76,7 @@ namespace LGamesDev
                     );
                     //Invoke(nameof(Connect), 10.0f);
                 }
+                isConnected = false;
             };
 
             _ws.OnMessage += (bytes) =>
@@ -111,6 +112,20 @@ namespace LGamesDev
                             InitialisationResult result =
                                 JsonConvert.DeserializeObject<InitialisationResult>(socketMessage.Content);
                             Initialisation.Current.SetResult(result);
+                            break;
+                        
+                        case SocketReceiveAction.TutorialDone:
+                            Authentication authentication = GameManager.Instance.GetAuthentication();
+                            authentication.PlayerConf.TutorialDone = true;
+                            GameManager.Instance.SetAuthentication(authentication);
+                            
+                            GameManager.Instance.modalWindow.ShowAsTextPopup(
+                                "Well Done!",
+                                "Tutorial Done!",
+                                "Ok",
+                                null,
+                                GameManager.Instance.modalWindow.Close
+                            );
                             break;
                         
                         case SocketReceiveAction.Equip:
@@ -216,6 +231,17 @@ namespace LGamesDev
                 { "action", SocketSendAction.TrySubscribe },
                 { "username", GameManager.Instance.GetAuthentication().username },
                 { "content", SocketChannel.DefaultChannel }
+            }));
+        }
+        
+        //Tutorial
+        public void TutorialFinished()
+        {
+            _ws.SendText(JsonConvert.SerializeObject(new Dictionary<string, string>
+            {
+                { "action", SocketSendAction.TutorialFinished },
+                { "channel", SocketChannel.DefaultChannel },
+                { "username", GameManager.Instance.GetAuthentication().username },
             }));
         }
 
@@ -360,9 +386,17 @@ namespace LGamesDev
             }));
         }
 
-        private async void OnApplicationQuit()
+        public async void Disconnect()
         {
-            await _ws.Close();
+            isConnected = false;
+            
+            if(_ws != null)
+                await _ws.Close();
+        }
+
+        private void OnApplicationQuit()
+        {
+            Disconnect();
         }
     }
     
@@ -377,6 +411,7 @@ namespace LGamesDev
     {
         public const string TrySubscribe = "trySubscribe";
         public const string TryUnsubscribe = "tryUnsubscribe";
+        public const string TutorialFinished = "tutorialFinished";
         public const string SendMessage = "sendMessage";
         public const string TryEquip = "tryEquip";
         public const string TryUnEquip = "TryUnEquip";
@@ -391,8 +426,7 @@ namespace LGamesDev
     public class SocketReceiveAction
     {
         public const string Initialisation = "initialisation";
-        /*public const string Subscribe = "subscribe";
-        public const string Unsubscribe = "unsubscribe";*/
+        public const string TutorialDone = "tutorialDone";
         public const string Message = "message";
         public const string MessageList = "messageList";
         public const string Equip = "equip";

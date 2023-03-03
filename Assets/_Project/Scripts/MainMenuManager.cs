@@ -34,28 +34,30 @@ namespace LGamesDev
                 }
                 else
                 {
-                    Initialisation.Current.LoadMainMenu();
+                    Initialisation.Current.LoadMainMenu(HandleTutorial);
+                    _gameManager.PlayMainMenuMusic();
                 }
-                
-                _gameManager.PlayMainMenuMusic();
             }
         }
 
-        private void SetupScene()
+        private void HandleTutorial()
         {
-            if (!_gameManager.GetAuthentication().PlayerConf.TutorialDone)
-                firstPopup.PopUp("Kalcifer : Salut et bienvenue dans mon tout premier jeu ! :)");
+            if (!_gameManager.GetAuthentication().PlayerConf.TutorialDone) {
+                GetComponent<DialogTrigger>().StartDialog();
+            }
+                
         }
 
-        public void TutorialDone()
+        public void TutorialFinished()
         {
-            StartCoroutine(RequestHandler.Request("api/user/tutorialDone",
+            _gameManager.networkManager.TutorialFinished();
+            /*StartCoroutine(RequestHandler.Request("api/user/tutorialDone",
                 UnityWebRequest.kHttpVerbGET,
                 error => { Debug.Log("Error on /tutorialDone : " + error); },
                 response => { Debug.Log("Received /tutorialDone : " + response); },
                 null,
                 _gameManager.GetAuthentication())
-            );
+            );*/
         }
 
         public void LoadPvpFight()

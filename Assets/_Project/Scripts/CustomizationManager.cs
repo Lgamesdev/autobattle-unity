@@ -20,6 +20,8 @@ namespace LGamesDev
             {
                 SceneManager.LoadScene((int)SceneIndexes.PersistentScene);
             }
+            
+            GetComponent<DialogTrigger>().StartDialog();
         }
 
         public void SubmitUserBody()

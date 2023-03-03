@@ -54,15 +54,15 @@ namespace LGamesDev.Fighting
                 switch (currency.currencyType)
                 {
                     case CurrencyType.Gold:
-                        _goldGain.text = ConvertNumber.ToString(currency.amount);
+                        _goldGain.text = AbbreviationUtility.AbbreviateNumber(currency.amount);
                         break;
                     case CurrencyType.Crystal:
-                        Debug.Log("crystal gained : +" +  ConvertNumber.ToString(currency.amount));
+                        Debug.Log("crystal gained : +" +  AbbreviationUtility.AbbreviateNumber(currency.amount));
                         break;
                 }
             }
 
-            _rankGain.text = "+" + ConvertNumber.ToString(reward.Ranking);
+            _rankGain.text = "+" + AbbreviationUtility.AbbreviateNumber(reward.Ranking);
         }
 
         private void AddToExperienceBar(int xpGained)
@@ -126,7 +126,7 @@ namespace LGamesDev.Fighting
 
         private void SetGainedExperience(float xpNumber)
         {
-            _experienceGain.text = "+" + ConvertNumber.ToString(xpNumber);
+            _experienceGain.text = "+" + AbbreviationUtility.AbbreviateNumber(xpNumber);
         }
 
         public void SetLevelSystem(LevelSystem levelSystem)

@@ -60,17 +60,17 @@ namespace LGamesDev.Core.Request
                     "Something get wrong...",
                     error,
                     "Retry",
-                    "Close",
+                    "Disconnect",
                     () =>
                     {
                         GameManager.Instance.StartCoroutine(Request(url, httpVerb, onError, onSuccess, bodyRaw,
                             authentication));
                     },
-                    GameManager.Instance.modalWindow.Close, 
                     () =>
                     {
                         GameManager.Instance.Logout();
-                    });
+                    }
+                );
                 
                 onError(error);
             }

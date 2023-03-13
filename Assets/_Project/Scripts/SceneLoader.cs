@@ -59,6 +59,8 @@ namespace LGamesDev
 
             SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex((int)SceneIndexes.MainMenu));
             activeScene = SceneIndexes.MainMenu;
+            
+            MainMenuManager.Instance.HandleTutorial();
         }
 
         public IEnumerator LoadFight(Fight fight)
@@ -98,6 +100,8 @@ namespace LGamesDev
             
             SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex((int)SceneIndexes.Customization));
             activeScene = SceneIndexes.Customization;
+            
+            CustomizationManager.Instance.HandleTutorial();
         }
 
         private IEnumerator SetupSceneTransition(Action onLoadingScreenFunction, bool loadingScreenEnabled = true, bool loadingScreenDisabled = true, IEnumerator onSceneLoadComplete = null)
@@ -145,7 +149,7 @@ namespace LGamesDev
 
             _scenesLoading.Clear();
 
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.25f);
         }
 
         /**

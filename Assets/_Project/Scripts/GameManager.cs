@@ -3,7 +3,6 @@ using LGamesDev.Core.Player;
 using LGamesDev.Fighting;
 using Newtonsoft.Json;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace LGamesDev
 {
@@ -110,7 +109,7 @@ namespace LGamesDev
             if (authentication != null)
             {
                 _authentication = authentication;
-                PlayerPrefs.SetString(AuthenticationKey, JsonUtility.ToJson(authentication));
+                PlayerPrefs.SetString(AuthenticationKey, JsonUtility.ToJson(_authentication));
             }
             else
             {

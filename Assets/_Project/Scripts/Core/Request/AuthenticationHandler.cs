@@ -11,6 +11,43 @@ namespace LGamesDev.Core.Request
 {
     public static class AuthenticationHandler
     {
+        public static IEnumerator PlatformRegister(MonoBehaviour instance, string token, Action<Authentication> setResult)
+        {
+            Dictionary<string, string> form = new Dictionary<string, string>() {
+                {"token", token},
+            };
+
+            var bodyRaw = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(form));
+            
+            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.EnableWaitingScreen());
+            
+            yield return instance.StartCoroutine(RequestHandler.Request("api/tokenRegister",
+                UnityWebRequest.kHttpVerbPOST,
+                error =>
+                {
+                    GameManager.Instance.modalWindow.ShowAsTextPopup(
+                        "Error",
+                        error,
+                        null,
+                        "Ok",
+                        null,
+                        GameManager.Instance.modalWindow.Close
+                    );
+                },
+                response =>
+                {
+                    //Debug.Log("Received : " + response);
+
+                    Authentication authentication = JsonConvert.DeserializeObject<Authentication>(response);
+                    
+                    setResult(authentication);
+                },
+                bodyRaw)
+            );
+            
+            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());
+        }
+        
         public static IEnumerator Register(MonoBehaviour instance, string username, string password, string email, Action<Authentication> setResult)
         {
             Dictionary<string, string> form = new Dictionary<string, string>() {
@@ -27,7 +64,14 @@ namespace LGamesDev.Core.Request
                 UnityWebRequest.kHttpVerbPOST,
                 error =>
                 {
-                    Debug.Log("Error : " + error);
+                    GameManager.Instance.modalWindow.ShowAsTextPopup(
+                        "Error",
+                        error,
+                        null,
+                        "Ok",
+                        null,
+                        GameManager.Instance.modalWindow.Close
+                    );
                 },
                 response =>
                 {
@@ -57,7 +101,14 @@ namespace LGamesDev.Core.Request
                 UnityWebRequest.kHttpVerbPOST,
                 error =>
                 {
-                    Debug.Log("Error : " + error);
+                    GameManager.Instance.modalWindow.ShowAsTextPopup(
+                        "Error",
+                        error,
+                        null,
+                        "Ok",
+                        null,
+                        GameManager.Instance.modalWindow.Close
+                    );
                 },
                 response =>
                 {
@@ -89,6 +140,17 @@ namespace LGamesDev.Core.Request
                 error =>
                 {
                     //Debug.Log("Error : " + error);
+                    GameManager.Instance.modalWindow.ShowAsTextPopup(
+                        "Error",
+                        error,
+                        "Retry",
+                        "Disconnect",
+                        () =>
+                        {
+                            instance.StartCoroutine(RefreshToken(instance, refreshToken, setResult));
+                        },
+                        GameManager.Instance.Logout
+                    );
                 },
                 response =>
                 {
@@ -116,7 +178,15 @@ namespace LGamesDev.Core.Request
                 UnityWebRequest.kHttpVerbPOST,
                 error =>
                 {
-                    Debug.Log("Error : " + error);
+                    //Debug.Log("Error : " + error);
+                    GameManager.Instance.modalWindow.ShowAsTextPopup(
+                        "Error",
+                        error,
+                        null,
+                        "Ok",
+                        null,
+                        GameManager.Instance.modalWindow.Close
+                    );
                 },
                 _ =>
                 {

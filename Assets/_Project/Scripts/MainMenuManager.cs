@@ -10,12 +10,15 @@ namespace LGamesDev
 {
     public class MainMenuManager : MonoBehaviour
     {
+        public static MainMenuManager Instance;
+        
         public PopupHandler firstPopup;
 
         private GameManager _gameManager;
 
         private void Awake()
         {
+            Instance = this;
             _gameManager = GameManager.Instance;
         }
 
@@ -34,18 +37,17 @@ namespace LGamesDev
                 }
                 else
                 {
-                    Initialisation.Current.LoadMainMenu(HandleTutorial);
+                    Initialisation.Current.LoadMainMenu();
                     _gameManager.PlayMainMenuMusic();
                 }
             }
         }
 
-        private void HandleTutorial()
+        public void HandleTutorial()
         {
             if (!_gameManager.GetAuthentication().PlayerConf.TutorialDone) {
                 GetComponent<DialogTrigger>().StartDialog();
             }
-                
         }
 
         public void TutorialFinished()

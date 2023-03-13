@@ -19,8 +19,8 @@ namespace LGamesDev.UI
         private void Awake()
         {
             _statPointText = transform.Find("Title").Find("statPoint").GetComponent<TextMeshProUGUI>();
-            _defensiveStats = transform.Find("statsParent").Find("Container").Find("Defensive Stats");
-            _offensiveStats = transform.Find("statsParent").Find("Container").Find("Offensive Stats");
+            _defensiveStats = transform.Find("statsParent").Find("Defensive Stats");
+            _offensiveStats = transform.Find("statsParent").Find("Offensive Stats");
         }
 
         private void Start()

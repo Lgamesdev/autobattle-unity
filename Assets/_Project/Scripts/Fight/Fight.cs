@@ -4,7 +4,6 @@ namespace LGamesDev.Fighting
 {
     public class Fight
     {
-        public bool PlayerWin;
         public Character Character;
         public Character Opponent;
         public List<FightAction> Actions = new();
@@ -13,12 +12,12 @@ namespace LGamesDev.Fighting
         public override string ToString()
         {
             string result = "[ \n" +
-                            "character : " + Character.ToString() + "\n" +
-                            "opponent : " + Opponent.ToString() + "\n" +
+                            "character : " + Character + "\n" +
+                            "opponent : " + Opponent + "\n" +
                             "actions [ : \n";
             Actions.ForEach(action => result += action.ToString());
             result += " ] \n" +
-                      "reward : " + Reward.ToString();
+                      "reward : " + Reward;
             return result;
         }
     }

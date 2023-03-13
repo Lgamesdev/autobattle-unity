@@ -26,6 +26,8 @@ namespace LGamesDev.Fighting
 
         private TextMeshProUGUI _levelText;
 
+        private LTDescr _actualAnim; 
+
         private void Awake()
         {
             Instance = this;
@@ -47,7 +49,7 @@ namespace LGamesDev.Fighting
             FightManager.Instance.FightOver += OnFightOver;
         }
 
-        private void OnFightOver(Reward reward, bool playerWin)
+        private void OnFightOver(Reward reward)
         {
             foreach (Currency currency in reward.Currencies)
             {
@@ -62,71 +64,48 @@ namespace LGamesDev.Fighting
                 }
             }
 
-            _rankGain.text = "+" + AbbreviationUtility.AbbreviateNumber(reward.Ranking);
-        }
-
-        private void AddToExperienceBar(int xpGained)
-        {
-            int level = _levelSystem.GetLevel();
-            int maxExperience = _levelSystem.CalculateRequiredXp(level);
-            
-            int oldExperience = _levelSystem.GetExperience() - xpGained;
-            int aimedExperience = _levelSystem.GetExperience();
-            
-            float animTime = 2f;
-            Action onComplete = null;
-
-            //if level up
-            if (oldExperience < 0)
+            if (reward.Ranking > 0)
             {
-                level -= 1;
-                maxExperience = _levelSystem.CalculateRequiredXp(level);
-
-                oldExperience = maxExperience + oldExperience;
-                aimedExperience = maxExperience;
-
-                //Debug.Log("old experience : " + oldExperience);
-
-                animTime /= 2;
-                
-                onComplete = () =>
-                {
-                    level += 1;
-                    maxExperience = _levelSystem.CalculateRequiredXp(level);
-                    
-                    aimedExperience = _levelSystem.GetExperience();
-                    
-                    _maxExperienceText.text = maxExperience.ToString();
-                    _levelText.text = "LEVEL \n" + level;
-                    
-                    AnimExperienceBar(0, aimedExperience, level, animTime);
-                };
+                _rankGain.text = "+" + AbbreviationUtility.AbbreviateNumber(reward.Ranking);
+            }
+            else
+            {
+                _rankGain.text = AbbreviationUtility.AbbreviateNumber(reward.Ranking);
             }
             
-            
-            _maxExperienceText.text = maxExperience.ToString();
-            AnimExperienceBar(oldExperience, aimedExperience, level, animTime, onComplete);
+            _experienceGain.text = "+" + AbbreviationUtility.AbbreviateNumber(reward.Experience);
         }
 
-        private void AnimExperienceBar(float actualExperience, float aimedExperience, int level, float time, Action onComplete = null)
+        private void AddToExperienceBar(int level, int oldExperience, int aimedExperience, int maxExperience)
         {
-            int maxExperience = _levelSystem.CalculateRequiredXp(level);
-            
-            LeanTween.value(_experienceBar.gameObject, actualExperience, aimedExperience, time).setEase(LeanTweenType.linear)
+            float animTime = 2f;
+
+            if (_actualAnim != null)
+            {
+                _actualAnim.setOnComplete(() =>
+                {
+                    _levelText.text = "LEVEL \n" + level;
+                    _maxExperienceText.text = maxExperience.ToString();
+                    AnimExperienceBar(oldExperience, aimedExperience, maxExperience, animTime);
+                });
+            }
+            else
+            {
+                _levelText.text = "LEVEL \n" + level;
+                _maxExperienceText.text = maxExperience.ToString();
+                AnimExperienceBar(oldExperience, aimedExperience, maxExperience, animTime);
+            }
+        }
+
+        private void AnimExperienceBar(int actualExperience, int aimedExperience, int maxExperience, float time)
+        {
+            _actualAnim = LeanTween.value(_experienceBar.gameObject, actualExperience, aimedExperience, time)
+                .setEase(LeanTweenType.linear)
                 .setOnUpdate(val =>
                 {
                     _experienceBar.value = val / maxExperience;
                     _currentExperienceText.text = Mathf.RoundToInt(val).ToString();
-                })
-                .setOnComplete(() => {
-                    onComplete?.Invoke();
-                }
-            );
-        }
-
-        private void SetGainedExperience(float xpNumber)
-        {
-            _experienceGain.text = "+" + AbbreviationUtility.AbbreviateNumber(xpNumber);
+                });
         }
 
         public void SetLevelSystem(LevelSystem levelSystem)
@@ -134,13 +113,7 @@ namespace LGamesDev.Fighting
             _levelSystem = levelSystem;
             _levelText.text = "LEVEL \n" + levelSystem.GetLevel();
 
-            levelSystem.OnExperienceChanged += LevelSystem_OnExperienceChanged;
-        }
-
-        private void LevelSystem_OnExperienceChanged(int xpGained)
-        {
-            SetGainedExperience(xpGained);
-            AddToExperienceBar(xpGained);
+            levelSystem.OnExperienceChanged += AddToExperienceBar;
         }
     }
 }

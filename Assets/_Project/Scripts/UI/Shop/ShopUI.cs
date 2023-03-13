@@ -9,7 +9,7 @@ namespace LGamesDev.UI
     {
         public static ShopUI Instance;
         
-        [SerializeField] private Transform pfShopCardUI;
+        [SerializeField] private ShopItemUI pfShopCardUI;
 
         private Transform _containerWrapper;
         private Transform _container;

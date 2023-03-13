@@ -58,7 +58,15 @@ namespace LGamesDev
 
             Actor actorToDisplay = _currentActors[messageToDisplay.actorId];
             actorName.text = actorToDisplay.name;
-            actorImage.sprite = actorToDisplay.sprite;
+            if (actorToDisplay.sprite != null)
+            {
+                actorImage.gameObject.SetActive(true);
+                actorImage.sprite = actorToDisplay.sprite;
+            }
+            else
+            {
+                actorImage.gameObject.SetActive(false);
+            }
 
             AnimateTextColor();
             
@@ -75,7 +83,12 @@ namespace LGamesDev
             else
             {
                 backgroundBox.LeanScale(Vector3.zero, 0.5f).setEaseInOutExpo();
-                backgroundScreen.rectTransform.LeanAlpha(0, .5f);
+                LeanTween.value(gameObject, 0.2f, 0, .5f).setOnUpdate(val =>
+                {
+                    Color c = backgroundScreen.color;
+                    c.a = val;
+                    backgroundScreen.color = c;
+                });
                 backgroundScreen.raycastTarget = false;
             }
         }

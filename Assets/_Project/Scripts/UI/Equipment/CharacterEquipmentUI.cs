@@ -2,6 +2,7 @@ using System;
 using LGamesDev.Core.Character;
 using LGamesDev.Core.Player;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace LGamesDev.UI
 {
@@ -9,17 +10,17 @@ namespace LGamesDev.UI
     {
         private CharacterEquipmentManager _equipmentManager;
 
-        private EquipmentSlotUI _helmetSlot;
-        private EquipmentSlotUI _armorSlot;
-        private EquipmentSlotUI _pantsSlot;
-        private EquipmentSlotUI _weaponSlot;
-        private EquipmentSlotUI _offHandSlot;
+        [SerializeField] private EquipmentSlotUI helmetSlot;
+        [SerializeField] private EquipmentSlotUI armorSlot;
+        [SerializeField] private EquipmentSlotUI pantsSlot;
+        [SerializeField] private EquipmentSlotUI weaponSlot;
+        [SerializeField] private EquipmentSlotUI offHandSlot;
         
         //[SerializeField] private Transform pfUI_ItemEquipment;
 
         //private Transform itemContainer;
         
-        private void Awake()
+        /*private void Awake()
         {
             //itemContainer = transform.Find("itemContainer");
             _helmetSlot = transform.Find("helmetSlot").GetComponent<EquipmentSlotUI>();
@@ -27,7 +28,7 @@ namespace LGamesDev.UI
             _pantsSlot = transform.Find("pantsSlot").GetComponent<EquipmentSlotUI>();
             _weaponSlot = transform.Find("weaponSlot").GetComponent<EquipmentSlotUI>();
             _offHandSlot = transform.Find("offHandSlot").GetComponent<EquipmentSlotUI>();
-        }
+        }*/
 
         public void Start()
         {
@@ -43,40 +44,40 @@ namespace LGamesDev.UI
                 switch (equipment.item.equipmentSlot)
                 {
                     case EquipmentSlot.Helmet:
-                        _helmetSlot.SetCharacterEquipment(equipment);
-                        _helmetSlot.transform.Find("emptyImage").gameObject.SetActive(false);
+                        helmetSlot.SetCharacterEquipment(equipment);
+                        helmetSlot.transform.Find("emptyImage").gameObject.SetActive(false);
                         break;
                     case EquipmentSlot.Chest:
-                        _armorSlot.SetCharacterEquipment(equipment);
-                        _armorSlot.transform.Find("emptyImage").gameObject.SetActive(false);
+                        armorSlot.SetCharacterEquipment(equipment);
+                        armorSlot.transform.Find("emptyImage").gameObject.SetActive(false);
                         break;
                     case EquipmentSlot.Pants:
-                        _pantsSlot.SetCharacterEquipment(equipment);
-                        _pantsSlot.transform.Find("emptyImage").gameObject.SetActive(false);
+                        pantsSlot.SetCharacterEquipment(equipment);
+                        pantsSlot.transform.Find("emptyImage").gameObject.SetActive(false);
                         break;
                     case EquipmentSlot.Weapon:
-                        _weaponSlot.SetCharacterEquipment(equipment);
-                        _weaponSlot.transform.Find("emptyImage").gameObject.SetActive(false);
+                        weaponSlot.SetCharacterEquipment(equipment);
+                        weaponSlot.transform.Find("emptyImage").gameObject.SetActive(false);
                         break;
                 }
             } else {
                 switch (equipmentSlot)
                 {
                     case EquipmentSlot.Helmet:
-                        _helmetSlot.ClearSlot();
-                        _helmetSlot.transform.Find("emptyImage").gameObject.SetActive(true);
+                        helmetSlot.ClearSlot();
+                        helmetSlot.transform.Find("emptyImage").gameObject.SetActive(true);
                         break;
                     case EquipmentSlot.Chest:
-                        _armorSlot.ClearSlot();
-                        _armorSlot.transform.Find("emptyImage").gameObject.SetActive(true);
+                        armorSlot.ClearSlot();
+                        armorSlot.transform.Find("emptyImage").gameObject.SetActive(true);
                         break;
                     case EquipmentSlot.Pants:
-                        _pantsSlot.ClearSlot();
-                        _pantsSlot.transform.Find("emptyImage").gameObject.SetActive(true);
+                        pantsSlot.ClearSlot();
+                        pantsSlot.transform.Find("emptyImage").gameObject.SetActive(true);
                         break;
                     case EquipmentSlot.Weapon:
-                        _weaponSlot.ClearSlot();
-                        _weaponSlot.transform.Find("emptyImage").gameObject.SetActive(true);
+                        weaponSlot.ClearSlot();
+                        weaponSlot.transform.Find("emptyImage").gameObject.SetActive(true);
                         break;
                 }
             }

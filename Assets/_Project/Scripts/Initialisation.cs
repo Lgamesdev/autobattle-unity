@@ -24,7 +24,6 @@ namespace LGamesDev
         public bool isDone;
         public InitialisationStage currentStage;
         private float _finishedStage;
-        private Action _onInitialisationEnd;
 
         private readonly Dictionary<InitialisationStage, IEnumerator> _coroutinesLoading = new();
 
@@ -38,9 +37,8 @@ namespace LGamesDev
             _gameManager = GameManager.Instance;
         }
 
-        public void LoadMainMenu(Action onInitialisationEnd)
+        public void LoadMainMenu()
         {
-            _onInitialisationEnd = onInitialisationEnd;
             isDone = false;
             progress = 0f;
 
@@ -67,10 +65,9 @@ namespace LGamesDev
             currentStage = InitialisationStage.Character;
             yield return StartCoroutine(CharacterManager.Instance.SetupCharacter(_character));
 
-            yield return new WaitForSeconds(0.75f);
+            yield return new WaitForSeconds(0.25f);
 
             isDone = true;
-            _onInitialisationEnd?.Invoke();
         }
         
         public void SetResult(InitialisationResult result)
@@ -87,7 +84,8 @@ namespace LGamesDev
                 case InitialisationStage.Progression:
                     PlayerProgression playerProgression = JsonConvert.DeserializeObject<PlayerProgression>(result.Value);
                     _character.Level = playerProgression.Level;
-                    _character.Experience = playerProgression.Xp;
+                    _character.Experience = playerProgression.Experience;
+                    _character.MaxExperience = playerProgression.MaxExperience;
                     _character.StatPoint = playerProgression.StatPoint;
                     _character.Ranking = playerProgression.Ranking;
                     break;
@@ -97,7 +95,7 @@ namespace LGamesDev
                     break;
                 case InitialisationStage.Equipment:
                     settings = new JsonSerializerSettings();
-                    settings.Converters.Add(new ItemConverter());
+                    settings.Converters.Add(new BaseCharacterItemConverter());
 
                     Gear gear = JsonConvert.DeserializeObject<Gear>(result.Value, settings);
                     _character.Gear = gear;

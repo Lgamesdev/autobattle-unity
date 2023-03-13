@@ -1,6 +1,9 @@
 using Core.Player;
+using LGamesDev.Helper;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 namespace LGamesDev.UI
 {
@@ -8,6 +11,9 @@ namespace LGamesDev.UI
     {
         public TextMeshProUGUI username;
         public TextMeshProUGUI level;
+        [SerializeField] private Slider experienceBar;
+        [SerializeField] private TextMeshProUGUI currentExperienceText;
+        [SerializeField] private TextMeshProUGUI maxExperienceText;
 
         private void Start()
         {
@@ -18,6 +24,9 @@ namespace LGamesDev.UI
         {
             username.text = character.Username;
             level.text = "Level : " + character.Level;
+            experienceBar.value = (float)character.Experience / character.MaxExperience;
+            currentExperienceText.text = AbbreviationUtility.AbbreviateNumber(character.Experience);
+            maxExperienceText.text = AbbreviationUtility.AbbreviateNumber(character.MaxExperience);
         }
     }
 }

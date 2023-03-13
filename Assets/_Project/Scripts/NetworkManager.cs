@@ -166,9 +166,10 @@ namespace LGamesDev
                             GameManager.Instance.modalWindow.ShowAsTextPopup(
                                 "Error",
                                 socketMessage.Content,
-                                null,
-                                "Ok",
-                                null,
+                                "Reconnect",
+                                "Disconnect",
+                                GameManager.Instance.LoadMainMenu,
+                                GameManager.Instance.Logout,
                                 GameManager.Instance.modalWindow.Close
                             );
                             break;
@@ -206,6 +207,15 @@ namespace LGamesDev
                         case SocketReceiveAction.Attack:
                             List<FightAction> fightActions = JsonConvert.DeserializeObject<List<FightAction>>(socketMessage.Content);
                             FightManager.Instance.Attack(fightActions);
+                            break;
+                        case SocketReceiveAction.ExperienceGained:
+                            Dictionary<string, int> experiencePayload = JsonConvert.DeserializeObject<Dictionary<string, int>>(socketMessage.Content);
+                            FightManager.Instance.playerCharacterFight.GetLevelSystem().AddExperience(
+                                experiencePayload["level"], 
+                                experiencePayload["oldExperience"], 
+                                experiencePayload["aimedExperience"], 
+                                experiencePayload["maxExperience"]
+                            );
                             break;
                         case SocketReceiveAction.EndFight:
                             Reward reward = JsonConvert.DeserializeObject<Reward>(socketMessage.Content);
@@ -259,7 +269,7 @@ namespace LGamesDev
         
         public new async void SendMessage(string message)
         {
-            if (_ws == null) return;
+            if (_ws == null || string.IsNullOrEmpty(message)) return;
             
             if (_ws.State == WebSocketState.Open)
             {
@@ -414,7 +424,7 @@ namespace LGamesDev
         public const string TutorialFinished = "tutorialFinished";
         public const string SendMessage = "sendMessage";
         public const string TryEquip = "tryEquip";
-        public const string TryUnEquip = "TryUnEquip";
+        public const string TryUnEquip = "tryUnEquip";
         public const string TryAddStatPoint = "tryAddStatPoint";
         public const string GetShopList = "getShopList";
         public const string TryBuyItem = "tryBuyItem";
@@ -438,6 +448,7 @@ namespace LGamesDev
         public const string RankList = "rankList";
         public const string StartFight = "fightStart";
         public const string Attack = "attack";
+        public const string ExperienceGained = "experienceGained";
         public const string EndFight = "fightOver";
         public const string Error = "error";
     }

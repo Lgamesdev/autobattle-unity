@@ -61,6 +61,7 @@ MonoBehaviour:
         stats: []
         equipmentSlot: 0
         spriteId: 0
+        requiredLevel: 0
       modifiers: []
     - id: 0
       amount: 1
@@ -72,6 +73,7 @@ MonoBehaviour:
         stats: []
         equipmentSlot: 0
         spriteId: 0
+        requiredLevel: 0
       modifiers: []
     - id: 0
       amount: 1
@@ -83,6 +85,7 @@ MonoBehaviour:
         stats: []
         equipmentSlot: 0
         spriteId: 0
+        requiredLevel: 0
       modifiers: []
     - id: 0
       amount: 1
@@ -94,6 +97,7 @@ MonoBehaviour:
         stats: []
         equipmentSlot: 0
         spriteId: 0
+        requiredLevel: 0
       modifiers: []
 --- !u!114 &5596931408496927021
 MonoBehaviour:
@@ -146,10 +150,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maleCharacter: {fileID: 2649459682988453678, guid: 13ffb6b04a610664da891f97f223bc14, type: 3}
   femaleCharacter: {fileID: 2649459682988453678, guid: b986761b625c91642b2a3546e0c77259, type: 3}
-  <activeCharacter>k__BackingField: {fileID: 0}
-  <activeSpriteLib>k__BackingField: 0
   equipmentManager: {fileID: 1188899891191775796}
   statsManager: {fileID: 5596931408496927021}
+  inventoryManager: {fileID: 0}
+  walletManager: {fileID: 0}
 --- !u!114 &-3192286778083205860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,3 +168,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   introDuration: 5
   isPlayerTeam: 0
+  platformLayerMask:
+    serializedVersion: 2
+    m_Bits: 64

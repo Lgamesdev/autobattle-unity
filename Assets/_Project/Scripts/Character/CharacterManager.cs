@@ -43,6 +43,7 @@ namespace LGamesDev
             Character.Username = GameManager.Instance.GetAuthentication().username;
             Character.Level = character.Level;
             Character.Experience = character.Experience;
+            Character.MaxExperience = character.MaxExperience;
             Character.StatPoint = character.StatPoint;
             Character.Ranking = character.Ranking;
 

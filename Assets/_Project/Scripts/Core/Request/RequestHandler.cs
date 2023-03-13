@@ -56,22 +56,7 @@ namespace LGamesDev.Core.Request
                     error += request.downloadHandler.text;
                 }
 
-                GameManager.Instance.modalWindow.ShowAsTextPopup(
-                    "Something get wrong...",
-                    error,
-                    "Retry",
-                    "Disconnect",
-                    () =>
-                    {
-                        GameManager.Instance.StartCoroutine(Request(url, httpVerb, onError, onSuccess, bodyRaw,
-                            authentication));
-                    },
-                    () =>
-                    {
-                        GameManager.Instance.Logout();
-                    }
-                );
-                
+                Debug.Log("error in request handler : " + error);
                 onError(error);
             }
         }

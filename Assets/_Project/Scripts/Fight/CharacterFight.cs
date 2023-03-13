@@ -16,6 +16,9 @@ namespace LGamesDev.Fighting
 
         private HealthBar _healthBar;
         private LevelSystem _levelSystem;
+
+        [SerializeField] private LayerMask platformLayerMask;
+        private bool _isGrounded;
         
         private CharacterStatsManager _characterStatsManager;
         private GameObject _selectionCircleGameObject;
@@ -41,13 +44,15 @@ namespace LGamesDev.Fighting
             if (isPlayerTeam)
             {
                 _healthBar = FindObjectOfType<HealthPannelUI>().playerHealthBar;
-                FindObjectOfType<UsernamePanelUI>().playerUsername.text = character.Username;
+                FindObjectOfType<InfosPanelUI>().playerUsername.text = character.Username;
+                FindObjectOfType<InfosPanelUI>().playerLevel.text = "lvl. " + character.Level;
                 RewardUI.Instance.SetLevelSystem(_levelSystem);
             }
             else
             {
                 _healthBar = FindObjectOfType<HealthPannelUI>().opponentHealthBar;
-                FindObjectOfType<UsernamePanelUI>().opponentUsername.text = character.Username;
+                FindObjectOfType<InfosPanelUI>().opponentUsername.text = character.Username;
+                FindObjectOfType<InfosPanelUI>().opponentLevel.text = "lvl. " + character.Level;
             }
             
             _healthBar.SetMaxHealth(_characterStatsManager.GetMaxHealth());
@@ -161,6 +166,21 @@ namespace LGamesDev.Fighting
         public LevelSystem GetLevelSystem()
         {
             return _levelSystem;
+        }
+
+        public bool IsGrounded()
+        {
+            return _isGrounded;
+        }
+
+        private void OnTriggerStay2D(Collider2D col)
+        {
+            _isGrounded = col != null && (((1 << col.gameObject.layer) & platformLayerMask) != 0);
+        }
+
+        private void OnTriggerExit2D(Collider2D col)
+        {
+            _isGrounded = false;
         }
     }
 }

@@ -11,6 +11,7 @@ namespace LGamesDev
         public string Username;
         public int Level;
         public int Experience;
+        public int MaxExperience;
         public int StatPoint;
         public int Ranking;
         public Body Body;
@@ -25,11 +26,12 @@ namespace LGamesDev
                             "\t username : " + Username + "\n" +
                             "\t level : " + Level + "\n" +
                             "\t xp : " + Experience + "\n" +
+                            "\t maxXp : " + MaxExperience + "\n" +
                             "\t ranking : " + Ranking + "\n" +
-                            "\t body : " + Body.ToString() + "\n" +
-                            "\t gear : " + Gear.ToString() + "\n" +
+                            "\t body : " + Body + "\n" +
+                            "\t gear : " + Gear + "\n" +
                             "\t stats : [ \n";
-            foreach (Stat stat in Stats) { result += "\t " + stat.ToString(); }
+            foreach (Stat stat in Stats) { result += "\t " + stat; }
             result += " ] \n";
 
             return result;

@@ -25,9 +25,9 @@ namespace LGamesDev.UI
             _item = item;
             _onBuy = onBuy;
 
-            header.Find("Item").Find("nameText").GetComponent<TextMeshProUGUI>().text = item.name;
-            header.Find("Item").Find("itemImage").GetComponent<Image>().sprite = item.icon;
-            header.Find("Cost").Find("costText").GetComponent<TextMeshProUGUI>().text = AbbreviationUtility.AbbreviateNumber(item.cost);
+            header.Find("nameText").GetComponent<TextMeshProUGUI>().text = item.name;
+            header.Find("itemImage").GetComponent<Image>().sprite = item.icon;
+            header.Find("costText").GetComponent<TextMeshProUGUI>().text = AbbreviationUtility.AbbreviateNumber(item.cost);
 
             content.Find("Item Description").GetComponent<TextMeshProUGUI>().text = "Description of " + item.name;
 
@@ -35,7 +35,7 @@ namespace LGamesDev.UI
             {
                 Equipment equipment = item as Equipment;
 
-                header.Find("Item").Find("levelText").GetComponent<TextMeshProUGUI>().text =
+                header.Find("levelText").GetComponent<TextMeshProUGUI>().text =
                     "Lvl." + equipment.requiredLevel;
 
                 _message = "Stats \n";
@@ -47,7 +47,7 @@ namespace LGamesDev.UI
             }
             else
             {
-                header.Find("Item").Find("levelText").gameObject.SetActive(false);
+                header.Find("levelText").gameObject.SetActive(false);
             }
 
             content.gameObject.SetActive(false);

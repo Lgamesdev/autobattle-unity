@@ -10,13 +10,11 @@ public class SpeedButton : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI buttonLabel;
 
-    private int _speed;
-    
     private void Start()
     {
-        SetButtonSpeed(GameManager.Instance.GetPlayerOptions().FightSpeed);
-        
-        FightManager.Instance.FightOver += (_, _) =>
+        FightManager.Instance.FightSpeedChanged += SetButtonSpeed;
+
+        FightManager.Instance.FightOver += (_) =>
         {
             transform.gameObject.SetActive(false);
         };
@@ -24,25 +22,22 @@ public class SpeedButton : MonoBehaviour
 
     public void OnButtonClick()
     {
-        switch (_speed)
+        switch (FightManager.Instance.fightSpeed)
         {
             case 1:
-                SetButtonSpeed(2);
+                FightManager.Instance.SetFightSpeed(2);
                 break;
             case 2:
-                SetButtonSpeed(4);
+                FightManager.Instance.SetFightSpeed(4);
                 break;
             case 4:
-                SetButtonSpeed(1);
+                FightManager.Instance.SetFightSpeed(1);
                 break;
         }
     }
 
     private void SetButtonSpeed(int speed)
     {
-        _speed = speed;
-        
-        FightManager.Instance.SetFightSpeed(speed);
         buttonLabel.text = "x" + speed;
     }
 }

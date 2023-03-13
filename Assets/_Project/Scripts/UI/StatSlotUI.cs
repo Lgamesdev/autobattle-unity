@@ -11,16 +11,18 @@ namespace LGamesDev.UI
     {
         private Stat _stat;
 
-        [SerializeField] private Transform infos;
+        [SerializeField] private TextMeshProUGUI label;
+        [SerializeField] private TextMeshProUGUI value;
+        [SerializeField] private TextMeshProUGUI modifier;
         [SerializeField] private Transform button;
 
-        public void SetupSlot(Stat stat, Stat modifier = null, bool buttonActive = false)
+        public void SetupSlot(Stat stat, Stat statModifier = null, bool buttonActive = false)
         {
             _stat = stat;
 
-            infos.Find("label").GetComponent<TextMeshProUGUI>().text = stat.GetStatType();
-            infos.Find("values").Find("value").GetComponent<TextMeshProUGUI>().text = stat.GetValue().ToString();
-            infos.Find("values").Find("modifier").GetComponent<TextMeshProUGUI>().text = modifier?.GetValue().ToString();
+            label.text = stat.GetStatType();
+            value.text = stat.GetValue().ToString();
+            modifier.text = statModifier?.GetValue().ToString();
 
             if (buttonActive)
             {

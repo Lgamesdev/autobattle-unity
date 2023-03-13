@@ -34,7 +34,7 @@ namespace LGamesDev.Core.Player
                          "spriteId : " + spriteId + "\n" +
                          "stats : [ \n";
 
-            if (stats != null) Array.ForEach(stats, stat => result += stat.ToString() + "\n");
+            if (stats != null) Array.ForEach(stats, stat => result += stat + "\n");
 
             result += "] \n" + 
                       "]";

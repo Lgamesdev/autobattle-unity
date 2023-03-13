@@ -5,7 +5,7 @@ namespace LGamesDev.Core.Player
 {
     public class LevelSystem
     {
-        public delegate void OnExperienceChangedEvent(int amount);
+        public delegate void OnExperienceChangedEvent(int level, int oldExperience, int aimedExperience, int maxExperience);
         public OnExperienceChangedEvent OnExperienceChanged;
 
         private const int XpAdditionMultiplier = 300;
@@ -23,33 +23,15 @@ namespace LGamesDev.Core.Player
             _currentExperience = experience;
         }
         
-        public void AddExperience(int xpGained)
+        public void AddExperience(int level, int oldExperience, int aimedExperience, int maxExperience)
         {
             if (IsMaxLevel()) return;
-            
-            /*_currentExperience += xpGained;
-            while (!IsMaxLevel() && _currentExperience >= CalculateRequiredXp(_level))
-            {
-                //Enough experience to level up
-                _currentExperience -= CalculateRequiredXp(_level);
-                _level++;
-                onLevelChanged?.Invoke(this, EventArgs.Empty);
-            }*/
-
-            OnExperienceChanged?.Invoke(xpGained);
+            OnExperienceChanged?.Invoke(level, oldExperience, aimedExperience, maxExperience);
         }
 
         public int GetLevel()
         {
             return _level;
-        }
-
-        public int GetExperienceNormalized()
-        {
-            if (IsMaxLevel())
-                return 1;
-            
-            return _currentExperience / CalculateRequiredXp(_level);
         }
 
         public int GetExperience()
@@ -60,7 +42,7 @@ namespace LGamesDev.Core.Player
         public int CalculateRequiredXp(int level)
         {
             var solveForRequiredXp = 0;
-            for (var levelCycle = 1; levelCycle <= level; levelCycle++)
+            for (int levelCycle = 1; levelCycle <= level; levelCycle++)
             {
                 solveForRequiredXp += Mathf.FloorToInt(levelCycle + XpAdditionMultiplier *
                     Mathf.Pow(XpPowerMultiplier, levelCycle / XpDivisionMultiplier));
@@ -76,7 +58,7 @@ namespace LGamesDev.Core.Player
 
         private bool IsMaxLevel(int level)
         {
-            return level == 200;
+            return level == 100;
         }
     }
 }

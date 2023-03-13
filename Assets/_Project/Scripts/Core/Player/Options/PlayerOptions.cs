@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 
 namespace LGamesDev.Core.Player
 {
+    
     public class PlayerOptions
     {
         public float MusicVolume = 0.5f;

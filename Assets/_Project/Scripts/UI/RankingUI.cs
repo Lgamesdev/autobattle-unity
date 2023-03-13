@@ -1,14 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using CodeMonkey.Utils;
-using Core.Player;
-using LGamesDev.Core.Request;
-using LGamesDev.Request.Converters;
-using Newtonsoft.Json;
-using TMPro;
 using UnityEngine;
-using UnityEngine.Networking;
-using UnityEngine.UI;
+using UnityEngine.Serialization;
 
 namespace LGamesDev.UI
 {
@@ -16,15 +9,14 @@ namespace LGamesDev.UI
     {
         public static RankingUI Instance;
         
-        private Transform _container;
+        [SerializeField] private Transform container;
 
         private Transform _goldAmount;
-        private Transform _playerCardTemplate;
+        [SerializeField] private RankCardUI playerCardTemplate;
 
         private List<Character> _characters = new();
         public List<Character> CharacterList
         {
-            get => _characters;
             set
             {
                 _characters = value;
@@ -35,9 +27,6 @@ namespace LGamesDev.UI
         private void Awake()
         {
             Instance = this;
-            _container = transform.Find("container");
-            _playerCardTemplate = _container.Find("playerCardTemplate");
-            _playerCardTemplate.gameObject.SetActive(false);
         }
 
         private void Start()
@@ -61,6 +50,8 @@ namespace LGamesDev.UI
 
         private void SetupUI()
         {
+            foreach (Transform child in container) Destroy(child.gameObject);
+            
             Character playerCharacter = CharacterManager.Instance.Character;
 
             CreateCharacterCard(new Character()
@@ -77,27 +68,8 @@ namespace LGamesDev.UI
 
         private void CreateCharacterCard(Character character, int positionIndex, bool isPlayerCharacter = false)
         {
-            var playerCardTransform = Instantiate(_playerCardTemplate, _container);
-            playerCardTransform.gameObject.SetActive(true);
-            RectTransform playerCardRectTransform = playerCardTransform.GetComponent<RectTransform>();
-
-            float playerCardHeight = 120f;
-            playerCardRectTransform.anchoredPosition = new Vector2(0, -playerCardHeight * positionIndex);
-
-            playerCardTransform.Find("nameText").GetComponent<TextMeshProUGUI>().text = isPlayerCharacter ? character.Username + " (You)" : character.Username;
-            playerCardTransform.Find("levelText").GetComponent<TextMeshProUGUI>().text = "level : " + character.Level.ToString();
-            playerCardTransform.Find("rankText").GetComponent<TextMeshProUGUI>().text = character.Ranking.ToString();
-
-            //playerCardTransform.Find("playerImage").GetComponent<Image>().sprite = player.body;
-
-            playerCardTransform.GetComponent<Button_UI>().ClickFunc = () =>
-            {
-                GameManager.Instance.modalWindow.ShowAsPrompt(character.Username, null, 
-                    "level : " + character.Level + "\n Experience : " + character.Experience
-                );
-                //Clicked on shop item button
-                Debug.Log("popup details playerCard");
-            };
+            RankCardUI playerCard = Instantiate(playerCardTemplate, container);
+            playerCard.SetupCard(character, isPlayerCharacter);
         }
         
         public void Hide()

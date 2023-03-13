@@ -87,13 +87,12 @@ public class LoadingScreen : MonoBehaviour
 
             _scrollingCoroutine = StartCoroutine(_parallaxBackground.ScrollingBackground());
 
-            LTDescr anim = LeanTween.alpha(transform.GetComponent<RectTransform>(), 0f, 1f)
-                .setEase(LeanTweenType.linear).setOnComplete(() =>
-                {
-                    LeanTween.alpha(transform.GetComponent<RectTransform>(), 1f, 1f).setEase(LeanTweenType.linear);
-                });
-
-            yield return new WaitForSeconds(anim.time);
+            foreach (RectTransform layer in _parallaxBackground.GetComponentsInChildren<RectTransform>())
+            {
+                LTDescr anim = layer.LeanAlpha(1f, .50f);
+                yield return new WaitForEndOfFrame();
+                //yield return new WaitForSeconds(anim.time);
+            }
         }
 
         yield return new WaitForEndOfFrame();
@@ -101,12 +100,12 @@ public class LoadingScreen : MonoBehaviour
 
     public IEnumerator DisableLoadingScreen()
     {
-        LTDescr anim = LeanTween.alpha(transform.GetComponent<RectTransform>(), 1f, 1f).setEase(LeanTweenType.linear).setOnComplete(() =>
+        foreach (RectTransform layer in _parallaxBackground.GetComponentsInChildren<RectTransform>())
         {
-            LeanTween.alpha(transform.GetComponent<RectTransform>(), 0f, 1f).setEase(LeanTweenType.linear);
-        });
-
-        yield return new WaitForSeconds(anim.time);
+            LTDescr anim = layer.LeanAlpha(0f, .50f);
+            yield return new WaitForEndOfFrame();
+            //yield return new WaitForSeconds(anim.time);
+        }
 
         if (!_waitingScreenEnabled)
         {

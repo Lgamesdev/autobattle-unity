@@ -8,9 +8,16 @@ namespace LGamesDev
 {
     public class CustomizationManager : MonoBehaviour
     {
+        public static CustomizationManager Instance;
+        
         private GameManager _gameManager;
 
         public TabGroup tabGroup;
+
+        private void Awake()
+        {
+            Instance = this;
+        }
 
         private void Start()
         {
@@ -20,7 +27,10 @@ namespace LGamesDev
             {
                 SceneManager.LoadScene((int)SceneIndexes.PersistentScene);
             }
-            
+        }
+
+        public void HandleTutorial()
+        {
             GetComponent<DialogTrigger>().StartDialog();
         }
 

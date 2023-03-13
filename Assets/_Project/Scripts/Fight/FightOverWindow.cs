@@ -19,16 +19,9 @@ namespace LGamesDev.Fighting
             FightManager.Instance.FightOver += OnFightOver;
         }
 
-        private void OnFightOver(Reward reward, bool playerWin)
+        private void OnFightOver(Reward reward)
         {
-            if (playerWin)
-            {
-                Show("Congrats, You win !");
-            }
-            else
-            {
-                Show("You lose !");
-            }
+            Show(reward.PlayerWin ? "Congrats, You win !" : "You lose !");
         }
 
         private void Hide()

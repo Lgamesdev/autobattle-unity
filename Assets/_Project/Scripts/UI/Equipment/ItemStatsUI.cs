@@ -3,6 +3,7 @@ using LGamesDev.Core.Character;
 using LGamesDev.Core.Player;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace LGamesDev.UI
@@ -14,28 +15,20 @@ namespace LGamesDev.UI
 
         private Transform _itemContainer;
 
-        private Transform _itemSlot;
+        [SerializeField] private TextMeshProUGUI itemName;
+        [SerializeField] private Transform itemImage;
         private Image _icon;
-        private TextMeshProUGUI _itemName;
-
-        private Transform _useButton;
-        private Transform _sellButton;
+        [SerializeField] private Transform statsParent;
         
-        private Transform _statsParent;
+        [SerializeField] private Button useButton;
+        [SerializeField] private Button sellButton;
+
         private IBaseCharacterItem _currentCharacterItem;
 
         private void Awake()
         {
             Instance = this;
-
-            _itemSlot = transform.Find("itemSlot");
-            _icon = _itemSlot.Find("icon").GetComponent<Image>();
-            _itemName = transform.Find("itemName").GetComponent<TextMeshProUGUI>();
-
-            _useButton = transform.Find("Buttons").Find("useButton");
-            _sellButton = transform.Find("Buttons").Find("sellButton");
-            
-            _statsParent = transform.Find("StatsParent");
+            _icon = itemImage.Find("icon").GetComponent<Image>();
         }
 
         private void Start()
@@ -54,9 +47,9 @@ namespace LGamesDev.UI
 
             _currentCharacterItem = item;
 
-            _useButton.GetComponent<Button>().onClick.RemoveAllListeners();
-            _useButton.GetComponent<Button>().onClick.AddListener(UseItem);
-            _sellButton.gameObject.SetActive(true);
+            useButton.onClick.RemoveAllListeners();
+            useButton.onClick.AddListener(UseItem);
+            sellButton.gameObject.SetActive(true);
 
             SetupUI(_currentCharacterItem.GetType() == typeof(CharacterEquipment) ? "Equip" : "Use");
         }
@@ -67,26 +60,26 @@ namespace LGamesDev.UI
 
             _currentCharacterItem = equipment;
 
-            _useButton.GetComponent<Button>().onClick.RemoveAllListeners();
-            _useButton.GetComponent<Button>().onClick.AddListener(UnEquipItem);
-            _sellButton.gameObject.SetActive(false);
+            useButton.onClick.RemoveAllListeners();
+            useButton.onClick.AddListener(UnEquipItem);
+            sellButton.gameObject.SetActive(false);
 
-            SetupUI("TryUnEquip");
+            SetupUI("Un equip");
         }
         
         private void SetupUI(string useButtonText)
         {
-            _useButton.Find("text").GetComponent<TextMeshProUGUI>().text = useButtonText;
+            useButton.transform.Find("text").GetComponent<TextMeshProUGUI>().text = useButtonText;
             
-            foreach (Transform child in _statsParent) Destroy(child.gameObject);
+            foreach (Transform child in statsParent) Destroy(child.gameObject);
 
             if (_currentCharacterItem != null && _currentCharacterItem.Item.isDefaultItem == false)
             {
                 _icon.sprite = _currentCharacterItem.Item.icon;
                 _icon.gameObject.SetActive(true);
-                _itemSlot.Find("emptyImage").gameObject.SetActive(false);
+                itemImage.Find("emptyImage").gameObject.SetActive(false);
 
-                if (_currentCharacterItem.Item.name != null) _itemName.text = _currentCharacterItem.Item.name;
+                if (_currentCharacterItem.Item.name != null) itemName.text = _currentCharacterItem.Item.name;
 
                 if (_currentCharacterItem.Item.GetType() == typeof(Equipment))
                 {
@@ -94,7 +87,7 @@ namespace LGamesDev.UI
                     
                     foreach (Stat stat in characterEquipment.item.GetStats())
                     {
-                        StatSlotUI statSlot = Instantiate(pfUIStatSlot, _statsParent);
+                        StatSlotUI statSlot = Instantiate(pfUIStatSlot, statsParent);
 
                         Stat statModifier = characterEquipment.GetModifier(stat.statType);
                         statSlot.SetupSlot(stat, statModifier);
@@ -104,7 +97,7 @@ namespace LGamesDev.UI
             else
             {
                 _icon.gameObject.SetActive(false);
-                _itemSlot.Find("emptyImage").gameObject.SetActive(true);
+                itemImage.Find("emptyImage").gameObject.SetActive(true);
             }
         }
 

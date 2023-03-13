@@ -1,7 +1,7 @@
 {
     "name": "Project.External",
     "rootNamespace": "",
-    "references": ["GUID:e4da5c0b916579d46a671bb224ef1713"],
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

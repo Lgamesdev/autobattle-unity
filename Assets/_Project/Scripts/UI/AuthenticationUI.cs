@@ -1,81 +1,78 @@
+using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace LGamesDev.UI
 {
     public class AuthenticationUI : MonoBehaviour
     {
-        //private static Transform _loadingPanel;
-        //private static TMP_InputField _errorText;
+        [SerializeField] private Transform mainPanel;
+        [SerializeField] private Transform platformRegisterForm;
+        [SerializeField] private Transform registerForm;
+        [SerializeField] private Transform loginForm;
 
         private Transform _activeForm;
-        private Transform _loginForm;
-        private Transform _mainPanel;
-        private Transform _registerForm;
-
-        private AuthenticationState _state;
-
-        private void Awake()
-        {
-            _mainPanel = transform.Find("mainPanel");
-            _registerForm = transform.Find("register");
-            _loginForm = transform.Find("login");
-
-            //_loadingPanel = transform.Find("loadingPanel");
-            //_errorText = transform.Find("errorText").GetComponent<TMP_InputField>();
-        }
 
         private void Start()
         {
-            _registerForm.gameObject.SetActive(false);
-            _loginForm.gameObject.SetActive(false);
+            platformRegisterForm.gameObject.SetActive(false);
+            registerForm.gameObject.SetActive(false);
+            loginForm.gameObject.SetActive(false);
 
-            //_loadingPanel.gameObject.SetActive(false);
-            //_errorText.gameObject.SetActive(false);
+            AuthenticationManager.Instance.OnStateUpdate += UpdateUI;
         }
 
-        public void SetAuthenticationTo(int formState)
+        private void UpdateUI(AuthenticationState state)
         {
-            _state = (AuthenticationState)formState;
-
-            switch (_state)
+            switch (state)
             {
                 case AuthenticationState.Default:
                     _activeForm.Find("usernameField").GetComponent<TMP_InputField>().text = "";
-                    _activeForm.Find("passwordField").GetComponent<TMP_InputField>().text = "";
-                    if (_activeForm == _registerForm)
+                    if (_activeForm == registerForm)
                     {
                         _activeForm.Find("emailField").GetComponent<TMP_InputField>().text = "";
                         _activeForm.Find("rePasswordField").GetComponent<TMP_InputField>().text = "";
                     }
+                    if (_activeForm == (registerForm || loginForm))
+                    {
+                        _activeForm.Find("passwordField").GetComponent<TMP_InputField>().text = "";
+                    }
 
                     _activeForm.gameObject.SetActive(false);
-                    _mainPanel.gameObject.SetActive(true);
+                    mainPanel.gameObject.SetActive(true);
+                    break;
+                case AuthenticationState.PlatformRegister:
+                    mainPanel.gameObject.SetActive(false);
+                    platformRegisterForm.gameObject.SetActive(true);
+
+                    _activeForm = platformRegisterForm;
                     break;
                 case AuthenticationState.Register:
-                    _mainPanel.gameObject.SetActive(false);
-                    _registerForm.gameObject.SetActive(true);
+                    mainPanel.gameObject.SetActive(false);
+                    registerForm.gameObject.SetActive(true);
 
-                    _activeForm = _registerForm;
+                    _activeForm = registerForm;
                     break;
                 case AuthenticationState.Login:
-                    _mainPanel.gameObject.SetActive(false);
-                    _loginForm.gameObject.SetActive(true);
+                    mainPanel.gameObject.SetActive(false);
+                    loginForm.gameObject.SetActive(true);
 
-                    _activeForm = _loginForm;
+                    _activeForm = loginForm;
+                    break;
+                case AuthenticationState.Refresh:
+                    //Todo: Waiting screen 
                     break;
             }
         }
 
         public void Submit()
         {
-            //_loadingPanel.gameObject.SetActive(true);
-            if (_activeForm == _registerForm)
+            if (_activeForm == registerForm)
             {
                 if (!_activeForm.Find("passwordField").GetComponent<TMP_InputField>().text
                         .Equals(_activeForm.Find("rePasswordField").GetComponent<TMP_InputField>().text)) 
                 {
-                    //ShowLoginError("Password must correspond to the password verification.");
                     GameManager.Instance.modalWindow.ShowAsTextPopup(
                         "Error on register", 
                         "Password must correspond to the password verification.", 
@@ -88,7 +85,6 @@ namespace LGamesDev.UI
                 else 
                 {
                     AuthenticationManager.Instance.Submit(
-                        _state,
                         _activeForm.Find("usernameField").GetComponent<TMP_InputField>().text,
                         _activeForm.Find("passwordField").GetComponent<TMP_InputField>().text,
                         _activeForm.Find("emailField").GetComponent<TMP_InputField>().text
@@ -98,7 +94,6 @@ namespace LGamesDev.UI
             else
             {
                 AuthenticationManager.Instance.Submit(
-                    _state,
                     _activeForm.Find("usernameField").GetComponent<TMP_InputField>().text,
                     _activeForm.Find("passwordField").GetComponent<TMP_InputField>().text
                 );

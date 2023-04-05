@@ -21,8 +21,8 @@ EditorBuildSettings:
     path: Assets/_Project/Scenes/4 Fight.unity
     guid: a7cd57e60ae66f542899b463f42fe151
   m_configObjects:
-    com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 6f516f859a66aa049b693a197ccee9d4, type: 2}
+    com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 0477f4997e903d54089f5f205660718b, type: 2}
     com.unity.adaptiveperformance.samsung.android.provider_settings: {fileID: 11400000, guid: 60342196d876aa042865261e7e311316, type: 2}
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 2ba5faef52f428d478a69571bd896167, type: 2}
-    com.unity.addressableassets: {fileID: 11400000, guid: 58ea4c82be22a2f4b8aa773d66be889e, type: 2}
+    com.unity.addressableassets: {fileID: 11400000, guid: 7c1f3f5bf9699df4284292679c5dca13, type: 2}
     com.unity.localization.settings: {fileID: 11400000, guid: 66bd234ee3328a64a98e6802bd1b1abc, type: 2}

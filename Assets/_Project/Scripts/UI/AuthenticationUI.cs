@@ -2,16 +2,20 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 namespace LGamesDev.UI
 {
     public class AuthenticationUI : MonoBehaviour
     {
         [SerializeField] private Transform mainPanel;
+        [SerializeField] private Button googleSignInButton;
+        [SerializeField] private Button appleSignInButton;
+        
         [SerializeField] private Transform platformRegisterForm;
         [SerializeField] private Transform registerForm;
         [SerializeField] private Transform loginForm;
-
+        
         private Transform _activeForm;
 
         private void Start()
@@ -20,6 +24,19 @@ namespace LGamesDev.UI
             registerForm.gameObject.SetActive(false);
             loginForm.gameObject.SetActive(false);
 
+            #if UNITY_ANDROID
+                googleSignInButton.gameObject.SetActive(true);
+            #else
+                googleSignInButton.gameObject.SetActive(false);
+            #endif
+            
+            #if UNITY_IOS
+                appleSignInButton.gameObject.SetActive(true);
+            #else
+                appleSignInButton.gameObject.SetActive(false);
+            #endif
+            
+            _activeForm = mainPanel;
             AuthenticationManager.Instance.OnStateUpdate += UpdateUI;
         }
 
@@ -27,42 +44,50 @@ namespace LGamesDev.UI
         {
             switch (state)
             {
+                case AuthenticationState.Loading or AuthenticationState.Refresh:
+                    StartCoroutine(GameManager.Instance.loadingScreen.EnableWaitingScreen());
+                    break;
                 case AuthenticationState.Default:
-                    _activeForm.Find("usernameField").GetComponent<TMP_InputField>().text = "";
+                    if (_activeForm != mainPanel)
+                    {                   
+                        _activeForm.Find("usernameField").GetComponent<TMP_InputField>().text = "";
+                    }
+                    if (_activeForm == registerForm || _activeForm == loginForm)
+                    {
+                        _activeForm.Find("passwordField").GetComponent<TMP_InputField>().text = "";
+                    }
                     if (_activeForm == registerForm)
                     {
                         _activeForm.Find("emailField").GetComponent<TMP_InputField>().text = "";
                         _activeForm.Find("rePasswordField").GetComponent<TMP_InputField>().text = "";
                     }
-                    if (_activeForm == (registerForm || loginForm))
-                    {
-                        _activeForm.Find("passwordField").GetComponent<TMP_InputField>().text = "";
-                    }
-
                     _activeForm.gameObject.SetActive(false);
                     mainPanel.gameObject.SetActive(true);
                     break;
+                
                 case AuthenticationState.PlatformRegister:
                     mainPanel.gameObject.SetActive(false);
                     platformRegisterForm.gameObject.SetActive(true);
-
                     _activeForm = platformRegisterForm;
                     break;
+                
                 case AuthenticationState.Register:
                     mainPanel.gameObject.SetActive(false);
                     registerForm.gameObject.SetActive(true);
-
                     _activeForm = registerForm;
                     break;
+                
                 case AuthenticationState.Login:
                     mainPanel.gameObject.SetActive(false);
                     loginForm.gameObject.SetActive(true);
-
                     _activeForm = loginForm;
                     break;
-                case AuthenticationState.Refresh:
-                    //Todo: Waiting screen 
-                    break;
+            }
+            
+            if (state != AuthenticationState.Loading 
+                && state != AuthenticationState.Refresh)
+            {
+                StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());
             }
         }
 
@@ -91,12 +116,32 @@ namespace LGamesDev.UI
                     );
                 }
             }
-            else
+            else if (_activeForm == loginForm)
             {
                 AuthenticationManager.Instance.Submit(
                     _activeForm.Find("usernameField").GetComponent<TMP_InputField>().text,
                     _activeForm.Find("passwordField").GetComponent<TMP_InputField>().text
                 );
+            } 
+            else if (_activeForm == platformRegisterForm)
+            {
+                if (!string.IsNullOrEmpty(_activeForm.Find("usernameField").GetComponent<TMP_InputField>().text))
+                {
+                    AuthenticationManager.Instance.Submit(
+                        _activeForm.Find("usernameField").GetComponent<TMP_InputField>().text
+                    );
+                }
+                else
+                {
+                    GameManager.Instance.modalWindow.ShowAsTextPopup(
+                        "Error on register",
+                        "You must enter a username!", 
+                        "", 
+                        "Close",
+                        null,
+                        GameManager.Instance.modalWindow.Close
+                    );
+                }
             }
         }
 

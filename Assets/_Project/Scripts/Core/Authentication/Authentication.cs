@@ -7,7 +7,6 @@ namespace LGamesDev.Core
     public class Authentication
     {
         public string username;
-
         public string token;
         public string refresh_token;
         public string refresh_token_expiration;
@@ -19,7 +18,7 @@ namespace LGamesDev.Core
                    + "token : " + token + "\n"
                    + "refresh_token : " + refresh_token + "\n"
                    + "refresh_token_expiration : " + refresh_token_expiration + "\n"
-                   + "playerConf : " + PlayerConf.ToString();
+                   + "playerConf : " + PlayerConf;
         }
     }
 }

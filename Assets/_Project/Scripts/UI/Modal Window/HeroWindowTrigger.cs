@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using LGamesDev;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -39,6 +40,6 @@ public class HeroWindowTrigger : MonoBehaviour
             alternateCallback = onAlternateCallback.Invoke;
         }*/
 
-        UIController.Instance.modalWindow.ShowAsHero(title, sprite, message, continueCallback, cancelCallback);
+        GameManager.Instance.modalWindow.ShowAsHero(title, sprite, message, continueCallback, cancelCallback);
     }
 }

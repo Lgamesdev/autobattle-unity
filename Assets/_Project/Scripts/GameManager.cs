@@ -41,6 +41,7 @@ namespace LGamesDev
 
             //Authentication
             _authentication = JsonConvert.DeserializeObject<Authentication>(PlayerPrefs.GetString(AuthenticationKey));
+            Debug.Log("player prefs authentication : " + PlayerPrefs.GetString(AuthenticationKey));
             
             //Player Options
             _playerOptions = JsonConvert.DeserializeObject<PlayerOptions>(PlayerPrefs.GetString(OptionsKey)) ?? new PlayerOptions();
@@ -91,7 +92,7 @@ namespace LGamesDev
         {
             networkManager.Disconnect();
             
-            PlayerPrefs.DeleteKey("authentication");
+            PlayerPrefs.DeleteKey(AuthenticationKey);
             _authentication = null;
             
             audioManager.StopMusic();
@@ -109,7 +110,7 @@ namespace LGamesDev
             if (authentication != null)
             {
                 _authentication = authentication;
-                PlayerPrefs.SetString(AuthenticationKey, JsonUtility.ToJson(_authentication));
+                PlayerPrefs.SetString(AuthenticationKey, JsonConvert.SerializeObject(_authentication));
             }
             else
             {
@@ -127,7 +128,7 @@ namespace LGamesDev
             if (playerOptions != null)
             {
                 _playerOptions = playerOptions;
-                PlayerPrefs.SetString(OptionsKey, JsonUtility.ToJson(_playerOptions));
+                PlayerPrefs.SetString(OptionsKey, JsonConvert.SerializeObject(_playerOptions));
             }
             else
             {

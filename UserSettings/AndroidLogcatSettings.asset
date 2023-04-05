@@ -1,13 +1,74 @@
 {
-    "m_SelectedDeviceId": "",
+    "m_SelectedDeviceId": "R3CR80237NT",
     "m_SelectedPackage": {
-        "deviceId": "",
-        "name": "",
-        "processId": 0,
+        "deviceId": "R3CR80237NT",
+        "name": "com.lgamesdev.herofantasy",
+        "processId": 2546,
         "exited": false
     },
     "m_SelectedPriority": 0,
-    "m_KnownPackagesForSerialization": [],
+    "m_KnownPackagesForSerialization": [
+        {
+            "deviceId": "R3CR80237NT",
+            "name": "com.lgamesdev.herofantasy",
+            "processId": 25764,
+            "exited": true
+        },
+        {
+            "deviceId": "R3CR80237NT",
+            "name": "com.lgamesdev.herofantasy",
+            "processId": 21337,
+            "exited": true
+        },
+        {
+            "deviceId": "R3CR80237NT",
+            "name": "com.sec.android.app.launcher",
+            "processId": 2719,
+            "exited": false
+        },
+        {
+            "deviceId": "R3CR80237NT",
+            "name": "com.lgamesdev.herofantasy",
+            "processId": 19786,
+            "exited": true
+        },
+        {
+            "deviceId": "R3CR80237NT",
+            "name": "com.lgamesdev.herofantasy",
+            "processId": 23390,
+            "exited": true
+        },
+        {
+            "deviceId": "R3CR80237NT",
+            "name": "com.lgamesdev.herofantasy",
+            "processId": 2546,
+            "exited": false
+        },
+        {
+            "deviceId": "emulator-5554",
+            "name": "com.google.android.documentsui",
+            "processId": 18797,
+            "exited": true
+        },
+        {
+            "deviceId": "emulator-5554",
+            "name": "com.lgamesdev.herofantasy",
+            "processId": 4223,
+            "exited": true
+        },
+        {
+            "deviceId": "emulator-5554",
+            "name": "com.lgamesdev.herofantasy",
+            "processId": 7350,
+            "exited": true
+        },
+        {
+            "deviceId": "emulator-5554",
+            "name": "com.google.android.apps.nexuslauncher",
+            "processId": 1286,
+            "exited": false
+        }
+    ],
     "m_Tags": {
         "m_Entries": [
             {
@@ -41,9 +102,20 @@
         ]
     },
     "m_MemoryViewerState": {
-        "MemoryWindowHeight": 0.0,
-        "MemoryWindowWidth": 0.0,
-        "MemoryTypeEnabled": [],
+        "MemoryWindowHeight": 300.0,
+        "MemoryWindowWidth": 170.0,
+        "MemoryTypeEnabled": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+        ],
         "MemoryGroup": 2,
         "Behavior": 0
     },

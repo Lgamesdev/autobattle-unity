@@ -11,17 +11,18 @@ namespace LGamesDev.Core.Request
 {
     public static class AuthenticationHandler
     {
-        public static IEnumerator PlatformRegister(MonoBehaviour instance, string token, Action<Authentication> setResult)
+        public static IEnumerator PlatformRegister(MonoBehaviour instance, string username, string code, Action<Authentication> setResult)
         {
             Dictionary<string, string> form = new Dictionary<string, string>() {
-                {"token", token},
+                {"username", username},
+                {"code", code},
             };
 
             var bodyRaw = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(form));
             
             yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.EnableWaitingScreen());
             
-            yield return instance.StartCoroutine(RequestHandler.Request("api/tokenRegister",
+            yield return instance.StartCoroutine(RequestHandler.Request("api/connect/google",
                 UnityWebRequest.kHttpVerbPOST,
                 error =>
                 {

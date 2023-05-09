@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <projectSettings>
-  <projectSetting name="com.google.external-dependency-managerAnalyticsCookie" value="78665b088deb4457babcce05d2a5c63d" />
+  <projectSetting name="com.google.external-dependency-managerAnalyticsCookie" value="a4963595838b41039e8a1b911ad7f5d0" />
   <projectSetting name="com.google.external-dependency-managerAnalyticsEnabled" value="True" />
   <projectSetting name="Google.IOSResolver.VerboseLoggingEnabled" value="False" />
   <projectSetting name="Google.PackageManagerResolver.VerboseLoggingEnabled" value="False" />
-  <projectSetting name="Google.VersionHandler.VerboseLoggingEnabled" value="True" />
+  <projectSetting name="Google.VersionHandler.CleanUpPromptEnabled" value="True" />
+  <projectSetting name="Google.VersionHandler.RenameToCanonicalFilenames" value="False" />
+  <projectSetting name="Google.VersionHandler.RenameToDisableFilesEnabled" value="True" />
+  <projectSetting name="Google.VersionHandler.VerboseLoggingEnabled" value="False" />
   <projectSetting name="Google.VersionHandler.VersionHandlingEnabled" value="True" />
   <projectSetting name="GooglePlayServices.AndroidPackageInstallationEnabled" value="True" />
   <projectSetting name="GooglePlayServices.AutoResolutionDisabledWarning" value="True" />

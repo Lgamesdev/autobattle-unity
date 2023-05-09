@@ -14,7 +14,7 @@ namespace LGamesDev.UI
         [SerializeField] private TextMeshProUGUI label;
         [SerializeField] private TextMeshProUGUI value;
         [SerializeField] private TextMeshProUGUI modifier;
-        [SerializeField] private Transform button;
+        [SerializeField] private Button button;
 
         public void SetupSlot(Stat stat, Stat statModifier = null, bool buttonActive = false)
         {
@@ -24,10 +24,20 @@ namespace LGamesDev.UI
             value.text = stat.GetValue().ToString();
             modifier.text = statModifier?.GetValue().ToString();
 
-            if (buttonActive)
+            if (buttonActive && button != null)
             {
                 button.gameObject.SetActive(CharacterStatsManager.Instance.GetStatPoint() > 0);
                 CharacterStatsManager.Instance.StatPointAdded += OnStatPointAdded;
+
+                button.GetComponentInChildren<TextMeshProUGUI>().text = (stat.statType) switch
+                {
+                    StatType.Health => "+10",
+                    StatType.Strength => "+2",
+                    StatType.Agility => "+1",
+                    StatType.Intelligence => "+1",
+                    StatType.Luck => "+1",
+                    _ => throw new ArgumentOutOfRangeException()
+                };
             }
             else
             {

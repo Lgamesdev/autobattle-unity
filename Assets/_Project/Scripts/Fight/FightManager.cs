@@ -63,11 +63,11 @@ namespace LGamesDev.Fighting
 
             Vector3 position = cam.transform.position;
             playerCharacterFight.transform.position = cam.ScreenToWorldPoint(new Vector3(
-                cam.pixelWidth * 0.18f, cam.pixelHeight / 2, -position.z
+                cam.pixelWidth * 0.3f, cam.pixelHeight * 1.75f, -14
             ));
             
             _enemyCharacterFight.transform.position = cam.ScreenToWorldPoint(new Vector3(
-                cam.pixelWidth * 0.82f, cam.pixelHeight / 2, -position.z
+                cam.pixelWidth * 0.7f, cam.pixelHeight * 1.75f, -14
             ));
             
             playerCharacterFight.LookAt(_enemyCharacterFight.GetPosition());

@@ -69,9 +69,9 @@ namespace LGamesDev.Core.Player
     {
         Health,
         Armor,
-        Damage,
-        Dodge,
-        Speed,
-        Critical
+        Strength,
+        Agility,
+        Intelligence,
+        Luck
     }
 }

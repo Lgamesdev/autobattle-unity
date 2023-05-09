@@ -35,7 +35,7 @@ namespace LGamesDev.Fighting
 
         public IEnumerator SetupCharacterFight(Character character)
         {
-            transform.localScale = new Vector3(1.4f, 1.4f, 1);
+            transform.localScale = new Vector3(.85f, .85f, 1);
             
             yield return StartCoroutine(_characterManager.SetupCharacter(character));
             
@@ -115,7 +115,7 @@ namespace LGamesDev.Fighting
 
         public void Attack(CharacterFight target, int damage, bool isCritical, bool dodged, Action onAttackComplete)
         {
-            var runningTargetPosition = target.GetPosition() + (GetPosition() - target.GetPosition()).normalized * 15f;
+            var runningTargetPosition = target.GetPosition() + (GetPosition() - target.GetPosition()).normalized * 11f;
 
             var startingPosition = GetPosition();
 

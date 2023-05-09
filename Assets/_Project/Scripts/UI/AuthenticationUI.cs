@@ -44,9 +44,12 @@ namespace LGamesDev.UI
         {
             switch (state)
             {
-                case AuthenticationState.Loading or AuthenticationState.Refresh:
-                    StartCoroutine(GameManager.Instance.loadingScreen.EnableWaitingScreen());
-                    break;
+                case AuthenticationState.Loading 
+                    or AuthenticationState.Refresh
+                    or AuthenticationState.PlatformConnect:
+                        StartCoroutine(GameManager.Instance.loadingScreen.EnableWaitingScreen());
+                        break;
+                
                 case AuthenticationState.Default:
                     if (_activeForm != mainPanel)
                     {                   

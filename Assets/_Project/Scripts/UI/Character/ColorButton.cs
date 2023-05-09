@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using LGamesDev.UI;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -17,7 +18,7 @@ namespace LGamesDev
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            SpriteColorPicker.Instance.currentColorPicker.SetSpritesColor(_color);
+            ColorPicker.Instance.currentColorPicker.SetSpritesColor(_color);
         }
     }
 }

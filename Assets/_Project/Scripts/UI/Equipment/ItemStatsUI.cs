@@ -16,6 +16,7 @@ namespace LGamesDev.UI
         private Transform _itemContainer;
 
         [SerializeField] private TextMeshProUGUI itemName;
+        [SerializeField] private TextMeshProUGUI itemLevel;
         [SerializeField] private Transform itemImage;
         private Image _icon;
         [SerializeField] private Transform statsParent;
@@ -81,17 +82,16 @@ namespace LGamesDev.UI
 
                 if (_currentCharacterItem.Item.name != null) itemName.text = _currentCharacterItem.Item.name;
 
-                if (_currentCharacterItem.Item.GetType() == typeof(Equipment))
-                {
-                    CharacterEquipment characterEquipment = _currentCharacterItem as CharacterEquipment;
-                    
-                    foreach (Stat stat in characterEquipment.item.GetStats())
-                    {
-                        StatSlotUI statSlot = Instantiate(pfUIStatSlot, statsParent);
+                if (_currentCharacterItem.Item.GetType() != typeof(Equipment)) return;
+                if (_currentCharacterItem is not CharacterEquipment characterEquipment) return;
+                itemLevel.text = "Lvl." + characterEquipment.item.requiredLevel;
 
-                        Stat statModifier = characterEquipment.GetModifier(stat.statType);
-                        statSlot.SetupSlot(stat, statModifier);
-                    }
+                foreach (Stat stat in characterEquipment.item.GetStats())
+                {
+                    StatSlotUI statSlot = Instantiate(pfUIStatSlot, statsParent);
+
+                    Stat statModifier = characterEquipment.GetModifier(stat.statType);
+                    statSlot.SetupSlot(stat, statModifier);
                 }
             }
             else

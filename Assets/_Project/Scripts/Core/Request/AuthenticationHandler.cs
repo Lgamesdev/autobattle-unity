@@ -11,7 +11,7 @@ namespace LGamesDev.Core.Request
 {
     public static class AuthenticationHandler
     {
-        public static IEnumerator PlatformRegister(MonoBehaviour instance, string username, string code, Action<Authentication> setResult)
+        public static IEnumerator PlatformConnect(MonoBehaviour instance, string username, string code, Action<Authentication> setResult)
         {
             Dictionary<string, string> form = new Dictionary<string, string>() {
                 {"username", username},
@@ -26,14 +26,21 @@ namespace LGamesDev.Core.Request
                 UnityWebRequest.kHttpVerbPOST,
                 error =>
                 {
-                    GameManager.Instance.modalWindow.ShowAsTextPopup(
-                        "Error",
-                        error,
-                        null,
-                        "Ok",
-                        null,
-                        GameManager.Instance.modalWindow.Close
-                    );
+                    if (error == AuthenticationError.PlatformConnectUsername)
+                    {
+                        AuthenticationManager.Instance.SetState(AuthenticationState.PlatformRegister);
+                    }
+                    else
+                    {
+                        GameManager.Instance.modalWindow.ShowAsTextPopup(
+                            "Error",
+                            error,
+                            null,
+                            "Ok",
+                            null,
+                            GameManager.Instance.modalWindow.Close
+                        );
+                    }
                 },
                 response =>
                 {
@@ -48,7 +55,7 @@ namespace LGamesDev.Core.Request
             
             yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());
         }
-        
+
         public static IEnumerator Register(MonoBehaviour instance, string username, string password, string email, Action<Authentication> setResult)
         {
             Dictionary<string, string> form = new Dictionary<string, string>() {
@@ -201,5 +208,10 @@ namespace LGamesDev.Core.Request
             
             yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());
         }
+    }
+    
+    public class AuthenticationError
+    {
+        public const string PlatformConnectUsername = "auth-0001";
     }
 }

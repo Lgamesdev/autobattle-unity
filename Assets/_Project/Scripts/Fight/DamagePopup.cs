@@ -68,13 +68,13 @@ namespace LGamesDev.Fighting
             if (!isCriticalHit)
             {
                 //Normal hit
-                _textMesh.fontSize = 70;
+                _textMesh.fontSize = 48;
                 _textColor = Color.white;
             }
             else
             {
                 // Critical hit
-                _textMesh.fontSize = 78;
+                _textMesh.fontSize = 56;
                 _textColor = Color.yellow;
             }
 
@@ -83,7 +83,7 @@ namespace LGamesDev.Fighting
 
             _sortingOrder++;
             _textMesh.sortingOrder = _sortingOrder;
-            _moveVector = new Vector3(0, 2) * 150f;
+            _moveVector = new Vector3(0, 2) * 100f;
         }
     }
 }

@@ -41,7 +41,7 @@ namespace LGamesDev
 
             //Authentication
             _authentication = JsonConvert.DeserializeObject<Authentication>(PlayerPrefs.GetString(AuthenticationKey));
-            Debug.Log("player prefs authentication : " + PlayerPrefs.GetString(AuthenticationKey));
+            Debug.Log("player prefs authentication : " + _authentication);//PlayerPrefs.GetString(AuthenticationKey));
             
             //Player Options
             _playerOptions = JsonConvert.DeserializeObject<PlayerOptions>(PlayerPrefs.GetString(OptionsKey)) ?? new PlayerOptions();
@@ -64,7 +64,6 @@ namespace LGamesDev
 
         public void LoadCustomization()
         {
-            networkManager.
             StartCoroutine(sceneLoader.LoadCustomization());
         }
         

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using LGamesDev;
+using LGamesDev.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -73,7 +74,7 @@ public class ColorPickerButton : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        SpriteColorPicker.Instance.Show(this);
+        ColorPicker.Instance.Show(this);
     }
 
     public void SetSpritesColor(Color color)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using GooglePlayGames;
+using GooglePlayGames.BasicApi;
 using LGamesDev.Core.Request;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
@@ -20,19 +21,10 @@ namespace LGamesDev
         private string _code;
         private string _error;
 
-        private async void Awake()
+        private void Awake()
         {
             Instance = this;
             _gameManager = GameManager.Instance;
-            
-            try
-            {
-                await UnityServices.InitializeAsync();
-            }
-            catch (Exception e)
-            {
-                Debug.LogException(e);
-            }
         }
 
         private void Start()
@@ -45,24 +37,126 @@ namespace LGamesDev
 
         public async void SetupAuthentication()
         {
-            SetState(AuthenticationState.Loading);
-            SetupEvents();
+            try
+            {
+                await UnityServices.InitializeAsync();
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+            }
+
+            SetupAuthenticationEvents();
             
-            await SignInAnonymouslyAsync();
+            #if UNITY_ANDROID
+                //Initialize PlayGamesPlatform
+                PlayGamesPlatform.Activate();
+            #endif
+
+            SetState(AuthenticationState.Loading);
+            
+            try
+            {
+                // Shows how to get the playerID
+                Debug.Log($"PlayerID: {AuthenticationService.Instance.PlayerId}");
+
+                #if UNITY_ANDROID
+                    await AuthenticationService.Instance.SignInAnonymouslyAsync();
+                    TrySignInWithGooglePlayGames();
+                #endif
+                #if UNITY_IOS
+                    //Initialize Game Center
+                    await AuthenticationService.Instance.SignInAnonymouslyAsync();
+                    SetState(AuthenticationState.Default);
+                #endif
+            }
+            catch (AuthenticationException ex)
+            {
+                // Compare error code to AuthenticationErrorCodes
+                // Notify the player with the proper error message
+                Debug.LogException(ex);
+            }
+            catch (RequestFailedException ex)
+            {
+                // Compare error code to CommonErrorCodes
+                // Notify the player with the proper error message
+                Debug.LogException(ex);
+            }
+        }
+        
+        public void TrySignInWithGooglePlayGames()
+        {
+            PlayGamesPlatform.Instance.Authenticate((success) =>
+            {
+                if (success == SignInStatus.Success)
+                {
+                    Debug.Log("Login with Google Play games successful.");
+
+                    PlayGamesPlatform.Instance.RequestServerSideAccess(true, async code =>
+                    {
+                        Debug.Log("google authorization code: " + code);
+                        _code = code;
+                        // This token serves as an example to be used for SignInWithGooglePlayGames
+
+                        if (!AuthenticationService.Instance.SessionTokenExists)
+                        {
+                            try
+                            {
+                                await AuthenticationService.Instance.LinkWithGooglePlayGamesAsync(_code);
+                                SetState(AuthenticationState.PlatformRegister);
+                                Debug.Log("SignIn with google is successful.");
+                            }
+                            catch (AuthenticationException ex) when (ex.ErrorCode == AuthenticationErrorCodes.AccountAlreadyLinked)
+                            {
+                                // Prompt the player with an error message.
+                                Debug.LogError("This user is already linked with another account. Log in instead.");
+                                SetState(AuthenticationState.PlatformConnect);
+                                PlatformConnect();
+                            }
+                            catch (RequestFailedException ex)
+                            {
+                                // Compare error code to CommonErrorCodes
+                                // Notify the player with the proper error message
+                                Debug.LogException(ex);
+                            }
+                        }
+                        else
+                        {
+                            SetState(AuthenticationState.PlatformConnect);
+                            PlatformConnect();
+                        }
+                    });
+                }
+                else
+                {
+                    _error = "Failed to retrieve Google play games authorization code";
+                    Debug.Log("Google Login Unsuccessful");
+
+                    if (_gameManager.GetAuthentication() != null)
+                    {
+                        Refresh();
+                    }
+                    else
+                    {
+                        SetState(AuthenticationState.Default);
+                    }
+                }
+            });
         }
 
-        // Setup authentication event handlers if desired
-        void SetupEvents() {
+        private void SetupAuthenticationEvents()
+        {
+            // Setup authentication event handlers if desired
             AuthenticationService.Instance.SignedIn += () => {
                 // Shows how to get a playerID
                 Debug.Log($"PlayerID: {AuthenticationService.Instance.PlayerId}");
 
                 // Shows how to get an access token
-                Debug.Log($"Access Token: {AuthenticationService.Instance.AccessToken}");
+                //Debug.Log($"Access Token: {AuthenticationService.Instance.AccessToken}");
             };
 
             AuthenticationService.Instance.SignInFailed += (err) => {
-                Debug.LogError(err);
+                Debug.Log("Sign in failed : " + err);
             };
 
             AuthenticationService.Instance.SignedOut += () => {
@@ -74,147 +168,6 @@ namespace LGamesDev
                 Debug.Log("Player session could not be refreshed and expired.");
             };
         }
-        
-        private async Task SignInAnonymouslyAsync()
-        {
-            try
-            {
-                await AuthenticationService.Instance.SignInAnonymouslyAsync();
-                Debug.Log("Sign in anonymously succeeded!");
-        
-                // Shows how to get the playerID
-                Debug.Log($"PlayerID: {AuthenticationService.Instance.PlayerId}"); 
-                
-                #if UNITY_ANDROID
-                    //Initialize PlayGamesPlatform
-                    PlayGamesPlatform.Activate();
-                    Social.localUser.Authenticate(ProcessAuthentication);
-                #endif
-
-                #if UNITY_IOS
-                    //Initialize Game Center
-                #endif
-            }
-            catch (AuthenticationException ex)
-            {
-                // Compare error code to AuthenticationErrorCodes
-                // Notify the player with the proper error message
-                Debug.LogException(ex);
-            }
-            catch (RequestFailedException ex)
-            {
-                // Compare error code to CommonErrorCodes
-                // Notify the player with the proper error message
-                Debug.LogException(ex);
-            }
-        }
-
-#if UNITY_ANDROID
-        private void ProcessAuthentication(bool success)
-        {
-            if (success)
-            {
-                Debug.Log("Login with Google Play games successful.");
-
-                PlayGamesPlatform.Instance.RequestServerSideAccess(true, async (string code) =>
-                {
-                    Debug.Log("Authorization code: " + code);
-
-                    _code = code;
-                    // This token serves as an example to be used for SignInWithGooglePlayGames
-                    if (!AuthenticationService.Instance.SessionTokenExists)
-                    {
-                        await LinkWithGooglePlayGamesAsync(code);
-                    }
-                    
-                    if (_gameManager.GetAuthentication() == null)
-                    {
-                        Debug.Log("no credentials");
-                        SetState(AuthenticationState.PlatformRegister);
-                    }
-                    else
-                    {
-                        Debug.Log("credentials exists : " + _gameManager.GetAuthentication().username);
-                        PlatformRegister(_gameManager.GetAuthentication().username);
-                        Submit();
-                    }
-                });
-            }
-            else
-            {
-                SetState(AuthenticationState.Default);
-                _error = "Failed to retrieve Google play games authorization code";
-                Debug.Log("Login Unsuccessful");
-            }
-        }
-
-        private async Task LinkWithGooglePlayGamesAsync(string authCode)
-        {
-            try
-            {
-                await AuthenticationService.Instance.LinkWithGooglePlayGamesAsync(authCode);
-                Debug.Log("Link is successful.");
-                SetState(AuthenticationState.PlatformRegister);
-            }
-            catch (AuthenticationException ex) when (ex.ErrorCode == AuthenticationErrorCodes.AccountAlreadyLinked)
-            {
-                // Prompt the player with an error message.
-                Debug.LogError("This user is already linked with another account. Log in instead.");
-
-                GameManager.Instance.modalWindow.ShowAsTextPopup(
-                    "Account already exist",
-                    "This user is already linked with another account, do you want to Log in instead ?",
-                    "Login",
-                    "No",
-                    async () =>
-                    {
-                        await SignInWithGooglePlayGamesAsync(authCode);
-                    },
-                    GameManager.Instance.modalWindow.Close
-                );
-                
-            }
-            catch (AuthenticationException ex)
-            {
-                // Compare error code to AuthenticationErrorCodes
-                // Notify the player with the proper error message
-                Debug.LogException(ex);
-            }
-            catch (RequestFailedException ex)
-            {
-                // Compare error code to CommonErrorCodes
-                // Notify the player with the proper error message
-                Debug.LogException(ex);
-            }
-        }
-        
-        private async Task SignInWithGooglePlayGamesAsync(string authCode)
-        {
-            try
-            {
-                await AuthenticationService.Instance.SignInWithGooglePlayGamesAsync(authCode);
-                Debug.Log("SignIn is successful.");
-                PlatformRegister("");
-            }
-            catch (AuthenticationException ex)
-            {
-                // Compare error code to AuthenticationErrorCodes
-                // Notify the player with the proper error message
-                Debug.LogException(ex);
-            }
-            catch (RequestFailedException ex)
-            {
-                // Compare error code to CommonErrorCodes
-                // Notify the player with the proper error message
-                Debug.LogException(ex);
-            }
-        }
-
-        public void ClickLoginGooglePlayGames()
-        {
-            Social.localUser.Authenticate(ProcessAuthentication);
-        }
-#endif
 
         public void Submit(string username = "", string password = "",
             string email = "", string refreshToken = "")
@@ -238,8 +191,35 @@ namespace LGamesDev
         
         private void PlatformRegister(string username)
         {
-            StartCoroutine(AuthenticationHandler.PlatformRegister(this,
+            PlayGamesPlatform.Instance.RequestServerSideAccess(true, code =>
+            {
+                Debug.Log("old code : " + _code);
+                _code = code;
+                Debug.Log("new code : " + _code);
+            });
+            
+            StartCoroutine(AuthenticationHandler.PlatformConnect(this,
                 username,
+                _code,
+                result =>
+                {
+                    _gameManager.SetAuthentication(result);
+                    _gameManager.LoadMainMenu();
+                }
+            ));
+        }
+
+        private void PlatformConnect()
+        {
+            PlayGamesPlatform.Instance.RequestServerSideAccess(true, code =>
+            {
+                Debug.Log("old code : " + _code);
+                _code = code;
+                Debug.Log("new code : " + _code);
+            });
+            
+            StartCoroutine(AuthenticationHandler.PlatformConnect(this,
+                null,
                 _code,
                 result =>
                 {
@@ -301,6 +281,7 @@ namespace LGamesDev
         Loading,
         Default,
         PlatformRegister,
+        PlatformConnect,
         Register,
         Login,
         Refresh

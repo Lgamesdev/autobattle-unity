@@ -34,7 +34,8 @@ namespace LGamesDev.Core.Request
             } 
             else 
             {
-                string error = request.error + "\n";
+                //string error = request.error + "\n";
+                string error;
 
                 if (!string.IsNullOrEmpty(request.downloadHandler.text))
                 {
@@ -42,21 +43,21 @@ namespace LGamesDev.Core.Request
                     {
                         JObject parsedJObjet = JObject.Parse(request.downloadHandler.text);
 
-                        error += parsedJObjet["detail"]?.ToString();
+                        error = parsedJObjet["detail"]?.ToString();
                         error += parsedJObjet["message"]?.ToString();
                     }
                     catch (JsonReaderException)
                     {
-                        error += "handling error by copying it to clipboard";
+                        error = "handling error by copying it to clipboard";
                         GUIUtility.systemCopyBuffer = request.downloadHandler.text;
                     }
                 }
                 else
                 {
-                    error += request.downloadHandler.text;
+                    error = request.downloadHandler.text;
                 }
 
-                Debug.Log("error in request handler : " + error);
+                Debug.Log("error in request handler : " + request.error + "\n" + error);
                 onError(error);
             }
         }

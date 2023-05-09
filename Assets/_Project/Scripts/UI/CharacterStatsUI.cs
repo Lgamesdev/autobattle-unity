@@ -52,13 +52,13 @@ namespace LGamesDev.UI
                 switch (stat.statType)
                 {
                     case StatType.Health 
-                        or StatType.Armor
-                        or StatType.Dodge:
+                        or StatType.Armor:
                         CreateStatSlot(stat, _defensiveStats);
                         break;
-                    case StatType.Damage
-                        or StatType.Critical
-                        or StatType.Speed:
+                    case StatType.Strength
+                        or StatType.Agility
+                        or StatType.Intelligence
+                        or StatType.Luck:
                         CreateStatSlot(stat, _offensiveStats);
                         break;
                 }
@@ -68,7 +68,19 @@ namespace LGamesDev.UI
         private void CreateStatSlot(Stat stat, Transform parent)
         {
             StatSlotUI statSlot = Instantiate(pfUIStatSlot, parent);
-            statSlot.SetupSlot(stat, null, true);
+            switch (stat.statType)
+            {
+                case StatType.Armor:
+                    statSlot.SetupSlot(stat);
+                    break;
+                case StatType.Health
+                    or StatType.Strength
+                    or StatType.Agility
+                    or StatType.Intelligence
+                    or StatType.Luck:
+                    statSlot.SetupSlot(stat, null, true);
+                    break;
+            }
         }
     }
 }

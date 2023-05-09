@@ -130,6 +130,6 @@ public class CharacterAnimator : MonoBehaviour
 
     public void SetMoveVector(Vector3 position)
     {
-        transform.right = new Vector3(position.x, transform.position.y, position.z) - transform.position;
+        transform.right = new Vector3(position.x, transform.position.y, transform.position.z) - transform.position;
     }
 }

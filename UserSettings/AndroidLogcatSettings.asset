@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "R3CR80237NT",
         "name": "com.lgamesdev.herofantasy",
-        "processId": 2546,
+        "processId": 22268,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -11,37 +11,31 @@
         {
             "deviceId": "R3CR80237NT",
             "name": "com.lgamesdev.herofantasy",
-            "processId": 25764,
+            "processId": 30000,
             "exited": true
         },
         {
             "deviceId": "R3CR80237NT",
             "name": "com.lgamesdev.herofantasy",
-            "processId": 21337,
+            "processId": 2707,
             "exited": true
         },
         {
             "deviceId": "R3CR80237NT",
-            "name": "com.sec.android.app.launcher",
-            "processId": 2719,
-            "exited": false
-        },
-        {
-            "deviceId": "R3CR80237NT",
-            "name": "com.lgamesdev.herofantasy",
-            "processId": 19786,
+            "name": "com.google.android.packageinstaller",
+            "processId": 20232,
             "exited": true
         },
         {
             "deviceId": "R3CR80237NT",
             "name": "com.lgamesdev.herofantasy",
-            "processId": 23390,
+            "processId": 4534,
             "exited": true
         },
         {
             "deviceId": "R3CR80237NT",
             "name": "com.lgamesdev.herofantasy",
-            "processId": 2546,
+            "processId": 22268,
             "exited": false
         },
         {

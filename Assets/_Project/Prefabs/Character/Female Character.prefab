@@ -4838,7 +4838,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!65 &7426691454492638843
 BoxCollider:
@@ -4910,6 +4910,10 @@ MonoBehaviour:
   eyeBrowsRenderer: {fileID: 6504357185546263767}
   moustacheResolver: {fileID: 0}
   beardResolver: {fileID: 0}
+  faceResolvers:
+  - {fileID: 22287025928512596}
+  - {fileID: 5909858864779307058}
+  - {fileID: 1874722277328551402}
   bodyResolvers:
   - {fileID: 5829232560454594207}
   - {fileID: 7565667446828305062}
@@ -4943,6 +4947,8 @@ MonoBehaviour:
   - {fileID: 3303751330933308526}
   - {fileID: 7096164022307465728}
   - {fileID: 6034239213545534343}
+  leftHandBone: {fileID: 193171189637508156}
+  rightHandBone: {fileID: 4702068009385741940}
   weaponResolver: {fileID: 6376792408898105164}
   offHandResolver: {fileID: 0}
   movementSpeed: 10
@@ -4970,6 +4976,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8ea43fd46b8d3b64fb37c25b0d5935d1, type: 3}
   - {fileID: 8300000, guid: 531660aefc5d9854c852f11c82d0abc6, type: 3}
   - {fileID: 8300000, guid: 134cff30994b8b041ad416c86c3dede1, type: 3}
+  handHitImpactFX: {fileID: 3658483921091176259, guid: 46605b62267385644b79550d555d3ffb, type: 3}
+  swordSlashFX: {fileID: 2119838712038804068, guid: db1b389eaba8d654598af7f235b26057, type: 3}
 --- !u!82 &3301184718862963405
 AudioSource:
   m_ObjectHideFlags: 0

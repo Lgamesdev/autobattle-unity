@@ -64,8 +64,11 @@ namespace LGamesDev.UI
                         _activeForm.Find("emailField").GetComponent<TMP_InputField>().text = "";
                         _activeForm.Find("rePasswordField").GetComponent<TMP_InputField>().text = "";
                     }
-                    _activeForm.gameObject.SetActive(false);
-                    mainPanel.gameObject.SetActive(true);
+                    if (_activeForm != null)
+                    {
+                        _activeForm.gameObject.SetActive(false);
+                        mainPanel.gameObject.SetActive(true);
+                    }
                     break;
                 
                 case AuthenticationState.PlatformRegister:
@@ -88,8 +91,10 @@ namespace LGamesDev.UI
             }
             
             if (state != AuthenticationState.Loading 
-                && state != AuthenticationState.Refresh)
+                && state != AuthenticationState.Refresh
+                && state != AuthenticationState.PlatformConnect)
             {
+                Debug.Log("state = " + state + " waiting screen disabled");
                 StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());
             }
         }

@@ -41,7 +41,7 @@ namespace LGamesDev
 
             //Authentication
             _authentication = JsonConvert.DeserializeObject<Authentication>(PlayerPrefs.GetString(AuthenticationKey));
-            Debug.Log("player prefs authentication : " + _authentication);//PlayerPrefs.GetString(AuthenticationKey));
+            //Debug.Log("player prefs authentication : " + _authentication);
             
             //Player Options
             _playerOptions = JsonConvert.DeserializeObject<PlayerOptions>(PlayerPrefs.GetString(OptionsKey)) ?? new PlayerOptions();
@@ -55,7 +55,7 @@ namespace LGamesDev
             }
             else
             {
-                StartCoroutine(sceneLoader.LoadAuthentication(true, false));
+                StartCoroutine(sceneLoader.LoadAuthentication(true, true));
             }
             
             audioManager.SetMixerVolume(AudioTrack.Music, _playerOptions.MusicVolume);

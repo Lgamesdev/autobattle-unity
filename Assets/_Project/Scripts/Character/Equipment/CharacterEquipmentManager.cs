@@ -104,5 +104,10 @@ namespace LGamesDev.Core.Character
         {
             return !currentGear.equipments[(int)EquipmentSlot.Weapon].item.isDefaultItem;
         }
+
+        public WeaponType GetWeaponType()
+        {
+            return GotWeapon() ? WeaponType.Sword : WeaponType.Hand;
+        }
     }
 }

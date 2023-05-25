@@ -3419,7 +3419,7 @@
             <param name="source">An observable sequence to aggregate over.</param>
             <param name="seed">The initial accumulator value.</param>
             <param name="accumulator">An accumulator function to be invoked on each element.</param>
-            <param name="resultSelector">A function to transform the final accumulator value into the result value.</param>
+            <param name="resultSelector">A function to tr the final accumulator value into the result value.</param>
             <returns>An observable sequence containing a single element with the final accumulator value.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="accumulator"/> or <paramref name="resultSelector"/> is null.</exception>
             <remarks>The return type of this operator differs from the corresponding operator on IEnumerable in order to retain asynchronous behavior.</remarks>
@@ -3577,11 +3577,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Observable.Average``1(System.IObservable{``0},System.Func{``0,System.Decimal})">
             <summary>
-            Computes the average of an observable sequence of <see cref="T:System.Decimal" /> values that are obtained by invoking a transform function on each element of the input sequence.
+            Computes the average of an observable sequence of <see cref="T:System.Decimal" /> values that are obtained by invoking a tr function on each element of the input sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to calculate the average of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the average of the sequence of values.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <exception cref="T:System.InvalidOperationException">(Asynchronous) The source sequence is empty.</exception>
@@ -3590,11 +3590,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Observable.Average``1(System.IObservable{``0},System.Func{``0,System.Double})">
             <summary>
-            Computes the average of an observable sequence of <see cref="T:System.Double" /> values that are obtained by invoking a transform function on each element of the input sequence.
+            Computes the average of an observable sequence of <see cref="T:System.Double" /> values that are obtained by invoking a tr function on each element of the input sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to calculate the average of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the average of the sequence of values.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <exception cref="T:System.InvalidOperationException">(Asynchronous) The source sequence is empty.</exception>
@@ -3602,11 +3602,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Observable.Average``1(System.IObservable{``0},System.Func{``0,System.Single})">
             <summary>
-            Computes the average of an observable sequence of <see cref="T:System.Single" /> values that are obtained by invoking a transform function on each element of the input sequence.
+            Computes the average of an observable sequence of <see cref="T:System.Single" /> values that are obtained by invoking a tr function on each element of the input sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to calculate the average of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the average of the sequence of values.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <exception cref="T:System.InvalidOperationException">(Asynchronous) The source sequence is empty.</exception>
@@ -3614,11 +3614,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Observable.Average``1(System.IObservable{``0},System.Func{``0,System.Int32})">
             <summary>
-            Computes the average of an observable sequence of <see cref="T:System.Int32" /> values that are obtained by invoking a transform function on each element of the input sequence.
+            Computes the average of an observable sequence of <see cref="T:System.Int32" /> values that are obtained by invoking a tr function on each element of the input sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to calculate the average of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the average of the sequence of values.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <exception cref="T:System.InvalidOperationException">(Asynchronous) The source sequence is empty.</exception>
@@ -3627,11 +3627,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Observable.Average``1(System.IObservable{``0},System.Func{``0,System.Int64})">
             <summary>
-            Computes the average of an observable sequence of <see cref="T:System.Int64" /> values that are obtained by invoking a transform function on each element of the input sequence.
+            Computes the average of an observable sequence of <see cref="T:System.Int64" /> values that are obtained by invoking a tr function on each element of the input sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to calculate the average of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the average of the sequence of values.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <exception cref="T:System.InvalidOperationException">(Asynchronous) The source sequence is empty.</exception>
@@ -3640,11 +3640,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Observable.Average``1(System.IObservable{``0},System.Func{``0,System.Nullable{System.Decimal}})">
             <summary>
-            Computes the average of an observable sequence of nullable <see cref="T:System.Decimal" /> values that are obtained by invoking a transform function on each element of the input sequence.
+            Computes the average of an observable sequence of nullable <see cref="T:System.Decimal" /> values that are obtained by invoking a tr function on each element of the input sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to calculate the average of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the average of the sequence of values, or null if the source sequence is empty or contains only values that are null.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <exception cref="T:System.InvalidOperationException">(Asynchronous) The source sequence is empty.</exception>
@@ -3653,11 +3653,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Observable.Average``1(System.IObservable{``0},System.Func{``0,System.Nullable{System.Double}})">
             <summary>
-            Computes the average of an observable sequence of nullable <see cref="T:System.Double" /> values that are obtained by invoking a transform function on each element of the input sequence.
+            Computes the average of an observable sequence of nullable <see cref="T:System.Double" /> values that are obtained by invoking a tr function on each element of the input sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to calculate the average of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the average of the sequence of values, or null if the source sequence is empty or contains only values that are null.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <exception cref="T:System.InvalidOperationException">(Asynchronous) The source sequence is empty.</exception>
@@ -3665,11 +3665,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Observable.Average``1(System.IObservable{``0},System.Func{``0,System.Nullable{System.Single}})">
             <summary>
-            Computes the average of an observable sequence of nullable <see cref="T:System.Single" /> values that are obtained by invoking a transform function on each element of the input sequence.
+            Computes the average of an observable sequence of nullable <see cref="T:System.Single" /> values that are obtained by invoking a tr function on each element of the input sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to calculate the average of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the average of the sequence of values, or null if the source sequence is empty or contains only values that are null.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <exception cref="T:System.InvalidOperationException">(Asynchronous) The source sequence is empty.</exception>
@@ -3677,11 +3677,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Observable.Average``1(System.IObservable{``0},System.Func{``0,System.Nullable{System.Int32}})">
             <summary>
-            Computes the average of an observable sequence of nullable <see cref="T:System.Int32" /> values that are obtained by invoking a transform function on each element of the input sequence.
+            Computes the average of an observable sequence of nullable <see cref="T:System.Int32" /> values that are obtained by invoking a tr function on each element of the input sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to calculate the average of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the average of the sequence of values, or null if the source sequence is empty or contains only values that are null.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <exception cref="T:System.InvalidOperationException">(Asynchronous) The source sequence is empty.</exception>
@@ -3690,11 +3690,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Observable.Average``1(System.IObservable{``0},System.Func{``0,System.Nullable{System.Int64}})">
             <summary>
-            Computes the average of an observable sequence of nullable <see cref="T:System.Int64" /> values that are obtained by invoking a transform function on each element of the input sequence.
+            Computes the average of an observable sequence of nullable <see cref="T:System.Int64" /> values that are obtained by invoking a tr function on each element of the input sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to calculate the average of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the average of the sequence of values, or null if the source sequence is empty or contains only values that are null.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <exception cref="T:System.InvalidOperationException">(Asynchronous) The source sequence is empty.</exception>
@@ -3993,24 +3993,24 @@
         </member>
         <member name="M:System.Reactive.Linq.Observable.Max``2(System.IObservable{``0},System.Func{``0,``1})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the maximum value.
+            Invokes a tr function on each element of a sequence and returns the maximum value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <typeparam name="TResult">The type of the objects derived from the elements in the source sequence to determine the maximum of.</typeparam>
             <param name="source">An observable sequence to determine the minimum element of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value that corresponds to the maximum element in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <remarks>The return type of this operator differs from the corresponding operator on IEnumerable in order to retain asynchronous behavior.</remarks>
         </member>
         <member name="M:System.Reactive.Linq.Observable.Max``2(System.IObservable{``0},System.Func{``0,``1},System.Collections.Generic.IComparer{``1})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the maximum value according to the specified comparer.
+            Invokes a tr function on each element of a sequence and returns the maximum value according to the specified comparer.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <typeparam name="TResult">The type of the objects derived from the elements in the source sequence to determine the maximum of.</typeparam>
             <param name="source">An observable sequence to determine the minimum element of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <param name="comparer">Comparer used to compare elements.</param>
             <returns>An observable sequence containing a single element with the value that corresponds to the maximum element in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> or <paramref name="comparer"/> is null.</exception>
@@ -4018,110 +4018,110 @@
         </member>
         <member name="M:System.Reactive.Linq.Observable.Max``1(System.IObservable{``0},System.Func{``0,System.Double})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the maximum <see cref="T:System.Double" /> value.
+            Invokes a tr function on each element of a sequence and returns the maximum <see cref="T:System.Double" /> value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to determine the maximum value of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value of type <see cref="T:System.Double" /> that corresponds to the maximum value in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <remarks>The return type of this operator differs from the corresponding operator on IEnumerable in order to retain asynchronous behavior.</remarks>
         </member>
         <member name="M:System.Reactive.Linq.Observable.Max``1(System.IObservable{``0},System.Func{``0,System.Single})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the maximum <see cref="T:System.Single" /> value.
+            Invokes a tr function on each element of a sequence and returns the maximum <see cref="T:System.Single" /> value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to determine the maximum value of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value of type <see cref="T:System.Single" /> that corresponds to the maximum value in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <remarks>The return type of this operator differs from the corresponding operator on IEnumerable in order to retain asynchronous behavior.</remarks>
         </member>
         <member name="M:System.Reactive.Linq.Observable.Max``1(System.IObservable{``0},System.Func{``0,System.Decimal})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the maximum <see cref="T:System.Decimal" /> value.
+            Invokes a tr function on each element of a sequence and returns the maximum <see cref="T:System.Decimal" /> value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to determine the maximum value of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value of type <see cref="T:System.Decimal" /> that corresponds to the maximum value in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <remarks>The return type of this operator differs from the corresponding operator on IEnumerable in order to retain asynchronous behavior.</remarks>
         </member>
         <member name="M:System.Reactive.Linq.Observable.Max``1(System.IObservable{``0},System.Func{``0,System.Int32})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the maximum <see cref="T:System.Int32" /> value.
+            Invokes a tr function on each element of a sequence and returns the maximum <see cref="T:System.Int32" /> value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to determine the maximum value of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value of type <see cref="T:System.Int32" /> that corresponds to the maximum value in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <remarks>The return type of this operator differs from the corresponding operator on IEnumerable in order to retain asynchronous behavior.</remarks>
         </member>
         <member name="M:System.Reactive.Linq.Observable.Max``1(System.IObservable{``0},System.Func{``0,System.Int64})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the maximum <see cref="T:System.Int64" /> value.
+            Invokes a tr function on each element of a sequence and returns the maximum <see cref="T:System.Int64" /> value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to determine the maximum value of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value of type <see cref="T:System.Int64" /> that corresponds to the maximum value in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <remarks>The return type of this operator differs from the corresponding operator on IEnumerable in order to retain asynchronous behavior.</remarks>
         </member>
         <member name="M:System.Reactive.Linq.Observable.Max``1(System.IObservable{``0},System.Func{``0,System.Nullable{System.Double}})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the maximum nullable <see cref="T:System.Double" /> value.
+            Invokes a tr function on each element of a sequence and returns the maximum nullable <see cref="T:System.Double" /> value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to determine the maximum value of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value of type <see cref="T:System.Nullable`1" /> that corresponds to the maximum value in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <remarks>The return type of this operator differs from the corresponding operator on IEnumerable in order to retain asynchronous behavior.</remarks>
         </member>
         <member name="M:System.Reactive.Linq.Observable.Max``1(System.IObservable{``0},System.Func{``0,System.Nullable{System.Single}})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the maximum nullable <see cref="T:System.Single" /> value.
+            Invokes a tr function on each element of a sequence and returns the maximum nullable <see cref="T:System.Single" /> value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to determine the maximum value of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value of type <see cref="T:System.Nullable`1" /> that corresponds to the maximum value in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <remarks>The return type of this operator differs from the corresponding operator on IEnumerable in order to retain asynchronous behavior.</remarks>
         </member>
         <member name="M:System.Reactive.Linq.Observable.Max``1(System.IObservable{``0},System.Func{``0,System.Nullable{System.Decimal}})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the maximum nullable <see cref="T:System.Decimal" /> value.
+            Invokes a tr function on each element of a sequence and returns the maximum nullable <see cref="T:System.Decimal" /> value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to determine the maximum value of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value of type <see cref="T:System.Nullable`1" /> that corresponds to the maximum value in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <remarks>The return type of this operator differs from the corresponding operator on IEnumerable in order to retain asynchronous behavior.</remarks>
         </member>
         <member name="M:System.Reactive.Linq.Observable.Max``1(System.IObservable{``0},System.Func{``0,System.Nullable{System.Int32}})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the maximum nullable <see cref="T:System.Int32" /> value.
+            Invokes a tr function on each element of a sequence and returns the maximum nullable <see cref="T:System.Int32" /> value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to determine the maximum value of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value of type <see cref="T:System.Nullable`1" /> that corresponds to the maximum value in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <remarks>The return type of this operator differs from the corresponding operator on IEnumerable in order to retain asynchronous behavior.</remarks>
         </member>
         <member name="M:System.Reactive.Linq.Observable.Max``1(System.IObservable{``0},System.Func{``0,System.Nullable{System.Int64}})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the maximum nullable <see cref="T:System.Int64" /> value.
+            Invokes a tr function on each element of a sequence and returns the maximum nullable <see cref="T:System.Int64" /> value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to determine the maximum value of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value of type <see cref="T:System.Nullable`1" /> that corresponds to the maximum value in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <remarks>The return type of this operator differs from the corresponding operator on IEnumerable in order to retain asynchronous behavior.</remarks>
@@ -4264,24 +4264,24 @@
         </member>
         <member name="M:System.Reactive.Linq.Observable.Min``2(System.IObservable{``0},System.Func{``0,``1})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the minimum value.
+            Invokes a tr function on each element of a sequence and returns the minimum value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <typeparam name="TResult">The type of the objects derived from the elements in the source sequence to determine the minimum of.</typeparam>
             <param name="source">An observable sequence to determine the minimum element of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value that corresponds to the minimum element in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <remarks>The return type of this operator differs from the corresponding operator on IEnumerable in order to retain asynchronous behavior.</remarks>
         </member>
         <member name="M:System.Reactive.Linq.Observable.Min``2(System.IObservable{``0},System.Func{``0,``1},System.Collections.Generic.IComparer{``1})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the minimum value according to the specified comparer.
+            Invokes a tr function on each element of a sequence and returns the minimum value according to the specified comparer.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <typeparam name="TResult">The type of the objects derived from the elements in the source sequence to determine the minimum of.</typeparam>
             <param name="source">An observable sequence to determine the minimum element of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <param name="comparer">Comparer used to compare elements.</param>
             <returns>An observable sequence containing a single element with the value that corresponds to the minimum element in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> or <paramref name="comparer"/> is null.</exception>
@@ -4289,110 +4289,110 @@
         </member>
         <member name="M:System.Reactive.Linq.Observable.Min``1(System.IObservable{``0},System.Func{``0,System.Double})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the minimum <see cref="T:System.Double" /> value.
+            Invokes a tr function on each element of a sequence and returns the minimum <see cref="T:System.Double" /> value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to determine the minimum value of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value of type <see cref="T:System.Double" /> that corresponds to the minimum value in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <remarks>The return type of this operator differs from the corresponding operator on IEnumerable in order to retain asynchronous behavior.</remarks>
         </member>
         <member name="M:System.Reactive.Linq.Observable.Min``1(System.IObservable{``0},System.Func{``0,System.Single})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the minimum <see cref="T:System.Single" /> value.
+            Invokes a tr function on each element of a sequence and returns the minimum <see cref="T:System.Single" /> value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to determine the minimum value of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value of type <see cref="T:System.Single" /> that corresponds to the minimum value in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <remarks>The return type of this operator differs from the corresponding operator on IEnumerable in order to retain asynchronous behavior.</remarks>
         </member>
         <member name="M:System.Reactive.Linq.Observable.Min``1(System.IObservable{``0},System.Func{``0,System.Decimal})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the minimum <see cref="T:System.Decimal" /> value.
+            Invokes a tr function on each element of a sequence and returns the minimum <see cref="T:System.Decimal" /> value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to determine the minimum value of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value of type <see cref="T:System.Decimal" /> that corresponds to the minimum value in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <remarks>The return type of this operator differs from the corresponding operator on IEnumerable in order to retain asynchronous behavior.</remarks>
         </member>
         <member name="M:System.Reactive.Linq.Observable.Min``1(System.IObservable{``0},System.Func{``0,System.Int32})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the minimum <see cref="T:System.Int32" /> value.
+            Invokes a tr function on each element of a sequence and returns the minimum <see cref="T:System.Int32" /> value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to determine the minimum value of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value of type <see cref="T:System.Int32" /> that corresponds to the minimum value in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <remarks>The return type of this operator differs from the corresponding operator on IEnumerable in order to retain asynchronous behavior.</remarks>
         </member>
         <member name="M:System.Reactive.Linq.Observable.Min``1(System.IObservable{``0},System.Func{``0,System.Int64})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the minimum <see cref="T:System.Int64" /> value.
+            Invokes a tr function on each element of a sequence and returns the minimum <see cref="T:System.Int64" /> value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to determine the minimum value of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value of type <see cref="T:System.Int64" /> that corresponds to the minimum value in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <remarks>The return type of this operator differs from the corresponding operator on IEnumerable in order to retain asynchronous behavior.</remarks>
         </member>
         <member name="M:System.Reactive.Linq.Observable.Min``1(System.IObservable{``0},System.Func{``0,System.Nullable{System.Double}})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the minimum nullable <see cref="T:System.Double" /> value.
+            Invokes a tr function on each element of a sequence and returns the minimum nullable <see cref="T:System.Double" /> value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to determine the minimum value of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value of type <see cref="T:System.Nullable`1" /> that corresponds to the minimum value in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <remarks>The return type of this operator differs from the corresponding operator on IEnumerable in order to retain asynchronous behavior.</remarks>
         </member>
         <member name="M:System.Reactive.Linq.Observable.Min``1(System.IObservable{``0},System.Func{``0,System.Nullable{System.Single}})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the minimum nullable <see cref="T:System.Single" /> value.
+            Invokes a tr function on each element of a sequence and returns the minimum nullable <see cref="T:System.Single" /> value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to determine the minimum value of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value of type <see cref="T:System.Nullable`1" /> that corresponds to the minimum value in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <remarks>The return type of this operator differs from the corresponding operator on IEnumerable in order to retain asynchronous behavior.</remarks>
         </member>
         <member name="M:System.Reactive.Linq.Observable.Min``1(System.IObservable{``0},System.Func{``0,System.Nullable{System.Decimal}})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the minimum nullable <see cref="T:System.Decimal" /> value.
+            Invokes a tr function on each element of a sequence and returns the minimum nullable <see cref="T:System.Decimal" /> value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to determine the minimum value of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value of type <see cref="T:System.Nullable`1" /> that corresponds to the minimum value in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <remarks>The return type of this operator differs from the corresponding operator on IEnumerable in order to retain asynchronous behavior.</remarks>
         </member>
         <member name="M:System.Reactive.Linq.Observable.Min``1(System.IObservable{``0},System.Func{``0,System.Nullable{System.Int32}})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the minimum nullable <see cref="T:System.Int32" /> value.
+            Invokes a tr function on each element of a sequence and returns the minimum nullable <see cref="T:System.Int32" /> value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to determine the minimum value of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value of type <see cref="T:System.Nullable`1" /> that corresponds to the minimum value in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <remarks>The return type of this operator differs from the corresponding operator on IEnumerable in order to retain asynchronous behavior.</remarks>
         </member>
         <member name="M:System.Reactive.Linq.Observable.Min``1(System.IObservable{``0},System.Func{``0,System.Nullable{System.Int64}})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the minimum nullable <see cref="T:System.Int64" /> value.
+            Invokes a tr function on each element of a sequence and returns the minimum nullable <see cref="T:System.Int64" /> value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to determine the minimum value of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value of type <see cref="T:System.Nullable`1" /> that corresponds to the minimum value in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <remarks>The return type of this operator differs from the corresponding operator on IEnumerable in order to retain asynchronous behavior.</remarks>
@@ -4608,33 +4608,33 @@
         </member>
         <member name="M:System.Reactive.Linq.Observable.Sum``1(System.IObservable{``0},System.Func{``0,System.Double})">
             <summary>
-            Computes the sum of a sequence of <see cref="T:System.Double" /> values that are obtained by invoking a transform function on each element of the input sequence.
+            Computes the sum of a sequence of <see cref="T:System.Double" /> values that are obtained by invoking a tr function on each element of the input sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values that are used to calculate a sum.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the sum of the values in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <remarks>The return type of this operator differs from the corresponding operator on IEnumerable in order to retain asynchronous behavior.</remarks>
         </member>
         <member name="M:System.Reactive.Linq.Observable.Sum``1(System.IObservable{``0},System.Func{``0,System.Single})">
             <summary>
-            Computes the sum of a sequence of <see cref="T:System.Single" /> values that are obtained by invoking a transform function on each element of the input sequence.
+            Computes the sum of a sequence of <see cref="T:System.Single" /> values that are obtained by invoking a tr function on each element of the input sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values that are used to calculate a sum.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the sum of the values in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <remarks>The return type of this operator differs from the corresponding operator on IEnumerable in order to retain asynchronous behavior.</remarks>
         </member>
         <member name="M:System.Reactive.Linq.Observable.Sum``1(System.IObservable{``0},System.Func{``0,System.Decimal})">
             <summary>
-            Computes the sum of a sequence of <see cref="T:System.Decimal" /> values that are obtained by invoking a transform function on each element of the input sequence.
+            Computes the sum of a sequence of <see cref="T:System.Decimal" /> values that are obtained by invoking a tr function on each element of the input sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values that are used to calculate a sum.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the sum of the values in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <exception cref="T:System.OverflowException">(Asynchronous) The sum of the projected values for the elements in the source sequence is larger than <see cref="F:System.Decimal.MaxValue"/>.</exception>
@@ -4642,11 +4642,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Observable.Sum``1(System.IObservable{``0},System.Func{``0,System.Int32})">
             <summary>
-            Computes the sum of a sequence of <see cref="T:System.Int32" /> values that are obtained by invoking a transform function on each element of the input sequence.
+            Computes the sum of a sequence of <see cref="T:System.Int32" /> values that are obtained by invoking a tr function on each element of the input sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values that are used to calculate a sum.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the sum of the values in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <exception cref="T:System.OverflowException">(Asynchronous) The sum of the projected values for the elements in the source sequence is larger than <see cref="F:System.Int32.MaxValue"/>.</exception>
@@ -4654,11 +4654,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Observable.Sum``1(System.IObservable{``0},System.Func{``0,System.Int64})">
             <summary>
-            Computes the sum of a sequence of <see cref="T:System.Int64" /> values that are obtained by invoking a transform function on each element of the input sequence.
+            Computes the sum of a sequence of <see cref="T:System.Int64" /> values that are obtained by invoking a tr function on each element of the input sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values that are used to calculate a sum.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the sum of the values in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <exception cref="T:System.OverflowException">(Asynchronous) The sum of the projected values for the elements in the source sequence is larger than <see cref="F:System.Int64.MaxValue"/>.</exception>
@@ -4666,33 +4666,33 @@
         </member>
         <member name="M:System.Reactive.Linq.Observable.Sum``1(System.IObservable{``0},System.Func{``0,System.Nullable{System.Double}})">
             <summary>
-            Computes the sum of a sequence of nullable <see cref="T:System.Double" /> values that are obtained by invoking a transform function on each element of the input sequence.
+            Computes the sum of a sequence of nullable <see cref="T:System.Double" /> values that are obtained by invoking a tr function on each element of the input sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values that are used to calculate a sum.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the sum of the values in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <remarks>The return type of this operator differs from the corresponding operator on IEnumerable in order to retain asynchronous behavior.</remarks>
         </member>
         <member name="M:System.Reactive.Linq.Observable.Sum``1(System.IObservable{``0},System.Func{``0,System.Nullable{System.Single}})">
             <summary>
-            Computes the sum of a sequence of nullable <see cref="T:System.Single" /> values that are obtained by invoking a transform function on each element of the input sequence.
+            Computes the sum of a sequence of nullable <see cref="T:System.Single" /> values that are obtained by invoking a tr function on each element of the input sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values that are used to calculate a sum.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the sum of the values in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <remarks>The return type of this operator differs from the corresponding operator on IEnumerable in order to retain asynchronous behavior.</remarks>
         </member>
         <member name="M:System.Reactive.Linq.Observable.Sum``1(System.IObservable{``0},System.Func{``0,System.Nullable{System.Decimal}})">
             <summary>
-            Computes the sum of a sequence of nullable <see cref="T:System.Decimal" /> values that are obtained by invoking a transform function on each element of the input sequence.
+            Computes the sum of a sequence of nullable <see cref="T:System.Decimal" /> values that are obtained by invoking a tr function on each element of the input sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values that are used to calculate a sum.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the sum of the values in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <exception cref="T:System.OverflowException">(Asynchronous) The sum of the projected values for the elements in the source sequence is larger than <see cref="F:System.Decimal.MaxValue"/>.</exception>
@@ -4700,11 +4700,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Observable.Sum``1(System.IObservable{``0},System.Func{``0,System.Nullable{System.Int32}})">
             <summary>
-            Computes the sum of a sequence of nullable <see cref="T:System.Int32" /> values that are obtained by invoking a transform function on each element of the input sequence.
+            Computes the sum of a sequence of nullable <see cref="T:System.Int32" /> values that are obtained by invoking a tr function on each element of the input sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values that are used to calculate a sum.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the sum of the values in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <exception cref="T:System.OverflowException">(Asynchronous) The sum of the projected values for the elements in the source sequence is larger than <see cref="F:System.Int32.MaxValue"/>.</exception>
@@ -4712,11 +4712,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Observable.Sum``1(System.IObservable{``0},System.Func{``0,System.Nullable{System.Int64}})">
             <summary>
-            Computes the sum of a sequence of nullable <see cref="T:System.Int64" /> values that are obtained by invoking a transform function on each element of the input sequence.
+            Computes the sum of a sequence of nullable <see cref="T:System.Int64" /> values that are obtained by invoking a tr function on each element of the input sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values that are used to calculate a sum.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the sum of the values in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <exception cref="T:System.OverflowException">(Asynchronous) The sum of the projected values for the elements in the source sequence is larger than <see cref="F:System.Int64.MaxValue"/>.</exception>
@@ -4766,7 +4766,7 @@
             <typeparam name="TElement">The type of the dictionary value computed for each element in the source sequence.</typeparam>
             <param name="source">An observable sequence to create a dictionary for.</param>
             <param name="keySelector">A function to extract a key from each element.</param>
-            <param name="elementSelector">A transform function to produce a result element value from each element.</param>
+            <param name="elementSelector">A tr function to produce a result element value from each element.</param>
             <returns>An observable sequence containing a single element with a dictionary mapping unique key values onto the corresponding source sequence's element.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="keySelector"/> or <paramref name="elementSelector"/> is null.</exception>
             <remarks>The return type of this operator differs from the corresponding operator on IEnumerable in order to retain asynchronous behavior.</remarks>
@@ -4780,7 +4780,7 @@
             <typeparam name="TElement">The type of the dictionary value computed for each element in the source sequence.</typeparam>
             <param name="source">An observable sequence to create a dictionary for.</param>
             <param name="keySelector">A function to extract a key from each element.</param>
-            <param name="elementSelector">A transform function to produce a result element value from each element.</param>
+            <param name="elementSelector">A tr function to produce a result element value from each element.</param>
             <param name="comparer">An equality comparer to compare keys.</param>
             <returns>An observable sequence containing a single element with a dictionary mapping unique key values onto the corresponding source sequence's element.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="keySelector"/> or <paramref name="elementSelector"/> or <paramref name="comparer"/> is null.</exception>
@@ -4830,7 +4830,7 @@
             <typeparam name="TElement">The type of the lookup value computed for each element in the source sequence.</typeparam>
             <param name="source">An observable sequence to create a lookup for.</param>
             <param name="keySelector">A function to extract a key from each element.</param>
-            <param name="elementSelector">A transform function to produce a result element value from each element.</param>
+            <param name="elementSelector">A tr function to produce a result element value from each element.</param>
             <returns>An observable sequence containing a single element with a lookup mapping unique key values onto the corresponding source sequence's elements.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="keySelector"/> or <paramref name="elementSelector"/> is null.</exception>
             <remarks>The return type of this operator differs from the corresponding operator on IEnumerable in order to retain asynchronous behavior.</remarks>
@@ -4844,7 +4844,7 @@
             <typeparam name="TElement">The type of the lookup value computed for each element in the source sequence.</typeparam>
             <param name="source">An observable sequence to create a lookup for.</param>
             <param name="keySelector">A function to extract a key from each element.</param>
-            <param name="elementSelector">A transform function to produce a result element value from each element.</param>
+            <param name="elementSelector">A tr function to produce a result element value from each element.</param>
             <param name="comparer">An equality comparer to compare keys.</param>
             <returns>An observable sequence containing a single element with a lookup mapping unique key values onto the corresponding source sequence's elements.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="keySelector"/> or <paramref name="elementSelector"/> or <paramref name="comparer"/> is null.</exception>
@@ -11237,9 +11237,9 @@
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <typeparam name="TResult">The type of the elements in the result sequence, obtained by running the selector function for each element in the source sequence.</typeparam>
-            <param name="source">A sequence of elements to invoke a transform function on.</param>
-            <param name="selector">A transform function to apply to each source element.</param>
-            <returns>An observable sequence whose elements are the result of invoking the transform function on each element of source.</returns>
+            <param name="source">A sequence of elements to invoke a tr function on.</param>
+            <param name="selector">A tr function to apply to each source element.</param>
+            <returns>An observable sequence whose elements are the result of invoking the tr function on each element of source.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
         </member>
         <member name="M:System.Reactive.Linq.Observable.Select``2(System.IObservable{``0},System.Func{``0,System.Int32,``1})">
@@ -11248,9 +11248,9 @@
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <typeparam name="TResult">The type of the elements in the result sequence, obtained by running the selector function for each element in the source sequence.</typeparam>
-            <param name="source">A sequence of elements to invoke a transform function on.</param>
-            <param name="selector">A transform function to apply to each source element; the second parameter of the function represents the index of the source element.</param>
-            <returns>An observable sequence whose elements are the result of invoking the transform function on each element of source.</returns>
+            <param name="source">A sequence of elements to invoke a tr function on.</param>
+            <param name="selector">A tr function to apply to each source element; the second parameter of the function represents the index of the source element.</param>
+            <returns>An observable sequence whose elements are the result of invoking the tr function on each element of source.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
         </member>
         <member name="M:System.Reactive.Linq.Observable.SelectMany``2(System.IObservable{``0},System.IObservable{``1})">
@@ -11271,8 +11271,8 @@
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <typeparam name="TResult">The type of the elements in the projected inner sequences and the elements in the merged result sequence.</typeparam>
             <param name="source">An observable sequence of elements to project.</param>
-            <param name="selector">A transform function to apply to each element.</param>
-            <returns>An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.</returns>
+            <param name="selector">A tr function to apply to each element.</param>
+            <returns>An observable sequence whose elements are the result of invoking the one-to-many tr function on each element of the input sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
         </member>
         <member name="M:System.Reactive.Linq.Observable.SelectMany``2(System.IObservable{``0},System.Func{``0,System.Int32,System.IObservable{``1}})">
@@ -11282,8 +11282,8 @@
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <typeparam name="TResult">The type of the elements in the projected inner sequences and the elements in the merged result sequence.</typeparam>
             <param name="source">An observable sequence of elements to project.</param>
-            <param name="selector">A transform function to apply to each element; the second parameter of the function represents the index of the source element.</param>
-            <returns>An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.</returns>
+            <param name="selector">A tr function to apply to each element; the second parameter of the function represents the index of the source element.</param>
+            <returns>An observable sequence whose elements are the result of invoking the one-to-many tr function on each element of the input sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
         </member>
         <member name="M:System.Reactive.Linq.Observable.SelectMany``2(System.IObservable{``0},System.Func{``0,System.Threading.Tasks.Task{``1}})">
@@ -11293,7 +11293,7 @@
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <typeparam name="TResult">The type of the result produced by the projected tasks and the elements in the merged result sequence.</typeparam>
             <param name="source">An observable sequence of elements to project.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence whose elements are the result of the tasks executed for each element of the input sequence.</returns>
             <remarks>This overload supports composition of observable sequences and tasks, without requiring manual conversion of the tasks to observable sequences using <see cref="M:System.Reactive.Threading.Tasks.TaskObservableExtensions.ToObservable``1(System.Threading.Tasks.Task{``0})"/>.</remarks>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
@@ -11305,7 +11305,7 @@
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <typeparam name="TResult">The type of the result produced by the projected tasks and the elements in the merged result sequence.</typeparam>
             <param name="source">An observable sequence of elements to project.</param>
-            <param name="selector">A transform function to apply to each element; the second parameter of the function represents the index of the source element.</param>
+            <param name="selector">A tr function to apply to each element; the second parameter of the function represents the index of the source element.</param>
             <returns>An observable sequence whose elements are the result of the tasks executed for each element of the input sequence.</returns>
             <remarks>This overload supports composition of observable sequences and tasks, without requiring manual conversion of the tasks to observable sequences using <see cref="M:System.Reactive.Threading.Tasks.TaskObservableExtensions.ToObservable``1(System.Threading.Tasks.Task{``0})"/>.</remarks>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
@@ -11317,7 +11317,7 @@
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <typeparam name="TResult">The type of the result produced by the projected tasks and the elements in the merged result sequence.</typeparam>
             <param name="source">An observable sequence of elements to project.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence whose elements are the result of the tasks executed for each element of the input sequence.</returns>
             <remarks>This overload supports composition of observable sequences and tasks, without requiring manual conversion of the tasks to observable sequences using <see cref="M:System.Reactive.Threading.Tasks.TaskObservableExtensions.ToObservable``1(System.Threading.Tasks.Task{``0})"/>.</remarks>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
@@ -11329,7 +11329,7 @@
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <typeparam name="TResult">The type of the result produced by the projected tasks and the elements in the merged result sequence.</typeparam>
             <param name="source">An observable sequence of elements to project.</param>
-            <param name="selector">A transform function to apply to each element; the second parameter of the function represents the index of the source element.</param>
+            <param name="selector">A tr function to apply to each element; the second parameter of the function represents the index of the source element.</param>
             <returns>An observable sequence whose elements are the result of the tasks executed for each element of the input sequence.</returns>
             <remarks>This overload supports composition of observable sequences and tasks, without requiring manual conversion of the tasks to observable sequences using <see cref="M:System.Reactive.Threading.Tasks.TaskObservableExtensions.ToObservable``1(System.Threading.Tasks.Task{``0})"/>.</remarks>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
@@ -11342,9 +11342,9 @@
             <typeparam name="TCollection">The type of the elements in the projected intermediate sequences.</typeparam>
             <typeparam name="TResult">The type of the elements in the result sequence, obtained by using the selector to combine source sequence elements with their corresponding intermediate sequence elements.</typeparam>
             <param name="source">An observable sequence of elements to project.</param>
-            <param name="collectionSelector">A transform function to apply to each element.</param>
-            <param name="resultSelector">A transform function to apply to each element of the intermediate sequence.</param>
-            <returns>An observable sequence whose elements are the result of invoking the one-to-many transform function collectionSelector on each element of the input sequence and then mapping each of those sequence elements and their corresponding source element to a result element.</returns>
+            <param name="collectionSelector">A tr function to apply to each element.</param>
+            <param name="resultSelector">A tr function to apply to each element of the intermediate sequence.</param>
+            <returns>An observable sequence whose elements are the result of invoking the one-to-many tr function collectionSelector on each element of the input sequence and then mapping each of those sequence elements and their corresponding source element to a result element.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="collectionSelector"/> or <paramref name="resultSelector"/> is null.</exception>
         </member>
         <member name="M:System.Reactive.Linq.Observable.SelectMany``3(System.IObservable{``0},System.Func{``0,System.Int32,System.IObservable{``1}},System.Func{``0,System.Int32,``1,System.Int32,``2})">
@@ -11355,9 +11355,9 @@
             <typeparam name="TCollection">The type of the elements in the projected intermediate sequences.</typeparam>
             <typeparam name="TResult">The type of the elements in the result sequence, obtained by using the selector to combine source sequence elements with their corresponding intermediate sequence elements.</typeparam>
             <param name="source">An observable sequence of elements to project.</param>
-            <param name="collectionSelector">A transform function to apply to each element; the second parameter of the function represents the index of the source element.</param>
-            <param name="resultSelector">A transform function to apply to each element of the intermediate sequence; the second parameter of the function represents the index of the source element and the fourth parameter represents the index of the intermediate element.</param>
-            <returns>An observable sequence whose elements are the result of invoking the one-to-many transform function collectionSelector on each element of the input sequence and then mapping each of those sequence elements and their corresponding source element to a result element.</returns>
+            <param name="collectionSelector">A tr function to apply to each element; the second parameter of the function represents the index of the source element.</param>
+            <param name="resultSelector">A tr function to apply to each element of the intermediate sequence; the second parameter of the function represents the index of the source element and the fourth parameter represents the index of the intermediate element.</param>
+            <returns>An observable sequence whose elements are the result of invoking the one-to-many tr function collectionSelector on each element of the input sequence and then mapping each of those sequence elements and their corresponding source element to a result element.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="collectionSelector"/> or <paramref name="resultSelector"/> is null.</exception>
         </member>
         <member name="M:System.Reactive.Linq.Observable.SelectMany``3(System.IObservable{``0},System.Func{``0,System.Threading.Tasks.Task{``1}},System.Func{``0,``1,``2})">
@@ -11368,8 +11368,8 @@
             <typeparam name="TTaskResult">The type of the results produced by the projected intermediate tasks.</typeparam>
             <typeparam name="TResult">The type of the elements in the result sequence, obtained by using the selector to combine source sequence elements with their corresponding intermediate task results.</typeparam>
             <param name="source">An observable sequence of elements to project.</param>
-            <param name="taskSelector">A transform function to apply to each element.</param>
-            <param name="resultSelector">A transform function to apply to each element of the intermediate sequence.</param>
+            <param name="taskSelector">A tr function to apply to each element.</param>
+            <param name="resultSelector">A tr function to apply to each element of the intermediate sequence.</param>
             <returns>An observable sequence whose elements are the result of obtaining a task for each element of the input sequence and then mapping the task's result and its corresponding source element to a result element.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="taskSelector"/> or <paramref name="resultSelector"/> is null.</exception>
             <remarks>This overload supports using LINQ query comprehension syntax in C# and Visual Basic to compose observable sequences and tasks, without requiring manual conversion of the tasks to observable sequences using <see cref="M:System.Reactive.Threading.Tasks.TaskObservableExtensions.ToObservable``1(System.Threading.Tasks.Task{``0})"/>.</remarks>
@@ -11382,8 +11382,8 @@
             <typeparam name="TTaskResult">The type of the results produced by the projected intermediate tasks.</typeparam>
             <typeparam name="TResult">The type of the elements in the result sequence, obtained by using the selector to combine source sequence elements with their corresponding intermediate task results.</typeparam>
             <param name="source">An observable sequence of elements to project.</param>
-            <param name="taskSelector">A transform function to apply to each element; the second parameter of the function represents the index of the source element.</param>
-            <param name="resultSelector">A transform function to apply to each element of the intermediate sequence; the second parameter of the function represents the index of the source element.</param>
+            <param name="taskSelector">A tr function to apply to each element; the second parameter of the function represents the index of the source element.</param>
+            <param name="resultSelector">A tr function to apply to each element of the intermediate sequence; the second parameter of the function represents the index of the source element.</param>
             <returns>An observable sequence whose elements are the result of obtaining a task for each element of the input sequence and then mapping the task's result and its corresponding source element to a result element.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="taskSelector"/> or <paramref name="resultSelector"/> is null.</exception>
             <remarks>This overload supports using LINQ query comprehension syntax in C# and Visual Basic to compose observable sequences and tasks, without requiring manual conversion of the tasks to observable sequences using <see cref="M:System.Reactive.Threading.Tasks.TaskObservableExtensions.ToObservable``1(System.Threading.Tasks.Task{``0})"/>.</remarks>
@@ -11396,8 +11396,8 @@
             <typeparam name="TTaskResult">The type of the results produced by the projected intermediate tasks.</typeparam>
             <typeparam name="TResult">The type of the elements in the result sequence, obtained by using the selector to combine source sequence elements with their corresponding intermediate task results.</typeparam>
             <param name="source">An observable sequence of elements to project.</param>
-            <param name="taskSelector">A transform function to apply to each element.</param>
-            <param name="resultSelector">A transform function to apply to each element of the intermediate sequence.</param>
+            <param name="taskSelector">A tr function to apply to each element.</param>
+            <param name="resultSelector">A tr function to apply to each element of the intermediate sequence.</param>
             <returns>An observable sequence whose elements are the result of obtaining a task for each element of the input sequence and then mapping the task's result and its corresponding source element to a result element.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="taskSelector"/> or <paramref name="resultSelector"/> is null.</exception>
             <remarks>This overload supports using LINQ query comprehension syntax in C# and Visual Basic to compose observable sequences and tasks, without requiring manual conversion of the tasks to observable sequences using <see cref="M:System.Reactive.Threading.Tasks.TaskObservableExtensions.ToObservable``1(System.Threading.Tasks.Task{``0})"/>.</remarks>
@@ -11410,8 +11410,8 @@
             <typeparam name="TTaskResult">The type of the results produced by the projected intermediate tasks.</typeparam>
             <typeparam name="TResult">The type of the elements in the result sequence, obtained by using the selector to combine source sequence elements with their corresponding intermediate task results.</typeparam>
             <param name="source">An observable sequence of elements to project.</param>
-            <param name="taskSelector">A transform function to apply to each element; the second parameter of the function represents the index of the source element.</param>
-            <param name="resultSelector">A transform function to apply to each element of the intermediate sequence; the second parameter of the function represents the index of the source element.</param>
+            <param name="taskSelector">A tr function to apply to each element; the second parameter of the function represents the index of the source element.</param>
+            <param name="resultSelector">A tr function to apply to each element of the intermediate sequence; the second parameter of the function represents the index of the source element.</param>
             <returns>An observable sequence whose elements are the result of obtaining a task for each element of the input sequence and then mapping the task's result and its corresponding source element to a result element.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="taskSelector"/> or <paramref name="resultSelector"/> is null.</exception>
             <remarks>This overload supports using LINQ query comprehension syntax in C# and Visual Basic to compose observable sequences and tasks, without requiring manual conversion of the tasks to observable sequences using <see cref="M:System.Reactive.Threading.Tasks.TaskObservableExtensions.ToObservable``1(System.Threading.Tasks.Task{``0})"/>.</remarks>
@@ -11423,10 +11423,10 @@
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <typeparam name="TResult">The type of the elements in the projected inner sequences and the elements in the merged result sequence.</typeparam>
             <param name="source">An observable sequence of notifications to project.</param>
-            <param name="onNext">A transform function to apply to each element.</param>
-            <param name="onError">A transform function to apply when an error occurs in the source sequence.</param>
-            <param name="onCompleted">A transform function to apply when the end of the source sequence is reached.</param>
-            <returns>An observable sequence whose elements are the result of invoking the one-to-many transform function corresponding to each notification in the input sequence.</returns>
+            <param name="onNext">A tr function to apply to each element.</param>
+            <param name="onError">A tr function to apply when an error occurs in the source sequence.</param>
+            <param name="onCompleted">A tr function to apply when the end of the source sequence is reached.</param>
+            <returns>An observable sequence whose elements are the result of invoking the one-to-many tr function corresponding to each notification in the input sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="onNext"/> or <paramref name="onError"/> or <paramref name="onCompleted"/> is null.</exception>
         </member>
         <member name="M:System.Reactive.Linq.Observable.SelectMany``2(System.IObservable{``0},System.Func{``0,System.Int32,System.IObservable{``1}},System.Func{System.Exception,System.IObservable{``1}},System.Func{System.IObservable{``1}})">
@@ -11436,10 +11436,10 @@
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <typeparam name="TResult">The type of the elements in the projected inner sequences and the elements in the merged result sequence.</typeparam>
             <param name="source">An observable sequence of notifications to project.</param>
-            <param name="onNext">A transform function to apply to each element; the second parameter of the function represents the index of the source element.</param>
-            <param name="onError">A transform function to apply when an error occurs in the source sequence.</param>
-            <param name="onCompleted">A transform function to apply when the end of the source sequence is reached.</param>
-            <returns>An observable sequence whose elements are the result of invoking the one-to-many transform function corresponding to each notification in the input sequence.</returns>
+            <param name="onNext">A tr function to apply to each element; the second parameter of the function represents the index of the source element.</param>
+            <param name="onError">A tr function to apply when an error occurs in the source sequence.</param>
+            <param name="onCompleted">A tr function to apply when the end of the source sequence is reached.</param>
+            <returns>An observable sequence whose elements are the result of invoking the one-to-many tr function corresponding to each notification in the input sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="onNext"/> or <paramref name="onError"/> or <paramref name="onCompleted"/> is null.</exception>
         </member>
         <member name="M:System.Reactive.Linq.Observable.SelectMany``2(System.IObservable{``0},System.Func{``0,System.Collections.Generic.IEnumerable{``1}})">
@@ -11449,8 +11449,8 @@
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <typeparam name="TResult">The type of the elements in the projected inner enumerable sequences and the elements in the merged result sequence.</typeparam>
             <param name="source">An observable sequence of elements to project.</param>
-            <param name="selector">A transform function to apply to each element.</param>
-            <returns>An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.</returns>
+            <param name="selector">A tr function to apply to each element.</param>
+            <returns>An observable sequence whose elements are the result of invoking the one-to-many tr function on each element of the input sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <remarks>The projected sequences are enumerated synchronously within the OnNext call of the source sequence. In order to do a concurrent, non-blocking merge, change the selector to return an observable sequence obtained using the <see cref="M:System.Reactive.Linq.Observable.ToObservable``1(System.Collections.Generic.IEnumerable{``0})"/> conversion.</remarks>
         </member>
@@ -11461,8 +11461,8 @@
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <typeparam name="TResult">The type of the elements in the projected inner enumerable sequences and the elements in the merged result sequence.</typeparam>
             <param name="source">An observable sequence of elements to project.</param>
-            <param name="selector">A transform function to apply to each element; the second parameter of the function represents the index of the source element.</param>
-            <returns>An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.</returns>
+            <param name="selector">A tr function to apply to each element; the second parameter of the function represents the index of the source element.</param>
+            <returns>An observable sequence whose elements are the result of invoking the one-to-many tr function on each element of the input sequence.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="selector"/> is null.</exception>
             <remarks>The projected sequences are enumerated synchronously within the OnNext call of the source sequence. In order to do a concurrent, non-blocking merge, change the selector to return an observable sequence obtained using the <see cref="M:System.Reactive.Linq.Observable.ToObservable``1(System.Collections.Generic.IEnumerable{``0})"/> conversion.</remarks>
         </member>
@@ -11474,9 +11474,9 @@
             <typeparam name="TCollection">The type of the elements in the projected intermediate enumerable sequences.</typeparam>
             <typeparam name="TResult">The type of the elements in the result sequence, obtained by using the selector to combine source sequence elements with their corresponding intermediate sequence elements.</typeparam>
             <param name="source">An observable sequence of elements to project.</param>
-            <param name="collectionSelector">A transform function to apply to each element.</param>
-            <param name="resultSelector">A transform function to apply to each element of the intermediate sequence.</param>
-            <returns>An observable sequence whose elements are the result of invoking the one-to-many transform function collectionSelector on each element of the input sequence and then mapping each of those sequence elements and their corresponding source element to a result element.</returns>
+            <param name="collectionSelector">A tr function to apply to each element.</param>
+            <param name="resultSelector">A tr function to apply to each element of the intermediate sequence.</param>
+            <returns>An observable sequence whose elements are the result of invoking the one-to-many tr function collectionSelector on each element of the input sequence and then mapping each of those sequence elements and their corresponding source element to a result element.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="collectionSelector"/> or <paramref name="resultSelector"/> is null.</exception>
             <remarks>The projected sequences are enumerated synchronously within the OnNext call of the source sequence. In order to do a concurrent, non-blocking merge, change the selector to return an observable sequence obtained using the <see cref="M:System.Reactive.Linq.Observable.ToObservable``1(System.Collections.Generic.IEnumerable{``0})"/> conversion.</remarks>
         </member>
@@ -11488,9 +11488,9 @@
             <typeparam name="TCollection">The type of the elements in the projected intermediate enumerable sequences.</typeparam>
             <typeparam name="TResult">The type of the elements in the result sequence, obtained by using the selector to combine source sequence elements with their corresponding intermediate sequence elements.</typeparam>
             <param name="source">An observable sequence of elements to project.</param>
-            <param name="collectionSelector">A transform function to apply to each element; the second parameter of the function represents the index of the source element.</param>
-            <param name="resultSelector">A transform function to apply to each element of the intermediate sequence; the second parameter of the function represents the index of the source element and the fourth parameter represents the index of the intermediate element.</param>
-            <returns>An observable sequence whose elements are the result of invoking the one-to-many transform function collectionSelector on each element of the input sequence and then mapping each of those sequence elements and their corresponding source element to a result element.</returns>
+            <param name="collectionSelector">A tr function to apply to each element; the second parameter of the function represents the index of the source element.</param>
+            <param name="resultSelector">A tr function to apply to each element of the intermediate sequence; the second parameter of the function represents the index of the source element and the fourth parameter represents the index of the intermediate element.</param>
+            <returns>An observable sequence whose elements are the result of invoking the one-to-many tr function collectionSelector on each element of the input sequence and then mapping each of those sequence elements and their corresponding source element to a result element.</returns>
             <exception cref="T:System.ArgumentNullException"><paramref name="source"/> or <paramref name="collectionSelector"/> or <paramref name="resultSelector"/> is null.</exception>
             <remarks>The projected sequences are enumerated synchronously within the OnNext call of the source sequence. In order to do a concurrent, non-blocking merge, change the selector to return an observable sequence obtained using the <see cref="M:System.Reactive.Linq.Observable.ToObservable``1(System.Collections.Generic.IEnumerable{``0})"/> conversion.</remarks>
         </member>
@@ -12899,7 +12899,7 @@
             <param name="source">An observable sequence to aggregate over.</param>
             <param name="seed">The initial accumulator value.</param>
             <param name="accumulator">An accumulator function to be invoked on each element.</param>
-            <param name="resultSelector">A function to transform the final accumulator value into the result value.</param>
+            <param name="resultSelector">A function to tr the final accumulator value into the result value.</param>
             <returns>An observable sequence containing a single element with the final accumulator value.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="accumulator" /> or <paramref name="resultSelector" /> is null.</exception>
@@ -13128,11 +13128,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Average``1(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Decimal}})">
             <summary>
-            Computes the average of an observable sequence of <see cref="T:System.Decimal" /> values that are obtained by invoking a transform function on each element of the input sequence.
+            Computes the average of an observable sequence of <see cref="T:System.Decimal" /> values that are obtained by invoking a tr function on each element of the input sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to calculate the average of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the average of the sequence of values.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
@@ -13142,11 +13142,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Average``1(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Double}})">
             <summary>
-            Computes the average of an observable sequence of <see cref="T:System.Double" /> values that are obtained by invoking a transform function on each element of the input sequence.
+            Computes the average of an observable sequence of <see cref="T:System.Double" /> values that are obtained by invoking a tr function on each element of the input sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to calculate the average of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the average of the sequence of values.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
@@ -13155,11 +13155,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Average``1(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Single}})">
             <summary>
-            Computes the average of an observable sequence of <see cref="T:System.Single" /> values that are obtained by invoking a transform function on each element of the input sequence.
+            Computes the average of an observable sequence of <see cref="T:System.Single" /> values that are obtained by invoking a tr function on each element of the input sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to calculate the average of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the average of the sequence of values.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
@@ -13168,11 +13168,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Average``1(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Int32}})">
             <summary>
-            Computes the average of an observable sequence of <see cref="T:System.Int32" /> values that are obtained by invoking a transform function on each element of the input sequence.
+            Computes the average of an observable sequence of <see cref="T:System.Int32" /> values that are obtained by invoking a tr function on each element of the input sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to calculate the average of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the average of the sequence of values.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
@@ -13182,11 +13182,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Average``1(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Int64}})">
             <summary>
-            Computes the average of an observable sequence of <see cref="T:System.Int64" /> values that are obtained by invoking a transform function on each element of the input sequence.
+            Computes the average of an observable sequence of <see cref="T:System.Int64" /> values that are obtained by invoking a tr function on each element of the input sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to calculate the average of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the average of the sequence of values.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
@@ -13196,11 +13196,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Average``1(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Nullable{System.Decimal}}})">
             <summary>
-            Computes the average of an observable sequence of nullable <see cref="T:System.Decimal" /> values that are obtained by invoking a transform function on each element of the input sequence.
+            Computes the average of an observable sequence of nullable <see cref="T:System.Decimal" /> values that are obtained by invoking a tr function on each element of the input sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to calculate the average of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the average of the sequence of values, or null if the source sequence is empty or contains only values that are null.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
@@ -13210,11 +13210,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Average``1(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Nullable{System.Double}}})">
             <summary>
-            Computes the average of an observable sequence of nullable <see cref="T:System.Double" /> values that are obtained by invoking a transform function on each element of the input sequence.
+            Computes the average of an observable sequence of nullable <see cref="T:System.Double" /> values that are obtained by invoking a tr function on each element of the input sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to calculate the average of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the average of the sequence of values, or null if the source sequence is empty or contains only values that are null.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
@@ -13223,11 +13223,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Average``1(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Nullable{System.Single}}})">
             <summary>
-            Computes the average of an observable sequence of nullable <see cref="T:System.Single" /> values that are obtained by invoking a transform function on each element of the input sequence.
+            Computes the average of an observable sequence of nullable <see cref="T:System.Single" /> values that are obtained by invoking a tr function on each element of the input sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to calculate the average of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the average of the sequence of values, or null if the source sequence is empty or contains only values that are null.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
@@ -13236,11 +13236,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Average``1(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Nullable{System.Int32}}})">
             <summary>
-            Computes the average of an observable sequence of nullable <see cref="T:System.Int32" /> values that are obtained by invoking a transform function on each element of the input sequence.
+            Computes the average of an observable sequence of nullable <see cref="T:System.Int32" /> values that are obtained by invoking a tr function on each element of the input sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to calculate the average of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the average of the sequence of values, or null if the source sequence is empty or contains only values that are null.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
@@ -13250,11 +13250,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Average``1(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Nullable{System.Int64}}})">
             <summary>
-            Computes the average of an observable sequence of nullable <see cref="T:System.Int64" /> values that are obtained by invoking a transform function on each element of the input sequence.
+            Computes the average of an observable sequence of nullable <see cref="T:System.Int64" /> values that are obtained by invoking a tr function on each element of the input sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to calculate the average of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the average of the sequence of values, or null if the source sequence is empty or contains only values that are null.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
@@ -16683,11 +16683,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Max``1(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Double}})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the maximum <see cref="T:System.Double" /> value.
+            Invokes a tr function on each element of a sequence and returns the maximum <see cref="T:System.Double" /> value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to determine the maximum value of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value of type <see cref="T:System.Double" /> that corresponds to the maximum value in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
@@ -16695,11 +16695,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Max``1(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Single}})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the maximum <see cref="T:System.Single" /> value.
+            Invokes a tr function on each element of a sequence and returns the maximum <see cref="T:System.Single" /> value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to determine the maximum value of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value of type <see cref="T:System.Single" /> that corresponds to the maximum value in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
@@ -16707,11 +16707,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Max``1(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Decimal}})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the maximum <see cref="T:System.Decimal" /> value.
+            Invokes a tr function on each element of a sequence and returns the maximum <see cref="T:System.Decimal" /> value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to determine the maximum value of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value of type <see cref="T:System.Decimal" /> that corresponds to the maximum value in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
@@ -16719,11 +16719,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Max``1(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Int32}})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the maximum <see cref="T:System.Int32" /> value.
+            Invokes a tr function on each element of a sequence and returns the maximum <see cref="T:System.Int32" /> value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to determine the maximum value of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value of type <see cref="T:System.Int32" /> that corresponds to the maximum value in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
@@ -16731,11 +16731,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Max``1(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Int64}})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the maximum <see cref="T:System.Int64" /> value.
+            Invokes a tr function on each element of a sequence and returns the maximum <see cref="T:System.Int64" /> value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to determine the maximum value of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value of type <see cref="T:System.Int64" /> that corresponds to the maximum value in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
@@ -16743,11 +16743,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Max``1(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Nullable{System.Double}}})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the maximum nullable <see cref="T:System.Double" /> value.
+            Invokes a tr function on each element of a sequence and returns the maximum nullable <see cref="T:System.Double" /> value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to determine the maximum value of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value of type <see cref="T:System.Nullable`1" /> that corresponds to the maximum value in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
@@ -16755,11 +16755,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Max``1(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Nullable{System.Single}}})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the maximum nullable <see cref="T:System.Single" /> value.
+            Invokes a tr function on each element of a sequence and returns the maximum nullable <see cref="T:System.Single" /> value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to determine the maximum value of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value of type <see cref="T:System.Nullable`1" /> that corresponds to the maximum value in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
@@ -16767,11 +16767,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Max``1(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Nullable{System.Decimal}}})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the maximum nullable <see cref="T:System.Decimal" /> value.
+            Invokes a tr function on each element of a sequence and returns the maximum nullable <see cref="T:System.Decimal" /> value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to determine the maximum value of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value of type <see cref="T:System.Nullable`1" /> that corresponds to the maximum value in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
@@ -16779,11 +16779,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Max``1(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Nullable{System.Int32}}})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the maximum nullable <see cref="T:System.Int32" /> value.
+            Invokes a tr function on each element of a sequence and returns the maximum nullable <see cref="T:System.Int32" /> value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to determine the maximum value of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value of type <see cref="T:System.Nullable`1" /> that corresponds to the maximum value in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
@@ -16791,11 +16791,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Max``1(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Nullable{System.Int64}}})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the maximum nullable <see cref="T:System.Int64" /> value.
+            Invokes a tr function on each element of a sequence and returns the maximum nullable <see cref="T:System.Int64" /> value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to determine the maximum value of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value of type <see cref="T:System.Nullable`1" /> that corresponds to the maximum value in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
@@ -16803,12 +16803,12 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Max``2(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the maximum value.
+            Invokes a tr function on each element of a sequence and returns the maximum value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <typeparam name="TResult">The type of the objects derived from the elements in the source sequence to determine the maximum of.</typeparam>
             <param name="source">An observable sequence to determine the minimum element of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value that corresponds to the maximum element in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
@@ -16816,12 +16816,12 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Max``2(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Collections.Generic.IComparer{``1})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the maximum value according to the specified comparer.
+            Invokes a tr function on each element of a sequence and returns the maximum value according to the specified comparer.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <typeparam name="TResult">The type of the objects derived from the elements in the source sequence to determine the maximum of.</typeparam>
             <param name="source">An observable sequence to determine the minimum element of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <param name="comparer">Comparer used to compare elements.</param>
             <returns>An observable sequence containing a single element with the value that corresponds to the maximum element in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
@@ -17112,11 +17112,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Min``1(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Double}})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the minimum <see cref="T:System.Double" /> value.
+            Invokes a tr function on each element of a sequence and returns the minimum <see cref="T:System.Double" /> value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to determine the minimum value of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value of type <see cref="T:System.Double" /> that corresponds to the minimum value in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
@@ -17124,11 +17124,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Min``1(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Single}})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the minimum <see cref="T:System.Single" /> value.
+            Invokes a tr function on each element of a sequence and returns the minimum <see cref="T:System.Single" /> value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to determine the minimum value of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value of type <see cref="T:System.Single" /> that corresponds to the minimum value in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
@@ -17136,11 +17136,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Min``1(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Decimal}})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the minimum <see cref="T:System.Decimal" /> value.
+            Invokes a tr function on each element of a sequence and returns the minimum <see cref="T:System.Decimal" /> value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to determine the minimum value of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value of type <see cref="T:System.Decimal" /> that corresponds to the minimum value in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
@@ -17148,11 +17148,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Min``1(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Int32}})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the minimum <see cref="T:System.Int32" /> value.
+            Invokes a tr function on each element of a sequence and returns the minimum <see cref="T:System.Int32" /> value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to determine the minimum value of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value of type <see cref="T:System.Int32" /> that corresponds to the minimum value in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
@@ -17160,11 +17160,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Min``1(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Int64}})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the minimum <see cref="T:System.Int64" /> value.
+            Invokes a tr function on each element of a sequence and returns the minimum <see cref="T:System.Int64" /> value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to determine the minimum value of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value of type <see cref="T:System.Int64" /> that corresponds to the minimum value in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
@@ -17172,11 +17172,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Min``1(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Nullable{System.Double}}})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the minimum nullable <see cref="T:System.Double" /> value.
+            Invokes a tr function on each element of a sequence and returns the minimum nullable <see cref="T:System.Double" /> value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to determine the minimum value of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value of type <see cref="T:System.Nullable`1" /> that corresponds to the minimum value in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
@@ -17184,11 +17184,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Min``1(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Nullable{System.Single}}})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the minimum nullable <see cref="T:System.Single" /> value.
+            Invokes a tr function on each element of a sequence and returns the minimum nullable <see cref="T:System.Single" /> value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to determine the minimum value of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value of type <see cref="T:System.Nullable`1" /> that corresponds to the minimum value in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
@@ -17196,11 +17196,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Min``1(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Nullable{System.Decimal}}})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the minimum nullable <see cref="T:System.Decimal" /> value.
+            Invokes a tr function on each element of a sequence and returns the minimum nullable <see cref="T:System.Decimal" /> value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to determine the minimum value of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value of type <see cref="T:System.Nullable`1" /> that corresponds to the minimum value in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
@@ -17208,11 +17208,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Min``1(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Nullable{System.Int32}}})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the minimum nullable <see cref="T:System.Int32" /> value.
+            Invokes a tr function on each element of a sequence and returns the minimum nullable <see cref="T:System.Int32" /> value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to determine the minimum value of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value of type <see cref="T:System.Nullable`1" /> that corresponds to the minimum value in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
@@ -17220,11 +17220,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Min``1(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Nullable{System.Int64}}})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the minimum nullable <see cref="T:System.Int64" /> value.
+            Invokes a tr function on each element of a sequence and returns the minimum nullable <see cref="T:System.Int64" /> value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values to determine the minimum value of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value of type <see cref="T:System.Nullable`1" /> that corresponds to the minimum value in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
@@ -17232,12 +17232,12 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Min``2(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the minimum value.
+            Invokes a tr function on each element of a sequence and returns the minimum value.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <typeparam name="TResult">The type of the objects derived from the elements in the source sequence to determine the minimum of.</typeparam>
             <param name="source">An observable sequence to determine the minimum element of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the value that corresponds to the minimum element in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
@@ -17245,12 +17245,12 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Min``2(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Collections.Generic.IComparer{``1})">
             <summary>
-            Invokes a transform function on each element of a sequence and returns the minimum value according to the specified comparer.
+            Invokes a tr function on each element of a sequence and returns the minimum value according to the specified comparer.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <typeparam name="TResult">The type of the objects derived from the elements in the source sequence to determine the minimum of.</typeparam>
             <param name="source">An observable sequence to determine the minimum element of.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <param name="comparer">Comparer used to compare elements.</param>
             <returns>An observable sequence containing a single element with the value that corresponds to the minimum element in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
@@ -17913,9 +17913,9 @@
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <typeparam name="TResult">The type of the elements in the result sequence, obtained by running the selector function for each element in the source sequence.</typeparam>
-            <param name="source">A sequence of elements to invoke a transform function on.</param>
-            <param name="selector">A transform function to apply to each source element.</param>
-            <returns>An observable sequence whose elements are the result of invoking the transform function on each element of source.</returns>
+            <param name="source">A sequence of elements to invoke a tr function on.</param>
+            <param name="selector">A tr function to apply to each source element.</param>
+            <returns>An observable sequence whose elements are the result of invoking the tr function on each element of source.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
         </member>
@@ -17925,9 +17925,9 @@
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <typeparam name="TResult">The type of the elements in the result sequence, obtained by running the selector function for each element in the source sequence.</typeparam>
-            <param name="source">A sequence of elements to invoke a transform function on.</param>
-            <param name="selector">A transform function to apply to each source element; the second parameter of the function represents the index of the source element.</param>
-            <returns>An observable sequence whose elements are the result of invoking the transform function on each element of source.</returns>
+            <param name="source">A sequence of elements to invoke a tr function on.</param>
+            <param name="selector">A tr function to apply to each source element; the second parameter of the function represents the index of the source element.</param>
+            <returns>An observable sequence whose elements are the result of invoking the tr function on each element of source.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
         </member>
@@ -17939,9 +17939,9 @@
             <typeparam name="TCollection">The type of the elements in the projected intermediate sequences.</typeparam>
             <typeparam name="TResult">The type of the elements in the result sequence, obtained by using the selector to combine source sequence elements with their corresponding intermediate sequence elements.</typeparam>
             <param name="source">An observable sequence of elements to project.</param>
-            <param name="collectionSelector">A transform function to apply to each element.</param>
-            <param name="resultSelector">A transform function to apply to each element of the intermediate sequence.</param>
-            <returns>An observable sequence whose elements are the result of invoking the one-to-many transform function collectionSelector on each element of the input sequence and then mapping each of those sequence elements and their corresponding source element to a result element.</returns>
+            <param name="collectionSelector">A tr function to apply to each element.</param>
+            <param name="resultSelector">A tr function to apply to each element of the intermediate sequence.</param>
+            <returns>An observable sequence whose elements are the result of invoking the one-to-many tr function collectionSelector on each element of the input sequence and then mapping each of those sequence elements and their corresponding source element to a result element.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="collectionSelector" /> or <paramref name="resultSelector" /> is null.</exception>
         </member>
@@ -17953,9 +17953,9 @@
             <typeparam name="TCollection">The type of the elements in the projected intermediate sequences.</typeparam>
             <typeparam name="TResult">The type of the elements in the result sequence, obtained by using the selector to combine source sequence elements with their corresponding intermediate sequence elements.</typeparam>
             <param name="source">An observable sequence of elements to project.</param>
-            <param name="collectionSelector">A transform function to apply to each element; the second parameter of the function represents the index of the source element.</param>
-            <param name="resultSelector">A transform function to apply to each element of the intermediate sequence; the second parameter of the function represents the index of the source element and the fourth parameter represents the index of the intermediate element.</param>
-            <returns>An observable sequence whose elements are the result of invoking the one-to-many transform function collectionSelector on each element of the input sequence and then mapping each of those sequence elements and their corresponding source element to a result element.</returns>
+            <param name="collectionSelector">A tr function to apply to each element; the second parameter of the function represents the index of the source element.</param>
+            <param name="resultSelector">A tr function to apply to each element of the intermediate sequence; the second parameter of the function represents the index of the source element and the fourth parameter represents the index of the intermediate element.</param>
+            <returns>An observable sequence whose elements are the result of invoking the one-to-many tr function collectionSelector on each element of the input sequence and then mapping each of those sequence elements and their corresponding source element to a result element.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="collectionSelector" /> or <paramref name="resultSelector" /> is null.</exception>
         </member>
@@ -17967,9 +17967,9 @@
             <typeparam name="TCollection">The type of the elements in the projected intermediate enumerable sequences.</typeparam>
             <typeparam name="TResult">The type of the elements in the result sequence, obtained by using the selector to combine source sequence elements with their corresponding intermediate sequence elements.</typeparam>
             <param name="source">An observable sequence of elements to project.</param>
-            <param name="collectionSelector">A transform function to apply to each element.</param>
-            <param name="resultSelector">A transform function to apply to each element of the intermediate sequence.</param>
-            <returns>An observable sequence whose elements are the result of invoking the one-to-many transform function collectionSelector on each element of the input sequence and then mapping each of those sequence elements and their corresponding source element to a result element.</returns>
+            <param name="collectionSelector">A tr function to apply to each element.</param>
+            <param name="resultSelector">A tr function to apply to each element of the intermediate sequence.</param>
+            <returns>An observable sequence whose elements are the result of invoking the one-to-many tr function collectionSelector on each element of the input sequence and then mapping each of those sequence elements and their corresponding source element to a result element.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="collectionSelector" /> or <paramref name="resultSelector" /> is null.</exception>
             <remarks>The projected sequences are enumerated synchronously within the OnNext call of the source sequence. In order to do a concurrent, non-blocking merge, change the selector to return an observable sequence obtained using the <see cref="M:System.Reactive.Linq.Observable.ToObservable``1(System.Collections.Generic.IEnumerable{``0})" /> conversion.</remarks>
@@ -17982,9 +17982,9 @@
             <typeparam name="TCollection">The type of the elements in the projected intermediate enumerable sequences.</typeparam>
             <typeparam name="TResult">The type of the elements in the result sequence, obtained by using the selector to combine source sequence elements with their corresponding intermediate sequence elements.</typeparam>
             <param name="source">An observable sequence of elements to project.</param>
-            <param name="collectionSelector">A transform function to apply to each element; the second parameter of the function represents the index of the source element.</param>
-            <param name="resultSelector">A transform function to apply to each element of the intermediate sequence; the second parameter of the function represents the index of the source element and the fourth parameter represents the index of the intermediate element.</param>
-            <returns>An observable sequence whose elements are the result of invoking the one-to-many transform function collectionSelector on each element of the input sequence and then mapping each of those sequence elements and their corresponding source element to a result element.</returns>
+            <param name="collectionSelector">A tr function to apply to each element; the second parameter of the function represents the index of the source element.</param>
+            <param name="resultSelector">A tr function to apply to each element of the intermediate sequence; the second parameter of the function represents the index of the source element and the fourth parameter represents the index of the intermediate element.</param>
+            <returns>An observable sequence whose elements are the result of invoking the one-to-many tr function collectionSelector on each element of the input sequence and then mapping each of those sequence elements and their corresponding source element to a result element.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="collectionSelector" /> or <paramref name="resultSelector" /> is null.</exception>
             <remarks>The projected sequences are enumerated synchronously within the OnNext call of the source sequence. In order to do a concurrent, non-blocking merge, change the selector to return an observable sequence obtained using the <see cref="M:System.Reactive.Linq.Observable.ToObservable``1(System.Collections.Generic.IEnumerable{``0})" /> conversion.</remarks>
@@ -18008,10 +18008,10 @@
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <typeparam name="TResult">The type of the elements in the projected inner sequences and the elements in the merged result sequence.</typeparam>
             <param name="source">An observable sequence of notifications to project.</param>
-            <param name="onNext">A transform function to apply to each element.</param>
-            <param name="onError">A transform function to apply when an error occurs in the source sequence.</param>
-            <param name="onCompleted">A transform function to apply when the end of the source sequence is reached.</param>
-            <returns>An observable sequence whose elements are the result of invoking the one-to-many transform function corresponding to each notification in the input sequence.</returns>
+            <param name="onNext">A tr function to apply to each element.</param>
+            <param name="onError">A tr function to apply when an error occurs in the source sequence.</param>
+            <param name="onCompleted">A tr function to apply when the end of the source sequence is reached.</param>
+            <returns>An observable sequence whose elements are the result of invoking the one-to-many tr function corresponding to each notification in the input sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="onNext" /> or <paramref name="onError" /> or <paramref name="onCompleted" /> is null.</exception>
         </member>
@@ -18022,10 +18022,10 @@
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <typeparam name="TResult">The type of the elements in the projected inner sequences and the elements in the merged result sequence.</typeparam>
             <param name="source">An observable sequence of notifications to project.</param>
-            <param name="onNext">A transform function to apply to each element; the second parameter of the function represents the index of the source element.</param>
-            <param name="onError">A transform function to apply when an error occurs in the source sequence.</param>
-            <param name="onCompleted">A transform function to apply when the end of the source sequence is reached.</param>
-            <returns>An observable sequence whose elements are the result of invoking the one-to-many transform function corresponding to each notification in the input sequence.</returns>
+            <param name="onNext">A tr function to apply to each element; the second parameter of the function represents the index of the source element.</param>
+            <param name="onError">A tr function to apply when an error occurs in the source sequence.</param>
+            <param name="onCompleted">A tr function to apply when the end of the source sequence is reached.</param>
+            <returns>An observable sequence whose elements are the result of invoking the one-to-many tr function corresponding to each notification in the input sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="onNext" /> or <paramref name="onError" /> or <paramref name="onCompleted" /> is null.</exception>
         </member>
@@ -18036,8 +18036,8 @@
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <typeparam name="TResult">The type of the elements in the projected inner sequences and the elements in the merged result sequence.</typeparam>
             <param name="source">An observable sequence of elements to project.</param>
-            <param name="selector">A transform function to apply to each element.</param>
-            <returns>An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.</returns>
+            <param name="selector">A tr function to apply to each element.</param>
+            <returns>An observable sequence whose elements are the result of invoking the one-to-many tr function on each element of the input sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
         </member>
@@ -18048,8 +18048,8 @@
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <typeparam name="TResult">The type of the elements in the projected inner sequences and the elements in the merged result sequence.</typeparam>
             <param name="source">An observable sequence of elements to project.</param>
-            <param name="selector">A transform function to apply to each element; the second parameter of the function represents the index of the source element.</param>
-            <returns>An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.</returns>
+            <param name="selector">A tr function to apply to each element; the second parameter of the function represents the index of the source element.</param>
+            <returns>An observable sequence whose elements are the result of invoking the one-to-many tr function on each element of the input sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
         </member>
@@ -18060,7 +18060,7 @@
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <typeparam name="TResult">The type of the result produced by the projected tasks and the elements in the merged result sequence.</typeparam>
             <param name="source">An observable sequence of elements to project.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence whose elements are the result of the tasks executed for each element of the input sequence.</returns>
             <remarks>This overload supports composition of observable sequences and tasks, without requiring manual conversion of the tasks to observable sequences using <see cref="M:System.Reactive.Threading.Tasks.TaskObservableExtensions.ToObservable``1(System.Threading.Tasks.Task{``0})" />.</remarks>
             <exception cref="T:System.ArgumentNullException">
@@ -18073,7 +18073,7 @@
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <typeparam name="TResult">The type of the result produced by the projected tasks and the elements in the merged result sequence.</typeparam>
             <param name="source">An observable sequence of elements to project.</param>
-            <param name="selector">A transform function to apply to each element; the second parameter of the function represents the index of the source element.</param>
+            <param name="selector">A tr function to apply to each element; the second parameter of the function represents the index of the source element.</param>
             <returns>An observable sequence whose elements are the result of the tasks executed for each element of the input sequence.</returns>
             <remarks>This overload supports composition of observable sequences and tasks, without requiring manual conversion of the tasks to observable sequences using <see cref="M:System.Reactive.Threading.Tasks.TaskObservableExtensions.ToObservable``1(System.Threading.Tasks.Task{``0})" />.</remarks>
             <exception cref="T:System.ArgumentNullException">
@@ -18086,7 +18086,7 @@
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <typeparam name="TResult">The type of the result produced by the projected tasks and the elements in the merged result sequence.</typeparam>
             <param name="source">An observable sequence of elements to project.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence whose elements are the result of the tasks executed for each element of the input sequence.</returns>
             <remarks>This overload supports composition of observable sequences and tasks, without requiring manual conversion of the tasks to observable sequences using <see cref="M:System.Reactive.Threading.Tasks.TaskObservableExtensions.ToObservable``1(System.Threading.Tasks.Task{``0})" />.</remarks>
             <exception cref="T:System.ArgumentNullException">
@@ -18099,7 +18099,7 @@
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <typeparam name="TResult">The type of the result produced by the projected tasks and the elements in the merged result sequence.</typeparam>
             <param name="source">An observable sequence of elements to project.</param>
-            <param name="selector">A transform function to apply to each element; the second parameter of the function represents the index of the source element.</param>
+            <param name="selector">A tr function to apply to each element; the second parameter of the function represents the index of the source element.</param>
             <returns>An observable sequence whose elements are the result of the tasks executed for each element of the input sequence.</returns>
             <remarks>This overload supports composition of observable sequences and tasks, without requiring manual conversion of the tasks to observable sequences using <see cref="M:System.Reactive.Threading.Tasks.TaskObservableExtensions.ToObservable``1(System.Threading.Tasks.Task{``0})" />.</remarks>
             <exception cref="T:System.ArgumentNullException">
@@ -18112,8 +18112,8 @@
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <typeparam name="TResult">The type of the elements in the projected inner enumerable sequences and the elements in the merged result sequence.</typeparam>
             <param name="source">An observable sequence of elements to project.</param>
-            <param name="selector">A transform function to apply to each element.</param>
-            <returns>An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.</returns>
+            <param name="selector">A tr function to apply to each element.</param>
+            <returns>An observable sequence whose elements are the result of invoking the one-to-many tr function on each element of the input sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
             <remarks>The projected sequences are enumerated synchronously within the OnNext call of the source sequence. In order to do a concurrent, non-blocking merge, change the selector to return an observable sequence obtained using the <see cref="M:System.Reactive.Linq.Observable.ToObservable``1(System.Collections.Generic.IEnumerable{``0})" /> conversion.</remarks>
@@ -18125,8 +18125,8 @@
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <typeparam name="TResult">The type of the elements in the projected inner enumerable sequences and the elements in the merged result sequence.</typeparam>
             <param name="source">An observable sequence of elements to project.</param>
-            <param name="selector">A transform function to apply to each element; the second parameter of the function represents the index of the source element.</param>
-            <returns>An observable sequence whose elements are the result of invoking the one-to-many transform function on each element of the input sequence.</returns>
+            <param name="selector">A tr function to apply to each element; the second parameter of the function represents the index of the source element.</param>
+            <returns>An observable sequence whose elements are the result of invoking the one-to-many tr function on each element of the input sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
             <remarks>The projected sequences are enumerated synchronously within the OnNext call of the source sequence. In order to do a concurrent, non-blocking merge, change the selector to return an observable sequence obtained using the <see cref="M:System.Reactive.Linq.Observable.ToObservable``1(System.Collections.Generic.IEnumerable{``0})" /> conversion.</remarks>
@@ -18139,8 +18139,8 @@
             <typeparam name="TTaskResult">The type of the results produced by the projected intermediate tasks.</typeparam>
             <typeparam name="TResult">The type of the elements in the result sequence, obtained by using the selector to combine source sequence elements with their corresponding intermediate task results.</typeparam>
             <param name="source">An observable sequence of elements to project.</param>
-            <param name="taskSelector">A transform function to apply to each element.</param>
-            <param name="resultSelector">A transform function to apply to each element of the intermediate sequence.</param>
+            <param name="taskSelector">A tr function to apply to each element.</param>
+            <param name="resultSelector">A tr function to apply to each element of the intermediate sequence.</param>
             <returns>An observable sequence whose elements are the result of obtaining a task for each element of the input sequence and then mapping the task's result and its corresponding source element to a result element.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="taskSelector" /> or <paramref name="resultSelector" /> is null.</exception>
@@ -18154,8 +18154,8 @@
             <typeparam name="TTaskResult">The type of the results produced by the projected intermediate tasks.</typeparam>
             <typeparam name="TResult">The type of the elements in the result sequence, obtained by using the selector to combine source sequence elements with their corresponding intermediate task results.</typeparam>
             <param name="source">An observable sequence of elements to project.</param>
-            <param name="taskSelector">A transform function to apply to each element; the second parameter of the function represents the index of the source element.</param>
-            <param name="resultSelector">A transform function to apply to each element of the intermediate sequence; the second parameter of the function represents the index of the source element.</param>
+            <param name="taskSelector">A tr function to apply to each element; the second parameter of the function represents the index of the source element.</param>
+            <param name="resultSelector">A tr function to apply to each element of the intermediate sequence; the second parameter of the function represents the index of the source element.</param>
             <returns>An observable sequence whose elements are the result of obtaining a task for each element of the input sequence and then mapping the task's result and its corresponding source element to a result element.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="taskSelector" /> or <paramref name="resultSelector" /> is null.</exception>
@@ -18169,8 +18169,8 @@
             <typeparam name="TTaskResult">The type of the results produced by the projected intermediate tasks.</typeparam>
             <typeparam name="TResult">The type of the elements in the result sequence, obtained by using the selector to combine source sequence elements with their corresponding intermediate task results.</typeparam>
             <param name="source">An observable sequence of elements to project.</param>
-            <param name="taskSelector">A transform function to apply to each element.</param>
-            <param name="resultSelector">A transform function to apply to each element of the intermediate sequence.</param>
+            <param name="taskSelector">A tr function to apply to each element.</param>
+            <param name="resultSelector">A tr function to apply to each element of the intermediate sequence.</param>
             <returns>An observable sequence whose elements are the result of obtaining a task for each element of the input sequence and then mapping the task's result and its corresponding source element to a result element.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="taskSelector" /> or <paramref name="resultSelector" /> is null.</exception>
@@ -18184,8 +18184,8 @@
             <typeparam name="TTaskResult">The type of the results produced by the projected intermediate tasks.</typeparam>
             <typeparam name="TResult">The type of the elements in the result sequence, obtained by using the selector to combine source sequence elements with their corresponding intermediate task results.</typeparam>
             <param name="source">An observable sequence of elements to project.</param>
-            <param name="taskSelector">A transform function to apply to each element; the second parameter of the function represents the index of the source element.</param>
-            <param name="resultSelector">A transform function to apply to each element of the intermediate sequence; the second parameter of the function represents the index of the source element.</param>
+            <param name="taskSelector">A tr function to apply to each element; the second parameter of the function represents the index of the source element.</param>
+            <param name="resultSelector">A tr function to apply to each element of the intermediate sequence; the second parameter of the function represents the index of the source element.</param>
             <returns>An observable sequence whose elements are the result of obtaining a task for each element of the input sequence and then mapping the task's result and its corresponding source element to a result element.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="taskSelector" /> or <paramref name="resultSelector" /> is null.</exception>
@@ -18945,11 +18945,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Sum``1(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Double}})">
             <summary>
-            Computes the sum of a sequence of <see cref="T:System.Double" /> values that are obtained by invoking a transform function on each element of the input sequence.
+            Computes the sum of a sequence of <see cref="T:System.Double" /> values that are obtained by invoking a tr function on each element of the input sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values that are used to calculate a sum.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the sum of the values in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
@@ -18957,11 +18957,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Sum``1(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Single}})">
             <summary>
-            Computes the sum of a sequence of <see cref="T:System.Single" /> values that are obtained by invoking a transform function on each element of the input sequence.
+            Computes the sum of a sequence of <see cref="T:System.Single" /> values that are obtained by invoking a tr function on each element of the input sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values that are used to calculate a sum.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the sum of the values in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
@@ -18969,11 +18969,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Sum``1(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Decimal}})">
             <summary>
-            Computes the sum of a sequence of <see cref="T:System.Decimal" /> values that are obtained by invoking a transform function on each element of the input sequence.
+            Computes the sum of a sequence of <see cref="T:System.Decimal" /> values that are obtained by invoking a tr function on each element of the input sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values that are used to calculate a sum.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the sum of the values in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
@@ -18982,11 +18982,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Sum``1(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Int32}})">
             <summary>
-            Computes the sum of a sequence of <see cref="T:System.Int32" /> values that are obtained by invoking a transform function on each element of the input sequence.
+            Computes the sum of a sequence of <see cref="T:System.Int32" /> values that are obtained by invoking a tr function on each element of the input sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values that are used to calculate a sum.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the sum of the values in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
@@ -18995,11 +18995,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Sum``1(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Int64}})">
             <summary>
-            Computes the sum of a sequence of <see cref="T:System.Int64" /> values that are obtained by invoking a transform function on each element of the input sequence.
+            Computes the sum of a sequence of <see cref="T:System.Int64" /> values that are obtained by invoking a tr function on each element of the input sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values that are used to calculate a sum.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the sum of the values in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
@@ -19008,11 +19008,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Sum``1(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Nullable{System.Double}}})">
             <summary>
-            Computes the sum of a sequence of nullable <see cref="T:System.Double" /> values that are obtained by invoking a transform function on each element of the input sequence.
+            Computes the sum of a sequence of nullable <see cref="T:System.Double" /> values that are obtained by invoking a tr function on each element of the input sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values that are used to calculate a sum.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the sum of the values in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
@@ -19020,11 +19020,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Sum``1(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Nullable{System.Single}}})">
             <summary>
-            Computes the sum of a sequence of nullable <see cref="T:System.Single" /> values that are obtained by invoking a transform function on each element of the input sequence.
+            Computes the sum of a sequence of nullable <see cref="T:System.Single" /> values that are obtained by invoking a tr function on each element of the input sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values that are used to calculate a sum.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the sum of the values in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
@@ -19032,11 +19032,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Sum``1(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Nullable{System.Decimal}}})">
             <summary>
-            Computes the sum of a sequence of nullable <see cref="T:System.Decimal" /> values that are obtained by invoking a transform function on each element of the input sequence.
+            Computes the sum of a sequence of nullable <see cref="T:System.Decimal" /> values that are obtained by invoking a tr function on each element of the input sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values that are used to calculate a sum.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the sum of the values in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
@@ -19045,11 +19045,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Sum``1(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Nullable{System.Int32}}})">
             <summary>
-            Computes the sum of a sequence of nullable <see cref="T:System.Int32" /> values that are obtained by invoking a transform function on each element of the input sequence.
+            Computes the sum of a sequence of nullable <see cref="T:System.Int32" /> values that are obtained by invoking a tr function on each element of the input sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values that are used to calculate a sum.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the sum of the values in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
@@ -19058,11 +19058,11 @@
         </member>
         <member name="M:System.Reactive.Linq.Qbservable.Sum``1(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Nullable{System.Int64}}})">
             <summary>
-            Computes the sum of a sequence of nullable <see cref="T:System.Int64" /> values that are obtained by invoking a transform function on each element of the input sequence.
+            Computes the sum of a sequence of nullable <see cref="T:System.Int64" /> values that are obtained by invoking a tr function on each element of the input sequence.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <param name="source">A sequence of values that are used to calculate a sum.</param>
-            <param name="selector">A transform function to apply to each element.</param>
+            <param name="selector">A tr function to apply to each element.</param>
             <returns>An observable sequence containing a single element with the sum of the values in the source sequence.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="selector" /> is null.</exception>
@@ -19954,7 +19954,7 @@
             <typeparam name="TElement">The type of the dictionary value computed for each element in the source sequence.</typeparam>
             <param name="source">An observable sequence to create a dictionary for.</param>
             <param name="keySelector">A function to extract a key from each element.</param>
-            <param name="elementSelector">A transform function to produce a result element value from each element.</param>
+            <param name="elementSelector">A tr function to produce a result element value from each element.</param>
             <returns>An observable sequence containing a single element with a dictionary mapping unique key values onto the corresponding source sequence's element.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="keySelector" /> or <paramref name="elementSelector" /> is null.</exception>
@@ -19969,7 +19969,7 @@
             <typeparam name="TElement">The type of the dictionary value computed for each element in the source sequence.</typeparam>
             <param name="source">An observable sequence to create a dictionary for.</param>
             <param name="keySelector">A function to extract a key from each element.</param>
-            <param name="elementSelector">A transform function to produce a result element value from each element.</param>
+            <param name="elementSelector">A tr function to produce a result element value from each element.</param>
             <param name="comparer">An equality comparer to compare keys.</param>
             <returns>An observable sequence containing a single element with a dictionary mapping unique key values onto the corresponding source sequence's element.</returns>
             <exception cref="T:System.ArgumentNullException">
@@ -20034,7 +20034,7 @@
             <typeparam name="TElement">The type of the lookup value computed for each element in the source sequence.</typeparam>
             <param name="source">An observable sequence to create a lookup for.</param>
             <param name="keySelector">A function to extract a key from each element.</param>
-            <param name="elementSelector">A transform function to produce a result element value from each element.</param>
+            <param name="elementSelector">A tr function to produce a result element value from each element.</param>
             <returns>An observable sequence containing a single element with a lookup mapping unique key values onto the corresponding source sequence's elements.</returns>
             <exception cref="T:System.ArgumentNullException">
             <paramref name="source" /> or <paramref name="keySelector" /> or <paramref name="elementSelector" /> is null.</exception>
@@ -20049,7 +20049,7 @@
             <typeparam name="TElement">The type of the lookup value computed for each element in the source sequence.</typeparam>
             <param name="source">An observable sequence to create a lookup for.</param>
             <param name="keySelector">A function to extract a key from each element.</param>
-            <param name="elementSelector">A transform function to produce a result element value from each element.</param>
+            <param name="elementSelector">A tr function to produce a result element value from each element.</param>
             <param name="comparer">An equality comparer to compare keys.</param>
             <returns>An observable sequence containing a single element with a lookup mapping unique key values onto the corresponding source sequence's elements.</returns>
             <exception cref="T:System.ArgumentNullException">

@@ -584,6 +584,15 @@
       "source": "builtin",
       "dependencies": {}
     },
+    "com.unity.visualeffectgraph": {
+      "version": "12.1.11",
+      "depth": 0,
+      "source": "builtin",
+      "dependencies": {
+        "com.unity.shadergraph": "12.1.11",
+        "com.unity.render-pipelines.core": "12.1.11"
+      }
+    },
     "com.unity.visualscripting": {
       "version": "1.8.0",
       "depth": 1,

@@ -1,8 +1,9 @@
 using System;
 using LGamesDev.Core.Character;
+using LGamesDev.Core.Player;
 using UnityEngine;
 
-namespace LGamesDev.Core.Player
+namespace LGamesDev
 {
     [Serializable]
     public class Equipment : Item
@@ -48,7 +49,24 @@ namespace LGamesDev.Core.Player
         Helmet,
         Chest,
         Pants,
-        Weapon
-        /*Shield,*/
+        Weapon,
+        OffHand,
+    }
+
+    public enum WeaponType
+    {
+        Hand = 0,
+        Sword = 1,
+        Staff = 2,
+        Dagger = 3,
+        MagicalDagger = 4
+    }
+
+    public enum OffHandType
+    {
+        Hand = 0,
+        Shield = 1,
+        Book = 2,
+        Dagger = 3
     }
 }

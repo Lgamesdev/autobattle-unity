@@ -63,11 +63,11 @@ namespace LGamesDev.Fighting
 
             Vector3 position = cam.transform.position;
             playerCharacterFight.transform.position = cam.ScreenToWorldPoint(new Vector3(
-                cam.pixelWidth * 0.3f, cam.pixelHeight * 1.75f, -14
+                cam.pixelWidth * 0.3f, cam.pixelHeight * 0.51f, -14
             ));
             
             _enemyCharacterFight.transform.position = cam.ScreenToWorldPoint(new Vector3(
-                cam.pixelWidth * 0.7f, cam.pixelHeight * 1.75f, -14
+                cam.pixelWidth * 0.7f, cam.pixelHeight * 0.51f, -14
             ));
             
             playerCharacterFight.LookAt(_enemyCharacterFight.GetPosition());
@@ -80,11 +80,11 @@ namespace LGamesDev.Fighting
 
         public void StartFight()
         {
-            //playerCharacterFight.Intro(_enemyCharacterFight, ChooseNextActiveCharacter);
+            //playerCharacterFight.Intro(_enemyCharacterFight, PlayNextAction);
             
             _gameManager.PlayFightMusic();
             
-            ChooseNextActiveCharacter();
+            PlayNextAction();
         }
 
         private CharacterFight SpawnCharacter()
@@ -94,7 +94,7 @@ namespace LGamesDev.Fighting
             return characterFight;
         }
 
-        private void ChooseNextActiveCharacter()
+        private void PlayNextAction()
         {
             if (TestBattleOver()) return;
 
@@ -104,23 +104,71 @@ namespace LGamesDev.Fighting
 
                 if (fightAction.PlayerTeam)
                 {
-                    playerCharacterFight.Attack(
-                        _enemyCharacterFight,
-                        Fight.Actions[_currentAction].Damage,
-                        fightAction.CriticalHit,
-                        fightAction.Dodged,
-                        ChooseNextActiveCharacter
-                    );
+                    switch (fightAction.ActionType)
+                    {
+                        case FightActionType.Attack:
+                            playerCharacterFight.Attack(
+                                _enemyCharacterFight,
+                                Fight.Actions[_currentAction].Damage,
+                                fightAction.CriticalHit,
+                                fightAction.Dodged,
+                                fightAction.EnergyGained,
+                                PlayNextAction
+                            );
+                            break;
+                        case FightActionType.Parry:
+                            playerCharacterFight.Parry(
+                                _enemyCharacterFight,
+                                Fight.Actions[_currentAction].Damage,
+                                fightAction.CriticalHit,
+                                fightAction.EnergyGained,
+                                PlayNextAction
+                            );
+                            break;
+                        case FightActionType.SpecialAttack:
+                            playerCharacterFight.SpecialAttack(
+                                _enemyCharacterFight,
+                                Fight.Actions[_currentAction].Damage,
+                                fightAction.CriticalHit,
+                                fightAction.Dodged,
+                                PlayNextAction
+                            );
+                            break;
+                    }
                 }
                 else
                 {
-                    _enemyCharacterFight.Attack(
-                        playerCharacterFight,
-                        Fight.Actions[_currentAction].Damage,
-                        fightAction.CriticalHit,
-                        fightAction.Dodged,
-                        ChooseNextActiveCharacter
-                    );
+                    switch (fightAction.ActionType)
+                    {
+                        case FightActionType.Attack:
+                            _enemyCharacterFight.Attack(
+                                playerCharacterFight,
+                                Fight.Actions[_currentAction].Damage,
+                                fightAction.CriticalHit,
+                                fightAction.Dodged,
+                                fightAction.EnergyGained,
+                                PlayNextAction
+                            );
+                            break;
+                        case FightActionType.Parry:
+                            _enemyCharacterFight.Parry(
+                                playerCharacterFight,
+                                Fight.Actions[_currentAction].Damage,
+                                fightAction.CriticalHit,
+                                fightAction.EnergyGained,
+                                PlayNextAction
+                            );
+                            break;
+                        case FightActionType.SpecialAttack:
+                            _enemyCharacterFight.SpecialAttack(
+                                playerCharacterFight,
+                                Fight.Actions[_currentAction].Damage,
+                                fightAction.CriticalHit,
+                                fightAction.Dodged,
+                                PlayNextAction
+                            );
+                            break;
+                    }
                 }
 
                 _currentAction++;
@@ -166,10 +214,22 @@ namespace LGamesDev.Fighting
             }
         }
 
-        public void Attack(IEnumerable<FightAction> fightActions)
+        public void AddActions(IEnumerable<FightAction> fightActions)
         {
             Fight.Actions.AddRange(fightActions);
-            ChooseNextActiveCharacter();
+            PlayNextAction();
+        }
+        
+        public void Dodge(IEnumerable<FightAction> fightActions)
+        {
+            Fight.Actions.AddRange(fightActions);
+            PlayNextAction();
+        }
+        
+        public void SpecialAttack(IEnumerable<FightAction> fightActions)
+        {
+            Fight.Actions.AddRange(fightActions);
+            PlayNextAction();
         }
 
         public void SetFightSpeed(int pFightSpeed)
@@ -192,5 +252,12 @@ namespace LGamesDev.Fighting
         {
             _gameManager.networkManager.SearchFight();
         }
+    }
+
+    public enum FightActionType
+    {
+        Attack, 
+        Parry,
+        SpecialAttack
     }
 }

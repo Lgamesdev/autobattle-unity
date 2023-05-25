@@ -4,6 +4,7 @@ using LGamesDev.Core;
 using LGamesDev.Core.Character;
 using LGamesDev.Core.Player;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace LGamesDev.Fighting
@@ -14,7 +15,9 @@ namespace LGamesDev.Fighting
 
         [SerializeField] private bool isPlayerTeam;
 
-        private HealthBar _healthBar;
+        private ResourceBar _healthBar;
+        private ResourceBar _energyBar;
+        private int _energy;
         private LevelSystem _levelSystem;
 
         [SerializeField] private LayerMask platformLayerMask;
@@ -43,22 +46,27 @@ namespace LGamesDev.Fighting
             
             if (isPlayerTeam)
             {
-                _healthBar = FindObjectOfType<HealthPannelUI>().playerHealthBar;
+                _healthBar = FindObjectOfType<ResourcePanelUI>().playerHealthBar;
+                _energyBar = FindObjectOfType<ResourcePanelUI>().playerEnergyBar;
                 FindObjectOfType<InfosPanelUI>().playerUsername.text = character.Username;
                 FindObjectOfType<InfosPanelUI>().playerLevel.text = "lvl. " + character.Level;
                 RewardUI.Instance.SetLevelSystem(_levelSystem);
             }
             else
             {
-                _healthBar = FindObjectOfType<HealthPannelUI>().opponentHealthBar;
+                _healthBar = FindObjectOfType<ResourcePanelUI>().opponentHealthBar;
+                _energyBar = FindObjectOfType<ResourcePanelUI>().opponentEnergyBar;
                 FindObjectOfType<InfosPanelUI>().opponentUsername.text = character.Username;
                 FindObjectOfType<InfosPanelUI>().opponentLevel.text = "lvl. " + character.Level;
             }
             
-            _healthBar.SetMaxHealth(_characterStatsManager.GetMaxHealth());
-            _healthBar.SetCurrentHealth(_characterStatsManager.GetCurrentHealth());
+            _healthBar.SetMaxResource(_characterStatsManager.GetMaxHealth());
+            _healthBar.SetCurrentResource(_characterStatsManager.GetCurrentHealth());
+            
+            _energyBar.SetMaxResource(100);
+            SetEnergy(0);
 
-            //PlayAnimIdle();
+            //PlayIdle();
         }
         
         /*public void Intro(CharacterFight target, Action onIntroComplete)
@@ -78,7 +86,14 @@ namespace LGamesDev.Fighting
         private void CharacterStatsManagerOnHealthChanged(object sender, EventArgs e)
         {
             _healthBar.SetSize(_characterStatsManager.GetHealthPercent());
-            _healthBar.SetCurrentHealth(_characterStatsManager.GetCurrentHealth());
+            _healthBar.SetCurrentResource(_characterStatsManager.GetCurrentHealth());
+        }
+
+        private void SetEnergy(int energy)
+        {
+            _energy = energy;
+            _energyBar.SetSize((float)energy / 100);
+            _energyBar.SetCurrentResource(energy);
         }
 
         public Vector3 GetPosition()
@@ -113,21 +128,25 @@ namespace LGamesDev.Fighting
             return _characterStatsManager.IsDead();
         }
 
-        public void Attack(CharacterFight target, int damage, bool isCritical, bool dodged, Action onAttackComplete)
+        public void Attack(CharacterFight target, int damage, bool isCritical, bool dodged, int energyGained, Action onAttackComplete)
         {
-            var runningTargetPosition = target.GetPosition() + (GetPosition() - target.GetPosition()).normalized * 11f;
+            _characterManager.activeCharacter.SetSpriteSorting(CharacterSorting.Top);
+            target._characterManager.activeCharacter.SetSpriteSorting(CharacterSorting.Default);
+            var runningTargetPosition = target.GetPosition() + (GetPosition() - target.GetPosition()).normalized * 6f;
 
             var startingPosition = GetPosition();
+            
 
             //Slide to Target
             _characterManager.activeCharacter.RunToPosition(runningTargetPosition, () =>
             {
                 // Arrived at target, attack him
                 var attackDir = (target.GetPosition() - GetPosition()).normalized;
-                _characterManager.activeCharacter.Attack(attackDir, () =>
+                _characterManager.activeCharacter.Attack(() =>
                 {
                     //Target hit
                     target.Damage(damage, isCritical, dodged);
+                    SetEnergy(_energy + energyGained);
                 }, () =>
                 {
                     if (!target.IsDead())
@@ -135,7 +154,8 @@ namespace LGamesDev.Fighting
                         // Slide back to starting position
                         _characterManager.activeCharacter.RunToPosition(startingPosition, () =>
                         {
-                            _characterManager.activeCharacter.PlayAnimIdle();
+                            _characterManager.activeCharacter.PlayIdle();
+                            _characterManager.activeCharacter.LookAt(target.GetPosition());
                             onAttackComplete?.Invoke();
                         });
                     }
@@ -145,6 +165,73 @@ namespace LGamesDev.Fighting
                         onAttackComplete?.Invoke();
                     }
                 });
+            });
+        }
+        
+        public void Parry(CharacterFight target, int damage, bool isCritical, int energyGained, Action onAttackComplete)
+        {
+            var runningTargetPosition =  GetPosition() + (target.GetPosition() - GetPosition()).normalized * 6f;
+
+            var startingPosition = target.GetPosition();
+            
+            var parryDir = (target.GetPosition() - GetPosition()).normalized;
+            _characterManager.activeCharacter.Parry(() =>
+            {
+                //Slide to Target
+                target._characterManager.activeCharacter.RunToPosition(runningTargetPosition, null);
+            }, () =>
+            {
+                // Arrived at target, attack him
+                var attackDir = (GetPosition() - target.GetPosition()).normalized;
+                target._characterManager.activeCharacter.Attack(() =>
+                {
+                    //Target hit
+                    Damage(damage, isCritical, false);
+                    SetEnergy(_energy + energyGained);
+                    _characterManager.activeCharacter.StopParry();
+                }, () =>
+                {
+                    if (!IsDead())
+                    {
+                        // Slide back to starting position
+                        target._characterManager.activeCharacter.RunToPosition(startingPosition, () =>
+                        {
+                            target._characterManager.activeCharacter.PlayIdle();
+                            target._characterManager.activeCharacter.LookAt(GetPosition());
+                            onAttackComplete?.Invoke();
+                        });
+                    }
+                    else
+                    {
+                        _characterManager.activeCharacter.PlayLose();
+                        onAttackComplete?.Invoke();
+                    }
+                });
+            });
+        }
+
+        public void SpecialAttack(CharacterFight target, int damage, bool isCritical, bool dodged, Action onAttackComplete)
+        {
+            _characterManager.activeCharacter.SetSpriteSorting(CharacterSorting.Top);
+            target._characterManager.activeCharacter.SetSpriteSorting(CharacterSorting.Default);
+            
+            SetEnergy(0);
+            _characterManager.activeCharacter.SpecialAttack(target.transform, () =>
+            {
+                //Target hit
+                target.Damage(damage, isCritical, dodged);
+            }, () =>
+            {
+                if (!target.IsDead())
+                {
+                    _characterManager.activeCharacter.PlayIdle();
+                    onAttackComplete?.Invoke();
+                }
+                else
+                {
+                    _characterManager.activeCharacter.PlayWin();
+                    onAttackComplete?.Invoke();
+                }
             });
         }
 
@@ -163,6 +250,11 @@ namespace LGamesDev.Fighting
             _selectionCircleGameObject.SetActive(true);
         }*/
 
+        public int GetEnergy()
+        {
+            return _energy;
+        }
+        
         public LevelSystem GetLevelSystem()
         {
             return _levelSystem;

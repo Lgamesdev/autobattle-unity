@@ -198,6 +198,7 @@ namespace LGamesDev
                     }
                     break;
                 case var value when string.Equals(value, string.Concat(SocketChannel.FightChannelSuffix, GameManager.Instance.GetAuthentication().username)):
+                    List<FightAction> fightActions;
                     switch (socketMessage.Action)
                     {
                         case SocketReceiveAction.StartFight:
@@ -205,8 +206,8 @@ namespace LGamesDev
                             GameManager.Instance.LoadFight(fight);
                             break;
                         case SocketReceiveAction.Attack:
-                            List<FightAction> fightActions = JsonConvert.DeserializeObject<List<FightAction>>(socketMessage.Content);
-                            FightManager.Instance.Attack(fightActions);
+                            fightActions = JsonConvert.DeserializeObject<List<FightAction>>(socketMessage.Content);
+                            FightManager.Instance.AddActions(fightActions);
                             break;
                         case SocketReceiveAction.ExperienceGained:
                             Dictionary<string, int> experiencePayload = JsonConvert.DeserializeObject<Dictionary<string, int>>(socketMessage.Content);
@@ -386,13 +387,14 @@ namespace LGamesDev
             }));
         }
 
-        public void Attack()
+        public void Attack(FightActionType actionType)
         {
             _ws.SendText(JsonConvert.SerializeObject(new Dictionary<string, string>
             {
                 { "action", SocketSendAction.TryAttack },
                 { "channel", string.Concat(SocketChannel.FightChannelSuffix, GameManager.Instance.GetAuthentication().username) },
                 { "username", GameManager.Instance.GetAuthentication().username },
+                { "content", actionType.ToString() },
             }));
         }
 

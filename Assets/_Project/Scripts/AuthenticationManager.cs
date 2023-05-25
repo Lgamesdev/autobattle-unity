@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
+#if UNITY_ANDROID
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
+#endif
 using LGamesDev.Core.Request;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
@@ -57,9 +59,6 @@ namespace LGamesDev
             
             try
             {
-                // Shows how to get the playerID
-                Debug.Log($"PlayerID: {AuthenticationService.Instance.PlayerId}");
-
                 #if UNITY_ANDROID
                     await AuthenticationService.Instance.SignInAnonymouslyAsync();
                     TrySignInWithGooglePlayGames();
@@ -67,7 +66,14 @@ namespace LGamesDev
                 #if UNITY_IOS
                     //Initialize Game Center
                     await AuthenticationService.Instance.SignInAnonymouslyAsync();
-                    SetState(AuthenticationState.Default);
+                    if (_gameManager.GetAuthentication() != null)
+                    {
+                        Refresh();
+                    }
+                    else
+                    {
+                        SetState(AuthenticationState.Default);
+                    }
                 #endif
             }
             catch (AuthenticationException ex)
@@ -84,6 +90,7 @@ namespace LGamesDev
             }
         }
         
+#if UNITY_ANDROID
         public void TrySignInWithGooglePlayGames()
         {
             PlayGamesPlatform.Instance.Authenticate((success) =>
@@ -94,7 +101,6 @@ namespace LGamesDev
 
                     PlayGamesPlatform.Instance.RequestServerSideAccess(true, async code =>
                     {
-                        Debug.Log("google authorization code: " + code);
                         _code = code;
                         // This token serves as an example to be used for SignInWithGooglePlayGames
 
@@ -143,13 +149,13 @@ namespace LGamesDev
                 }
             });
         }
-
+#endif
         private void SetupAuthenticationEvents()
         {
             // Setup authentication event handlers if desired
             AuthenticationService.Instance.SignedIn += () => {
                 // Shows how to get a playerID
-                Debug.Log($"PlayerID: {AuthenticationService.Instance.PlayerId}");
+                //Debug.Log($"PlayerID: {AuthenticationService.Instance.PlayerId}");
 
                 // Shows how to get an access token
                 //Debug.Log($"Access Token: {AuthenticationService.Instance.AccessToken}");
@@ -157,6 +163,7 @@ namespace LGamesDev
 
             AuthenticationService.Instance.SignInFailed += (err) => {
                 Debug.Log("Sign in failed : " + err);
+                SetState(AuthenticationState.Default);
             };
 
             AuthenticationService.Instance.SignedOut += () => {
@@ -188,15 +195,16 @@ namespace LGamesDev
                     break;
             }
         }
-        
+
+      
         private void PlatformRegister(string username)
         {
-            PlayGamesPlatform.Instance.RequestServerSideAccess(true, code =>
-            {
-                Debug.Log("old code : " + _code);
-                _code = code;
-                Debug.Log("new code : " + _code);
-            });
+            #if UNITY_ANDROID  
+                PlayGamesPlatform.Instance.RequestServerSideAccess(true, code =>
+                {
+                    _code = code;
+                });
+            #endif
             
             StartCoroutine(AuthenticationHandler.PlatformConnect(this,
                 username,
@@ -211,12 +219,12 @@ namespace LGamesDev
 
         private void PlatformConnect()
         {
-            PlayGamesPlatform.Instance.RequestServerSideAccess(true, code =>
-            {
-                Debug.Log("old code : " + _code);
-                _code = code;
-                Debug.Log("new code : " + _code);
-            });
+            #if UNITY_ANDROID
+                PlayGamesPlatform.Instance.RequestServerSideAccess(true, code =>
+                {
+                    _code = code;
+                });
+            #endif
             
             StartCoroutine(AuthenticationHandler.PlatformConnect(this,
                 null,

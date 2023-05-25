@@ -2,11 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using LGamesDev.Core.Character;
 using LGamesDev.Core.Player;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.U2D.Animation;
+using Vector2 = UnityEngine.Vector2;
+using Vector3 = UnityEngine.Vector3;
 
 namespace LGamesDev
 {
@@ -20,6 +23,8 @@ namespace LGamesDev
         public SpriteResolver moustacheResolver;
         [Header("Beard")]
         public SpriteResolver beardResolver;
+        [Header("Face Resolvers")]
+        public List<SpriteResolver> faceResolvers;
         [Header("Body")]
         public List<SpriteResolver> bodyResolvers;
         
@@ -30,6 +35,10 @@ namespace LGamesDev
         [Header("Pant")]
         public List<SpriteResolver> pantResolvers;
         
+        [Header("HandL")]
+        public Transform leftHandBone;
+        [Header("HandR")]
+        public Transform rightHandBone;
         [Header("Weapon")]
         public SpriteResolver weaponResolver;
         [Header("OffHand")]
@@ -44,6 +53,9 @@ namespace LGamesDev
 
         private Action _onAttackHit;
         private Action _onAttackComplete;
+        
+        private bool _isParrying;
+        private Action _onParryReady;
 
         private void OnEnable()
         {
@@ -227,77 +239,139 @@ namespace LGamesDev
 
         public void RunToPosition(Vector3 runTargetPosition, Action onRunComplete)
         {
-            _characterAnimator.PlayRun();
-            _characterAnimator.SetMoveVector(runTargetPosition);
+            _characterAnimator.OnMove(runTargetPosition);
+            //_characterAnimator.SetMoveVector(runTargetPosition);
 
             LTDescr runAnim = LeanTween.move(_characterManager.gameObject, runTargetPosition, .7f);
 
-            if (onRunComplete != null)
+            runAnim.setOnComplete(() =>
             {
-                runAnim.setOnComplete(() =>
-                {
-                    //_state = State.Idle;
-                    _characterAnimator.StopRun();
-                    onRunComplete?.Invoke();
-                });
-            }
+                onRunComplete?.Invoke();
+            });
         }
-        
-        public void Attack(Vector3 attackDir, Action onHit, Action onComplete) {
-            //_state = State.Busy;
-            if (_characterManager.equipmentManager.GotWeapon())
-            {
-                _characterAnimator.PlaySwordAttack();
-            }
-            else
-            {
-                _characterAnimator.PlayHandAttack();
-            }
 
+        public void Attack(/*Vector3 attackDir,*/ Action onHit, Action onComplete) {
             _onAttackHit = onHit;
             _onAttackComplete = onComplete;
+            
+            _characterAnimator.OnAttack(_characterManager.equipmentManager.GetWeaponType());
         }
         
         public void OnAttackHit()
         {
             _onAttackHit?.Invoke();
+
+            switch (_characterManager.equipmentManager.GetWeaponType())
+            {
+                case WeaponType.Hand:
+                    _characterAnimator.CreateHandHitImpact(rightHandBone.transform.position);
+                    break;
+                case WeaponType.Sword:
+                    _characterAnimator.CreateSwordSlash(rightHandBone.transform.position);
+                    break;
+            }
         }
 
-        public void OnAttackComplete()
+        public void OnAttackFinished()
         {
+            _characterAnimator.OnAttackComplete();
             _onAttackComplete?.Invoke();
+        }
+
+        public void Parry(Action onStart, Action onParryReady)
+        {
+            _onParryReady = onParryReady;
+            
+            _characterAnimator.OnParry(onStart);
+        }
+        
+        public void OnParryReady()
+        {
+            if (_isParrying) return;
+            
+            _onParryReady?.Invoke();
+            _isParrying = true;
+        }
+
+        public void StopParry()
+        {
+            _isParrying = false;
+            _characterAnimator.StopParrying();
+        }
+
+        public void SpecialAttack(Transform target, Action onHit, Action onComplete)
+        {
+            Debug.Log("special attack");
+            _characterAnimator.CreateProjectile(transform.parent.position, target, onHit, onComplete);
         }
 
         public void Dodge()
         {
-            _characterAnimator.PlayDodge();
+            _characterAnimator.OnDodge();
         }
 
         public void TakeHit()
         {
-            _characterAnimator.PlayHitted();
+            _characterAnimator.OnStruck();
         }
 
-        public void PlayAnimIdle()
+        public void PlayIdle()
         {
-            _characterAnimator.SetMoveVector(Vector3.zero);
+            _characterAnimator.OnMove(Vector3.zero);
         }
 
         public void LookAt(Vector3 position)
         {
-            _characterAnimator.SetMoveVector(position);
+            _characterAnimator.LookAt(position);
         }
 
         public void PlayWin()
         {
-            _characterAnimator.PlayWin();
+            _characterAnimator.OnWin();
         }
         
         public void PlayLose()
         {
-            _characterAnimator.PlayLose();
+            _characterAnimator.OnLose();
         }
-        
+
+        public void SetSpriteSorting(CharacterSorting characterSorting)
+        {
+            hairResolver.GetComponent<SpriteRenderer>().sortingLayerName = characterSorting.ToString();
+            eyeBrowsRenderer.GetComponent<SpriteRenderer>().sortingLayerName = characterSorting.ToString();
+            
+            foreach (SpriteResolver spriteResolver in faceResolvers)
+            {
+                spriteResolver.GetComponent<SpriteRenderer>().sortingLayerName = characterSorting.ToString();
+            }
+
+            if (_body.isMaleGender)
+            {
+                moustacheResolver.GetComponent<SpriteRenderer>().sortingLayerName = characterSorting.ToString();
+                beardResolver.GetComponent<SpriteRenderer>().sortingLayerName = characterSorting.ToString();
+            }
+
+            foreach (SpriteResolver spriteResolver in bodyResolvers)
+            {
+                spriteResolver.GetComponent<SpriteRenderer>().sortingLayerName = characterSorting.ToString();
+            }
+
+            helmetResolver.GetComponent<SpriteRenderer>().sortingLayerName = characterSorting.ToString();
+
+            foreach (SpriteResolver spriteResolver in chestResolvers)
+            {
+                spriteResolver.GetComponent<SpriteRenderer>().sortingLayerName = characterSorting.ToString();
+            }
+
+            foreach (SpriteResolver spriteResolver in pantResolvers)
+            {
+                spriteResolver.GetComponent<SpriteRenderer>().sortingLayerName = characterSorting.ToString();
+            }
+
+            weaponResolver.GetComponent<SpriteRenderer>().sortingLayerName = characterSorting.ToString();
+            //offHandResolver.GetComponent<SpriteRenderer>().sortingLayerName = characterSorting.ToString();
+        }
+
         private enum State
         {
             Idle,
@@ -305,5 +379,11 @@ namespace LGamesDev
             Walking,
             Busy
         }
+    }
+    
+    public enum CharacterSorting
+    {
+        Top,
+        Default
     }
 }

@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+#if UNITY_ANDROID
 using GooglePlayGames;
+#endif
 using LGamesDev;
 using LGamesDev.Core;
 using LGamesDev.Core.Request;
@@ -11,6 +13,7 @@ using UnityEngine;
 
 public class OptionsUI : MonoBehaviour
 {
+#if UNITY_ANDROID
     public async void LinkAccountWithGoogle()
     {
         if (!AuthenticationService.Instance.SessionTokenExists)
@@ -46,6 +49,7 @@ public class OptionsUI : MonoBehaviour
             
         }
     }
+#endif
     
     private async Task LinkWithGooglePlayGamesAsync(string authCode)
     {

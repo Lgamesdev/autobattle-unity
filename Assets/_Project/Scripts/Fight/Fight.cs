@@ -5,9 +5,10 @@ namespace LGamesDev.Fighting
     public class Fight
     {
         public Character Character;
-        public Character Opponent;
+        public IFighter Opponent;
         public List<FightAction> Actions = new();
         public Reward Reward;
+        public FightType FightType;
 
         public override string ToString()
         {

@@ -6,8 +6,8 @@ namespace LGamesDev.Core.Character
     public abstract class BaseCharacterItem<T> : IBaseCharacterItem where T : Item, new()
     {
         public int id;
-        public int amount = 1;
         public T item;
+        public int amount = 1;
 
         int IBaseCharacterItem.Id => id;
         

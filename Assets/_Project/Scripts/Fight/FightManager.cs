@@ -55,11 +55,11 @@ namespace LGamesDev.Fighting
             
             Fight = fight;
 
-            yield return StartCoroutine(playerCharacterFight.SetupCharacterFight(fight.Character));
+            yield return StartCoroutine(playerCharacterFight.SetupFighter(fight.Character));
             
             _enemyCharacterFight = SpawnCharacter();
 
-            yield return StartCoroutine(_enemyCharacterFight.SetupCharacterFight(fight.Opponent));
+            yield return StartCoroutine(_enemyCharacterFight.SetupFighter(fight.Opponent));
 
             Vector3 position = cam.transform.position;
             playerCharacterFight.transform.position = cam.ScreenToWorldPoint(new Vector3(
@@ -250,7 +250,7 @@ namespace LGamesDev.Fighting
 
         public void FightAgain()
         {
-            _gameManager.networkManager.SearchFight();
+            _gameManager.networkManager.SearchFight(Fight.FightType);
         }
     }
 
@@ -259,5 +259,11 @@ namespace LGamesDev.Fighting
         Attack, 
         Parry,
         SpecialAttack
+    }
+
+    public enum FightType
+    {
+        Pvp,
+        Pve
     }
 }

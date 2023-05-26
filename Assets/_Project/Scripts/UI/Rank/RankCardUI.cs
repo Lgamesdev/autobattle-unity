@@ -19,19 +19,19 @@ namespace LGamesDev.UI
         {
             _character = character;
 
-            usernameText.text = isPlayerCharacter ? character.Username + " (You)" : character.Username;
-            levelText.text = "lvl." + _character.Level;
+            usernameText.text = isPlayerCharacter ? character.username + " (You)" : character.username;
+            levelText.text = "lvl." + _character.level;
             rankText.text = AbbreviationUtility.AbbreviateNumber(_character.Ranking);
 
-            _message = "Character Infos of " + _character.Username + " : \n" +
-                       "Level : " + _character.Level + "\n" +
+            _message = "Character Infos of " + _character.username + " : \n" +
+                       "level : " + _character.level + "\n" +
                        "Ranking : " + _character.Ranking + "\n";
         }
 
         public void OnDetailButton()
         {
             GameManager.Instance.modalWindow.ShowAsPrompt(
-                _character.Username,
+                _character.username,
                 null,
                 _message
             );

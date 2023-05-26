@@ -30,7 +30,7 @@ namespace LGamesDev.Core.Request
 
                     if (responseRaw == null)
                     {
-                        Debug.Log("No Stats in response");
+                        Debug.Log("No stats in response");
                     }
                     
                     /*string log = "stats [ \n";

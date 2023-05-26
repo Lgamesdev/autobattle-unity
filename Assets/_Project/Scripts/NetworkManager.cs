@@ -47,7 +47,7 @@ namespace LGamesDev
             _ws.OnError += (e) =>
             {
                 _isError = true;
-                //Debug.Log("Error! " + e);
+                Debug.Log("Error! " + e.ToString());
                 GameManager.Instance.modalWindow.ShowAsTextPopup(
                     "Something get wrong...",
                     "Error : " + e,
@@ -102,10 +102,11 @@ namespace LGamesDev
 
         private void HandleSocketChannel(SocketMessage socketMessage)
         {
+            JsonSerializerSettings settings;
             switch (socketMessage.Channel)
             {
                 case SocketChannel.DefaultChannel:
-                    JsonSerializerSettings settings = new JsonSerializerSettings();
+                    settings = new JsonSerializerSettings();
                     switch (socketMessage.Action)
                     {
                         case SocketReceiveAction.Initialisation:
@@ -202,7 +203,10 @@ namespace LGamesDev
                     switch (socketMessage.Action)
                     {
                         case SocketReceiveAction.StartFight:
-                            Fight fight = JsonConvert.DeserializeObject<Fight>(socketMessage.Content);
+                            settings = new JsonSerializerSettings();
+                            settings.Converters.Add(new FighterConverter());
+                            
+                            Fight fight = JsonConvert.DeserializeObject<Fight>(socketMessage.Content, settings);
                             GameManager.Instance.LoadFight(fight);
                             break;
                         case SocketReceiveAction.Attack:
@@ -319,7 +323,7 @@ namespace LGamesDev
             }));
         }
         
-        //Stats
+        //stats
         public void TryAddStatPoint(StatType statType)
         {
             _ws.SendText(JsonConvert.SerializeObject(new Dictionary<string, string>
@@ -376,14 +380,18 @@ namespace LGamesDev
         }
         
         //Fight
-        public void SearchFight()
+        public void SearchFight(FightType fightType)
         {
             _ws.SendText(JsonConvert.SerializeObject(new Dictionary<string, string>
             {
                 { "action", SocketSendAction.TrySubscribe },
                 { "channel", SocketChannel.DefaultChannel },
                 { "username", GameManager.Instance.GetAuthentication().username },
-                { "content", string.Concat(SocketChannel.FightChannelSuffix, GameManager.Instance.GetAuthentication().username) }
+                { "content", string.Concat( 
+                    SocketChannel.FightChannelSuffix, 
+                    GameManager.Instance.GetAuthentication().username
+                )},
+                { "type", fightType.ToString()}
             }));
         }
 

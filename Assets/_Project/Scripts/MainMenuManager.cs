@@ -1,6 +1,7 @@
 using System;
 using LGamesDev.Core;
 using LGamesDev.Core.Request;
+using LGamesDev.Fighting;
 using LGamesDev.UI;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -64,7 +65,7 @@ namespace LGamesDev
 
         public void LoadPvpFight()
         {
-            _gameManager.networkManager.SearchFight();
+            _gameManager.networkManager.SearchFight(FightType.Pvp);
             /*StartCoroutine(FightHandler.Load(
                 this,
                 result =>
@@ -79,7 +80,7 @@ namespace LGamesDev
         
         public void LoadPveFight()
         {
-            _gameManager.networkManager.SearchFight();
+            _gameManager.networkManager.SearchFight(FightType.Pve);
             /*StartCoroutine(FightHandler.Load(
                 this,
                 result =>

@@ -38,7 +38,7 @@ namespace LGamesDev.UI
                 header.Find("levelText").GetComponent<TextMeshProUGUI>().text =
                     "Lvl." + equipment.requiredLevel;
 
-                _message = "Stats \n";
+                _message = "stats \n";
 
                 foreach (Stat stat in equipment.GetStats())
                 {

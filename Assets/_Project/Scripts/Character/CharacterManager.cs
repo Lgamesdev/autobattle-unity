@@ -38,15 +38,11 @@ namespace LGamesDev
             }
         }
 
-        public IEnumerator SetupCharacter(Character character)
+        public IEnumerator SetupCharacter(IFighter fighter)
         {
-            Character.Username = GameManager.Instance.GetAuthentication().username;
-            Character.Level = character.Level;
-            Character.Experience = character.Experience;
-            Character.MaxExperience = character.MaxExperience;
-            Character.StatPoint = character.StatPoint;
-            Character.Ranking = character.Ranking;
-
+            Character.username = GameManager.Instance.GetAuthentication().username;
+            Character.level = fighter.Level;
+            
             //Setup Equipments
             foreach (EquipmentSlot equipmentSlot in (EquipmentSlot[])Enum.GetValues(typeof(EquipmentSlot)))
             {
@@ -58,57 +54,67 @@ namespace LGamesDev
                 };
                 yield return new WaitForEndOfFrame();
             }
-
-            foreach (CharacterEquipment characterEquipment in character.Gear.equipments)
-            {
-                Character.Gear.equipments[(int)characterEquipment.item.equipmentSlot] = characterEquipment;
-                yield return new WaitForEndOfFrame();
-            }
-
-            //Setup Stats
+            
+            //Setup stats
             foreach (StatType statType in (StatType[])Enum.GetValues(typeof(StatType)))
             {
-                Character.Stats[(int)statType] = new Stat() { statType = statType };
+                Character.stats[(int)statType] = new Stat() { statType = statType };
                 yield return new WaitForEndOfFrame();
             }
 
-            foreach (Stat stat in character.Stats)
+            foreach (Stat stat in fighter.Stats)
             {
-                Character.Stats[(int)stat.statType] = stat;
+                Character.stats[(int)stat.statType] = stat;
                 yield return new WaitForEndOfFrame();
             }
-
+            
             //Setup Equipment Manager
             equipmentManager = GetComponent<CharacterEquipmentManager>();
             equipmentManager.SetupManager(Character.Gear);
 
             //Setup Stat Manager
             statsManager = GetComponent<CharacterStatsManager>();
-            statsManager.SetupManager(Character.Stats);
+            statsManager.SetupManager(Character.stats);
+            
+            Character.Body = fighter.Body;
 
-            //Setup Wallet/Wallet Manager
-            Character.Wallet = character.Wallet;
-            walletManager = GetComponent<PlayerWalletManager>();
-            if (walletManager != null)
+            if (fighter is Character character)
             {
-                walletManager.SetupManager(Character.Wallet);
+                Character.Experience = character.Experience;
+                Character.MaxExperience = character.MaxExperience;
+                Character.StatPoint = character.StatPoint;
+                Character.Ranking = character.Ranking;
+                
+                //Setup Equipments
+                foreach (CharacterEquipment characterEquipment in character.Gear.equipments)
+                {
+                    Character.Gear.equipments[(int)characterEquipment.item.equipmentSlot] = characterEquipment;
+                    yield return new WaitForEndOfFrame();
+                }
+                
+                //Setup Wallet/Wallet Manager
+                Character.Wallet = character.Wallet;
+                walletManager = GetComponent<PlayerWalletManager>();
+                if (walletManager != null)
+                {
+                    walletManager.SetupManager(Character.Wallet);
+                }
+                
+                //Setup Inventory/Inventory Manager
+                Character.Inventory = character.Inventory;
+                inventoryManager = GetComponent<PlayerInventoryManager>();
+                if (inventoryManager != null)
+                {
+                    inventoryManager.SetupManager(Character.Inventory);
+                }
             }
-
-            //Setup Inventory/Inventory Manager
-            Character.Inventory = character.Inventory;
-            inventoryManager = GetComponent<PlayerInventoryManager>();
-            if (inventoryManager != null)
-            {
-                inventoryManager.SetupManager(Character.Inventory);
-            }
-
-            Character.Body = character.Body;
             
             PlayerInfosUpdate?.Invoke(Character);
 
             CreateCharacter(Character.Body.isMaleGender ? SpriteLib.Male : SpriteLib.Female);
 
             equipmentManager.EquipmentChanged += activeCharacter.UpdateEquipmentTexture;
+            
             yield return activeCharacter.SetupCharacter(Character);
         }
 

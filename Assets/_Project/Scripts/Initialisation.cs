@@ -83,7 +83,7 @@ namespace LGamesDev
                     break;
                 case InitialisationStage.Progression:
                     PlayerProgression playerProgression = JsonConvert.DeserializeObject<PlayerProgression>(result.Value);
-                    _character.Level = playerProgression.Level;
+                    _character.level = playerProgression.Level;
                     _character.Experience = playerProgression.Experience;
                     _character.MaxExperience = playerProgression.MaxExperience;
                     _character.StatPoint = playerProgression.StatPoint;
@@ -108,7 +108,7 @@ namespace LGamesDev
                     break;
                 case InitialisationStage.CharacterStats:
                     Stat[] stats = JsonConvert.DeserializeObject<Stat[]>(result.Value);
-                    _character.Stats = stats;
+                    _character.stats = stats;
                     break;
             }
 

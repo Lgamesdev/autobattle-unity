@@ -264,7 +264,7 @@ namespace LGamesDev
             switch (_characterManager.equipmentManager.GetWeaponType())
             {
                 case WeaponType.Hand:
-                    _characterAnimator.CreateHandHitImpact(rightHandBone.transform.position);
+                    _characterAnimator.CreateHandHitImpact(leftHandBone.transform.position);
                     break;
                 case WeaponType.Sword:
                     _characterAnimator.CreateSwordSlash(rightHandBone.transform.position);

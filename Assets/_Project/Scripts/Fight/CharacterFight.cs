@@ -36,28 +36,35 @@ namespace LGamesDev.Fighting
             _characterStatsManager.OnHealthChanged += CharacterStatsManagerOnHealthChanged;
         }
 
-        public IEnumerator SetupCharacterFight(Character character)
+        public IEnumerator SetupFighter(IFighter fighter)
         {
             transform.localScale = new Vector3(.85f, .85f, 1);
             
-            yield return StartCoroutine(_characterManager.SetupCharacter(character));
-            
-            _levelSystem = new LevelSystem(character.Level, character.Experience);
-            
+            yield return StartCoroutine(_characterManager.SetupCharacter(fighter));
+
+            if (fighter is Character character)
+            {
+                _levelSystem = new LevelSystem(fighter.Level, character.Experience);
+            }
+            else
+            {
+                _levelSystem = new LevelSystem(fighter.Level, 0);
+            }
+
             if (isPlayerTeam)
             {
                 _healthBar = FindObjectOfType<ResourcePanelUI>().playerHealthBar;
                 _energyBar = FindObjectOfType<ResourcePanelUI>().playerEnergyBar;
-                FindObjectOfType<InfosPanelUI>().playerUsername.text = character.Username;
-                FindObjectOfType<InfosPanelUI>().playerLevel.text = "lvl. " + character.Level;
+                FindObjectOfType<InfosPanelUI>().playerUsername.text = fighter.Username;
+                FindObjectOfType<InfosPanelUI>().playerLevel.text = "lvl. " + fighter.Level;
                 RewardUI.Instance.SetLevelSystem(_levelSystem);
             }
             else
             {
                 _healthBar = FindObjectOfType<ResourcePanelUI>().opponentHealthBar;
                 _energyBar = FindObjectOfType<ResourcePanelUI>().opponentEnergyBar;
-                FindObjectOfType<InfosPanelUI>().opponentUsername.text = character.Username;
-                FindObjectOfType<InfosPanelUI>().opponentLevel.text = "lvl. " + character.Level;
+                FindObjectOfType<InfosPanelUI>().opponentUsername.text = fighter.Username;
+                FindObjectOfType<InfosPanelUI>().opponentLevel.text = "lvl. " + fighter.Level;
             }
             
             _healthBar.SetMaxResource(_characterStatsManager.GetMaxHealth());

@@ -22,8 +22,8 @@ namespace LGamesDev.UI
 
         private void UpdateUI(Character character)
         {
-            username.text = character.Username;
-            level.text = "Level : " + character.Level;
+            username.text = character.username;
+            level.text = "level : " + character.level;
             experienceBar.value = (float)character.Experience / character.MaxExperience;
             currentExperienceText.text = AbbreviationUtility.AbbreviateNumber(character.Experience);
             maxExperienceText.text = AbbreviationUtility.AbbreviateNumber(character.MaxExperience);

@@ -29,9 +29,9 @@ namespace LGamesDev.Fighting
             FightManager.Instance.FightOver += OnFightOver;
         }
 
-        private void OnFightOver(Reward reward)
+        private void OnFightOver(Fight fight)
         {
-            if (reward.PlayerWin)
+            if (fight.PlayerWin)
             {
                 _winsNumber.text = (_playerWins + 1).ToString();
                 PlayerPrefs.SetInt("playerWins", PlayerPrefs.GetInt("playerWins") + 1);

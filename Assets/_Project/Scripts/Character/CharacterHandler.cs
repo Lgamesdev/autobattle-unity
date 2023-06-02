@@ -242,9 +242,7 @@ namespace LGamesDev
             _characterAnimator.OnMove(runTargetPosition);
             //_characterAnimator.SetMoveVector(runTargetPosition);
 
-            LTDescr runAnim = LeanTween.move(_characterManager.gameObject, runTargetPosition, .7f);
-
-            runAnim.setOnComplete(() =>
+            LTDescr runAnim = LeanTween.move(_characterManager.gameObject, runTargetPosition, .8f).setOnComplete(() =>
             {
                 onRunComplete?.Invoke();
             });

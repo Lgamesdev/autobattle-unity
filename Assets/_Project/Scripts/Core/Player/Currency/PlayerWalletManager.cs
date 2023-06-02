@@ -42,9 +42,9 @@ namespace LGamesDev
         
         public void TryBuyItem(Item item)
         {
-            if (GetAmount(CurrencyType.Gold) > item.cost)
+            if (GetAmount(CurrencyType.Gold) >= item.cost)
             {
-                GameManager.Instance.networkManager.TryBuyItem(item);
+                GameManager.Instance.networkService.TryBuyItem(item);
                 
                 //Can afford cost
                 /*StartCoroutine(PlayerWalletHandler.Buy(
@@ -75,7 +75,7 @@ namespace LGamesDev
         
         public void TrySellCharacterItem(IBaseCharacterItem characterItem)
         {
-            GameManager.Instance.networkManager.TrySellItem(characterItem);
+            GameManager.Instance.networkService.TrySellItem(characterItem);
             /*StartCoroutine(PlayerWalletHandler.Sell(
                 this,
                 characterItem,

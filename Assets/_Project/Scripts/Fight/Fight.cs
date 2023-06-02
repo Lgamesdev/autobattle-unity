@@ -9,7 +9,8 @@ namespace LGamesDev.Fighting
         public List<FightAction> Actions = new();
         public Reward Reward;
         public FightType FightType;
-
+        public bool PlayerWin;
+        
         public override string ToString()
         {
             string result = "[ \n" +
@@ -18,7 +19,8 @@ namespace LGamesDev.Fighting
                             "actions [ : \n";
             Actions.ForEach(action => result += action.ToString());
             result += " ] \n" +
-                      "reward : " + Reward;
+                      "reward : " + Reward + "\n" +
+                      "isPlayerWin : " + PlayerWin + "]";
             return result;
         }
     }

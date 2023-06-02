@@ -1,8 +1,10 @@
+using Core.Network;
 using LGamesDev.Core;
 using LGamesDev.Core.Player;
 using LGamesDev.Fighting;
 using Newtonsoft.Json;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace LGamesDev
 {
@@ -13,10 +15,12 @@ namespace LGamesDev
         [SerializeField] private SceneLoader sceneLoader;
 
         public NetworkManager networkManager;
+        public NetworkService networkService;
         public LoadingScreen loadingScreen;
         public ModalWindowPanel modalWindow;
         public AudioManager audioManager;
         public DialogManager dialogManager;
+        public ColorLibrary itemQualityColorLibrary;
 
         private Authentication _authentication;
         private const string AuthenticationKey = "authentication";
@@ -29,6 +33,8 @@ namespace LGamesDev
             
             //Network Manager
             networkManager = GetComponent<NetworkManager>();
+            //Network Manager
+            networkService = GetComponent<NetworkService>();
             //Audio Manager
             audioManager = GetComponent<AudioManager>();
             //Scene Loader

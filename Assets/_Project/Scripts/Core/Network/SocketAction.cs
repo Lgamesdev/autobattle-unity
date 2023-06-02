@@ -1,11 +1,24 @@
-﻿namespace LGamesDev.Core
+﻿using Newtonsoft.Json;
+
+namespace LGamesDev.Core
 {
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class SocketMessage
     {
+        [JsonProperty("action")]
         public string Action;
+        
+        [JsonProperty("channel")]
         public string Channel;
+        
+        [JsonProperty("username")]
         public string Username;
+        
+        [JsonProperty("content")]
         public string Content;
+        
+        [JsonProperty("type")]
+        public string Type;
         
         public override string ToString()
         {
@@ -14,6 +27,7 @@
                        "Channel : " + Channel + "\n" +
                        "Username : " + Username + "\n" +
                        "Content : " + Content + "\n" +
+                       "Type : " + Type + "\n" +
                    "]";
         }
     }

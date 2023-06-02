@@ -4,6 +4,7 @@ using LGamesDev.Request.Converters;
 using Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace LGamesDev
 {
@@ -16,7 +17,8 @@ namespace LGamesDev
         public Sprite icon;
         public bool isDefaultItem = true;
         public int cost = 0;
-        
+        public ItemQuality itemQuality;
+
         public override string ToString()
         {
             return "item : [ \n " +
@@ -24,7 +26,16 @@ namespace LGamesDev
                    "isDefaultItem : " + isDefaultItem + "\n" +
                    /*"iconPath : " + AssetDatabase.GetAssetPath(icon) + "\n" +*/
                    "cost : " + cost + "\n" +
+                   "itemQuality : " + itemQuality + "\n" +
                    "]";
         }
+    }
+
+    public enum ItemQuality
+    {
+        Normal,
+        Rare,
+        Epic,
+        Legendary
     }
 }

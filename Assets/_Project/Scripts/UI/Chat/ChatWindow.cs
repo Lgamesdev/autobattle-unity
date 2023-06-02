@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Core.Network;
 using LGamesDev.Core;
 using LGamesDev.Helper;
 using NativeWebSocket;
@@ -37,18 +38,18 @@ namespace LGamesDev.UI
         public void Show()
         {
             gameObject.SetActive(true);
-            GameManager.Instance.networkManager.ConnectToChat();
+            GameManager.Instance.networkService.ConnectToChat();
         }
 
         public void Hide()
         {
-            GameManager.Instance.networkManager.ExitChat();
+            GameManager.Instance.networkService.ExitChat();
             gameObject.SetActive(false);
         }
 
         public void SendMessage()
         {
-            GameManager.Instance.networkManager.SendMessage(inputField.text);
+            MainMenuManager.Instance.chatService.SendMessage(inputField.text);
             inputField.text = "";
         }
 
@@ -56,7 +57,7 @@ namespace LGamesDev.UI
         {
             if (GameManager.Instance != null)
             {
-                GameManager.Instance.networkManager.MessageReceived += AddMessageToChannel;
+                ChatService.MessageReceived += AddMessageToChannel;
             }
         }
 
@@ -64,7 +65,7 @@ namespace LGamesDev.UI
         {
             if (GameManager.Instance != null)
             {
-                GameManager.Instance.networkManager.MessageReceived -= AddMessageToChannel;
+                ChatService.MessageReceived -= AddMessageToChannel;
             }
         }
     }

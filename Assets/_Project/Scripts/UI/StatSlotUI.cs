@@ -14,7 +14,7 @@ namespace LGamesDev.UI
         [SerializeField] private TextMeshProUGUI label;
         [SerializeField] private TextMeshProUGUI value;
         [SerializeField] private TextMeshProUGUI modifier;
-        [SerializeField] private Button button;
+        [SerializeField] private GameObject statPoint;
 
         public void SetupSlot(Stat stat, Stat statModifier = null, bool buttonActive = false)
         {
@@ -24,12 +24,12 @@ namespace LGamesDev.UI
             value.text = stat.GetValue().ToString();
             modifier.text = statModifier?.GetValue().ToString();
 
-            if (buttonActive && button != null)
+            if (buttonActive && statPoint != null)
             {
-                button.gameObject.SetActive(CharacterStatsManager.Instance.GetStatPoint() > 0);
+                statPoint.SetActive(CharacterStatsManager.Instance.GetStatPoint() > 0);
                 CharacterStatsManager.Instance.StatPointAdded += OnStatPointAdded;
 
-                button.GetComponentInChildren<TextMeshProUGUI>().text = (stat.statType) switch
+                statPoint.GetComponentInChildren<TextMeshProUGUI>().text = (stat.statType) switch
                 {
                     StatType.Health => "+10",
                     StatType.Strength => "+2",
@@ -41,23 +41,26 @@ namespace LGamesDev.UI
             }
             else
             {
-                HideStatPointButton();
+                if (statPoint != null)
+                {
+                    HideStatPointButton();
+                }
             }
         }
 
         private void OnStatPointAdded()
         {
-            button.gameObject.SetActive(CharacterStatsManager.Instance.GetStatPoint() > 0);
+            statPoint.SetActive(CharacterStatsManager.Instance.GetStatPoint() > 0);
         }
 
         public void ShowStatPointButton()
         {
-            button.gameObject.SetActive(true);
+            statPoint.SetActive(true);
         }
 
         private void HideStatPointButton()
         {
-            button.gameObject.SetActive(false);
+            statPoint.SetActive(false);
         }
 
         public void OnStatPointButton()

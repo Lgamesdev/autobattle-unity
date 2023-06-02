@@ -94,7 +94,7 @@ namespace LGamesDev.UI
                 && state != AuthenticationState.Refresh
                 && state != AuthenticationState.PlatformConnect)
             {
-                Debug.Log("state = " + state + " waiting screen disabled");
+                //Debug.Log("state = " + state + " waiting screen disabled");
                 StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());
             }
         }

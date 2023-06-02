@@ -49,9 +49,9 @@ namespace LGamesDev.Fighting
             FightManager.Instance.FightOver += OnFightOver;
         }
 
-        private void OnFightOver(Reward reward)
+        private void OnFightOver(Fight fight)
         {
-            foreach (Currency currency in reward.Currencies)
+            foreach (Currency currency in fight.Reward.Currencies)
             {
                 switch (currency.currencyType)
                 {
@@ -64,16 +64,16 @@ namespace LGamesDev.Fighting
                 }
             }
 
-            if (reward.Ranking > 0)
+            if (fight.Reward.Ranking > 0)
             {
-                _rankGain.text = "+" + AbbreviationUtility.AbbreviateNumber(reward.Ranking);
+                _rankGain.text = "+" + AbbreviationUtility.AbbreviateNumber(fight.Reward.Ranking);
             }
             else
             {
-                _rankGain.text = AbbreviationUtility.AbbreviateNumber(reward.Ranking);
+                _rankGain.text = AbbreviationUtility.AbbreviateNumber(fight.Reward.Ranking);
             }
             
-            _experienceGain.text = "+" + AbbreviationUtility.AbbreviateNumber(reward.Experience);
+            _experienceGain.text = "+" + AbbreviationUtility.AbbreviateNumber(fight.Reward.Experience);
         }
 
         private void AddToExperienceBar(int level, int oldExperience, int aimedExperience, int maxExperience)

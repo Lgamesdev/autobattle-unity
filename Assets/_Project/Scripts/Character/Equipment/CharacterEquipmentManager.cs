@@ -18,7 +18,7 @@ namespace LGamesDev.Core.Character
 
         public void TryEquip(CharacterEquipment newCharacterEquipment) 
         {
-            GameManager.Instance.networkManager.TryEquip(newCharacterEquipment);
+            GameManager.Instance.networkService.TryEquip(newCharacterEquipment);
         }
 
         public void Equip(int id)
@@ -67,7 +67,7 @@ namespace LGamesDev.Core.Character
         
         public void TryUnEquip(int slotIndex) 
         {
-            GameManager.Instance.networkManager.TryUnEquip(currentGear.equipments[slotIndex]);
+            GameManager.Instance.networkService.TryUnEquip(currentGear.equipments[slotIndex]);
         }
 
         public void UnEquip(int slotIndex)

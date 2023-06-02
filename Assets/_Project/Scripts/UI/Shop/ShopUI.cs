@@ -1,6 +1,5 @@
 using System.Collections.Generic;
-using LGamesDev.Core.Player;
-using LGamesDev.Core.Request;
+using System.Linq;
 using UnityEngine;
 
 namespace LGamesDev.UI
@@ -8,7 +7,7 @@ namespace LGamesDev.UI
     public class ShopUI : MonoBehaviour
     {
         public static ShopUI Instance;
-        
+
         [SerializeField] private ShopItemUI pfShopCardUI;
 
         private Transform _containerWrapper;
@@ -23,7 +22,7 @@ namespace LGamesDev.UI
             get => _shopItems;
             set
             {
-                _shopItems = value;
+                _shopItems = value.OrderBy(i => i.cost).ToList();
                 SetupUI();
             }
         }
@@ -40,21 +39,13 @@ namespace LGamesDev.UI
 
         private void Start()
         {
-            GameManager.Instance.networkManager.GetItemsList();
-            /*StartCoroutine(ShopHandler.Load(
-                this,
-                result =>
-                {
-                    _shopItems = result;
-                    SetupUI();
-                }
-            ));*/
+            GameManager.Instance.networkService.GetItemsList();
         }
 
         private void SetupUI(EquipmentSlot? equipmentSlot = null)
         {
             foreach (Transform child in _container) Destroy(child.gameObject);
-            
+
             if (equipmentSlot.HasValue)
             {
                 foreach (Item shopItem in _shopItems) 

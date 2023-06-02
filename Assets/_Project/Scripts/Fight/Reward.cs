@@ -6,7 +6,6 @@ namespace LGamesDev.Fighting
 {
     public class Reward
     {
-        public bool PlayerWin;
         public int Experience;
         public int Ranking;
         public Currency[] Currencies = new Currency[Enum.GetNames(typeof(CurrencyType)).Length];

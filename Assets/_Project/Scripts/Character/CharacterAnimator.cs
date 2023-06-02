@@ -142,7 +142,7 @@ namespace LGamesDev
 
         public void OnAttack(WeaponType weaponType)
         {
-            _animator.SetFloat(WeaponType, (int)weaponType, 0.25f, Time.deltaTime);
+            _animator.SetFloat(WeaponType, (int)weaponType);
             CurrentState = PlayerStates.ATTACK;
             //Debug.Log("Hand attack animation");
             //_animator.SetTrigger(HandAttack);
@@ -229,7 +229,7 @@ namespace LGamesDev
         public void OnDodgeFinished()
         {
             _stateLock = false;
-            _canMove = true;
+            CurrentState = PlayerStates.IDLE;
         }
 
         public void OnWin()

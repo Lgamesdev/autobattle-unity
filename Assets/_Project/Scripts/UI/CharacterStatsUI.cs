@@ -19,8 +19,8 @@ namespace LGamesDev.UI
         private void Awake()
         {
             _statPointText = transform.Find("Title").Find("statPoint").GetComponent<TextMeshProUGUI>();
-            _defensiveStats = transform.Find("statsParent").Find("Defensive stats");
-            _offensiveStats = transform.Find("statsParent").Find("Offensive stats");
+            _defensiveStats = transform.Find("statsParent").Find("Defensive Stats");
+            _offensiveStats = transform.Find("statsParent").Find("Offensive Stats");
         }
 
         private void Start()
@@ -53,7 +53,11 @@ namespace LGamesDev.UI
                 {
                     case StatType.Health 
                         or StatType.Armor:
-                        CreateStatSlot(stat, _defensiveStats);
+                        if (!(stat.statType.Equals(StatType.Armor)
+                            && stat.value <= 0))
+                        {
+                            CreateStatSlot(stat, _defensiveStats);
+                        }
                         break;
                     case StatType.Strength
                         or StatType.Agility

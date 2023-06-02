@@ -26,7 +26,9 @@ namespace LGamesDev.UI
             _onBuy = onBuy;
 
             header.Find("nameText").GetComponent<TextMeshProUGUI>().text = item.name;
-            header.Find("itemImage").GetComponent<Image>().sprite = item.icon;
+            header.Find("Item Panel").GetComponent<Image>().color =
+                GameManager.Instance.itemQualityColorLibrary.colors[(int)item.itemQuality];
+            header.Find("Item Panel/Item Image").GetComponent<Image>().sprite = item.icon;
             header.Find("costText").GetComponent<TextMeshProUGUI>().text = AbbreviationUtility.AbbreviateNumber(item.cost);
 
             content.Find("Item Description").GetComponent<TextMeshProUGUI>().text = "Description of " + item.name;

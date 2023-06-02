@@ -58,8 +58,8 @@ namespace LGamesDev
         public void Attack(FightActionType actionType)
         {
             if (_isAttacking) return;
-            
-            GameManager.Instance.networkManager.Attack(actionType);
+            Debug.Log("click!");
+            FightManager.Instance.fightService.Attack(actionType);
             _isAttacking = true;
             attackButton.interactable = false;
             parryButton.interactable = false;

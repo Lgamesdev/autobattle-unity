@@ -152,13 +152,16 @@ namespace LGamesDev.Core.Request
                         "Error",
                         error,
                         "Retry",
-                        "Disconnect",
+                        "Close",
                         () =>
                         {
                             instance.StartCoroutine(RefreshToken(instance, refreshToken, setResult));
                         },
-                        GameManager.Instance.Logout
-                    );
+                        () =>
+                        {
+                            GameManager.Instance.modalWindow.Close();
+                            AuthenticationManager.Instance.SetState(AuthenticationState.Default);
+                        });
                 },
                 response =>
                 {

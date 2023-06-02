@@ -1,4 +1,5 @@
 using System;
+using Core.Network;
 using LGamesDev.Core;
 using LGamesDev.Core.Request;
 using LGamesDev.Fighting;
@@ -12,6 +13,8 @@ namespace LGamesDev
     public class MainMenuManager : MonoBehaviour
     {
         public static MainMenuManager Instance;
+
+        public ChatService chatService;
         
         public PopupHandler firstPopup;
 
@@ -53,7 +56,7 @@ namespace LGamesDev
 
         public void TutorialFinished()
         {
-            _gameManager.networkManager.TutorialFinished();
+            _gameManager.networkService.OnTutorialFinished();
             /*StartCoroutine(RequestHandler.Request("api/user/tutorialDone",
                 UnityWebRequest.kHttpVerbGET,
                 error => { Debug.Log("Error on /tutorialDone : " + error); },
@@ -65,7 +68,7 @@ namespace LGamesDev
 
         public void LoadPvpFight()
         {
-            _gameManager.networkManager.SearchFight(FightType.Pvp);
+            _gameManager.networkService.SearchFight(FightType.Pvp);
             /*StartCoroutine(FightHandler.Load(
                 this,
                 result =>
@@ -80,7 +83,7 @@ namespace LGamesDev
         
         public void LoadPveFight()
         {
-            _gameManager.networkManager.SearchFight(FightType.Pve);
+            _gameManager.networkService.SearchFight(FightType.Pve);
             /*StartCoroutine(FightHandler.Load(
                 this,
                 result =>

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Core.Network;
 using LGamesDev.Core.Player;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,13 +11,15 @@ namespace LGamesDev.Fighting
 {
     public class FightManager : MonoBehaviour
     {
+        public static FightManager Instance;
+
+        public FightService fightService;
+        
         public Camera cam;
         public Action<int> FightSpeedChanged;
 
-        public delegate void FightOverEvent(Reward reward);
+        public delegate void FightOverEvent(Fight fight);
         public FightOverEvent FightOver;
-
-        public static FightManager Instance;
 
         [SerializeField] private CharacterFight pfCharacterBattle;
 
@@ -26,9 +29,11 @@ namespace LGamesDev.Fighting
 
         public Fight Fight;
         private int _currentAction = 0;
+        public Action OnFightStart;
         public Action ActionsComplete;
 
         public int fightSpeed;
+        public bool isFightOver;
 
         //[SerializeField] private State state = State.Busy;
 
@@ -47,11 +52,15 @@ namespace LGamesDev.Fighting
             {
                 SceneManager.LoadScene((int)SceneIndexes.PersistentScene);
             }
+            
+            FightService.OnFightOver += OnFightOver;
         }
 
         public IEnumerator SetupFight(Fight fight)
         {
             SetFightSpeed(GameManager.Instance.GetPlayerOptions().FightSpeed);
+            
+            isFightOver = false;
             
             Fight = fight;
 
@@ -73,7 +82,6 @@ namespace LGamesDev.Fighting
             playerCharacterFight.LookAt(_enemyCharacterFight.GetPosition());
             _enemyCharacterFight.LookAt(playerCharacterFight.GetPosition());
             
-            
             //TODO
             //yield return new WaitUntil(() => playerCharacterFight.IsGrounded() && _enemyCharacterFight.IsGrounded());
         }
@@ -84,6 +92,7 @@ namespace LGamesDev.Fighting
             
             _gameManager.PlayFightMusic();
             
+            OnFightStart?.Invoke();
             PlayNextAction();
         }
 
@@ -100,6 +109,8 @@ namespace LGamesDev.Fighting
 
             if (_currentAction < Fight.Actions.Count)
             {
+                Debug.Log("play action " + _currentAction);
+                
                 FightAction fightAction = Fight.Actions[_currentAction];
 
                 if (fightAction.PlayerTeam)
@@ -182,12 +193,13 @@ namespace LGamesDev.Fighting
 
         private bool TestBattleOver()
         {
-            if (!playerCharacterFight.IsDead() && !_enemyCharacterFight.IsDead()) return false;
+            //if (!playerCharacterFight.IsDead() && !_enemyCharacterFight.IsDead()) return false;
+            if (!isFightOver) return false;
             
             // reset fight speed on battle over window
             SetFightSpeed(1);
 
-            FightOver?.Invoke(Fight.Reward);
+            FightOver?.Invoke(Fight);
             HandlePlayerReward();
 
             return true;
@@ -195,7 +207,7 @@ namespace LGamesDev.Fighting
 
         private void HandlePlayerReward()
         {
-            if (Fight.Reward.PlayerWin)
+            if (Fight.PlayerWin)
             {
                 _gameManager.audioManager.PlayWinMusic();
             }
@@ -219,18 +231,6 @@ namespace LGamesDev.Fighting
             Fight.Actions.AddRange(fightActions);
             PlayNextAction();
         }
-        
-        public void Dodge(IEnumerable<FightAction> fightActions)
-        {
-            Fight.Actions.AddRange(fightActions);
-            PlayNextAction();
-        }
-        
-        public void SpecialAttack(IEnumerable<FightAction> fightActions)
-        {
-            Fight.Actions.AddRange(fightActions);
-            PlayNextAction();
-        }
 
         public void SetFightSpeed(int pFightSpeed)
         {
@@ -242,6 +242,13 @@ namespace LGamesDev.Fighting
             _gameManager.SetPlayerOptions(playerOptions);
             FightSpeedChanged?.Invoke(fightSpeed);
         }
+        
+        private void OnFightOver()
+        {
+            Debug.Log("fight over");
+            isFightOver = true;
+            TestBattleOver();
+        }
 
         public void BackToMainMenu()
         {
@@ -250,7 +257,7 @@ namespace LGamesDev.Fighting
 
         public void FightAgain()
         {
-            _gameManager.networkManager.SearchFight(Fight.FightType);
+            _gameManager.networkService.SearchFight(Fight.FightType);
         }
     }
 

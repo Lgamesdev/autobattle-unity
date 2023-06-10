@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reactive;
 using System.Text;
 using LGamesDev.Core;
 using LGamesDev.Core.Character;
@@ -59,7 +60,8 @@ namespace LGamesDev
                     "Retry",
                     "Disconnect",
                     GameManager.Instance.LoadMainMenu,
-                    GameManager.Instance.Logout
+                    GameManager.Instance.Logout,
+                    GameManager.Instance.modalWindow.Close
                 );
             };
 
@@ -72,12 +74,13 @@ namespace LGamesDev
                 if (!_isError && isConnected)
                 {
                     GameManager.Instance.modalWindow.ShowAsTextPopup(
-                        "Something get wrong...",
+                        "You've got disconnected...",
                         e.ToString(),
                         "Reconnect",
                         "Disconnect",
                         GameManager.Instance.LoadMainMenu,
-                        GameManager.Instance.Logout
+                        GameManager.Instance.Logout,
+                        GameManager.Instance.modalWindow.Close
                     );
                     //Invoke(nameof(Connect), 10.0f);
                 }
@@ -88,8 +91,7 @@ namespace LGamesDev
             {
                 // getting the message as a string
                 string response = Encoding.UTF8.GetString(bytes);
-                //Debug.Log("OnMessage! " + response);
-                
+
                 SocketMessage socketMessage = JsonConvert.DeserializeObject<SocketMessage>(response);
 
                 if (socketMessage == null)
@@ -98,8 +100,7 @@ namespace LGamesDev
                     return;
                 }
 
-                foreach (var observer in _observers)
-                {
+                foreach (var observer in _observers) {
                     observer.OnNext(socketMessage);
                 }
             };
@@ -119,9 +120,11 @@ namespace LGamesDev
         {
             // Check whether observer is already registered. If not, add it
             if (! _observers.Contains(observer)) {
+                //Debug.Log(observer + " subscribed");
                 _observers.Add(observer);
-                /*// Provide observer with existing data.
-                foreach (var item in flights)
+                
+                // Provide observer with existing data.
+                /*foreach (var item in flights)
                     observer.OnNext(item);*/
             }
             return new UnSubscriber<SocketMessage>(_observers, observer);

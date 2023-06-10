@@ -22,21 +22,23 @@ namespace LGamesDev.Request.Converters
         {
             JObject jo = JObject.Load(reader);
 
-            // Using a nullable bool here in case "isDefaultItem" is not present on an item
-            bool? isDefaultItem = jo["item"]?.ToObject<Item>()?.isDefaultItem;
-
-            IBaseCharacterItem characterItem;
-            if (isDefaultItem.GetValueOrDefault())
-            {                
-                characterItem = new CharacterItem();
-            }
-            else
+            ItemType? itemType = jo["item"]?.ToObject<Item>()?.itemType;
+            
+            IBaseCharacterItem characterItem = itemType switch
             {
-                characterItem = new CharacterEquipment();
+                ItemType.Item => new CharacterItem(),
+                ItemType.LootBox => new CharacterLootBox(),
+                ItemType.Equipment => new CharacterEquipment(),
+                _ => null
+            };
+            
+            if (characterItem == null)
+            {
+                Debug.LogError("Deserialization of characterItem is null, set to CharacterItem class by default.");
             }
 
             serializer.Converters.Add(new ItemConverter());
-            serializer.Populate(jo.CreateReader(), characterItem);
+            serializer.Populate(jo.CreateReader(), characterItem ?? new CharacterItem());
 
             return characterItem;
         }

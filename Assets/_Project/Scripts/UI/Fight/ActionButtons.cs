@@ -33,6 +33,11 @@ namespace LGamesDev
             {
                 specialAttackButton.interactable = false;
             }
+            
+            FightManager.Instance.FightOver += (_) =>
+            {
+                gameObject.SetActive(false);
+            };
         }
 
         public void OnAutoClick()
@@ -58,7 +63,7 @@ namespace LGamesDev
         public void Attack(FightActionType actionType)
         {
             if (_isAttacking) return;
-            Debug.Log("click!");
+            //Debug.Log("click!");
             FightManager.Instance.fightService.Attack(actionType);
             _isAttacking = true;
             attackButton.interactable = false;

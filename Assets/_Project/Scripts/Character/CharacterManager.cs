@@ -44,16 +44,16 @@ namespace LGamesDev
             Character.level = fighter.Level;
             
             //Setup Equipments
-            foreach (EquipmentSlot equipmentSlot in (EquipmentSlot[])Enum.GetValues(typeof(EquipmentSlot)))
+            /*foreach (EquipmentSlot equipmentSlot in (EquipmentSlot[])Enum.GetValues(typeof(EquipmentSlot)))
             {
-                Equipment defaultEquipment = new Equipment() { equipmentSlot = equipmentSlot, isDefaultItem = true };
+                Equipment defaultEquipment = new Equipment() { equipmentSlot = equipmentSlot/*, isDefaultItem = true#1# };
 
                 Character.Gear.equipments[(int)equipmentSlot] = new CharacterEquipment()
                 {
                     item = defaultEquipment
                 };
                 yield return new WaitForEndOfFrame();
-            }
+            }*/
             
             //Setup stats
             foreach (StatType statType in (StatType[])Enum.GetValues(typeof(StatType)))
@@ -67,15 +67,7 @@ namespace LGamesDev
                 Character.stats[(int)stat.statType] = stat;
                 yield return new WaitForEndOfFrame();
             }
-            
-            //Setup Equipment Manager
-            equipmentManager = GetComponent<CharacterEquipmentManager>();
-            equipmentManager.SetupManager(Character.Gear);
 
-            //Setup Stat Manager
-            statsManager = GetComponent<CharacterStatsManager>();
-            statsManager.SetupManager(Character.stats);
-            
             Character.Body = fighter.Body;
 
             if (fighter is Character character)
@@ -108,6 +100,14 @@ namespace LGamesDev
                     inventoryManager.SetupManager(Character.Inventory);
                 }
             }
+            
+            //Setup Equipment Manager
+            equipmentManager = GetComponent<CharacterEquipmentManager>();
+            equipmentManager.SetupManager(Character.Gear);
+
+            //Setup Stat Manager
+            statsManager = GetComponent<CharacterStatsManager>();
+            statsManager.SetupManager(Character.stats);
             
             PlayerInfosUpdate?.Invoke(Character);
 

@@ -29,7 +29,9 @@ namespace LGamesDev.Core.Character
 
             CharacterEquipment oldCharacterEquipment = null;
 
-            if (currentGear.equipments[slotIndex] != null && currentGear.equipments[slotIndex].item.isDefaultItem == false) {
+            if (currentGear.equipments[slotIndex] != null 
+                //&& currentGear.equipments[slotIndex].item.isDefaultItem == false) {
+                && currentGear.equipments[slotIndex].item.itemType == ItemType.Equipment) {
                 oldCharacterEquipment = currentGear.equipments[slotIndex];
             }
             
@@ -100,9 +102,9 @@ namespace LGamesDev.Core.Character
             ));*/
         }
 
-        public bool GotWeapon()
+        private bool GotWeapon()
         {
-            return !currentGear.equipments[(int)EquipmentSlot.Weapon].item.isDefaultItem;
+            return currentGear.equipments[(int)EquipmentSlot.Weapon] != null;
         }
 
         public WeaponType GetWeaponType()

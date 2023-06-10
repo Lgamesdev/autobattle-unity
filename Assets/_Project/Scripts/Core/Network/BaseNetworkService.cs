@@ -25,5 +25,7 @@ namespace LGamesDev
         public abstract void OnNext(SocketMessage socketMessage);
         
         protected abstract void HandleSocket(SocketMessage socketMessage);
+
+        protected abstract void OnDestroy();
     }
 }

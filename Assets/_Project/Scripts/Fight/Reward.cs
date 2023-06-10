@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using LGamesDev.Core.Character;
 using LGamesDev.Core.Player;
 
 namespace LGamesDev.Fighting
@@ -9,7 +10,7 @@ namespace LGamesDev.Fighting
         public int Experience;
         public int Ranking;
         public Currency[] Currencies = new Currency[Enum.GetNames(typeof(CurrencyType)).Length];
-        public List<Item> Items = new(); 
+        public List<IBaseCharacterItem> Items = new(); 
         
         public override string ToString()
         {

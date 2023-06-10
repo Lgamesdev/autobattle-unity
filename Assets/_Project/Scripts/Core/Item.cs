@@ -1,7 +1,9 @@
 using System;
+using System.Runtime.Serialization;
 using LGamesDev.Core.Player;
 using LGamesDev.Request.Converters;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -15,27 +17,45 @@ namespace LGamesDev
         public string name = "New Item";
         [JsonIgnore]
         public Sprite icon;
-        public bool isDefaultItem = true;
+        //public bool isDefaultItem = true;
         public int cost = 0;
-        public ItemQuality itemQuality;
+        public ItemType itemType = ItemType.Item;
+        public ItemQuality itemQuality = ItemQuality.Normal;
 
         public override string ToString()
         {
             return "item : [ \n " +
                    "name : " + name + "\n" +
-                   "isDefaultItem : " + isDefaultItem + "\n" +
+                   //"isDefaultItem : " + isDefaultItem + "\n" +
                    /*"iconPath : " + AssetDatabase.GetAssetPath(icon) + "\n" +*/
                    "cost : " + cost + "\n" +
+                   "itemType : " + itemType + "\n" +
                    "itemQuality : " + itemQuality + "\n" +
                    "]";
         }
     }
+    
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum ItemType
+    {
+        [EnumMember(Value = "item")]
+        Item,
+        [EnumMember(Value = "lootBox")]
+        LootBox,
+        [EnumMember(Value = "equipment")]
+        Equipment,
+    }
 
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum ItemQuality
     {
+        [EnumMember(Value = "normal")]
         Normal,
+        [EnumMember(Value = "rare")]
         Rare,
+        [EnumMember(Value = "epic")]
         Epic,
+        [EnumMember(Value = "legendary")]
         Legendary
     }
 }

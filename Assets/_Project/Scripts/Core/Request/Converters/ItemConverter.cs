@@ -18,6 +18,48 @@ namespace LGamesDev.Request.Converters
         {
             return typeof(Item).IsAssignableFrom(objectType);
         }
+        
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            if (reader.TokenType == JsonToken.Null) {
+                return null;
+            }
+
+            JObject jo = JObject.Load(reader);
+            
+            /*Item item = Create(objectType, jsonObject);*/
+
+            ItemType? itemType = jo["itemType"]?.ToObject<ItemType>();
+            Item item = itemType switch
+            {
+                ItemType.Item => new Item(),
+                ItemType.LootBox => new LootBox(),
+                ItemType.Equipment => new Equipment(),
+                _ => null
+            };
+            
+            if (item == null)
+            {
+                Debug.LogError("Deserialization of item is null, set to Item class by default.");
+            }
+            
+            serializer.Populate(jo.CreateReader(), item ?? new Item());
+
+            string iconPath = jo["iconPath"]?.ToString();
+
+            if (iconPath == null) 
+                return item;
+
+            Sprite sprite = Resources.Load<Sprite>(iconPath);//AssetDatabase.LoadAssetAtPath<Sprite>(_rootPath + iconPath + ".png");
+            
+            if (sprite == null) 
+                return item;
+            
+            if (item != null) 
+                item.icon = sprite;
+
+            return item;
+        }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
@@ -51,30 +93,6 @@ namespace LGamesDev.Request.Converters
             writer.WriteValue(AssetDatabase.GetAssetPath(item.icon));*/
         }
 
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-        {
-            if (reader.TokenType == JsonToken.Null) {
-                return null;
-            }
-
-            JObject jsonObject = JObject.Load(reader);
-
-            Item item = Create(objectType, jsonObject);
-
-            serializer.Populate(jsonObject.CreateReader(), item);
-
-            string iconPath = jsonObject["iconPath"]?.ToString();
-
-            if (iconPath == null) 
-                return item;
-
-            Sprite sprite = Resources.Load<Sprite>(iconPath);//AssetDatabase.LoadAssetAtPath<Sprite>(_rootPath + iconPath + ".png");
-            if (sprite != null)
-                item.icon = sprite;
-
-            return item;
-        }
-        
         private Item Create(Type objectType, JObject jObject)
         {
             return FieldExists("spriteId", jObject) ? new Equipment() : new Item();

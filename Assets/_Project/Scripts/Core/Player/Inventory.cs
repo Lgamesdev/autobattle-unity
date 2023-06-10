@@ -13,7 +13,7 @@ namespace LGamesDev.Core.Player
 
         public void AddItem(IBaseCharacterItem characterItem)
         {
-            if (!characterItem.Item.isDefaultItem)
+            if (characterItem.Item.itemType == ItemType.Equipment)
             {
                 if (Items.Count >= space)
                 {
@@ -26,12 +26,14 @@ namespace LGamesDev.Core.Player
             else
             {
                 var itemAlreadyInInventory = false;
-                foreach (var inventoryItem in Items)
-                    if (inventoryItem.Item.name == characterItem.Item.name)
-                    {
-                        inventoryItem.Amount += characterItem.Amount;
-                        itemAlreadyInInventory = true;
-                    }
+                foreach (IBaseCharacterItem inventoryItem in Items)
+                {
+                    //Debug.Log("inventory Item id : " + inventoryItem.Item.ID + " || character item id : " + characterItem.Item.ID);
+                    
+                    if (inventoryItem.Item.ID != characterItem.Item.ID) continue;
+                    inventoryItem.Amount += characterItem.Amount;
+                    itemAlreadyInInventory = true;
+                }
 
                 if (!itemAlreadyInInventory)
                 {
@@ -42,30 +44,31 @@ namespace LGamesDev.Core.Player
 
         public void RemoveItem(IBaseCharacterItem item)
         {
-            Items.Remove(item);
-
-            /*if (item.IsStackable())
+            int index;
+            
+            //if (!Items.Contains(item)) return;
+            if (item.Item.itemType is ItemType.Equipment) 
             {
-                Item itemInInventory = null;
-                foreach (Item inventoryItem in itemList)
+                index = Items.FindIndex(characterItem => characterItem.Id == item.Id); 
+            } 
+            else 
+            {
+                index = Items.FindIndex(characterItem => characterItem.Item.ID == item.Item.ID);
+            }
+
+            if (index != -1)
+            {
+                Items[index].Amount--;
+
+                if (Items[index].Amount < 1)
                 {
-                    if (inventoryItem.itemType == item.itemType)
-                    {
-                        //inventoryItem.amount -= item.amount;
-                        itemInInventory = inventoryItem;
-                    }
+                    Items.RemoveAt(index);
                 }
-                */ /*if (itemInInventory != null && itemInInventory.amount <= 0)
-                {
-                    GetInventorySlotWithItem(itemInInventory).RemoveItem();
-                    itemList.Remove(itemInInventory);
-                }*/ /*
             }
             else
             {
-                GetInventorySlotWithItem(item).RemoveItem();
-                itemList.Remove(item);
-            }*/
+                Debug.LogError(item.Item.name + " not found in inventory while removing");
+            }
         }
         
         public override string ToString()
@@ -75,7 +78,7 @@ namespace LGamesDev.Core.Player
 
             foreach (IBaseCharacterItem item in Items)
             {
-                result += item.ToString() + "\n";
+                result += item + "\n";
             }
 
             result += "] \n" +

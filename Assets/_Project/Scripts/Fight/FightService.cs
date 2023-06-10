@@ -23,13 +23,21 @@ namespace LGamesDev.Fighting
         private static FightManager fightManager;
 
         private static Action onFightStart;
-        public static Action OnFightOver;
+        public Action<Fight> OnFightOver;
+
+        private bool _isFightOver;
 
         private void Start()
         {
-            Subscribe(GameManager.Instance.networkManager);
+            if (GameManager.Instance != null)
+            {
+                Subscribe(GameManager.Instance.networkManager);
+            }
+
             fightManager = FightManager.Instance;
             fightManager.OnFightStart += OnFightStart;
+
+            _isFightOver = false;
         }
 
         protected override void Subscribe(NetworkManager networkManager)
@@ -61,6 +69,7 @@ namespace LGamesDev.Fighting
                     switch (socketMessage.Action)
                     {
                         case AttackAction:
+                            //Debug.Log("attack action");
                             List<FightAction> fightActions =
                                 JsonConvert.DeserializeObject<List<FightAction>>(socketMessage.Content);
                             FightManager.Instance.AddActions(fightActions);
@@ -86,14 +95,18 @@ namespace LGamesDev.Fighting
 
         public void Attack(FightActionType actionType)
         {
-            GameManager.Instance.networkManager.SendSocket(new SocketMessage()
+            //Debug.Log("try attack action");
+            if (!_isFightOver)
             {
-                Action = TryAttack,
-                Channel = string.Concat(FightChannelSuffix, GameManager.Instance.GetAuthentication().username),
-                Username = GameManager.Instance.GetAuthentication().username,
-                Content = actionType.ToString(),
-            });
-            
+                GameManager.Instance.networkManager.SendSocket(new SocketMessage()
+                {
+                    Action = TryAttack,
+                    Channel = string.Concat(FightChannelSuffix, GameManager.Instance.GetAuthentication().username),
+                    Username = GameManager.Instance.GetAuthentication().username,
+                    Content = actionType.ToString(),
+                });
+            }
+
             /*_ws.SendText(JsonConvert.SerializeObject(new Dictionary<string, string>
             {
                 { "action", SocketSendAction.TryAttack },
@@ -108,30 +121,35 @@ namespace LGamesDev.Fighting
             onFightStart?.Invoke();
         }
 
-        private static void OnFightOverAction(string content)
+        private void OnFightOverAction(string content)
         {
+            _isFightOver = true;
             Fight fight = JsonConvert.DeserializeObject<Fight>(content);
-            
+
             if (fightManager != null)
             {
-                fightManager.Fight.PlayerWin = fight.PlayerWin;
-                fightManager.Fight.Reward = fight.Reward;
                 fightManager.ActionsComplete += () =>
                 {
-                    OnFightOver?.Invoke();
+                    OnFightOver?.Invoke(fight);
                 };
             }
             else
             {
                 onFightStart = () =>
                 {
-                    fightManager.Fight.PlayerWin = fight.PlayerWin;
-                    fightManager.Fight.Reward = fight.Reward;
                     fightManager.ActionsComplete += () =>
                     {
-                        OnFightOver?.Invoke();
+                        OnFightOver?.Invoke(fight);
                     };
                 };
+            }
+        }
+        
+        protected override void OnDestroy()
+        {
+            if (Cancellation != null)
+            {
+                Cancellation.Dispose();
             }
         }
     }

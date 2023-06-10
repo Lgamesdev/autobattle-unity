@@ -57,6 +57,11 @@ namespace LGamesDev.Core.Request
                     error = request.downloadHandler.text;
                 }
 
+                if (string.IsNullOrEmpty(error))
+                {
+                    error = request.error;
+                }
+
                 Debug.Log("error in request handler : " + request.error + "\n" + error);
                 onError(error);
             }

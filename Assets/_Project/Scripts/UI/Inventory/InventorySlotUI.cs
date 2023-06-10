@@ -1,5 +1,6 @@
 using LGamesDev.Core.Character;
 using LGamesDev.Core.Player;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,7 @@ namespace LGamesDev.UI
     public class InventorySlotUI : MonoBehaviour
     {
         public Image icon;
+        public TextMeshProUGUI amount;
 
         private IBaseCharacterItem _characterItem;
 
@@ -18,7 +20,14 @@ namespace LGamesDev.UI
             icon.sprite = _characterItem.Item.icon;
             icon.enabled = true;
 
-            if (newItem.Amount > 1) transform.Find("ItemButton").Find("amount").gameObject.SetActive(true);
+            if (newItem.Amount <= 1) {
+                amount.gameObject.SetActive(false);
+                return;
+                
+            }
+            
+            amount.gameObject.SetActive(true);
+            amount.text = newItem.Amount.ToString();
         }
 
         public void ClearSlot()
@@ -28,7 +37,7 @@ namespace LGamesDev.UI
             icon.sprite = null;
             icon.enabled = false;
 
-            transform.Find("ItemButton").Find("amount").gameObject.SetActive(false);
+            amount.gameObject.SetActive(false);
         }
 
         public void Clicked()

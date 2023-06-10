@@ -1,11 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Core.Network;
 using LGamesDev.Core.Player;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 
 namespace LGamesDev.Fighting
 {
@@ -27,7 +25,7 @@ namespace LGamesDev.Fighting
         private CharacterFight _enemyCharacterFight;
         private CharacterFight _activeCharacterFight;
 
-        public Fight Fight;
+        private Fight _fight;
         private int _currentAction = 0;
         public Action OnFightStart;
         public Action ActionsComplete;
@@ -53,7 +51,7 @@ namespace LGamesDev.Fighting
                 SceneManager.LoadScene((int)SceneIndexes.PersistentScene);
             }
             
-            FightService.OnFightOver += OnFightOver;
+            fightService.OnFightOver += OnFightOver;
         }
 
         public IEnumerator SetupFight(Fight fight)
@@ -62,7 +60,8 @@ namespace LGamesDev.Fighting
             
             isFightOver = false;
             
-            Fight = fight;
+            //Debug.Log("setup fight : " + fight);
+            _fight = fight;
 
             yield return StartCoroutine(playerCharacterFight.SetupFighter(fight.Character));
             
@@ -107,11 +106,11 @@ namespace LGamesDev.Fighting
         {
             if (TestBattleOver()) return;
 
-            if (_currentAction < Fight.Actions.Count)
+            if (_currentAction < _fight.Actions.Count)
             {
-                Debug.Log("play action " + _currentAction);
+                //Debug.Log("play action " + _currentAction);
                 
-                FightAction fightAction = Fight.Actions[_currentAction];
+                FightAction fightAction = _fight.Actions[_currentAction];
 
                 if (fightAction.PlayerTeam)
                 {
@@ -120,7 +119,7 @@ namespace LGamesDev.Fighting
                         case FightActionType.Attack:
                             playerCharacterFight.Attack(
                                 _enemyCharacterFight,
-                                Fight.Actions[_currentAction].Damage,
+                                _fight.Actions[_currentAction].Damage,
                                 fightAction.CriticalHit,
                                 fightAction.Dodged,
                                 fightAction.EnergyGained,
@@ -130,7 +129,7 @@ namespace LGamesDev.Fighting
                         case FightActionType.Parry:
                             playerCharacterFight.Parry(
                                 _enemyCharacterFight,
-                                Fight.Actions[_currentAction].Damage,
+                                _fight.Actions[_currentAction].Damage,
                                 fightAction.CriticalHit,
                                 fightAction.EnergyGained,
                                 PlayNextAction
@@ -139,7 +138,7 @@ namespace LGamesDev.Fighting
                         case FightActionType.SpecialAttack:
                             playerCharacterFight.SpecialAttack(
                                 _enemyCharacterFight,
-                                Fight.Actions[_currentAction].Damage,
+                                _fight.Actions[_currentAction].Damage,
                                 fightAction.CriticalHit,
                                 fightAction.Dodged,
                                 PlayNextAction
@@ -154,7 +153,7 @@ namespace LGamesDev.Fighting
                         case FightActionType.Attack:
                             _enemyCharacterFight.Attack(
                                 playerCharacterFight,
-                                Fight.Actions[_currentAction].Damage,
+                                _fight.Actions[_currentAction].Damage,
                                 fightAction.CriticalHit,
                                 fightAction.Dodged,
                                 fightAction.EnergyGained,
@@ -164,7 +163,7 @@ namespace LGamesDev.Fighting
                         case FightActionType.Parry:
                             _enemyCharacterFight.Parry(
                                 playerCharacterFight,
-                                Fight.Actions[_currentAction].Damage,
+                                _fight.Actions[_currentAction].Damage,
                                 fightAction.CriticalHit,
                                 fightAction.EnergyGained,
                                 PlayNextAction
@@ -173,7 +172,7 @@ namespace LGamesDev.Fighting
                         case FightActionType.SpecialAttack:
                             _enemyCharacterFight.SpecialAttack(
                                 playerCharacterFight,
-                                Fight.Actions[_currentAction].Damage,
+                                _fight.Actions[_currentAction].Damage,
                                 fightAction.CriticalHit,
                                 fightAction.Dodged,
                                 PlayNextAction
@@ -197,9 +196,10 @@ namespace LGamesDev.Fighting
             if (!isFightOver) return false;
             
             // reset fight speed on battle over window
-            SetFightSpeed(1);
-
-            FightOver?.Invoke(Fight);
+            fightSpeed = 1;
+            Time.timeScale = fightSpeed;
+            
+            FightOver?.Invoke(_fight);
             HandlePlayerReward();
 
             return true;
@@ -207,7 +207,7 @@ namespace LGamesDev.Fighting
 
         private void HandlePlayerReward()
         {
-            if (Fight.PlayerWin)
+            if (_fight.PlayerWin)
             {
                 _gameManager.audioManager.PlayWinMusic();
             }
@@ -218,7 +218,7 @@ namespace LGamesDev.Fighting
             
             //playerCharacterFight.GetLevelSystem().AddExperience(Fight.Reward.Experience);
 
-            foreach (Currency currency in Fight.Reward.Currencies)
+            foreach (Currency currency in _fight.Reward.Currencies)
             {
                 PlayerWalletManager.Instance.AddCurrency(
                     currency.currencyType, currency.amount
@@ -228,7 +228,7 @@ namespace LGamesDev.Fighting
 
         public void AddActions(IEnumerable<FightAction> fightActions)
         {
-            Fight.Actions.AddRange(fightActions);
+            _fight.Actions.AddRange(fightActions);
             PlayNextAction();
         }
 
@@ -242,11 +242,12 @@ namespace LGamesDev.Fighting
             _gameManager.SetPlayerOptions(playerOptions);
             FightSpeedChanged?.Invoke(fightSpeed);
         }
-        
-        private void OnFightOver()
+
+        private void OnFightOver(Fight fight)
         {
-            Debug.Log("fight over");
             isFightOver = true;
+            _fight.PlayerWin = fight.PlayerWin;
+            _fight.Reward = fight.Reward;
             TestBattleOver();
         }
 
@@ -257,7 +258,7 @@ namespace LGamesDev.Fighting
 
         public void FightAgain()
         {
-            _gameManager.networkService.SearchFight(Fight.FightType);
+            _gameManager.networkService.SearchFight(_fight.FightType);
         }
     }
 

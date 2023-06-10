@@ -29,6 +29,22 @@ namespace LGamesDev.UI
             
             SetupInventoryUI();
         }
+        
+        private void SetupInventoryUI()
+        {
+            foreach (Transform child in _itemsParent) Destroy(child.gameObject);
+            
+            for (var i = 0; i < _slots.Length; i++)
+            {
+                var itemSlotRectTransform = Instantiate(pfUIInventorySlot, _itemsParent).GetComponent<RectTransform>();
+
+                var slot = itemSlotRectTransform.GetComponent<InventorySlotUI>();
+
+                _slots[i] = slot;
+            }
+
+            UpdateInventoryUI();
+        }
 
         private void Inventory_OnItemChanged(List<IBaseCharacterItem> items)
         {
@@ -46,22 +62,6 @@ namespace LGamesDev.UI
                 {
                     _slots[i].ClearSlot();
                 }
-        }
-
-        private void SetupInventoryUI()
-        {
-            foreach (Transform child in _itemsParent) Destroy(child.gameObject);
-            
-            for (var i = 0; i < _slots.Length; i++)
-            {
-                var itemSlotRectTransform = Instantiate(pfUIInventorySlot, _itemsParent).GetComponent<RectTransform>();
-
-                var slot = itemSlotRectTransform.GetComponent<InventorySlotUI>();
-
-                _slots[i] = slot;
-            }
-
-            UpdateInventoryUI();
         }
     }
 }

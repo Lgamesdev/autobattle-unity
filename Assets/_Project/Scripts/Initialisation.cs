@@ -99,13 +99,13 @@ namespace LGamesDev
                 case InitialisationStage.Equipment:
                     settings = new JsonSerializerSettings();
                     settings.Converters.Add(new BaseCharacterItemConverter());
-
                     Gear gear = JsonConvert.DeserializeObject<Gear>(result.Value, settings);
                     _character.Gear = gear;
                     break;
                 case InitialisationStage.Inventory:
                     settings = new JsonSerializerSettings();
                     settings.Converters.Add(new BaseCharacterItemConverter());
+                    //Debug.Log("inventory : " + result.Value);
                     Inventory inventory = JsonConvert.DeserializeObject<Inventory>(result.Value, settings);
                     _character.Inventory = inventory;
                     break;

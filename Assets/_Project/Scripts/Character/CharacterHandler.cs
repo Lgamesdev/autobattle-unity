@@ -101,7 +101,7 @@ namespace LGamesDev
                 yield return new WaitForEndOfFrame();
             }
             
-            if (character.Gear.equipments[(int)EquipmentSlot.Chest].item.spriteId == 0)
+            if (character.Gear.equipments[(int)EquipmentSlot.Chest] == null)
             {
                 ColorUtility.TryParseHtmlString(_body.chestColor, out Color chestColor);
                 foreach (SpriteResolver chestResolver in chestResolvers) {
@@ -109,7 +109,7 @@ namespace LGamesDev
                 }
             }
 
-            if (character.Gear.equipments[(int)EquipmentSlot.Pants].item.spriteId == 0)
+            if (character.Gear.equipments[(int)EquipmentSlot.Pants] == null)
             {
                 ColorUtility.TryParseHtmlString(_body.shortColor, out Color pantColor);
                 foreach (SpriteResolver pantResolver in pantResolvers) {
@@ -118,10 +118,10 @@ namespace LGamesDev
             }
 
             foreach (CharacterEquipment characterEquipment in character.Gear.equipments) {
-                if (characterEquipment.item != null)
+                if (characterEquipment != null)
                 {
                     //Debug.Log("equipment : " + characterEquipment.ToString());
-                    if (!characterEquipment.item.isDefaultItem)
+                    if (characterEquipment.item != null)
                     {
                         UpdateEquipmentTexture(characterEquipment, null);
                     }
@@ -299,7 +299,7 @@ namespace LGamesDev
 
         public void SpecialAttack(Transform target, Action onHit, Action onComplete)
         {
-            Debug.Log("special attack");
+            //Debug.Log("special attack");
             _characterAnimator.CreateProjectile(transform.parent.position, target, onHit, onComplete);
         }
 

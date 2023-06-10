@@ -45,12 +45,13 @@ namespace LGamesDev.Fighting
             _experienceGain = transform.Find("Rewards").Find("ExperienceAndGold").Find("Experience").Find("experienceText").GetComponent<TextMeshProUGUI>();
             _goldGain = transform.Find("Rewards").Find("ExperienceAndGold").Find("Gold").Find("goldText").GetComponent<TextMeshProUGUI>();
             _rankGain = transform.Find("Rewards").Find("RankingAndItems").Find("Ranking").Find("rankingText").GetComponent<TextMeshProUGUI>();
-
+            
             FightManager.Instance.FightOver += OnFightOver;
         }
-
+        
         private void OnFightOver(Fight fight)
         {
+            //Debug.Log("on fight over : " + fight);
             foreach (Currency currency in fight.Reward.Currencies)
             {
                 switch (currency.currencyType)

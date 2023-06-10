@@ -39,5 +39,10 @@ namespace Core.Network
         {
             
         }
+        
+        protected override void OnDestroy()
+        {
+            Cancellation.Dispose();
+        }
     }
 }

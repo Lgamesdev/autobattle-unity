@@ -57,7 +57,7 @@ namespace Core.Network
             switch (socketMessage.Channel)
             {
                 case DefaultChatChannel:
-                    Debug.Log("new socket message for chatService : " + socketMessage);
+                    //Debug.Log("new socket message for chatService : " + socketMessage);
                     switch (socketMessage.Action)
                     {
                         case MessageList:
@@ -101,6 +101,11 @@ namespace Core.Network
                 { "username", GameManager.Instance.GetAuthentication().username },
                 { "content", message }
             }));*/
+        }
+        
+        protected override void OnDestroy()
+        {
+            Cancellation.Dispose();
         }
     }
 }

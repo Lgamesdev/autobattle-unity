@@ -19,6 +19,7 @@ namespace Core.Network
         //Socket Send Actions
         private const string TrySubscribe = "trySubscribe";
         private const string TryUnsubscribe = "tryUnsubscribe";
+        private const string TryOpenLootBoxAction = "tryOpenLootBox";
         private const string TryEquipAction = "tryEquip";
         private const string TryUnEquipAction = "tryUnEquip";
         private const string TryAddStatPointAction = "tryAddStatPoint";
@@ -34,6 +35,7 @@ namespace Core.Network
         //Socket Received Actions
         private const string InitialisationAction = "initialisation";
         private const string TutorialDone = "tutorialDone";
+        private const string OpenLootBox = "openLootBox";
         private const string Equip = "equip";
         private const string UnEquip = "unEquip";
         private const string AddStatPoint = "addStatPoint";
@@ -45,7 +47,7 @@ namespace Core.Network
         private const string BuyItem = "buyItem";
         private const string SellItem = "sellItem";
         private const string RankList = "rankList";
-        
+
         protected override IDisposable Cancellation { get; set; }
         
         private void Start()
@@ -80,6 +82,7 @@ namespace Core.Network
             {
                 case DefaultChannel:
                     //Debug.Log("new socket message for networkService : " + socketMessage);
+                    IBaseCharacterItem characterItem;
                     switch (socketMessage.Action)
                     {
                         case InitialisationAction:
@@ -100,6 +103,21 @@ namespace Core.Network
                                 null,
                                 GameManager.Instance.modalWindow.Close
                             );
+                            break;
+                        
+                        case OpenLootBox:
+                            //Debug.Log("open lootbox : " + socketMessage.Content);
+                            settings.Converters.Add(new BaseCharacterItemConverter());
+
+                            CharacterLootBox lootBox =
+                                JsonConvert.DeserializeObject<CharacterLootBox>(socketMessage.Content, settings);
+
+                            foreach (IBaseCharacterItem rewardItem in lootBox.Reward.Items)
+                            {
+                                PlayerInventoryManager.Instance.AddItem(rewardItem);
+                            }
+                            
+                            PlayerInventoryManager.Instance.RemoveItem(lootBox);
                             break;
                         
                         case Equip:
@@ -123,7 +141,7 @@ namespace Core.Network
                         
                         case BuyItem:
                             settings.Converters.Add(new BaseCharacterItemConverter());
-                            IBaseCharacterItem characterItem = JsonConvert.DeserializeObject<IBaseCharacterItem>(socketMessage.Content, settings);
+                            characterItem = JsonConvert.DeserializeObject<IBaseCharacterItem>(socketMessage.Content, settings);
                             CharacterManager.Instance.walletManager.BuyItem(characterItem);
                             break;
                         
@@ -137,6 +155,7 @@ namespace Core.Network
                             break;
 
                         case Error:
+                            Debug.Log("error : " + socketMessage.Content);
                             GameManager.Instance.modalWindow.ShowAsTextPopup(
                                 "Error",
                                 socketMessage.Content,
@@ -152,7 +171,7 @@ namespace Core.Network
                 case var value when string.Equals(value, string.Concat(FightChannelSuffix, GameManager.Instance.GetAuthentication().username)):
                     switch (socketMessage.Action) {
                         case StartFight:
-                            Debug.Log("start fight : " + socketMessage);
+                            //Debug.Log("start fight : " + socketMessage);
                             settings.Converters.Add(new FighterConverter());
                             Fight fight = JsonConvert.DeserializeObject<Fight>(socketMessage.Content, settings);
                             GameManager.Instance.LoadFight(fight);
@@ -282,6 +301,17 @@ namespace Core.Network
             }));*/
         }
         
+        public void TryOpenLootBox(IBaseCharacterItem characterItem)
+        {
+            GameManager.Instance.networkManager.SendSocket(new SocketMessage()
+            {
+                Action = TryOpenLootBoxAction,
+                Channel = DefaultChannel,
+                Username = GameManager.Instance.GetAuthentication().username,
+                Content = characterItem.Id.ToString(),
+            });
+        }
+        
         //Gear
         public void TryEquip(CharacterEquipment newEquipment)
         {
@@ -391,6 +421,11 @@ namespace Core.Network
                 { "channel", SocketChannel.DefaultChannel },
                 { "username", GameManager.Instance.GetAuthentication().username },
             }));*/
+        }
+        
+        protected override void OnDestroy()
+        {
+            Cancellation.Dispose();
         }
     }
 }

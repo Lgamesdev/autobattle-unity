@@ -52,7 +52,13 @@ namespace LGamesDev.UI
             useButton.onClick.AddListener(UseItem);
             sellButton.gameObject.SetActive(true);
 
-            SetupUI(_currentCharacterItem.GetType() == typeof(CharacterEquipment) ? "Equip" : "Use");
+            SetupUI(_currentCharacterItem.Item.itemType switch
+            {
+                ItemType.Item => "Use",
+                ItemType.LootBox => "Open",
+                ItemType.Equipment => "Equip",
+                _ => "Use",
+            });
         }
 
         public void ShowEquipped(CharacterEquipment equipment)
@@ -74,15 +80,16 @@ namespace LGamesDev.UI
             
             foreach (Transform child in statsParent) Destroy(child.gameObject);
 
-            if (_currentCharacterItem != null && _currentCharacterItem.Item.isDefaultItem == false)
+            if (_currentCharacterItem != null)
             {
                 _icon.sprite = _currentCharacterItem.Item.icon;
                 _icon.gameObject.SetActive(true);
                 itemImage.Find("emptyImage").gameObject.SetActive(false);
-
+                
                 if (_currentCharacterItem.Item.name != null) itemName.text = _currentCharacterItem.Item.name;
 
-                if (_currentCharacterItem.Item.GetType() != typeof(Equipment)) return;
+                if (_currentCharacterItem.Item.itemType != ItemType.Equipment
+                    && _currentCharacterItem.Item.GetType() != typeof(Equipment)) return;
                 if (_currentCharacterItem is not CharacterEquipment characterEquipment) return;
                 itemLevel.text = "Lvl." + characterEquipment.item.requiredLevel;
 

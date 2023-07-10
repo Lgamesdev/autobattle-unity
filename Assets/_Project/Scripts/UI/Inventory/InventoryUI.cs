@@ -56,6 +56,7 @@ namespace LGamesDev.UI
             for (var i = 0; i < _slots.Length; i++)
                 if (i < _inventoryManager.items.Count)
                 {
+                    //set
                     _slots[i].AddItem(_inventoryManager.items[i]);
                 }
                 else

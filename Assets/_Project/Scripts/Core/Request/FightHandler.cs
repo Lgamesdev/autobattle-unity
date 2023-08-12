@@ -9,9 +9,9 @@ namespace LGamesDev.Core.Request
 {
     public class FightHandler
     {
-        public static IEnumerator Load(MonoBehaviour instance, Action<Fight> setResult)
+        public static /*IEnumerator*/void Load(MonoBehaviour instance, Action<Fight> setResult)
         {
-            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.EnableWaitingScreen());
+            /*yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.EnableWaitingScreen());
             
             yield return instance.StartCoroutine(RequestHandler.Request("api/user/fight",
                 UnityWebRequest.kHttpVerbGET,
@@ -28,7 +28,7 @@ namespace LGamesDev.Core.Request
                 GameManager.Instance.GetAuthentication())
             );
             
-            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());
+            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());*/
         }
     }
 }

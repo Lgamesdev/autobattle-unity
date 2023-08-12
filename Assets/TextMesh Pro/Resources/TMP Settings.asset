@@ -39,10 +39,9 @@ MonoBehaviour:
   m_defaultSpriteAssetPath: Sprite Assets/
   m_enableEmojiSupport: 1
   m_MissingCharacterSpriteUnicode: 0
-  m_EmojiFallbackTextAssets:
-  - {fileID: 11400000, guid: b20fccf8f5c51514b8f1b1531cf5cd6f, type: 2}
+  m_EmojiFallbackTextAssets: []
   m_defaultColorGradientPresetsPath: Color Gradient Presets/
-  m_defaultStyleSheet: {fileID: 11400000, guid: 121e60118fb8ec44191d15409f5b7f54, type: 2}
+  m_defaultStyleSheet: {fileID: 11400000, guid: f952c082cb03451daed3ee968ac6c63e, type: 2}
   m_StyleSheetsResourcePath: 
   m_leadingCharacters: {fileID: 4900000, guid: d82c1b31c7e74239bff1220585707d2b, type: 3}
   m_followingCharacters: {fileID: 4900000, guid: fade42e8bc714b018fac513c043d323b, type: 3}

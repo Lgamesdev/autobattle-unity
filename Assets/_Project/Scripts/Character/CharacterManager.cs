@@ -40,7 +40,7 @@ namespace LGamesDev
 
         public IEnumerator SetupCharacter(IFighter fighter)
         {
-            Character.username = GameManager.Instance.GetAuthentication().username;
+            Character.username = GameManager.Instance.GetPlayerConf().Username;
             Character.level = fighter.Level;
             
             //Setup Equipments

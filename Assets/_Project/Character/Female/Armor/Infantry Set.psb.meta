@@ -21,11 +21,13 @@ ScriptedImporter:
     convertToNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
+    swizzle: 50462976
     isReadable: 0
     streamingMipmaps: 1
     streamingMipmapsPriority: 0
     vTOnly: 0
-    ignoreMasterTextureLimit: 0
+    ignoreMipmapLimit: 0
     nPOTScale: 1
     sRGBTexture: 1
     spriteMode: 2
@@ -88,7 +90,6 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    parentGroupIndex: -1
     uvTransform: {x: 0, y: 0}
     spritePosition: {x: 0, y: 0}
   mosaicSpriteImportData: []
@@ -112,7 +113,6 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    parentGroupIndex: -1
     uvTransform: {x: 538, y: 1254}
     spritePosition: {x: 0, y: 857}
   - name: C Arm_L
@@ -134,7 +134,6 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    parentGroupIndex: -1
     uvTransform: {x: 863, y: 4}
     spritePosition: {x: 10, y: 613}
   - name: C Hand_L
@@ -156,7 +155,6 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    parentGroupIndex: -1
     uvTransform: {x: 767, y: 1466}
     spritePosition: {x: 14, y: 501}
   - name: Helmet
@@ -178,7 +176,6 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    parentGroupIndex: -1
     uvTransform: {x: 538, y: 4}
     spritePosition: {x: 148, y: 1147}
   - name: Chest
@@ -200,7 +197,6 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    parentGroupIndex: -1
     uvTransform: {x: 4, y: 999}
     spritePosition: {x: 88, y: 614}
   - name: Pelvis
@@ -222,7 +218,6 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    parentGroupIndex: -1
     uvTransform: {x: 4, y: 1676}
     spritePosition: {x: 94, y: 395}
   - name: P1 Thigh_L
@@ -244,7 +239,6 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    parentGroupIndex: -1
     uvTransform: {x: 538, y: 412}
     spritePosition: {x: 128, y: 286}
   - name: P1 Calf_L
@@ -266,7 +260,6 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    parentGroupIndex: -1
     uvTransform: {x: 767, y: 822}
     spritePosition: {x: 165, y: 100}
   - name: P1 Foot_L
@@ -288,7 +281,6 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    parentGroupIndex: -1
     uvTransform: {x: 767, y: 1328}
     spritePosition: {x: 166, y: 0}
   - name: P1 Thigh_R
@@ -310,7 +302,6 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    parentGroupIndex: -1
     uvTransform: {x: 538, y: 827}
     spritePosition: {x: 317, y: 293}
   - name: P1 Calf_R
@@ -332,7 +323,6 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    parentGroupIndex: -1
     uvTransform: {x: 767, y: 1081}
     spritePosition: {x: 357, y: 101}
   - name: P1 Foot_R
@@ -354,7 +344,6 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    parentGroupIndex: -1
     uvTransform: {x: 538, y: 1909}
     spritePosition: {x: 364, y: 5}
   - name: C Shoulder_R
@@ -376,7 +365,6 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    parentGroupIndex: -1
     uvTransform: {x: 767, y: 412}
     spritePosition: {x: 341, y: 832}
   - name: C Arm_R
@@ -398,7 +386,6 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    parentGroupIndex: -1
     uvTransform: {x: 538, y: 1628}
     spritePosition: {x: 445, y: 634}
   - name: C Hand_R
@@ -420,7 +407,6 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    parentGroupIndex: -1
     uvTransform: {x: 767, y: 1620}
     spritePosition: {x: 537, y: 553}
   - name: Cloak
@@ -442,7 +428,6 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    parentGroupIndex: -1
     uvTransform: {x: 4, y: 4}
     spritePosition: {x: 41, y: 257}
   characterData:
@@ -450,6 +435,7 @@ ScriptedImporter:
     parts: []
     dimension: {x: 0, y: 0}
     characterGroups: []
+    pivot: {x: 0, y: 0}
     boneReadOnly: 0
   sharedRigSpriteImportData:
   - name: C Shoulder_L
@@ -895,7 +881,6 @@ ScriptedImporter:
     - {x: 32, y: 33}
     - {x: 33, y: 34}
     tessellationDetail: 0
-    parentGroupIndex: -1
     uvTransform: {x: 874, y: 222}
     spritePosition: {x: 689, y: 1120}
   - name: C Arm_L
@@ -1324,7 +1309,6 @@ ScriptedImporter:
     - {x: 25, y: 26}
     - {x: 26, y: 27}
     tessellationDetail: 0
-    parentGroupIndex: -1
     uvTransform: {x: 874, y: 886}
     spritePosition: {x: 699, y: 874}
   - name: C Hand_L
@@ -1673,7 +1657,6 @@ ScriptedImporter:
     - {x: 25, y: 26}
     - {x: 26, y: 27}
     tessellationDetail: 0
-    parentGroupIndex: -1
     uvTransform: {x: 1636, y: 4}
     spritePosition: {x: 703, y: 762}
   - name: Weapon
@@ -2180,7 +2163,6 @@ ScriptedImporter:
     - {x: 33, y: 34}
     - {x: 34, y: 35}
     tessellationDetail: 0
-    parentGroupIndex: -1
     uvTransform: {x: 542, y: 4}
     spritePosition: {x: 667, y: 691}
   - name: Helmet
@@ -2879,7 +2861,6 @@ ScriptedImporter:
     - {x: 45, y: 46}
     - {x: 46, y: 47}
     tessellationDetail: 0
-    parentGroupIndex: -1
     uvTransform: {x: 542, y: 222}
     spritePosition: {x: 837, y: 1402}
   - name: Chest
@@ -3347,7 +3328,6 @@ ScriptedImporter:
     - {x: 34, y: 35}
     - {x: 35, y: 36}
     tessellationDetail: 0
-    parentGroupIndex: -1
     uvTransform: {x: 4, y: 1003}
     spritePosition: {x: 778, y: 874}
   - name: Pelvis
@@ -3836,7 +3816,6 @@ ScriptedImporter:
     - {x: 35, y: 36}
     - {x: 36, y: 37}
     tessellationDetail: 0
-    parentGroupIndex: -1
     uvTransform: {x: 4, y: 1686}
     spritePosition: {x: 783, y: 655}
   - name: P1 Thigh_L
@@ -4258,7 +4237,6 @@ ScriptedImporter:
     - {x: 28, y: 29}
     - {x: 29, y: 30}
     tessellationDetail: 0
-    parentGroupIndex: -1
     uvTransform: {x: 542, y: 642}
     spritePosition: {x: 817, y: 547}
   - name: P1 Calf_L
@@ -4682,7 +4660,6 @@ ScriptedImporter:
     - {x: 30, y: 31}
     - {x: 31, y: 32}
     tessellationDetail: 0
-    parentGroupIndex: -1
     uvTransform: {x: 874, y: 1208}
     spritePosition: {x: 855, y: 361}
   - name: P1 Foot_L
@@ -5040,7 +5017,6 @@ ScriptedImporter:
     - {x: 24, y: 25}
     - {x: 25, y: 26}
     tessellationDetail: 0
-    parentGroupIndex: -1
     uvTransform: {x: 874, y: 1866}
     spritePosition: {x: 856, y: 261}
   - name: P1 Thigh_R
@@ -5502,7 +5478,6 @@ ScriptedImporter:
     - {x: 28, y: 29}
     - {x: 29, y: 30}
     tessellationDetail: 0
-    parentGroupIndex: -1
     uvTransform: {x: 542, y: 1062}
     spritePosition: {x: 1006, y: 554}
   - name: P1 Calf_R
@@ -5904,7 +5879,6 @@ ScriptedImporter:
     - {x: 28, y: 29}
     - {x: 29, y: 30}
     tessellationDetail: 0
-    parentGroupIndex: -1
     uvTransform: {x: 874, y: 1469}
     spritePosition: {x: 1047, y: 362}
   - name: P1 Foot_R
@@ -6262,7 +6236,6 @@ ScriptedImporter:
     - {x: 24, y: 25}
     - {x: 25, y: 26}
     tessellationDetail: 0
-    parentGroupIndex: -1
     uvTransform: {x: 874, y: 1719}
     spritePosition: {x: 1053, y: 266}
   - name: C Shoulder_R
@@ -6684,7 +6657,6 @@ ScriptedImporter:
     - {x: 28, y: 29}
     - {x: 29, y: 30}
     tessellationDetail: 0
-    parentGroupIndex: -1
     uvTransform: {x: 542, y: 1494}
     spritePosition: {x: 1032, y: 1093}
   - name: C Arm_R
@@ -7105,7 +7077,6 @@ ScriptedImporter:
     - {x: 27, y: 28}
     - {x: 28, y: 29}
     tessellationDetail: 0
-    parentGroupIndex: -1
     uvTransform: {x: 874, y: 599}
     spritePosition: {x: 1134, y: 895}
   - name: C Hand_R
@@ -7483,7 +7454,6 @@ ScriptedImporter:
     - {x: 24, y: 25}
     - {x: 25, y: 26}
     tessellationDetail: 0
-    parentGroupIndex: -1
     uvTransform: {x: 1776, y: 4}
     spritePosition: {x: 1227, y: 814}
   - name: Cloak
@@ -7928,7 +7898,6 @@ ScriptedImporter:
     - {x: 31, y: 32}
     - {x: 32, y: 33}
     tessellationDetail: 0
-    parentGroupIndex: -1
     uvTransform: {x: 4, y: 4}
     spritePosition: {x: 731, y: 518}
   sharedRigCharacterData:
@@ -8224,10 +8193,12 @@ ScriptedImporter:
       order: 0
     dimension: {x: 0, y: 0}
     characterGroups: []
+    pivot: {x: 0.5, y: 0}
     boneReadOnly: 0
   platformSettings:
   - name: DefaultTexturePlatform
     overridden: 0
+    ignorePlatformSupport: 0
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -8239,6 +8210,7 @@ ScriptedImporter:
     androidETC2FallbackOverride: 0
   - name: Standalone
     overridden: 0
+    ignorePlatformSupport: 0
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -8250,6 +8222,7 @@ ScriptedImporter:
     androidETC2FallbackOverride: 0
   - name: Server
     overridden: 0
+    ignorePlatformSupport: 0
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -8261,6 +8234,7 @@ ScriptedImporter:
     androidETC2FallbackOverride: 0
   - name: Android
     overridden: 0
+    ignorePlatformSupport: 0
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -8272,6 +8246,7 @@ ScriptedImporter:
     androidETC2FallbackOverride: 0
   - name: iPhone
     overridden: 0
+    ignorePlatformSupport: 0
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -8283,6 +8258,7 @@ ScriptedImporter:
     androidETC2FallbackOverride: 0
   - name: Windows Store Apps
     overridden: 0
+    ignorePlatformSupport: 0
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -8294,7 +8270,7 @@ ScriptedImporter:
     androidETC2FallbackOverride: 0
   mosaicLayers: 1
   characterMode: 1
-  documentPivot: {x: 0, y: 0}
+  documentPivot: {x: 0.5, y: 0}
   documentAlignment: 7
   importHiddenLayers: 0
   layerMappingOption: 2
@@ -8302,6 +8278,8 @@ ScriptedImporter:
   paperDollMode: 0
   keepDupilcateSpriteName: 1
   skeletonAssetReferenceID: f24fd1b3fd2bd5d46bfa0f2352949b17
+  padding: 4
+  spriteSizeExpand: 0
   spriteCategoryList:
     categories: []
   spritePackingTag: 
@@ -8720,6 +8698,9 @@ ScriptedImporter:
     isImported: 1
     isVisible: 1
   pSDLayerImportSetting: []
+  importFileNodeState: 1
+  platformSettingsDirtyTick: 0
+  spriteSizeExpandChanged: 0
   generateGOHierarchy: 0
   textureAssetName: 
   prefabAssetName: 

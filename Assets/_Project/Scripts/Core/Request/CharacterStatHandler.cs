@@ -13,9 +13,9 @@ namespace LGamesDev.Core.Request
 {
     public class CharacterStatHandler
     {
-        public static IEnumerator Load(MonoBehaviour instance, Action<string> onError, Action<Stat[]> setResult)
+        public static /*IEnumerator*/void  Load(MonoBehaviour instance, Action<string> onError, Action<Stat[]> setResult)
         {
-            yield return instance.StartCoroutine(RequestHandler.Request("api/user/stats",
+            /*yield return instance.StartCoroutine(RequestHandler.Request("api/user/stats",
                 UnityWebRequest.kHttpVerbGET,
                 error =>
                 {
@@ -35,18 +35,18 @@ namespace LGamesDev.Core.Request
                     
                     /*string log = "stats [ \n";
                     foreach (Stat stat in responseRaw) log += stat.ToString() + "\n";
-                    Debug.Log(log + "\n ]");*/
+                    Debug.Log(log + "\n ]");#1#
                     
                     setResult(responseRaw);
                 },
                 null,
                 GameManager.Instance.GetAuthentication())
-            );
+            );*/
         }
 
-        public static IEnumerator AddStatPoint(MonoBehaviour instance, StatType statType, Action<string> onError, Action<string> onResult)
+        public static /*IEnumerator*/void AddStatPoint(MonoBehaviour instance, StatType statType, Action<string> onError, Action<string> onResult)
         {
-            Dictionary<string, string> form = new Dictionary<string, string>() {
+            /*Dictionary<string, string> form = new Dictionary<string, string>() {
                 {"statType", statType.ToString()},
             };
             
@@ -68,7 +68,7 @@ namespace LGamesDev.Core.Request
                 GameManager.Instance.GetAuthentication())
             );
             
-            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());
+            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());*/
         }
     }
 }

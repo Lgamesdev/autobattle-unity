@@ -34,7 +34,7 @@ namespace LGamesDev
 
         public async void Connect()
         {
-            _isError = false;
+            /*_isError = false;
             isConnected = false;
             
             _ws = new WebSocket(Url, new Dictionary<string, string>()
@@ -106,7 +106,7 @@ namespace LGamesDev
             };
             
             // waiting for messages
-            await _ws.Connect();
+            await _ws.Connect();*/
         }
 
         private void Update()

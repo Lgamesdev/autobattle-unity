@@ -1,4 +1,5 @@
 using System;
+using Core.Player;
 using LGamesDev.Core;
 using LGamesDev.Core.Request;
 using UnityEngine;
@@ -77,7 +78,7 @@ namespace LGamesDev
                 }
             }
 
-            StartCoroutine(CharacterBodyHandler.Save(
+            /*StartCoroutine(CharacterBodyHandler.Save(
                 this,
                 body,
                 error =>
@@ -88,13 +89,13 @@ namespace LGamesDev
                 {
                     //Debug.Log("Received : " + response);
 
-                    Authentication authentication = _gameManager.GetAuthentication();
-                    authentication.PlayerConf.CreationDone = true;
-                    _gameManager.SetAuthentication(authentication);
+                    PlayerConfig playerConfig = _gameManager.GetPlayerConf();
+                    playerConfig.CreationDone = true;
+                    _gameManager.SetPlayerConf(playerConfig);
                     
                     _gameManager.LoadMainMenu();
                 }
-            ));
+            ));*/
         }
     }
 }

@@ -7,6 +7,7 @@ using GooglePlayGames.BasicApi;
 using LGamesDev.Core.Request;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
+using Unity.Services.RemoteConfig;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -37,20 +38,37 @@ namespace LGamesDev
             }
         }
 
+        async Task InitializeRemoteConfigAsync()
+        {
+            // initialize handlers for unity game services
+            await UnityServices.InitializeAsync();
+
+            SetupAuthenticationEvents();
+            
+            // remote config requires authentication for managing environment information
+            if (!AuthenticationService.Instance.IsSignedIn)
+            {
+                await AuthenticationService.Instance.SignInAnonymouslyAsync();
+            }
+        }
+        
         public async void SetupAuthentication()
         {
             try
             {
-                await UnityServices.InitializeAsync();
+                // initialize Unity's authentication and core services, however check for internet connection
+                // in order to fail gracefully without throwing exception if connection does not exist
+                if (Utilities.CheckForInternetConnection())
+                {
+                    await InitializeRemoteConfigAsync();
+                }
             }
             catch (Exception e)
             {
                 Debug.LogException(e);
             }
 
-            SetupAuthenticationEvents();
-            
-            #if UNITY_ANDROID
+#if UNITY_ANDROID
                 //Initialize PlayGamesPlatform
                 PlayGamesPlatform.Activate();
             #endif
@@ -60,20 +78,20 @@ namespace LGamesDev
             try
             {
                 #if UNITY_ANDROID
-                    await AuthenticationService.Instance.SignInAnonymouslyAsync();
-                    TrySignInWithGooglePlayGames();
+                TrySignInWithGooglePlayGames();
                 #endif
                 #if UNITY_IOS
                     //Initialize Game Center
                     await AuthenticationService.Instance.SignInAnonymouslyAsync();
-                    if (_gameManager.GetAuthentication() != null)
+                    SetState(AuthenticationState.Default);
+                    /*if (_gameManager.GetAuthentication() != null)
                     {
                         Refresh();
                     }
                     else
                     {
                         SetState(AuthenticationState.Default);
-                    }
+                    }*/
                 #endif
             }
             catch (AuthenticationException ex)
@@ -103,12 +121,11 @@ namespace LGamesDev
                     {
                         _code = code;
                         // This token serves as an example to be used for SignInWithGooglePlayGames
-
                         if (!AuthenticationService.Instance.SessionTokenExists)
                         {
                             try
                             {
-                                await AuthenticationService.Instance.LinkWithGooglePlayGamesAsync(_code);
+                                await AuthenticationService.Instance.SignInWithGooglePlayGamesAsync(_code);
                                 SetState(AuthenticationState.PlatformRegister);
                                 Debug.Log("SignIn with google is successful.");
                             }
@@ -116,8 +133,16 @@ namespace LGamesDev
                             {
                                 // Prompt the player with an error message.
                                 Debug.LogError("This user is already linked with another account. Log in instead.");
-                                SetState(AuthenticationState.PlatformConnect);
-                                PlatformConnect();
+                                /*SetState(AuthenticationState.PlatformConnect);
+                                PlatformConnect();*/
+                                try
+                                {
+                                    await AuthenticationService.Instance.LinkWithGooglePlayGamesAsync(_code);
+                                }
+                                catch (Exception e)
+                                {
+                                    Debug.LogException(e);
+                                }
                             }
                             catch (RequestFailedException ex)
                             {
@@ -128,8 +153,10 @@ namespace LGamesDev
                         }
                         else
                         {
-                            SetState(AuthenticationState.PlatformConnect);
-                            PlatformConnect();
+                            Debug.Log(AuthenticationService.Instance.PlayerInfo.ToString());
+                            SetState(AuthenticationState.Default);
+                            //PlatformConnect();
+                            /*_gameManager.LoadMainMenu();*/
                         }
                     });
                 }
@@ -137,15 +164,18 @@ namespace LGamesDev
                 {
                     _error = "Failed to retrieve Google play games authorization code";
                     Debug.Log("Google Login Unsuccessful");
-
-                    if (_gameManager.GetAuthentication() != null)
+                    
+                    Debug.Log("user id : " + AuthenticationService.Instance.PlayerInfo.Id);
+                    SetState(AuthenticationState.Default);
+                    //_gameManager.LoadMainMenu();
+                    /*if (_gameManager.GetAuthentication() != null)
                     {
                         Refresh();
                     }
                     else
                     {
                         SetState(AuthenticationState.Default);
-                    }
+                    }*/
                 }
             });
         }
@@ -185,13 +215,13 @@ namespace LGamesDev
                     PlatformRegister(username);
                     break;
                 case AuthenticationState.Register:
-                    Register(username, password, email);
+                    //Register(username, password, email);
                     break;
                 case AuthenticationState.Login:
-                    Login(username, password);
+                    //Login(username, password);
                     break;
                 case AuthenticationState.Refresh:
-                    Refresh();
+                    //Refresh();
                     break;
             }
         }
@@ -200,13 +230,13 @@ namespace LGamesDev
         private void PlatformRegister(string username)
         {
             #if UNITY_ANDROID  
-                PlayGamesPlatform.Instance.RequestServerSideAccess(true, code =>
+                /*PlayGamesPlatform.Instance.RequestServerSideAccess(true, code =>
                 {
                     _code = code;
-                });
+                });*/
             #endif
             
-            StartCoroutine(AuthenticationHandler.PlatformConnect(this,
+            /*StartCoroutine(AuthenticationHandler.PlatformConnect(this,
                 username,
                 _code,
                 result =>
@@ -214,32 +244,42 @@ namespace LGamesDev
                     _gameManager.SetAuthentication(result);
                     _gameManager.LoadMainMenu();
                 }
-            ));
+            ));*/
+            
+            AuthenticationHandler.PlatformConnect(/*this,*/
+                username,
+                /*_code,*/
+                result =>
+                {
+                    _gameManager.SetPlayerConf(result);
+                    _gameManager.LoadMainMenu();
+                }
+            );
         }
 
         private void PlatformConnect()
         {
-            #if UNITY_ANDROID
+            /*#if UNITY_ANDROID
                 PlayGamesPlatform.Instance.RequestServerSideAccess(true, code =>
                 {
                     _code = code;
                 });
-            #endif
+            #endif*/
             
-            StartCoroutine(AuthenticationHandler.PlatformConnect(this,
+            /*StartCoroutine(AuthenticationHandler.PlatformConnect(//this,
                 null,
-                _code,
+                //_code,
                 result =>
                 {
-                    _gameManager.SetAuthentication(result);
+                    _gameManager.GetPlayerConf(result);
                     _gameManager.LoadMainMenu();
                 }
-            ));
+            ));*/
         }
 
         private void Register(string username, string password, string email)
         {
-            StartCoroutine(AuthenticationHandler.Register(this,
+            /*StartCoroutine(AuthenticationHandler.Register(this,
                 username, 
                 password,
                 email,
@@ -248,12 +288,12 @@ namespace LGamesDev
                     _gameManager.SetAuthentication(result);
                     _gameManager.LoadMainMenu();
                 }
-            ));
+            ));*/
         }
 
         private void Login(string username, string password)
         {
-            StartCoroutine(AuthenticationHandler.Login(this,
+            /*StartCoroutine(AuthenticationHandler.Login(this,
                 username, 
                 password,
                 result =>
@@ -261,12 +301,12 @@ namespace LGamesDev
                     _gameManager.SetAuthentication(result);
                     _gameManager.LoadMainMenu();
                 }
-            ));
+            ));*/
         }
 
         private void Refresh()
         {
-            StartCoroutine(AuthenticationHandler.RefreshToken(
+            /*StartCoroutine(AuthenticationHandler.RefreshToken(
                 this,
                 _gameManager.GetAuthentication().refresh_token,
                 result =>
@@ -274,7 +314,7 @@ namespace LGamesDev
                     _gameManager.SetAuthentication(result);
                     _gameManager.LoadMainMenu();
                 }
-            ));
+            ));*/
         }
 
         public void SetState(AuthenticationState state)

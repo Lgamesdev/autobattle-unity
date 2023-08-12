@@ -10,9 +10,9 @@ namespace LGamesDev.Core.Request
 {
     public class PlayerConfigHandler
     {
-        public static IEnumerator Load(MonoBehaviour instance, Action<string> onError, Action<PlayerConfig> setResult)
+        public static /*IEnumerator*/void Load(MonoBehaviour instance, Action<string> onError, Action<PlayerConfig> setResult)
         {
-            PlayerConfig playerConf = JsonConvert.DeserializeObject<PlayerConfig>(PlayerPrefs.GetString("PlayerConfig"));
+            /*PlayerConfig playerConf = JsonConvert.DeserializeObject<PlayerConfig>(PlayerPrefs.GetString("PlayerConfig"));
             if (playerConf != null)
             {
                 setResult(playerConf);
@@ -34,7 +34,7 @@ namespace LGamesDev.Core.Request
                     null,
                     GameManager.Instance.GetAuthentication())
                 );
-            }
+            }*/
         }
     }
 }

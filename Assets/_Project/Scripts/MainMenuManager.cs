@@ -35,7 +35,7 @@ namespace LGamesDev
             }
             else
             {
-                if (!_gameManager.GetAuthentication().PlayerConf.CreationDone)
+                if (!_gameManager.GetPlayerConf().CreationDone)
                 {
                     _gameManager.LoadCustomization();
                 }
@@ -49,7 +49,7 @@ namespace LGamesDev
 
         public void HandleTutorial()
         {
-            if (!_gameManager.GetAuthentication().PlayerConf.TutorialDone) {
+            if (!_gameManager.GetPlayerConf().TutorialDone) {
                 GetComponent<DialogTrigger>().StartDialog();
             }
         }

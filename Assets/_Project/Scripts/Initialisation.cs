@@ -42,10 +42,10 @@ namespace LGamesDev
             isDone = false;
             progress = 0f;
 
-            if (!_gameManager.networkManager.isConnected)
+            /*if (!_gameManager.networkManager.isConnected)
             {
                 _gameManager.networkManager.Connect();
-            }
+            }*/
 
             StartCoroutine(SetupInitialisation());
         }
@@ -54,9 +54,11 @@ namespace LGamesDev
         {
             _finishedStage = 0;
             
-            yield return new WaitUntil(() => _gameManager.networkManager.isConnected);
+            //yield return new WaitUntil(() => _gameManager.networkManager.isConnected);
 
-            _gameManager.networkService.SubscribeToMainChannel();
+            //_gameManager.networkService.SubscribeToMainChannel();
+            
+            
             
             int totalStages = Enum.GetValues(typeof(InitialisationStage)).Length - 1;
 

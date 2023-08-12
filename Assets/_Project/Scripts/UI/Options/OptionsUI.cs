@@ -87,7 +87,7 @@ public class OptionsUI : MonoBehaviour
     
     public void Logout()
     {
-        Authentication authentication = GameManager.Instance.GetAuthentication();
+        /*Authentication authentication = GameManager.Instance.GetAuthentication();
 
         StartCoroutine(AuthenticationHandler.Logout(
             this,
@@ -95,6 +95,6 @@ public class OptionsUI : MonoBehaviour
             () => {
                 GameManager.Instance.Logout();
             }
-        ));
+        ));*/
     }
 }

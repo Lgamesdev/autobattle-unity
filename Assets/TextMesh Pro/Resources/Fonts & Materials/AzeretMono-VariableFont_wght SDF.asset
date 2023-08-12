@@ -22,7 +22,8 @@ Texture2D:
   m_MipCount: 1
   m_IsReadable: 0
   m_IsPreProcessed: 0
-  m_IgnoreMasterTextureLimit: 0
+  m_IgnoreMipmapLimit: 0
+  m_MipmapLimitGroupName: 
   m_StreamingMipmaps: 0
   m_StreamingMipmapsPriority: 0
   m_VTOnly: 0
@@ -66,6 +67,7 @@ MonoBehaviour:
     m_StyleName: Bold
     m_PointSize: 320
     m_Scale: 1
+    m_UnitsPerEM: 1000
     m_LineHeight: 373.44
     m_AscentLine: 299.84
     m_CapLine: 224
@@ -102,6 +104,7 @@ MonoBehaviour:
       m_Height: 232
     m_Scale: 1
     m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
   - m_Index: 420
     m_Metrics:
       m_Width: 177.26562
@@ -116,6 +119,7 @@ MonoBehaviour:
       m_Height: 224
     m_Scale: 1
     m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
   - m_Index: 421
     m_Metrics:
       m_Width: 170.5625
@@ -130,6 +134,7 @@ MonoBehaviour:
       m_Height: 228
     m_Scale: 1
     m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
   - m_Index: 422
     m_Metrics:
       m_Width: 174.09375
@@ -144,6 +149,7 @@ MonoBehaviour:
       m_Height: 232
     m_Scale: 1
     m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
   - m_Index: 423
     m_Metrics:
       m_Width: 192.64062
@@ -158,6 +164,7 @@ MonoBehaviour:
       m_Height: 224
     m_Scale: 1
     m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
   - m_Index: 424
     m_Metrics:
       m_Width: 170.875
@@ -172,6 +179,7 @@ MonoBehaviour:
       m_Height: 228
     m_Scale: 1
     m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
   - m_Index: 425
     m_Metrics:
       m_Width: 174.40625
@@ -186,6 +194,7 @@ MonoBehaviour:
       m_Height: 232
     m_Scale: 1
     m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
   - m_Index: 426
     m_Metrics:
       m_Width: 176.64062
@@ -200,6 +209,7 @@ MonoBehaviour:
       m_Height: 224
     m_Scale: 1
     m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
   - m_Index: 427
     m_Metrics:
       m_Width: 168.64062
@@ -214,6 +224,7 @@ MonoBehaviour:
       m_Height: 232
     m_Scale: 1
     m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
   - m_Index: 428
     m_Metrics:
       m_Width: 174.40625
@@ -228,6 +239,7 @@ MonoBehaviour:
       m_Height: 232
     m_Scale: 1
     m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
   m_CharacterTable:
   - m_ElementType: 1
     m_Unicode: 48
@@ -363,9 +375,6 @@ MonoBehaviour:
   m_FallbackFontAssetTable:
   - {fileID: 11400000, guid: 75e13ba504445bf48ae069e6e286d10e, type: 2}
   - {fileID: 11400000, guid: 579372661fcf3854cb3b964afdaa3df4, type: 2}
-  - {fileID: 11400000, guid: 64e64c3524f801f4e8eddb685b093dd7, type: 2}
-  - {fileID: 11400000, guid: 88d8831c6377c8240922be89abfc2efc, type: 2}
-  - {fileID: 11400000, guid: 8aa800cec71dd194c99b8f7a3dcff5e9, type: 2}
   m_CreationSettings:
     sourceFontFileName: 
     sourceFontFileGUID: 9d0a382c65f881445ac55c72d2fe7cb9
@@ -449,6 +458,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: AzeretMono-VariableFont_wght Atlas Material
   m_Shader: {fileID: 4800000, guid: 68e6db2ebdc24f95958faec2be5558d6, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -457,6 +468,7 @@ Material:
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:

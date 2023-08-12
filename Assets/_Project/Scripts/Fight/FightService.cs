@@ -62,7 +62,7 @@ namespace LGamesDev.Fighting
 
         protected override void HandleSocket(SocketMessage socketMessage)
         {
-            switch (socketMessage.Channel)
+            /*switch (socketMessage.Channel)
             {
                 case var value when string.Equals(value,
                     string.Concat(FightChannelSuffix, GameManager.Instance.GetAuthentication().username)):
@@ -90,13 +90,13 @@ namespace LGamesDev.Fighting
                     }
 
                     break;
-            }
+            }*/
         }
 
         public void Attack(FightActionType actionType)
         {
             //Debug.Log("try attack action");
-            if (!_isFightOver)
+            /*if (!_isFightOver)
             {
                 GameManager.Instance.networkManager.SendSocket(new SocketMessage()
                 {
@@ -105,7 +105,7 @@ namespace LGamesDev.Fighting
                     Username = GameManager.Instance.GetAuthentication().username,
                     Content = actionType.ToString(),
                 });
-            }
+            }*/
 
             /*_ws.SendText(JsonConvert.SerializeObject(new Dictionary<string, string>
             {

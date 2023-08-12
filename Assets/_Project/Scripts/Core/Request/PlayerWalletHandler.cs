@@ -15,9 +15,9 @@ namespace LGamesDev.Core.Request
     {
         private static PlayerWalletManager _manager;
         
-        public static IEnumerator Load(MonoBehaviour instance, Action<string> onError, Action<Wallet> setResult)
+        public static /*IEnumerator*/void Load(MonoBehaviour instance, Action<string> onError, Action<Wallet> setResult)
         {
-            yield return instance.StartCoroutine(RequestHandler.Request("api/user/wallet",
+            /*yield return instance.StartCoroutine(RequestHandler.Request("api/user/wallet",
                 UnityWebRequest.kHttpVerbGET,
                 error =>
                 {
@@ -41,12 +41,12 @@ namespace LGamesDev.Core.Request
                 },
                 null,
                 GameManager.Instance.GetAuthentication())
-            );
+            );*/
         }
 
-        public static IEnumerator Buy(MonoBehaviour instance, Item item, Action<string> onError, Action<IBaseCharacterItem> onResult)
+        public static /*IEnumerator*/void Buy(MonoBehaviour instance, Item item, Action<string> onError, Action<IBaseCharacterItem> onResult)
         {
-            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.EnableWaitingScreen());
+            /*yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.EnableWaitingScreen());
             
             yield return instance.StartCoroutine(RequestHandler.Request("api/shop/buy/" + item.ID,
                 UnityWebRequest.kHttpVerbPOST,
@@ -69,12 +69,12 @@ namespace LGamesDev.Core.Request
                 GameManager.Instance.GetAuthentication())
             );
             
-            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());
+            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());*/
         }
         
-        public static IEnumerator Sell(MonoBehaviour instance, IBaseCharacterItem characterItem, Action<string> onError, Action<string> onResult)
+        public static /*IEnumerator*/void Sell(MonoBehaviour instance, IBaseCharacterItem characterItem, Action<string> onError, Action<string> onResult)
         {
-            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.EnableWaitingScreen());
+            /*yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.EnableWaitingScreen());
             
             yield return instance.StartCoroutine(RequestHandler.Request("api/shop/sell/" + characterItem.Id,
                 UnityWebRequest.kHttpVerbPUT,
@@ -91,7 +91,7 @@ namespace LGamesDev.Core.Request
                 GameManager.Instance.GetAuthentication())
             );
             
-            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());
+            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());*/
         }
     }
 }

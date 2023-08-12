@@ -11,9 +11,9 @@ namespace LGamesDev.Core.Request
 {
     public class ShopHandler
     {
-        public static IEnumerator Load(MonoBehaviour instance, Action<List<Item>> setResult)
+        public static /*IEnumerator*/void Load(MonoBehaviour instance, Action<List<Item>> setResult)
         {
-            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.EnableWaitingScreen());
+            /*yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.EnableWaitingScreen());
             
             yield return instance.StartCoroutine(RequestHandler.Request("api/shop",
                 UnityWebRequest.kHttpVerbGET,
@@ -33,7 +33,7 @@ namespace LGamesDev.Core.Request
                 GameManager.Instance.GetAuthentication())
             );
             
-            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());
+            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());*/
         }
     }
 }

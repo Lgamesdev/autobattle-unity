@@ -2,8 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
+using Core.Player;
 using LGamesDev.Core.Player;
 using Newtonsoft.Json;
+using Unity.Services.CloudCode;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -11,9 +14,27 @@ namespace LGamesDev.Core.Request
 {
     public static class AuthenticationHandler
     {
-        public static IEnumerator PlatformConnect(MonoBehaviour instance, string username, string code, Action<Authentication> setResult)
+        public static async /*Task<IEnumerator>*/ void PlatformConnect( /*MonoBehaviour instance,*/
+            string username, /*string code,*/ Action<PlayerConfig> setResult)
         {
-            Dictionary<string, string> form = new Dictionary<string, string>() {
+            Dictionary<string, object> requestParams = new Dictionary<string, object> { { "username", username } };
+
+            PlayerConfig response = null;
+            try
+            {
+                response =
+                    await CloudCodeService.Instance.CallEndpointAsync<PlayerConfig>("Register", requestParams);
+                
+                Debug.Log("response : " + response);
+
+                setResult(response);
+            }
+            catch (CloudCodeException e)
+            {
+                Debug.Log("error while calling cloud code register : " + e);
+            }
+
+            /*Dictionary<string, string> form = new Dictionary<string, string>() {
                 {"username", username},
                 {"code", code},
             };
@@ -53,21 +74,23 @@ namespace LGamesDev.Core.Request
                 bodyRaw)
             );
             
-            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());
+            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());*/
         }
 
-        public static IEnumerator Register(MonoBehaviour instance, string username, string password, string email, Action<Authentication> setResult)
+        public static IEnumerator Register(MonoBehaviour instance, string username, string password, string email,
+            Action<Authentication> setResult)
         {
-            Dictionary<string, string> form = new Dictionary<string, string>() {
-                {"username", username},
-                {"password", password}, 
-                {"email", email}
+            Dictionary<string, string> form = new Dictionary<string, string>()
+            {
+                { "username", username },
+                { "password", password },
+                { "email", email }
             };
 
             var bodyRaw = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(form));
-            
+
             yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.EnableWaitingScreen());
-            
+
             yield return instance.StartCoroutine(RequestHandler.Request("api/register",
                 UnityWebRequest.kHttpVerbPOST,
                 error =>
@@ -86,25 +109,27 @@ namespace LGamesDev.Core.Request
                     //Debug.Log("Received : " + response);
 
                     Authentication authentication = JsonConvert.DeserializeObject<Authentication>(response);
-                    
+
                     setResult(authentication);
                 },
                 bodyRaw)
             );
-            
+
             yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());
         }
-        
-        public static IEnumerator Login(MonoBehaviour instance, string username, string password, Action<Authentication> setResult)
+
+        public static IEnumerator Login(MonoBehaviour instance, string username, string password,
+            Action<Authentication> setResult)
         {
-            Dictionary<string, string> form = new Dictionary<string, string>() {
-                {"username", username},
-                {"password", password},
+            Dictionary<string, string> form = new Dictionary<string, string>()
+            {
+                { "username", username },
+                { "password", password },
             };
             var bodyRaw = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(form));
-            
+
             yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.EnableWaitingScreen());
-            
+
             yield return instance.StartCoroutine(RequestHandler.Request("api/login",
                 UnityWebRequest.kHttpVerbPOST,
                 error =>
@@ -127,21 +152,23 @@ namespace LGamesDev.Core.Request
                 },
                 bodyRaw)
             );
-            
+
             yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());
         }
-        
-        public static IEnumerator RefreshToken(MonoBehaviour instance, string refreshToken, Action<Authentication> setResult)
+
+        public static /*IEnumerator*/
+            void RefreshToken(MonoBehaviour instance, string refreshToken, Action<Authentication> setResult)
         {
-            Dictionary<string, string> form = new Dictionary<string, string>() {
-                {"refresh_token", refreshToken},
+            Dictionary<string, string> form = new Dictionary<string, string>()
+            {
+                { "refresh_token", refreshToken },
             };
 
             string bodyRequest = JsonConvert.SerializeObject(form);
 
             var bodyRaw = Encoding.UTF8.GetBytes(bodyRequest);
 
-            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.EnableWaitingScreen());
+            /*yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.EnableWaitingScreen());
             
             yield return instance.StartCoroutine(RequestHandler.Request("api/token/refresh",
                 UnityWebRequest.kHttpVerbPOST,
@@ -173,12 +200,12 @@ namespace LGamesDev.Core.Request
                 bodyRaw)
             );
             
-            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());
+            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());*/
         }
 
-        public static IEnumerator Logout(MonoBehaviour instance, string refreshToken, Action onComplete)
+        public static /*IEnumerator*/ void Logout(MonoBehaviour instance, string refreshToken, Action onComplete)
         {
-            Dictionary<string, string> form = new Dictionary<string, string>() {
+            /*Dictionary<string, string> form = new Dictionary<string, string>() {
                 {"refresh_token", refreshToken},
             };
             var bodyRaw = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(form));
@@ -210,11 +237,12 @@ namespace LGamesDev.Core.Request
             );
             
             yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());
+        }*/
         }
-    }
-    
-    public class AuthenticationError
-    {
-        public const string PlatformConnectUsername = "auth-0001";
+
+        public class AuthenticationError
+        {
+            public const string PlatformConnectUsername = "auth-0001";
+        }
     }
 }

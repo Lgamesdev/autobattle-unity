@@ -11,9 +11,9 @@ namespace LGamesDev.Core.Request
 {
     public class PlayerInventoryHandler
     {
-        public static IEnumerator Load(MonoBehaviour instance, Action<string> onError, Action<Inventory> setResult)
+        public static /*IEnumerator*/void Load(MonoBehaviour instance, Action<string> onError, Action<Inventory> setResult)
         {
-            yield return instance.StartCoroutine(RequestHandler.Request("api/user/inventory",
+            /*yield return instance.StartCoroutine(RequestHandler.Request("api/user/inventory",
                 UnityWebRequest.kHttpVerbGET,
                 error =>
                 {
@@ -38,10 +38,10 @@ namespace LGamesDev.Core.Request
                 },
                 null,
                 GameManager.Instance.GetAuthentication())
-            );
+            );*/
         }
 
-        public static IEnumerator Save(List<Equipment> items)
+        public static /*IEnumerator*/void Save(List<Equipment> items)
         {
             //var jsonString = Serialize(items);
 
@@ -49,7 +49,7 @@ namespace LGamesDev.Core.Request
 
             //PlayerPrefs.SetString("PlayerInventory", jsonString);
 
-            yield return new WaitForEndOfFrame();
+            /*yield return new WaitForEndOfFrame();*/
         }
     }
 }

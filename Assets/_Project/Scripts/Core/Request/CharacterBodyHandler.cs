@@ -9,9 +9,9 @@ namespace LGamesDev.Core.Request
 {
     public class CharacterBodyHandler
     {
-        public static IEnumerator Load(MonoBehaviour instance, Action<string> onError, Action<Body> setResult)
+        public static /*IEnumerator*/void Load(MonoBehaviour instance, Action<string> onError, Action<Body> setResult)
         {
-            yield return instance.StartCoroutine(RequestHandler.Request("api/user/body",
+            /*yield return instance.StartCoroutine(RequestHandler.Request("api/user/body",
                 UnityWebRequest.kHttpVerbGET,
                 error =>
                 {
@@ -26,12 +26,12 @@ namespace LGamesDev.Core.Request
                 },
                 null,
                 GameManager.Instance.GetAuthentication())
-            );
+            );*/
         }
 
-        public static IEnumerator Save(MonoBehaviour instance, Body body, Action<string> onError, Action<string> onResult)
+        public static /*IEnumerator*/void Save(MonoBehaviour instance, Body body, Action<string> onError, Action<string> onResult)
         {
-            var bodyRaw = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(body));
+            /*var bodyRaw = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(body));
 
             //Debug.Log("authentication : " + GameManager.Instance.GetAuthentication().ToString());
             
@@ -41,7 +41,7 @@ namespace LGamesDev.Core.Request
                 onResult,
                 bodyRaw,
                 GameManager.Instance.GetAuthentication())
-            );
+            );*/
         }
     }
 }

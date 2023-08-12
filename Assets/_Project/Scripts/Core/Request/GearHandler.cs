@@ -13,9 +13,9 @@ namespace LGamesDev.Core.Request
 {
     public class GearHandler
     {
-        public static IEnumerator Load(MonoBehaviour instance, Action<string> onError, Action<Gear> setResult)
+        public static /*IEnumerator*/void Load(MonoBehaviour instance, Action<string> onError, Action<Gear> setResult)
         {
-            yield return instance.StartCoroutine(RequestHandler.Request("api/user/gear",
+            /*yield return instance.StartCoroutine(RequestHandler.Request("api/user/gear",
                 UnityWebRequest.kHttpVerbGET,
                 error =>
                 {
@@ -37,18 +37,18 @@ namespace LGamesDev.Core.Request
                     /*else
                     {
                         Debug.Log("gear : " + gear.ToString());
-                    }*/
+                    }#1#
 
                     setResult(gear);
                 },
                 null,
                 GameManager.Instance.GetAuthentication())
-            );
+            );*/
         }
 
-        public static IEnumerator Equip(MonoBehaviour instance, CharacterEquipment newEquipment, Action<string> onError, Action<string> onResult)
+        public static /*IEnumerator*/void Equip(MonoBehaviour instance, CharacterEquipment newEquipment, Action<string> onError, Action<string> onResult)
         {
-            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.EnableWaitingScreen());
+            /*yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.EnableWaitingScreen());
             
             yield return instance.StartCoroutine(RequestHandler.Request("api/user/gear/equip/" + newEquipment.id,
                 UnityWebRequest.kHttpVerbPUT,
@@ -64,12 +64,12 @@ namespace LGamesDev.Core.Request
                 GameManager.Instance.GetAuthentication())
             );
             
-            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());
+            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());*/
         }
         
-        public static IEnumerator UnEquip(MonoBehaviour instance, CharacterEquipment oldEquipment, Action<string> onError, Action<string> onResult)
+        public static /*IEnumerator*/void UnEquip(MonoBehaviour instance, CharacterEquipment oldEquipment, Action<string> onError, Action<string> onResult)
         {
-            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.EnableWaitingScreen());
+            /*yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.EnableWaitingScreen());
             
             yield return instance.StartCoroutine(RequestHandler.Request("api/user/gear/unEquip/" + oldEquipment.id,
                 UnityWebRequest.kHttpVerbPUT,
@@ -85,7 +85,7 @@ namespace LGamesDev.Core.Request
                 GameManager.Instance.GetAuthentication())
             );
             
-            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());
+            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());*/
         }
     }
 }

@@ -1,4 +1,5 @@
 using Core.Network;
+using Core.Player;
 using LGamesDev.Core;
 using LGamesDev.Core.Player;
 using LGamesDev.Fighting;
@@ -22,8 +23,10 @@ namespace LGamesDev
         public DialogManager dialogManager;
         public ColorLibrary itemQualityColorLibrary;
 
-        private Authentication _authentication;
-        private const string AuthenticationKey = "authentication";
+        //private Authentication _authentication;
+        private PlayerConfig _playerConfig;
+        //private const string AuthenticationKey = "authentication";
+        private const string PlayerConfKey = "playerConf";
         private PlayerOptions _playerOptions;
         private const string OptionsKey = "options";
 
@@ -46,16 +49,41 @@ namespace LGamesDev
             modalWindow.Close();
 
             //Authentication
-            _authentication = JsonConvert.DeserializeObject<Authentication>(PlayerPrefs.GetString(AuthenticationKey));
+            //_authentication = JsonConvert.DeserializeObject<Authentication>(PlayerPrefs.GetString(AuthenticationKey));
             //Debug.Log("player prefs authentication : " + _authentication);
+            
+            _playerConfig = JsonConvert.DeserializeObject<PlayerConfig>(PlayerPrefs.GetString(PlayerConfKey));
             
             //Player Options
             _playerOptions = JsonConvert.DeserializeObject<PlayerOptions>(PlayerPrefs.GetString(OptionsKey)) ?? new PlayerOptions();
         }
+        
+        /*public struct userAttributes {}
+        public struct appAttributes {}
+
+        
+
+        async Task Start()
+        {
+            // initialize Unity's authentication and core services, however check for internet connection
+            // in order to fail gracefully without throwing exception if connection does not exist
+            if (Utilities.CheckForInternetConnection())
+            {
+                await InitializeRemoteConfigAsync();
+            }
+
+            RemoteConfigService.Instance.FetchCompleted += ApplyRemoteSettings;
+            RemoteConfigService.Instance.FetchConfigs(new userAttributes(), new appAttributes());
+        }
+
+        void ApplyRemoteSettings(ConfigResponse configResponse)
+        {
+            Debug.Log("RemoteConfigService.Instance.appConfig fetched: " + RemoteConfigService.Instance.appConfig.config.ToString());
+        }*/
 
         private void Start()
         {
-            if (_authentication == null)
+            if (_playerConfig == null)
             {
                 StartCoroutine(sceneLoader.LoadAuthentication(true, true));
             }
@@ -97,15 +125,33 @@ namespace LGamesDev
         {
             networkManager.Disconnect();
             
-            PlayerPrefs.DeleteKey(AuthenticationKey);
-            _authentication = null;
+            PlayerPrefs.DeleteKey(PlayerConfKey);
+            _playerConfig = null;
             
             audioManager.StopMusic();
             
             StartCoroutine(sceneLoader.LoadAuthentication(true, true));
         }
+        
+        public PlayerConfig GetPlayerConf()
+        {
+            return _playerConfig;
+        }
+        
+        public void SetPlayerConf(PlayerConfig playerConfig)
+        {
+            if (playerConfig != null)
+            {
+                _playerConfig = playerConfig;
+                PlayerPrefs.SetString(PlayerConfKey, JsonConvert.SerializeObject(_playerConfig));
+            }
+            else
+            {
+                Debug.LogError("trying to set player conf to null");
+            }
+        }
 
-        public Authentication GetAuthentication()
+        /*public Authentication GetAuthentication()
         {
             return _authentication;
         }
@@ -121,7 +167,7 @@ namespace LGamesDev
             {
                 Debug.LogError("trying to set authentication to null");
             }
-        }
+        }*/
 
         public PlayerOptions GetPlayerOptions()
         {

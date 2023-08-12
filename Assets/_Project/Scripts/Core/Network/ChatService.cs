@@ -85,13 +85,13 @@ namespace Core.Network
         //Chat
         public new void SendMessage(string message)
         {
-            GameManager.Instance.networkManager.SendSocket(new SocketMessage()
+            /*GameManager.Instance.networkManager.SendSocket(new SocketMessage()
             {
                 Action = SendMessageAction,
                 Channel = DefaultChatChannel,
                 Username = GameManager.Instance.GetAuthentication().username,
                 Content = message,
-            });
+            });*/
 
             /*// Sending plain text to json
             await _ws.SendText(JsonConvert.SerializeObject(new Dictionary<string, string>

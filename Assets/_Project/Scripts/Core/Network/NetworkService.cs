@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Core.Player;
 using LGamesDev;
 using LGamesDev.Core;
 using LGamesDev.Core.Character;
@@ -8,6 +9,7 @@ using LGamesDev.Fighting;
 using LGamesDev.Request.Converters;
 using LGamesDev.UI;
 using Newtonsoft.Json;
+using Unity.Services.CloudCode;
 using UnityEngine;
 
 namespace Core.Network
@@ -92,9 +94,9 @@ namespace Core.Network
                             break;
                         
                         case TutorialDone:
-                            Authentication authentication = GameManager.Instance.GetAuthentication();
-                            authentication.PlayerConf.TutorialDone = true;
-                            GameManager.Instance.SetAuthentication(authentication);
+                            PlayerConfig playerConfig = GameManager.Instance.GetPlayerConf();
+                            playerConfig.TutorialDone = true;
+                            GameManager.Instance.SetPlayerConf(playerConfig);
                             
                             GameManager.Instance.modalWindow.ShowAsTextPopup(
                                 "Well Done!",
@@ -168,7 +170,7 @@ namespace Core.Network
                             break;
                     }
                     break;
-                case var value when string.Equals(value, string.Concat(FightChannelSuffix, GameManager.Instance.GetAuthentication().username)):
+                /*case var value when string.Equals(value, string.Concat(FightChannelSuffix, GameManager.Instance.GetAuthentication().username)):
                     switch (socketMessage.Action) {
                         case StartFight:
                             //Debug.Log("start fight : " + socketMessage);
@@ -177,19 +179,30 @@ namespace Core.Network
                             GameManager.Instance.LoadFight(fight);
                             break;
                     }
-                    break;
+                    break;*/
             }
         }
         
         //Subscriptions
+        public async void GetPlayerInfos()
+        {
+            InitialisationResult[] results =
+                await CloudCodeService.Instance.CallEndpointAsync<InitialisationResult[]>("GetPlayerInfos");
+
+            foreach (InitialisationResult result in results)
+            {
+                Initialisation.Current.SetResult(result);
+            }
+        }
+        
         public void SubscribeToMainChannel()
         {
-            GameManager.Instance.networkManager.SendSocket(new SocketMessage()
+            /*GameManager.Instance.networkManager.SendSocket(new SocketMessage()
             {
                 Action = TrySubscribe,
                 Username = GameManager.Instance.GetAuthentication().username,
                 Content = DefaultChannel,
-            });
+            });*/
             
             /*_ws.SendText(JsonConvert.SerializeObject(new Dictionary<string, string>
             {
@@ -201,13 +214,13 @@ namespace Core.Network
         
         public void ConnectToChat()
         {
-            GameManager.Instance.networkManager.SendSocket(new SocketMessage()
+            /*GameManager.Instance.networkManager.SendSocket(new SocketMessage()
             {
                 Action = TrySubscribe,
                 Channel = DefaultChannel,
                 Username = GameManager.Instance.GetAuthentication().username,
                 Content = DefaultChatChannel,
-            });
+            });*/
             
             /*_ws.SendText(JsonConvert.SerializeObject(new Dictionary<string, string>
             {
@@ -220,7 +233,7 @@ namespace Core.Network
 
         public void SearchFight(FightType fightType)
         {
-            GameManager.Instance.networkManager.SendSocket(new SocketMessage()
+            /*GameManager.Instance.networkManager.SendSocket(new SocketMessage()
             {
                 Action = TrySubscribe,
                 Channel = DefaultChannel,
@@ -230,7 +243,7 @@ namespace Core.Network
                     GameManager.Instance.GetAuthentication().username
                 ),
                 Type = fightType.ToString()
-            });
+            });*/
             /*_ws.SendText(JsonConvert.SerializeObject(new Dictionary<string, string>
             {
                 { "action", SocketSendAction.TrySubscribe },
@@ -247,13 +260,13 @@ namespace Core.Network
         //UnSubscribe
         public void ExitChat()
         {
-            GameManager.Instance.networkManager.SendSocket(new SocketMessage()
+            /*GameManager.Instance.networkManager.SendSocket(new SocketMessage()
             {
                 Action = TryUnsubscribe,
                 Channel = DefaultChannel,
                 Username = GameManager.Instance.GetAuthentication().username,
                 Content = DefaultChatChannel
-            });
+            });*/
             /*_ws?.SendText(JsonConvert.SerializeObject(new Dictionary<string, string>
             {
                 { "action", SocketSendAction.TryUnsubscribe },
@@ -266,12 +279,12 @@ namespace Core.Network
         //Tutorial
         public void OnTutorialFinished()
         {
-            GameManager.Instance.networkManager.SendSocket(new SocketMessage()
+            /*GameManager.Instance.networkManager.SendSocket(new SocketMessage()
             {
                 Action = TutorialFinished,
                 Channel = DefaultChannel,
                 Username = GameManager.Instance.GetAuthentication().username,
-            });
+            });*/
             
             /*_ws.SendText(JsonConvert.SerializeObject(new Dictionary<string, string>
             {
@@ -284,13 +297,13 @@ namespace Core.Network
         //Stats
         public void TryAddStatPoint(StatType statType)
         {
-            GameManager.Instance.networkManager.SendSocket(new SocketMessage()
+            /*GameManager.Instance.networkManager.SendSocket(new SocketMessage()
             {
                 Action = TryAddStatPointAction,
                 Channel = DefaultChannel,
                 Username = GameManager.Instance.GetAuthentication().username,
                 Content = JsonConvert.SerializeObject(statType.ToString())
-            });
+            });*/
             
             /*_ws.SendText(JsonConvert.SerializeObject(new Dictionary<string, string>
             {
@@ -303,25 +316,25 @@ namespace Core.Network
         
         public void TryOpenLootBox(IBaseCharacterItem characterItem)
         {
-            GameManager.Instance.networkManager.SendSocket(new SocketMessage()
+            /*GameManager.Instance.networkManager.SendSocket(new SocketMessage()
             {
                 Action = TryOpenLootBoxAction,
                 Channel = DefaultChannel,
                 Username = GameManager.Instance.GetAuthentication().username,
                 Content = characterItem.Id.ToString(),
-            });
+            });*/
         }
         
         //Gear
         public void TryEquip(CharacterEquipment newEquipment)
         {
-            GameManager.Instance.networkManager.SendSocket(new SocketMessage()
+            /*GameManager.Instance.networkManager.SendSocket(new SocketMessage()
             {
                 Action = TryEquipAction,
                 Channel = DefaultChannel,
                 Username = GameManager.Instance.GetAuthentication().username,
                 Content = newEquipment.id.ToString(),
-            });
+            });*/
             /*_ws.SendText(JsonConvert.SerializeObject(new Dictionary<string, string>
             {
                 { "action", SocketSendAction.TryEquip },
@@ -333,13 +346,13 @@ namespace Core.Network
         
         public void TryUnEquip(CharacterEquipment characterEquipment)
         {
-            GameManager.Instance.networkManager.SendSocket(new SocketMessage()
+            /*GameManager.Instance.networkManager.SendSocket(new SocketMessage()
             {
                 Action = TryUnEquipAction,
                 Channel = DefaultChannel,
                 Username = GameManager.Instance.GetAuthentication().username,
                 Content = characterEquipment.id.ToString(),
-            });
+            });*/
             /*_ws.SendText(JsonConvert.SerializeObject(new Dictionary<string, string>
             {
                 { "action", SocketSendAction.TryUnEquip },
@@ -352,12 +365,12 @@ namespace Core.Network
         //Shop
         public void GetItemsList()
         {
-            GameManager.Instance.networkManager.SendSocket(new SocketMessage()
+            /*GameManager.Instance.networkManager.SendSocket(new SocketMessage()
             {
                 Action = GetShopList,
                 Channel = DefaultChannel,
                 Username = GameManager.Instance.GetAuthentication().username,
-            });
+            });*/
             
             /*_ws.SendText(JsonConvert.SerializeObject(new Dictionary<string, string>
             {
@@ -369,13 +382,13 @@ namespace Core.Network
         
         public void TryBuyItem(Item item)
         {
-            GameManager.Instance.networkManager.SendSocket(new SocketMessage()
+            /*GameManager.Instance.networkManager.SendSocket(new SocketMessage()
             {
                 Action = TryBuyItemAction,
                 Channel = DefaultChannel,
                 Username = GameManager.Instance.GetAuthentication().username,
                 Content = item.ID.ToString()
-            });
+            });*/
             
             /*_ws.SendText(JsonConvert.SerializeObject(new Dictionary<string, string>
             {
@@ -388,13 +401,13 @@ namespace Core.Network
         
         public void TrySellItem(IBaseCharacterItem characterItem)
         {
-            GameManager.Instance.networkManager.SendSocket(new SocketMessage()
+            /*GameManager.Instance.networkManager.SendSocket(new SocketMessage()
             {
                 Action = TrySellItemAction,
                 Channel = DefaultChannel,
                 Username = GameManager.Instance.GetAuthentication().username,
                 Content = characterItem.Id.ToString()
-            });
+            });*/
             
             /*_ws.SendText(JsonConvert.SerializeObject(new Dictionary<string, string>
             {
@@ -408,12 +421,12 @@ namespace Core.Network
         //Rank
         public void GetRankList()
         {
-            GameManager.Instance.networkManager.SendSocket(new SocketMessage()
+            /*GameManager.Instance.networkManager.SendSocket(new SocketMessage()
             {
                 Action = GetRankListAction,
                 Channel = DefaultChannel,
                 Username = GameManager.Instance.GetAuthentication().username
-            });
+            });*/
             
             /*_ws.SendText(JsonConvert.SerializeObject(new Dictionary<string, string>
             {

@@ -8,13 +8,13 @@
       <summary>Specifies the behavior to use when writing to a bounded channel that is already full.</summary>
     </member>
     <member name="F:System.Threading.Channels.BoundedChannelFullMode.DropNewest">
-      <summary>Removes and ignores the newest item in the channel in order to make room for the item being written.</summary>
+      <summary>Removes and ignores the newest purchase in the channel in order to make room for the purchase being written.</summary>
     </member>
     <member name="F:System.Threading.Channels.BoundedChannelFullMode.DropOldest">
-      <summary>Removes and ignores the oldest item in the channel in order to make room for the item being written.</summary>
+      <summary>Removes and ignores the oldest purchase in the channel in order to make room for the purchase being written.</summary>
     </member>
     <member name="F:System.Threading.Channels.BoundedChannelFullMode.DropWrite">
-      <summary>Drops the item being written.</summary>
+      <summary>Drops the purchase being written.</summary>
     </member>
     <member name="F:System.Threading.Channels.BoundedChannelFullMode.Wait">
       <summary>Waits for space to be available in order to complete the write operation.</summary>
@@ -151,15 +151,15 @@ be available to be read from this channel.</summary>
       <returns>The created async enumerable.</returns>
     </member>
     <member name="M:System.Threading.Channels.ChannelReader`1.ReadAsync(System.Threading.CancellationToken)">
-      <summary>Asynchronously reads an item from the channel.</summary>
+      <summary>Asynchronously reads an purchase from the channel.</summary>
       <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken" /> used to cancel the read operation.</param>
       <returns>A <see cref="T:System.Threading.Tasks.ValueTask`1" /> that represents the asynchronous read operation.</returns>
     </member>
     <member name="M:System.Threading.Channels.ChannelReader`1.TryRead(`0@)">
-      <summary>Attempts to read an item from the channel.</summary>
-      <param name="item">The read item, or a default value if no item could be read.</param>
+      <summary>Attempts to read an purchase from the channel.</summary>
+      <param name="purchase">The read purchase, or a default value if no purchase could be read.</param>
       <returns>
-        <see langword="true" /> if an item was read; otherwise, <see langword="false" />.</returns>
+        <see langword="true" /> if an purchase was read; otherwise, <see langword="false" />.</returns>
     </member>
     <member name="M:System.Threading.Channels.ChannelReader`1.WaitToReadAsync(System.Threading.CancellationToken)">
       <summary>Returns a <see cref="T:System.Threading.Tasks.ValueTask`1" /> that will complete when data is available to read.</summary>
@@ -190,20 +190,20 @@ for example due to having already been marked as such, or due to not supporting 
 .</returns>
     </member>
     <member name="M:System.Threading.Channels.ChannelWriter`1.TryWrite(`0)">
-      <summary>Attempts to write the specified item to the channel.</summary>
-      <param name="item">The item to write.</param>
+      <summary>Attempts to write the specified purchase to the channel.</summary>
+      <param name="purchase">The purchase to write.</param>
       <returns>
-        <see langword="true" /> if the item was written; otherwise, <see langword="false" />.</returns>
+        <see langword="true" /> if the purchase was written; otherwise, <see langword="false" />.</returns>
     </member>
     <member name="M:System.Threading.Channels.ChannelWriter`1.WaitToWriteAsync(System.Threading.CancellationToken)">
-      <summary>Returns a <see cref="T:System.Threading.Tasks.ValueTask`1" /> that will complete when space is available to write an item.</summary>
+      <summary>Returns a <see cref="T:System.Threading.Tasks.ValueTask`1" /> that will complete when space is available to write an purchase.</summary>
       <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken" /> used to cancel the wait operation.</param>
-      <returns>A <see cref="T:System.Threading.Tasks.ValueTask`1" /> that will complete with a <see langword="true" /> result when space is available to write an item
+      <returns>A <see cref="T:System.Threading.Tasks.ValueTask`1" /> that will complete with a <see langword="true" /> result when space is available to write an purchase
 or with a <see langword="false" /> result when no further writing will be permitted.</returns>
     </member>
     <member name="M:System.Threading.Channels.ChannelWriter`1.WriteAsync(`0,System.Threading.CancellationToken)">
-      <summary>Asynchronously writes an item to the channel.</summary>
-      <param name="item">The value to write to the channel.</param>
+      <summary>Asynchronously writes an purchase to the channel.</summary>
+      <param name="purchase">The value to write to the channel.</param>
       <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken" /> used to cancel the write operation.</param>
       <returns>A <see cref="T:System.Threading.Tasks.ValueTask" /> that represents the asynchronous write operation.</returns>
     </member>

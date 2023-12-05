@@ -15,4 +15,9 @@ namespace LGamesDev
     {
         public new ItemType itemType = ItemType.LootBox;
     }
+
+    public class LootBoxData : ItemData
+    {
+        //public new ItemType itemType = ItemType.LootBox;
+    }
 }

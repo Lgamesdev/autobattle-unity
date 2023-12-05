@@ -10,13 +10,13 @@ namespace LGamesDev.Core.Player
     [Serializable]
     public class Stat
     {
-        public int value;
-        
         [JsonConverter(typeof(StringEnumConverter))]
         public StatType statType;
         
+        public int value;
+        
         [SerializeField]
-        private List<int> modifiers = new List<int>();
+        private List<int> modifiers = new();
 
         public string GetStatType()
         {

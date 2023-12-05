@@ -90,7 +90,7 @@ namespace Core.Network
                         case InitialisationAction:
                             InitialisationResult result =
                                 JsonConvert.DeserializeObject<InitialisationResult>(socketMessage.Content);
-                            Initialisation.Current.SetResult(result);
+                            //Initialisation.Current.SetResult(result);
                             break;
                         
                         case TutorialDone:
@@ -123,7 +123,7 @@ namespace Core.Network
                             break;
                         
                         case Equip:
-                            CharacterManager.Instance.equipmentManager.Equip(int.Parse(socketMessage.Content));
+                            CharacterManager.Instance.equipmentManager.Equip(socketMessage.Content);
                             break;
                         
                         case UnEquip:
@@ -137,7 +137,7 @@ namespace Core.Network
                         
                         case ShopList:
                             settings.Converters.Add(new ItemConverter());
-                            List<Item> shopItems = JsonConvert.DeserializeObject<List<Item>>(socketMessage.Content, settings);
+                            List<ShopPurchase> shopItems = JsonConvert.DeserializeObject<List<ShopPurchase>>(socketMessage.Content, settings);
                             ShopUI.Instance.ShopItems = shopItems;
                             break;
                         
@@ -148,7 +148,7 @@ namespace Core.Network
                             break;
                         
                         case SellItem:
-                            CharacterManager.Instance.walletManager.SellCharacterItem(int.Parse(socketMessage.Content));
+                            CharacterManager.Instance.walletManager.SellCharacterItem(socketMessage.Content);
                             break;
                         
                         case RankList:
@@ -191,7 +191,7 @@ namespace Core.Network
 
             foreach (InitialisationResult result in results)
             {
-                Initialisation.Current.SetResult(result);
+                //Initialisation.Current.SetResult(result);
             }
         }
         

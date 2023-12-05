@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using LGamesDev.Core.Player;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -54,7 +55,7 @@ namespace LGamesDev.Fighting
             fightService.OnFightOver += OnFightOver;
         }
 
-        public IEnumerator SetupFight(Fight fight)
+        public async Task SetupFight(Fight fight)
         {
             SetFightSpeed(GameManager.Instance.GetPlayerOptions().FightSpeed);
             
@@ -63,11 +64,11 @@ namespace LGamesDev.Fighting
             //Debug.Log("setup fight : " + fight);
             _fight = fight;
 
-            yield return StartCoroutine(playerCharacterFight.SetupFighter(fight.Character));
+            await playerCharacterFight.SetupFighter(fight.Character);
             
             _enemyCharacterFight = SpawnCharacter();
 
-            yield return StartCoroutine(_enemyCharacterFight.SetupFighter(fight.Opponent));
+            await _enemyCharacterFight.SetupFighter(fight.Opponent);
 
             Vector3 position = cam.transform.position;
             playerCharacterFight.transform.position = cam.ScreenToWorldPoint(new Vector3(

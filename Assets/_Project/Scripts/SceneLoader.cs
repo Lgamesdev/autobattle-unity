@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using LGamesDev;
 using LGamesDev.Core;
 using LGamesDev.Fighting;
@@ -24,9 +25,9 @@ namespace LGamesDev
             _gameManager = GameManager.Instance;
         }
 
-        public IEnumerator LoadAuthentication(bool loadingScreenEnabled, bool loadingScreenDisabled)
+        public async void LoadAuthentication(bool loadingScreenEnabled, bool loadingScreenDisabled)
         {
-            yield return StartCoroutine(SetupSceneTransition(
+            await SetupSceneTransition(
                 () =>
                 {
                     // Load / unload scene below to load authentication
@@ -35,16 +36,16 @@ namespace LGamesDev
                     _scenesLoading.Add(SceneManager.LoadSceneAsync((int)SceneIndexes.Authentication, LoadSceneMode.Additive));
                 },
                 loadingScreenEnabled,
-                loadingScreenDisabled)
+                loadingScreenDisabled
             );
 
             AuthenticationManager.Instance.SetupAuthentication();
             activeScene = SceneIndexes.Authentication;
         }
 
-        public IEnumerator LoadMainMenu()
+        public async void LoadMainMenu()
         {
-            yield return StartCoroutine(SetupSceneTransition(
+            await SetupSceneTransition(
                 () =>
                 {
                     // Load / unload scene below to load Main menu
@@ -55,7 +56,7 @@ namespace LGamesDev
                 true,
                 true,
                 GetTotalProgress()
-            ));
+            );
 
             SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex((int)SceneIndexes.MainMenu));
             activeScene = SceneIndexes.MainMenu;
@@ -63,9 +64,9 @@ namespace LGamesDev
             MainMenuManager.Instance.HandleTutorial();
         }
 
-        public IEnumerator LoadFight(Fight fight)
+        public async void LoadFight(Fight fight)
         {
-            yield return StartCoroutine(_gameManager.loadingScreen.EnableLoadingScreen());
+            await _gameManager.loadingScreen.EnableLoadingScreen();
 
             // Load / unload scene below to load Fight
             UnloadAdditiveScenes();
@@ -73,22 +74,22 @@ namespace LGamesDev
             _scenesLoading.Add(SceneManager.LoadSceneAsync((int)SceneIndexes.Fight, LoadSceneMode.Additive));
             
             // Get Scene load progress
-            yield return StartCoroutine(GetSceneLoadProgress());
+            await GetSceneLoadProgress();
             
             SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex((int)SceneIndexes.Fight));
             
             // When scene loaded setup the fight
-            yield return StartCoroutine(FightManager.Instance.SetupFight(fight));
+            await FightManager.Instance.SetupFight(fight);
             
-            yield return StartCoroutine(_gameManager.loadingScreen.DisableLoadingScreen());
+            await _gameManager.loadingScreen.DisableLoadingScreen();
 
             FightManager.Instance.StartFight();
             activeScene = SceneIndexes.Fight;
         }
 
-        public IEnumerator LoadCustomization()
+        public async void LoadCustomization()
         {
-            yield return StartCoroutine(SetupSceneTransition(
+            await SetupSceneTransition(
                 () =>
                 {
                     // Load / unload scene below to load Customization
@@ -96,7 +97,7 @@ namespace LGamesDev
                     
                     _scenesLoading.Add(SceneManager.LoadSceneAsync((int)SceneIndexes.Customization, LoadSceneMode.Additive));
                 }    
-            ));
+            );
             
             SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex((int)SceneIndexes.Customization));
             activeScene = SceneIndexes.Customization;
@@ -104,30 +105,29 @@ namespace LGamesDev
             CustomizationManager.Instance.HandleTutorial();
         }
 
-        private IEnumerator SetupSceneTransition(Action onLoadingScreenFunction, bool loadingScreenEnabled = true, bool loadingScreenDisabled = true, IEnumerator onSceneLoadComplete = null)
+        private async Task SetupSceneTransition(Action onLoadingScreenFunction, bool loadingScreenEnabled = true, bool loadingScreenDisabled = true, Task onSceneLoadComplete = null)
         {
             if (loadingScreenEnabled)
             {
-                yield return StartCoroutine(_gameManager.loadingScreen.EnableLoadingScreen());
+                await _gameManager.loadingScreen.EnableLoadingScreen();
             }
 
             onLoadingScreenFunction?.Invoke();
             
-            yield return StartCoroutine(GetSceneLoadProgress());
+            await GetSceneLoadProgress();
             
             if (onSceneLoadComplete != null)
             {
-                yield return StartCoroutine(onSceneLoadComplete);
-
+                await onSceneLoadComplete;
             }
 
             if (loadingScreenDisabled)
             {
-                yield return StartCoroutine(_gameManager.loadingScreen.DisableLoadingScreen());
+                await _gameManager.loadingScreen.DisableLoadingScreen();
             }
         }
 
-        private IEnumerator GetSceneLoadProgress()
+        private async Task GetSceneLoadProgress()
         {
             foreach (var sceneLoading in _scenesLoading)
             {
@@ -143,19 +143,19 @@ namespace LGamesDev
                     _gameManager.loadingScreen.progressBar.current = Mathf.RoundToInt(_totalSceneProgress);
                     _gameManager.loadingScreen.progressBar.percentageText.text = Mathf.RoundToInt(_totalSceneProgress).ToString() + "%";
 
-                    yield return new WaitForEndOfFrame();
+                    await Task.Yield();
                 }
             }
 
             _scenesLoading.Clear();
 
-            yield return new WaitForSeconds(0.25f);
+            await Task.Delay(250);
         }
 
         /**
         * For player setup initialisation after loading scenes
         */
-        private IEnumerator GetTotalProgress()
+        private async Task GetTotalProgress()
         {
             while (Initialisation.Current == null || !Initialisation.Current.isDone)
             {
@@ -184,10 +184,10 @@ namespace LGamesDev
                 _gameManager.loadingScreen.progressBar.current = Mathf.RoundToInt(totalProgress);
                 _gameManager.loadingScreen.progressBar.percentageText.text = Mathf.RoundToInt(totalProgress) + "%";
 
-                yield return new WaitForEndOfFrame();
+                await Task.Yield();
             }
 
-            yield return new WaitForSeconds(0.5f);
+            await Task.Delay(500);
         }
 
         private void UnloadAdditiveScenes()

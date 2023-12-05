@@ -7,6 +7,7 @@ namespace LGamesDev.Core.Character
     [Serializable]
     public class Gear
     {
+        
         public CharacterEquipment[] equipments = new CharacterEquipment[Enum.GetNames(typeof(EquipmentSlot)).Length];
 
         public override string ToString()

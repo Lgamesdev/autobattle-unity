@@ -53,6 +53,7 @@ namespace LGamesDev.UI
 
         private void UpdateInventoryUI()
         {
+            //Debug.Log("update inventory ui length : " + _inventoryManager.items.Count);
             for (var i = 0; i < _slots.Length; i++)
                 if (i < _inventoryManager.items.Count)
                 {

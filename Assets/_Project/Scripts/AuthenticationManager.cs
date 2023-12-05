@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Threading.Tasks;
-#if UNITY_ANDROID
-using GooglePlayGames;
-using GooglePlayGames.BasicApi;
-#endif
 using LGamesDev.Core.Request;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
 using Unity.Services.RemoteConfig;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+#if UNITY_ANDROID
+using GooglePlayGames;
+using GooglePlayGames.BasicApi;
+#endif
 
 namespace LGamesDev
 {
@@ -54,6 +54,8 @@ namespace LGamesDev
         
         public async void SetupAuthentication()
         {
+            SetState(AuthenticationState.Loading);
+            
             try
             {
                 // initialize Unity's authentication and core services, however check for internet connection
@@ -78,7 +80,7 @@ namespace LGamesDev
             try
             {
                 #if UNITY_ANDROID
-                TrySignInWithGooglePlayGames();
+                    TrySignInWithGooglePlayGames();
                 #endif
                 #if UNITY_IOS
                     //Initialize Game Center
@@ -93,6 +95,22 @@ namespace LGamesDev
                         SetState(AuthenticationState.Default);
                     }*/
                 #endif
+                
+                AuthenticationHandler.Connect(result =>
+                {
+                    _gameManager.SetPlayerConf(result);
+                    _gameManager.LoadMainMenu();
+                },
+                e =>
+                {
+                    if(e.Message == "No account found for this player")
+                        SetState(AuthenticationState.Register);
+                },
+                e =>
+                {
+                    Debug.Log("error : " + e);
+                    SetState(AuthenticationState.Default);
+                });
             }
             catch (AuthenticationException ex)
             {
@@ -126,15 +144,14 @@ namespace LGamesDev
                             try
                             {
                                 await AuthenticationService.Instance.SignInWithGooglePlayGamesAsync(_code);
-                                SetState(AuthenticationState.PlatformRegister);
                                 Debug.Log("SignIn with google is successful.");
                             }
                             catch (AuthenticationException ex) when (ex.ErrorCode == AuthenticationErrorCodes.AccountAlreadyLinked)
                             {
                                 // Prompt the player with an error message.
                                 Debug.LogError("This user is already linked with another account. Log in instead.");
-                                /*SetState(AuthenticationState.PlatformConnect);
-                                PlatformConnect();*/
+                                /*SetState(AuthenticationState.Register);
+                                Register();*/
                                 try
                                 {
                                     await AuthenticationService.Instance.LinkWithGooglePlayGamesAsync(_code);
@@ -153,10 +170,7 @@ namespace LGamesDev
                         }
                         else
                         {
-                            Debug.Log(AuthenticationService.Instance.PlayerInfo.ToString());
-                            SetState(AuthenticationState.Default);
-                            //PlatformConnect();
-                            /*_gameManager.LoadMainMenu();*/
+                            Debug.Log("Google account already connected : " + AuthenticationService.Instance.PlayerInfo);
                         }
                     });
                 }
@@ -166,20 +180,11 @@ namespace LGamesDev
                     Debug.Log("Google Login Unsuccessful");
                     
                     Debug.Log("user id : " + AuthenticationService.Instance.PlayerInfo.Id);
-                    SetState(AuthenticationState.Default);
-                    //_gameManager.LoadMainMenu();
-                    /*if (_gameManager.GetAuthentication() != null)
-                    {
-                        Refresh();
-                    }
-                    else
-                    {
-                        SetState(AuthenticationState.Default);
-                    }*/
                 }
             });
         }
 #endif
+        
         private void SetupAuthenticationEvents()
         {
             // Setup authentication event handlers if desired
@@ -206,89 +211,38 @@ namespace LGamesDev
             };
         }
 
-        public void Submit(string username = "", string password = "",
-            string email = "", string refreshToken = "")
+        public void Submit(string username = "")
         {
             switch (_state)
             {
-                case AuthenticationState.PlatformRegister:
-                    PlatformRegister(username);
-                    break;
+                /*case AuthenticationState.Connect:
+                    Connect();
+                    break;*/
                 case AuthenticationState.Register:
-                    //Register(username, password, email);
-                    break;
-                case AuthenticationState.Login:
-                    //Login(username, password);
-                    break;
-                case AuthenticationState.Refresh:
-                    //Refresh();
+                    Register(username);
                     break;
             }
         }
 
-      
-        private void PlatformRegister(string username)
+        private void Register(string username)
         {
-            #if UNITY_ANDROID  
-                /*PlayGamesPlatform.Instance.RequestServerSideAccess(true, code =>
-                {
-                    _code = code;
-                });*/
-            #endif
-            
-            /*StartCoroutine(AuthenticationHandler.PlatformConnect(this,
-                username,
-                _code,
-                result =>
-                {
-                    _gameManager.SetAuthentication(result);
-                    _gameManager.LoadMainMenu();
-                }
-            ));*/
-            
-            AuthenticationHandler.PlatformConnect(/*this,*/
-                username,
-                /*_code,*/
+            AuthenticationHandler.Register(
+                username, 
                 result =>
                 {
                     _gameManager.SetPlayerConf(result);
                     _gameManager.LoadMainMenu();
-                }
-            );
-        }
-
-        private void PlatformConnect()
-        {
-            /*#if UNITY_ANDROID
-                PlayGamesPlatform.Instance.RequestServerSideAccess(true, code =>
+                },
+                e =>
                 {
-                    _code = code;
+                    if(e.Message == "No account found for this player")
+                        SetState(AuthenticationState.Register);
+                },
+                e =>
+                {
+                    Debug.Log("error : " + e);
+                    SetState(AuthenticationState.Default);
                 });
-            #endif*/
-            
-            /*StartCoroutine(AuthenticationHandler.PlatformConnect(//this,
-                null,
-                //_code,
-                result =>
-                {
-                    _gameManager.GetPlayerConf(result);
-                    _gameManager.LoadMainMenu();
-                }
-            ));*/
-        }
-
-        private void Register(string username, string password, string email)
-        {
-            /*StartCoroutine(AuthenticationHandler.Register(this,
-                username, 
-                password,
-                email,
-                result =>
-                {
-                    _gameManager.SetAuthentication(result);
-                    _gameManager.LoadMainMenu();
-                }
-            ));*/
         }
 
         private void Login(string username, string password)
@@ -328,10 +282,7 @@ namespace LGamesDev
     {
         Loading,
         Default,
-        PlatformRegister,
-        PlatformConnect,
         Register,
-        Login,
-        Refresh
+        Connect,
     }
 }

@@ -26,25 +26,26 @@ namespace LGamesDev.Request.Converters
             }
 
             JObject jo = JObject.Load(reader);
-            
             /*Item item = Create(objectType, jsonObject);*/
 
             ItemType? itemType = jo["itemType"]?.ToObject<ItemType>();
+            //Debug.Log("itemType : " + itemType + " \n generic item types : " + ItemType.Item + "\n" + ItemType.LootBox + "\n" + ItemType.Equipment);
+            
             Item item = itemType switch
             {
                 ItemType.Item => new Item(),
                 ItemType.LootBox => new LootBox(),
                 ItemType.Equipment => new Equipment(),
-                _ => null
+                _ => throw new ArgumentOutOfRangeException()
             };
             
-            if (item == null)
+            /*if (item == null)
             {
                 Debug.LogError("Deserialization of item is null, set to Item class by default.");
-            }
+            }*/
             
             serializer.Populate(jo.CreateReader(), item ?? new Item());
-
+            
             string iconPath = jo["iconPath"]?.ToString();
 
             if (iconPath == null) 

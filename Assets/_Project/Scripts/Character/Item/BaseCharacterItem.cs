@@ -5,13 +5,21 @@ namespace LGamesDev.Core.Character
     [Serializable]
     public abstract class BaseCharacterItem<T> : IBaseCharacterItem where T : Item, new()
     {
-        public int id;
+        public string id;
         public T item;
         public int amount = 1;
 
-        int IBaseCharacterItem.Id => id;
-        
-        Item IBaseCharacterItem.Item => item;
+        string IBaseCharacterItem.Id
+        {
+            get => id;
+            set => id = value;
+        }
+
+        Item IBaseCharacterItem.Item
+        {
+            get => item;
+            set => item = (T)value;
+        }
 
         int IBaseCharacterItem.Amount
         {

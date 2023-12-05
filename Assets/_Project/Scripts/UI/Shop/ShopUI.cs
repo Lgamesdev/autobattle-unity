@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using LGamesDev.Core.Request;
 using UnityEngine;
 
 namespace LGamesDev.UI
@@ -15,14 +16,22 @@ namespace LGamesDev.UI
 
         private PlayerWalletManager _walletManager;
 
-        private List<Item> _shopItems = new();
+        private List<ShopPurchase> _shopItems = new();
+        
+        // Dictionary of all Virtual Purchase transactions ids to lists of costs & rewards.
+        /*public Dictionary<string, (List<ItemAndAmountSpec> costs, List<ItemAndAmountSpec> rewards)>
+            virtualPurchaseTransactions
+        {
+            get;
+            private set;
+        }*/
 
-        public List<Item> ShopItems
+        public List<ShopPurchase> ShopItems
         {
             get => _shopItems;
             set
             {
-                _shopItems = value.OrderBy(i => i.cost).ToList();
+                _shopItems = value.OrderBy(i => i.item.cost).ToList();
                 SetupUI();
             }
         }
@@ -39,7 +48,12 @@ namespace LGamesDev.UI
 
         private void Start()
         {
-            GameManager.Instance.networkService.GetItemsList();
+            //GameManager.Instance.networkService.GetItemsList();
+            ShopHandler.GetPurchase(
+                shopList => ShopItems = shopList,
+                e => Debug.Log("error on shopList : " + e), 
+                e => Debug.Log("error on shopList : " + e)
+            );
         }
 
         private void SetupUI(EquipmentSlot? equipmentSlot = null)
@@ -48,34 +62,34 @@ namespace LGamesDev.UI
 
             if (equipmentSlot.HasValue)
             {
-                foreach (Item shopItem in _shopItems) 
+                foreach (ShopPurchase shopPurchase in _shopItems) 
                 {
-                    if(shopItem.GetType() != typeof(Equipment)) continue;
-                    Equipment equipment = shopItem as Equipment;
+                    if(shopPurchase.item.GetType() != typeof(Equipment)) continue;
+                    Equipment equipment = shopPurchase.item as Equipment;
 
                     if (equipmentSlot == equipment.equipmentSlot) {
-                        CreateItemButton(equipment);
+                        CreateItemButton(shopPurchase);
                     }
                 }
             }
             else
             {
-                foreach (Item shopItem in _shopItems) 
+                foreach (ShopPurchase shopPurchase in _shopItems) 
                 {
-                    CreateItemButton(shopItem);
+                    CreateItemButton(shopPurchase);
                 }
             }
         }
 
-        private void CreateItemButton(Item item)
+        private void CreateItemButton(ShopPurchase purchase)
         {
             ShopItemUI shopItem = Instantiate(pfShopCardUI, _container).GetComponent<ShopItemUI>();
-            shopItem.SetupCard(item, TryBuyItem);
+            shopItem.SetupCard(purchase, TryBuyItem);
         }
 
-        private void TryBuyItem(Item item)
+        private void TryBuyItem(ShopPurchase shopPurchase)
         {
-            _walletManager.TryBuyItem(item);
+            _walletManager.TryBuyItem(shopPurchase);
         }
 
         public void NoFilter()

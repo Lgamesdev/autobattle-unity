@@ -1,9 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using LGamesDev.Core.Character;
 using LGamesDev.Core.Player;
 using LGamesDev.Request.Converters;
 using Newtonsoft.Json;
+using Unity.Services.Economy;
+using Unity.Services.Economy.Model;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -11,6 +14,11 @@ namespace LGamesDev.Core.Request
 {
     public class PlayerInventoryHandler
     {
+        public async void GetInventory(Action<Inventory> onSuccess, Action<Exception> onFail, Action<Exception> onError)
+        {
+            
+        }
+        
         public static /*IEnumerator*/void Load(MonoBehaviour instance, Action<string> onError, Action<Inventory> setResult)
         {
             /*yield return instance.StartCoroutine(RequestHandler.Request("api/user/inventory",

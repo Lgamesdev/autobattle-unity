@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using LGamesDev.Core.Character;
 using LGamesDev.Core.Player;
 using UnityEngine;
@@ -8,6 +9,7 @@ namespace LGamesDev
     [Serializable]
     public class Equipment : Item
     {
+        //public new ItemType itemType = ItemType.Equipment;
         public Stat[] stats;
         
         public EquipmentSlot equipmentSlot;
@@ -42,6 +44,14 @@ namespace LGamesDev
 
             return result;
         }
+    }
+
+    public class EquipmentData : ItemData
+    {
+        //public new ItemType itemType = ItemType.Equipment;
+        public EquipmentSlot EquipmentSlot;
+        public int spriteId;
+        public Stat[] stats;
     }
 
     public enum EquipmentSlot

@@ -56,7 +56,11 @@ namespace LGamesDev
 
         public void TutorialFinished()
         {
-            _gameManager.networkService.OnTutorialFinished();
+            TutorialHandler.TutorialFinished(e =>
+            {
+                Debug.Log("error on initialisation : " + e);
+            });
+            //_gameManager.networkService.OnTutorialFinished();
             /*StartCoroutine(RequestHandler.Request("api/user/tutorialDone",
                 UnityWebRequest.kHttpVerbGET,
                 error => { Debug.Log("Error on /tutorialDone : " + error); },

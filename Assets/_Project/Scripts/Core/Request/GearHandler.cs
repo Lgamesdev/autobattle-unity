@@ -6,6 +6,10 @@ using LGamesDev.Core.Character;
 using LGamesDev.Core.Player;
 using LGamesDev.Request.Converters;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using NJsonSchema;
+using NJsonSchema.Validation;
+using Unity.Services.CloudCode;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -13,58 +17,40 @@ namespace LGamesDev.Core.Request
 {
     public class GearHandler
     {
-        public static /*IEnumerator*/void Load(MonoBehaviour instance, Action<string> onError, Action<Gear> setResult)
+        public static async void Equip(CharacterEquipment newEquipment, Action onSuccess, Action<Exception> onFail, Action<Exception> onError)
         {
-            /*yield return instance.StartCoroutine(RequestHandler.Request("api/user/gear",
-                UnityWebRequest.kHttpVerbGET,
-                error =>
-                {
-                    onError?.Invoke("error on equipments load : \n" + error);
-                },
-                response =>
-                {
-                    //Debug.Log("Received player equipments : " + response);
-
-                    JsonSerializerSettings settings = new JsonSerializerSettings();
-                    settings.Converters.Add(new ItemConverter());
-
-                    Gear gear = JsonConvert.DeserializeObject<Gear>(response, settings);
-
-                    if (gear == null)
-                    {
-                        Debug.Log("No Equipment in response");
-                    }
-                    /*else
-                    {
-                        Debug.Log("gear : " + gear.ToString());
-                    }#1#
-
-                    setResult(gear);
-                },
-                null,
-                GameManager.Instance.GetAuthentication())
-            );*/
-        }
-
-        public static /*IEnumerator*/void Equip(MonoBehaviour instance, CharacterEquipment newEquipment, Action<string> onError, Action<string> onResult)
-        {
-            /*yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.EnableWaitingScreen());
+            Dictionary<string, object> requestParams = new Dictionary<string, object> { { "characterEquipment", newEquipment } };
             
-            yield return instance.StartCoroutine(RequestHandler.Request("api/user/gear/equip/" + newEquipment.id,
-                UnityWebRequest.kHttpVerbPUT,
-                error =>
+            try
+            {
+                // Call the function within the module and provide the parameters we defined in there
+                string result =
+                    await CloudCodeService.Instance.CallModuleEndpointAsync<string>("PlayerModule", "Equip", requestParams);
+                Debug.Log("equip result : " + result);
+
+                if (ValidateCharacterEquipment(result))
                 {
-                    onError?.Invoke(error);
-                },
-                response =>
+                    //Debug.Log("valid json schema : " + result);
+                    var jsonSerializerSettings = new JsonSerializerSettings();
+                    jsonSerializerSettings.Converters.Add(new StringEnumConverter());
+                    CharacterEquipment characterEquipment = JsonConvert.DeserializeObject<CharacterEquipment>(result, jsonSerializerSettings);
+                    
+                    onSuccess?.Invoke();
+                }
+                else
                 {
-                    onResult?.Invoke(response);
-                },
-                null,//bodyRaw,
-                GameManager.Instance.GetAuthentication())
-            );
-            
-            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());*/
+                    //AuthenticationException exception = JsonConvert.DeserializeObject<AuthenticationException>(result);
+                    Debug.Log("on fail : " + result);
+                    Exception e = JsonConvert.DeserializeObject<Exception>(result);
+                    onFail?.Invoke(e);
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.Log("error while trying to cloud code connect : " + e.Message);
+
+                onError?.Invoke(e);
+            }
         }
         
         public static /*IEnumerator*/void UnEquip(MonoBehaviour instance, CharacterEquipment oldEquipment, Action<string> onError, Action<string> onResult)
@@ -86,6 +72,19 @@ namespace LGamesDev.Core.Request
             );
             
             yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());*/
+        }
+        
+        private static bool ValidateCharacterEquipment(string json)
+        {
+            var schema = JsonSchema.FromType<CharacterEquipment>();
+            var schemaData = schema.ToJson();
+            ICollection<ValidationError> errors = schema.Validate(json);
+
+            foreach (var error in errors) {
+                Debug.Log("error in validate initialisation : " + error);
+            }
+
+            return errors.Count <= 0;
         }
     }
 }

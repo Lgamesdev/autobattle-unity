@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using LGamesDev.Core.Character;
 using LGamesDev.Core.Player;
 using Newtonsoft.Json;
@@ -23,22 +21,28 @@ namespace LGamesDev.Request.Converters
             JObject jo = JObject.Load(reader);
 
             ItemType? itemType = jo["item"]?.ToObject<Item>()?.itemType;
+            //ItemType? itemType = jo.ToObject<Item>()?.itemType;
+            //Debug.Log("jo : " + jo);
+            //Debug.Log("itemType : " + itemType + " \n generic item types : " + ItemType.Item + "\n" + ItemType.LootBox + "\n" + ItemType.Equipment);
             
             IBaseCharacterItem characterItem = itemType switch
             {
                 ItemType.Item => new CharacterItem(),
                 ItemType.LootBox => new CharacterLootBox(),
                 ItemType.Equipment => new CharacterEquipment(),
-                _ => null
+                _ => throw new ArgumentOutOfRangeException()
             };
             
-            if (characterItem == null)
+            //Debug.Log("characterItem : " + characterItem);
+            
+            /*if (characterItem == null)
             {
                 Debug.LogError("Deserialization of characterItem is null, set to CharacterItem class by default.");
-            }
+            }*/
 
             serializer.Converters.Add(new ItemConverter());
             serializer.Populate(jo.CreateReader(), characterItem ?? new CharacterItem());
+            
 
             return characterItem;
         }

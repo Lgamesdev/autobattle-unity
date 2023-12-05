@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Threading.Tasks;
 using Core.Player;
 using LGamesDev.Core.Character;
 using LGamesDev.Core.Player;
@@ -38,7 +39,7 @@ namespace LGamesDev
             }
         }
 
-        public IEnumerator SetupCharacter(IFighter fighter)
+        public async Task SetupCharacter(IFighter fighter)
         {
             Character.username = GameManager.Instance.GetPlayerConf().Username;
             Character.level = fighter.Level;
@@ -46,7 +47,7 @@ namespace LGamesDev
             //Setup Equipments
             /*foreach (EquipmentSlot equipmentSlot in (EquipmentSlot[])Enum.GetValues(typeof(EquipmentSlot)))
             {
-                Equipment defaultEquipment = new Equipment() { equipmentSlot = equipmentSlot/*, isDefaultItem = true#1# };
+                Equipment defaultEquipment = new Equipment() { equipmentSlot = equipmentSlot, isDefaultItem = true };
 
                 Character.Gear.equipments[(int)equipmentSlot] = new CharacterEquipment()
                 {
@@ -59,13 +60,13 @@ namespace LGamesDev
             foreach (StatType statType in (StatType[])Enum.GetValues(typeof(StatType)))
             {
                 Character.stats[(int)statType] = new Stat() { statType = statType };
-                yield return new WaitForEndOfFrame();
+                await Task.Yield();
             }
 
             foreach (Stat stat in fighter.Stats)
             {
                 Character.stats[(int)stat.statType] = stat;
-                yield return new WaitForEndOfFrame();
+                await Task.Yield();
             }
 
             Character.Body = fighter.Body;
@@ -81,7 +82,7 @@ namespace LGamesDev
                 foreach (CharacterEquipment characterEquipment in character.Gear.equipments)
                 {
                     Character.Gear.equipments[(int)characterEquipment.item.equipmentSlot] = characterEquipment;
-                    yield return new WaitForEndOfFrame();
+                    await Task.Yield();
                 }
                 
                 //Setup Wallet/Wallet Manager
@@ -115,7 +116,7 @@ namespace LGamesDev
 
             equipmentManager.EquipmentChanged += activeCharacter.UpdateEquipmentTexture;
             
-            yield return activeCharacter.SetupCharacter(Character);
+            await activeCharacter.SetupCharacter(Character);
         }
 
         public void CreateCharacter(SpriteLib spriteLib)

@@ -1,15 +1,22 @@
 ﻿using System;
+using System.Threading.Tasks;
 using LGamesDev.Core.Character;
 using LGamesDev.Core.Player;
 using LGamesDev.Core.Request;
+using LGamesDev.Request.Converters;
 using LGamesDev.UI;
+using Newtonsoft.Json;
 using TMPro;
+using Unity.Services.Economy;
+using Unity.Services.Economy.Model;
 using UnityEngine;
 
 namespace LGamesDev
 {
     public class PlayerWalletManager: MonoBehaviour
     {
+        const int k_EconomyPurchaseCostsNotMetStatusCode = 10504;
+        
         public static PlayerWalletManager Instance;
         
         public delegate void CurrencyChangedEvent(Currency currency);
@@ -40,31 +47,126 @@ namespace LGamesDev
             return _wallet.GetAmount(currencyType);
         }
         
-        public void TryBuyItem(Item item)
+        public async void TryBuyItem(ShopPurchase shopPurchase)
         {
-            if (GetAmount(CurrencyType.Gold) >= item.cost)
+            try
             {
-                GameManager.Instance.networkService.TryBuyItem(item);
-                
-                //Can afford cost
-                /*StartCoroutine(PlayerWalletHandler.Buy(
-                    this,
-                    item,
-                    error =>
+                //var result = await MakeVirtualPurchaseAsync(shopPurchase.ID);
+                ShopHandler.BuyItem(shopPurchase.ID, async () =>
                     {
-                        Debug.Log("error on trying to buy item : " + error);
-                    },
-                    baseCharacterItem =>
-                    {
-                        SpendCurrency(CurrencyType.Gold, item.cost);
-                        PlayerInventoryManager.Instance.AddItem(baseCharacterItem);
-                    }
-                ));*/
+                        try
+                        {
+                            GetInventoryResult inventoryResult = await EconomyService.Instance.PlayerInventory.GetInventoryAsync();
+                            JsonSerializerSettings settings = new JsonSerializerSettings();
+                            settings.Converters.Add(new ItemConverter());
+                            Inventory inventory = new Inventory();
+                            foreach (PlayersInventoryItem inventoryItem in inventoryResult.PlayersInventoryItems)
+                            {
+                                //Debug.Log("inventory item data : " + inventoryItem.GetItemDefinition().CustomDataDeserializable.GetAsString());
+                                Item item = JsonConvert.DeserializeObject<Item>(
+                                    inventoryItem.GetItemDefinition().CustomDataDeserializable.GetAsString(), settings);
+                                item.ID = inventoryItem.InventoryItemId;
+                                //item.icon = null;
+
+                                IBaseCharacterItem characterItem = item.itemType switch
+                                {
+                                    ItemType.Item => new CharacterItem(),
+                                    ItemType.LootBox => new CharacterLootBox(),
+                                    ItemType.Equipment => new CharacterEquipment(),
+                                    _ => throw new ArgumentOutOfRangeException()
+                                };
+                                characterItem.Id = inventoryItem.PlayersInventoryItemId;
+                                characterItem.Item = item;
+
+                                inventory.AddItem(characterItem);
+                            }
+
+                            PlayerInventoryManager.Instance.SetInventory(inventory);
+                        }
+                        catch (Exception e)
+                        {
+                            Debug.Log("error while trying to get inventory : " + e.Message);
+                        }
+                    }, 
+                    null,
+                    null
+                );
+                if (this == null) return;
+
+                await RefreshCurrencyBalances();
+                if (this == null) return;
+
+                //ShowRewardPopup(result.Rewards);
             }
-            else
+            catch (EconomyException e)
+                when (e.ErrorCode == k_EconomyPurchaseCostsNotMetStatusCode)
             {
-                Tooltip_Warning.ShowTooltip_Static("Cannot afford " + item.cost + " gold !");
+                Debug.LogError(e.Message);
+                //virtualShopSampleView.ShowVirtualPurchaseFailedErrorPopup();
             }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+            }
+        }
+        
+        private async Task<MakeVirtualPurchaseResult> MakeVirtualPurchaseAsync(string virtualPurchaseId)
+        {
+            try
+            {
+                return await EconomyService.Instance.Purchases.MakeVirtualPurchaseAsync(virtualPurchaseId);
+            }
+            catch (EconomyException e)
+                when (e.ErrorCode == k_EconomyPurchaseCostsNotMetStatusCode)
+            {
+                // Rethrow purchase-cost-not-met exception to be handled by shops manager.
+                throw;
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+                return default;
+            }
+        }
+        
+        private async Task RefreshCurrencyBalances()
+        {
+            GetBalancesResult balanceResult = null;
+
+            try
+            {
+                balanceResult = await GetEconomyBalances();
+            }
+            catch (EconomyRateLimitedException e)
+            {
+                balanceResult = await Utils.RetryEconomyFunction(GetEconomyBalances, e.RetryAfter);
+            }
+            catch (Exception e)
+            {
+                Debug.Log("Problem getting Economy currency balances:");
+                Debug.LogException(e);
+            }
+
+            // Check that scene has not been unloaded while processing async wait to prevent throw.
+            if (this == null)
+                return;
+
+            foreach (PlayerBalance balance in balanceResult.Balances)
+            {
+                CurrencyType currencyType = Enum.Parse<CurrencyType>(balance.CurrencyId, true);
+                CurrencyChanged?.Invoke(new Currency()
+                {
+                    currencyType = currencyType,
+                    amount = (int)balance.Balance
+                });
+            }
+            //currencyHudView.SetBalances(balanceResult);
+        }
+        
+        private static Task<GetBalancesResult> GetEconomyBalances()
+        {
+            var options = new GetBalancesOptions { ItemsPerFetch = 100 };
+            return EconomyService.Instance.PlayerBalances.GetBalancesAsync(options);
         }
 
         public void BuyItem(IBaseCharacterItem characterItem)
@@ -91,7 +193,7 @@ namespace LGamesDev
             ));*/
         }
 
-        public void SellCharacterItem(int id)
+        public void SellCharacterItem(string id)
         {
             IBaseCharacterItem characterItem = CharacterManager.Instance.inventoryManager.GetItemById(id);
             

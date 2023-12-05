@@ -1,5 +1,8 @@
-﻿namespace Core.Player
+﻿using System;
+
+namespace Core.Player
 {
+    [Serializable]
     public class PlayerConfig
     {
         public string Username;

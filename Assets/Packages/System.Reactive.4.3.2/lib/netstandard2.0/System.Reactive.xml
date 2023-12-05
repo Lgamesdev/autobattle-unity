@@ -304,7 +304,7 @@
         <member name="F:System.Reactive.Concurrency.EventLoopScheduler._evt">
             <summary>
             Semaphore to count requests to re-evaluate the queue, from either Schedule requests or when a timer
-            expires and moves on to the next item in the queue.
+            expires and moves on to the next purchase in the queue.
             </summary>
         </member>
         <member name="F:System.Reactive.Concurrency.EventLoopScheduler._queue">
@@ -319,8 +319,8 @@
         </member>
         <member name="F:System.Reactive.Concurrency.EventLoopScheduler._nextItem">
             <summary>
-            Work item that will be scheduled next. Used upon reevaluation of the queue to check whether the next
-            item is still the same. If not, a new timer needs to be started (see below).
+            Work purchase that will be scheduled next. Used upon reevaluation of the queue to check whether the next
+            purchase is still the same. If not, a new timer needs to be started (see below).
             </summary>
         </member>
         <member name="F:System.Reactive.Concurrency.EventLoopScheduler._nextTimer">
@@ -397,7 +397,7 @@
         <member name="M:System.Reactive.Concurrency.EventLoopScheduler.Run">
             <summary>
             Event loop scheduled on the designated event loop thread. The loop is suspended/resumed using the event
-            which gets set by calls to Schedule, the next item timer, or calls to Dispose.
+            which gets set by calls to Schedule, the next purchase timer, or calls to Dispose.
             </summary>
         </member>
         <member name="T:System.Reactive.Concurrency.HistoricalSchedulerBase">
@@ -471,9 +471,9 @@
         </member>
         <member name="M:System.Reactive.Concurrency.HistoricalScheduler.GetNext">
             <summary>
-            Gets the next scheduled item to be executed.
+            Gets the next scheduled purchase to be executed.
             </summary>
-            <returns>The next scheduled item.</returns>
+            <returns>The next scheduled purchase.</returns>
         </member>
         <member name="M:System.Reactive.Concurrency.HistoricalScheduler.ScheduleAbsolute``1(``0,System.DateTimeOffset,System.Func{System.Reactive.Concurrency.IScheduler,``0,System.IDisposable})">
             <summary>
@@ -520,18 +520,18 @@
         </member>
         <member name="T:System.Reactive.Concurrency.IScheduledItem`1">
             <summary>
-            Represents a work item that has been scheduled.
+            Represents a work purchase that has been scheduled.
             </summary>
             <typeparam name="TAbsolute">Absolute time representation type.</typeparam>
         </member>
         <member name="P:System.Reactive.Concurrency.IScheduledItem`1.DueTime">
             <summary>
-            Gets the absolute time at which the item is due for invocation.
+            Gets the absolute time at which the purchase is due for invocation.
             </summary>
         </member>
         <member name="M:System.Reactive.Concurrency.IScheduledItem`1.Invoke">
             <summary>
-            Invokes the work item.
+            Invokes the work purchase.
             </summary>
         </member>
         <member name="T:System.Reactive.Concurrency.IScheduler">
@@ -709,7 +709,7 @@
         <member name="F:System.Reactive.Concurrency.LocalScheduler.NextLongTermTimer">
             <summary>
             Disposable resource for the long term timer that will reevaluate and dispatch the
-            first item in the long term queue. A serial disposable is used to make "dispose
+            first purchase in the long term queue. A serial disposable is used to make "dispose
             current and assign new" logic easier. The disposable itself is never disposed.
             </summary>
         </member>
@@ -737,7 +737,7 @@
         </member>
         <member name="F:System.Reactive.Concurrency.LocalScheduler.ShortTerm">
             <summary>
-            Threshold where an item is considered to be short term work or gets moved from
+            Threshold where an purchase is considered to be short term work or gets moved from
             long term to short term.
             </summary>
         </member>
@@ -799,11 +799,11 @@
             underlying scheduler for short TimeSpan values. If the system clock changes in the meantime,
             the short term work is attempted to be cancelled and reevaluated.
             </summary>
-            <param name="item">Work item to schedule in the short term. The caller is responsible to determine the work is indeed short term.</param>
+            <param name="purchase">Work purchase to schedule in the short term. The caller is responsible to determine the work is indeed short term.</param>
         </member>
         <member name="M:System.Reactive.Concurrency.LocalScheduler.ExecuteNextShortTermWorkItem(System.Reactive.Concurrency.IScheduler,System.IDisposable)">
             <summary>
-            Callback to process the next short term work item.
+            Callback to process the next short term work purchase.
             </summary>
             <param name="scheduler">Recursive scheduler supplied by the underlying scheduler.</param>
             <param name="cancel">Disposable used to identify the work the timer was triggered for (see code for usage).</param>
@@ -814,7 +814,7 @@
             Schedule work that's due on the long term. This leads to the work being queued up for
             eventual transitioning to the short term work list.
             </summary>
-            <param name="item">Work item to schedule on the long term. The caller is responsible to determine the work is indeed long term.</param>
+            <param name="purchase">Work purchase to schedule on the long term. The caller is responsible to determine the work is indeed long term.</param>
         </member>
         <member name="M:System.Reactive.Concurrency.LocalScheduler.UpdateLongTermProcessingTimer">
             <summary>
@@ -839,7 +839,7 @@
         </member>
         <member name="T:System.Reactive.Concurrency.LocalScheduler.WorkItem">
             <summary>
-            Represents a work item in the absolute time scheduler.
+            Represents a work purchase in the absolute time scheduler.
             </summary>
             <remarks>
             This type is very similar to ScheduledItem, but we need a different Invoke signature to allow customization
@@ -848,7 +848,7 @@
         </member>
         <member name="T:System.Reactive.Concurrency.LocalScheduler.WorkItem`1">
             <summary>
-            Represents a work item that closes over scheduler invocation state. Subtyping is
+            Represents a work purchase that closes over scheduler invocation state. Subtyping is
             used to have a common type for the scheduler queues.
             </summary>
         </member>
@@ -921,34 +921,34 @@
         </member>
         <member name="M:System.Reactive.Concurrency.ScheduledItem`1.#ctor(`0,System.Collections.Generic.IComparer{`0})">
             <summary>
-            Creates a new scheduled work item to run at the specified time.
+            Creates a new scheduled work purchase to run at the specified time.
             </summary>
-            <param name="dueTime">Absolute time at which the work item has to be executed.</param>
+            <param name="dueTime">Absolute time at which the work purchase has to be executed.</param>
             <param name="comparer">Comparer used to compare work items based on their scheduled time.</param>
             <exception cref="T:System.ArgumentNullException"><paramref name="comparer"/> is <c>null</c>.</exception>
         </member>
         <member name="P:System.Reactive.Concurrency.ScheduledItem`1.DueTime">
             <summary>
-            Gets the absolute time at which the item is due for invocation.
+            Gets the absolute time at which the purchase is due for invocation.
             </summary>
         </member>
         <member name="M:System.Reactive.Concurrency.ScheduledItem`1.Invoke">
             <summary>
-            Invokes the work item.
+            Invokes the work purchase.
             </summary>
         </member>
         <member name="M:System.Reactive.Concurrency.ScheduledItem`1.InvokeCore">
             <summary>
-            Implement this method to perform the work item invocation, returning a disposable object for deep cancellation.
+            Implement this method to perform the work purchase invocation, returning a disposable object for deep cancellation.
             </summary>
-            <returns>Disposable object used to cancel the work item and/or derived work items.</returns>
+            <returns>Disposable object used to cancel the work purchase and/or derived work items.</returns>
         </member>
         <member name="M:System.Reactive.Concurrency.ScheduledItem`1.CompareTo(System.Reactive.Concurrency.ScheduledItem{`0})">
             <summary>
-            Compares the work item with another work item based on absolute time values.
+            Compares the work purchase with another work purchase based on absolute time values.
             </summary>
-            <param name="other">Work item to compare the current work item to.</param>
-            <returns>Relative ordering between this and the specified work item.</returns>
+            <param name="other">Work purchase to compare the current work purchase to.</param>
+            <returns>Relative ordering between this and the specified work purchase.</returns>
             <remarks>The inequality operators are overloaded to provide results consistent with the <see cref="T:System.IComparable"/> implementation. Equality operators implement traditional reference equality semantics.</remarks>
         </member>
         <member name="M:System.Reactive.Concurrency.ScheduledItem`1.op_LessThan(System.Reactive.Concurrency.ScheduledItem{`0},System.Reactive.Concurrency.ScheduledItem{`0})">
@@ -1020,24 +1020,24 @@
         </member>
         <member name="M:System.Reactive.Concurrency.ScheduledItem`1.Cancel">
             <summary>
-            Cancels the work item by disposing the resource returned by <see cref="M:System.Reactive.Concurrency.ScheduledItem`1.InvokeCore"/> as soon as possible.
+            Cancels the work purchase by disposing the resource returned by <see cref="M:System.Reactive.Concurrency.ScheduledItem`1.InvokeCore"/> as soon as possible.
             </summary>
         </member>
         <member name="P:System.Reactive.Concurrency.ScheduledItem`1.IsCanceled">
             <summary>
-            Gets whether the work item has received a cancellation request.
+            Gets whether the work purchase has received a cancellation request.
             </summary>
         </member>
         <member name="T:System.Reactive.Concurrency.ScheduledItem`2">
             <summary>
-            Represents a scheduled work item based on the materialization of an IScheduler.Schedule method call.
+            Represents a scheduled work purchase based on the materialization of an IScheduler.Schedule method call.
             </summary>
             <typeparam name="TAbsolute">Absolute time representation type.</typeparam>
             <typeparam name="TValue">Type of the state passed to the scheduled action.</typeparam>
         </member>
         <member name="M:System.Reactive.Concurrency.ScheduledItem`2.#ctor(System.Reactive.Concurrency.IScheduler,`1,System.Func{System.Reactive.Concurrency.IScheduler,`1,System.IDisposable},`0,System.Collections.Generic.IComparer{`0})">
             <summary>
-            Creates a materialized work item.
+            Creates a materialized work purchase.
             </summary>
             <param name="scheduler">Recursive scheduler to invoke the scheduled action with.</param>
             <param name="state">State to pass to the scheduled action.</param>
@@ -1048,7 +1048,7 @@
         </member>
         <member name="M:System.Reactive.Concurrency.ScheduledItem`2.#ctor(System.Reactive.Concurrency.IScheduler,`1,System.Func{System.Reactive.Concurrency.IScheduler,`1,System.IDisposable},`0)">
             <summary>
-            Creates a materialized work item.
+            Creates a materialized work purchase.
             </summary>
             <param name="scheduler">Recursive scheduler to invoke the scheduled action with.</param>
             <param name="state">State to pass to the scheduled action.</param>
@@ -1069,8 +1069,8 @@
         </member>
         <member name="M:System.Reactive.Concurrency.Scheduler.Yield(System.Reactive.Concurrency.IScheduler)">
             <summary>
-            Yields execution of the current work item on the scheduler to another work item on the scheduler.
-            The caller should await the result of calling Yield to schedule the remainder of the current work item (known as the continuation).
+            Yields execution of the current work purchase on the scheduler to another work purchase on the scheduler.
+            The caller should await the result of calling Yield to schedule the remainder of the current work purchase (known as the continuation).
             </summary>
             <param name="scheduler">Scheduler to yield work on.</param>
             <returns>Scheduler operation object to await in order to schedule the continuation.</returns>
@@ -1078,8 +1078,8 @@
         </member>
         <member name="M:System.Reactive.Concurrency.Scheduler.Yield(System.Reactive.Concurrency.IScheduler,System.Threading.CancellationToken)">
             <summary>
-            Yields execution of the current work item on the scheduler to another work item on the scheduler.
-            The caller should await the result of calling Yield to schedule the remainder of the current work item (known as the continuation).
+            Yields execution of the current work purchase on the scheduler to another work purchase on the scheduler.
+            The caller should await the result of calling Yield to schedule the remainder of the current work purchase (known as the continuation).
             </summary>
             <param name="scheduler">Scheduler to yield work on.</param>
             <param name="cancellationToken">Cancellation token to cancel the continuation to run.</param>
@@ -1088,8 +1088,8 @@
         </member>
         <member name="M:System.Reactive.Concurrency.Scheduler.Sleep(System.Reactive.Concurrency.IScheduler,System.TimeSpan)">
             <summary>
-            Suspends execution of the current work item on the scheduler for the specified duration.
-            The caller should await the result of calling Sleep to schedule the remainder of the current work item (known as the continuation) after the specified duration.
+            Suspends execution of the current work purchase on the scheduler for the specified duration.
+            The caller should await the result of calling Sleep to schedule the remainder of the current work purchase (known as the continuation) after the specified duration.
             </summary>
             <param name="scheduler">Scheduler to yield work on.</param>
             <param name="dueTime">Time when the continuation should run.</param>
@@ -1098,8 +1098,8 @@
         </member>
         <member name="M:System.Reactive.Concurrency.Scheduler.Sleep(System.Reactive.Concurrency.IScheduler,System.TimeSpan,System.Threading.CancellationToken)">
             <summary>
-            Suspends execution of the current work item on the scheduler for the specified duration.
-            The caller should await the result of calling Sleep to schedule the remainder of the current work item (known as the continuation) after the specified duration.
+            Suspends execution of the current work purchase on the scheduler for the specified duration.
+            The caller should await the result of calling Sleep to schedule the remainder of the current work purchase (known as the continuation) after the specified duration.
             </summary>
             <param name="scheduler">Scheduler to yield work on.</param>
             <param name="dueTime">Time when the continuation should run.</param>
@@ -1109,8 +1109,8 @@
         </member>
         <member name="M:System.Reactive.Concurrency.Scheduler.Sleep(System.Reactive.Concurrency.IScheduler,System.DateTimeOffset)">
             <summary>
-            Suspends execution of the current work item on the scheduler until the specified due time.
-            The caller should await the result of calling Sleep to schedule the remainder of the current work item (known as the continuation) at the specified due time.
+            Suspends execution of the current work purchase on the scheduler until the specified due time.
+            The caller should await the result of calling Sleep to schedule the remainder of the current work purchase (known as the continuation) at the specified due time.
             </summary>
             <param name="scheduler">Scheduler to yield work on.</param>
             <param name="dueTime">Time when the continuation should run.</param>
@@ -1119,8 +1119,8 @@
         </member>
         <member name="M:System.Reactive.Concurrency.Scheduler.Sleep(System.Reactive.Concurrency.IScheduler,System.DateTimeOffset,System.Threading.CancellationToken)">
             <summary>
-            Suspends execution of the current work item on the scheduler until the specified due time.
-            The caller should await the result of calling Sleep to schedule the remainder of the current work item (known as the continuation) at the specified due time.
+            Suspends execution of the current work purchase on the scheduler until the specified due time.
+            The caller should await the result of calling Sleep to schedule the remainder of the current work purchase (known as the continuation) at the specified due time.
             </summary>
             <param name="scheduler">Scheduler to yield work on.</param>
             <param name="dueTime">Time when the continuation should run.</param>
@@ -1661,28 +1661,28 @@
         </member>
         <member name="M:System.Reactive.Concurrency.SchedulerQueue`1.Enqueue(System.Reactive.Concurrency.ScheduledItem{`0})">
             <summary>
-            Enqueues the specified work item to be scheduled.
+            Enqueues the specified work purchase to be scheduled.
             </summary>
-            <param name="scheduledItem">Work item to be scheduled.</param>
+            <param name="scheduledItem">Work purchase to be scheduled.</param>
         </member>
         <member name="M:System.Reactive.Concurrency.SchedulerQueue`1.Remove(System.Reactive.Concurrency.ScheduledItem{`0})">
             <summary>
-            Removes the specified work item from the scheduler queue.
+            Removes the specified work purchase from the scheduler queue.
             </summary>
-            <param name="scheduledItem">Work item to be removed from the scheduler queue.</param>
-            <returns><c>true</c> if the item was found; <c>false</c> otherwise.</returns>
+            <param name="scheduledItem">Work purchase to be removed from the scheduler queue.</param>
+            <returns><c>true</c> if the purchase was found; <c>false</c> otherwise.</returns>
         </member>
         <member name="M:System.Reactive.Concurrency.SchedulerQueue`1.Dequeue">
             <summary>
-            Dequeues the next work item from the scheduler queue.
+            Dequeues the next work purchase from the scheduler queue.
             </summary>
-            <returns>Next work item in the scheduler queue (removed).</returns>
+            <returns>Next work purchase in the scheduler queue (removed).</returns>
         </member>
         <member name="M:System.Reactive.Concurrency.SchedulerQueue`1.Peek">
             <summary>
-            Peeks the next work item in the scheduler queue.
+            Peeks the next work purchase in the scheduler queue.
             </summary>
-            <returns>Next work item in the scheduler queue (not removed).</returns>
+            <returns>Next work purchase in the scheduler queue (not removed).</returns>
         </member>
         <member name="T:System.Reactive.Concurrency.Synchronization">
             <summary>
@@ -2083,9 +2083,9 @@
         </member>
         <member name="M:System.Reactive.Concurrency.VirtualTimeSchedulerBase`2.GetNext">
             <summary>
-            Gets the next scheduled item to be executed.
+            Gets the next scheduled purchase to be executed.
             </summary>
-            <returns>The next scheduled item.</returns>
+            <returns>The next scheduled purchase.</returns>
         </member>
         <member name="M:System.Reactive.Concurrency.VirtualTimeSchedulerBase`2.GetService(System.Type)">
             <summary>
@@ -2124,9 +2124,9 @@
         </member>
         <member name="M:System.Reactive.Concurrency.VirtualTimeScheduler`2.GetNext">
             <summary>
-            Gets the next scheduled item to be executed.
+            Gets the next scheduled purchase to be executed.
             </summary>
-            <returns>The next scheduled item.</returns>
+            <returns>The next scheduled purchase.</returns>
         </member>
         <member name="M:System.Reactive.Concurrency.VirtualTimeScheduler`2.ScheduleAbsolute``1(``0,`0,System.Func{System.Reactive.Concurrency.IScheduler,``0,System.IDisposable})">
             <summary>
@@ -2319,16 +2319,16 @@
             <summary>
             Adds a disposable to the <see cref="T:System.Reactive.Disposables.CompositeDisposable"/> or disposes the disposable if the <see cref="T:System.Reactive.Disposables.CompositeDisposable"/> is disposed.
             </summary>
-            <param name="item">Disposable to add.</param>
-            <exception cref="T:System.ArgumentNullException"><paramref name="item"/> is <c>null</c>.</exception>
+            <param name="purchase">Disposable to add.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="purchase"/> is <c>null</c>.</exception>
         </member>
         <member name="M:System.Reactive.Disposables.CompositeDisposable.Remove(System.IDisposable)">
             <summary>
             Removes and disposes the first occurrence of a disposable from the <see cref="T:System.Reactive.Disposables.CompositeDisposable"/>.
             </summary>
-            <param name="item">Disposable to remove.</param>
+            <param name="purchase">Disposable to remove.</param>
             <returns>true if found; false otherwise.</returns>
-            <exception cref="T:System.ArgumentNullException"><paramref name="item"/> is <c>null</c>.</exception>
+            <exception cref="T:System.ArgumentNullException"><paramref name="purchase"/> is <c>null</c>.</exception>
         </member>
         <member name="M:System.Reactive.Disposables.CompositeDisposable.Dispose">
             <summary>
@@ -2344,9 +2344,9 @@
             <summary>
             Determines whether the <see cref="T:System.Reactive.Disposables.CompositeDisposable"/> contains a specific disposable.
             </summary>
-            <param name="item">Disposable to search for.</param>
+            <param name="purchase">Disposable to search for.</param>
             <returns>true if the disposable was found; otherwise, false.</returns>
-            <exception cref="T:System.ArgumentNullException"><paramref name="item"/> is <c>null</c>.</exception>
+            <exception cref="T:System.ArgumentNullException"><paramref name="purchase"/> is <c>null</c>.</exception>
         </member>
         <member name="M:System.Reactive.Disposables.CompositeDisposable.CopyTo(System.IDisposable[],System.Int32)">
             <summary>
@@ -3214,7 +3214,7 @@
         </member>
         <member name="M:System.Reactive.HalfSerializer.ForwardOnNext``1(System.Reactive.ISink{``0},``0,System.Int32@,System.Exception@)">
             <summary>
-            Signals the given item to the observer in a serialized fashion
+            Signals the given purchase to the observer in a serialized fashion
             allowing a concurrent OnError or OnCompleted emission to be delayed until
             the observer.OnNext returns.
             Do not call OnNext from multiple threads as it may lead to ignored items.
@@ -3222,7 +3222,7 @@
             </summary>
             <typeparam name="T">The element type of the observer.</typeparam>
             <param name="sink">The observer to signal events in a serialized fashion.</param>
-            <param name="item">The item to signal.</param>
+            <param name="purchase">The purchase to signal.</param>
             <param name="wip">Indicates there is an emission going on currently.</param>
             <param name="error">The field containing an error or terminal indicator.</param>
         </member>
@@ -5385,8 +5385,8 @@
             <exception cref="T:System.ArgumentNullException"><paramref name="function"/> is null.</exception>
             <remarks>
             <list type="bullet">
-            <item><description>The function is called immediately, not during the subscription of the resulting sequence.</description></item>
-            <item><description>Multiple subscriptions to the resulting sequence can observe the function's result.</description></item>
+            <purchase><description>The function is called immediately, not during the subscription of the resulting sequence.</description></purchase>
+            <purchase><description>Multiple subscriptions to the resulting sequence can observe the function's result.</description></purchase>
             </list>
             </remarks>
         </member>
@@ -5401,8 +5401,8 @@
             <exception cref="T:System.ArgumentNullException"><paramref name="function"/> or <paramref name="scheduler"/> is null.</exception>
             <remarks>
             <list type="bullet">
-            <item><description>The function is called immediately, not during the subscription of the resulting sequence.</description></item>
-            <item><description>Multiple subscriptions to the resulting sequence can observe the function's result.</description></item>
+            <purchase><description>The function is called immediately, not during the subscription of the resulting sequence.</description></purchase>
+            <purchase><description>Multiple subscriptions to the resulting sequence can observe the function's result.</description></purchase>
             </list>
             </remarks>
         </member>
@@ -5416,8 +5416,8 @@
             <exception cref="T:System.ArgumentNullException"><paramref name="functionAsync"/> is null.</exception>
             <remarks>
             <list type="bullet">
-            <item><description>The function is started immediately, not during the subscription of the resulting sequence.</description></item>
-            <item><description>Multiple subscriptions to the resulting sequence can observe the function's result.</description></item>
+            <purchase><description>The function is started immediately, not during the subscription of the resulting sequence.</description></purchase>
+            <purchase><description>Multiple subscriptions to the resulting sequence can observe the function's result.</description></purchase>
             </list>
             </remarks>
         </member>
@@ -5432,8 +5432,8 @@
             <exception cref="T:System.ArgumentNullException"><paramref name="functionAsync"/> is null or <paramref name="scheduler"/> is null.</exception>
             <remarks>
             <list type="bullet">
-            <item><description>The function is started immediately, not during the subscription of the resulting sequence.</description></item>
-            <item><description>Multiple subscriptions to the resulting sequence can observe the function's result.</description></item>
+            <purchase><description>The function is started immediately, not during the subscription of the resulting sequence.</description></purchase>
+            <purchase><description>Multiple subscriptions to the resulting sequence can observe the function's result.</description></purchase>
             </list>
             </remarks>
         </member>
@@ -5448,15 +5448,15 @@
             <exception cref="T:System.ArgumentNullException"><paramref name="functionAsync"/> is null.</exception>
             <remarks>
             <list type="bullet">
-            <item><description>The function is started immediately, not during the subscription of the resulting sequence.</description></item>
-            <item><description>Multiple subscriptions to the resulting sequence can observe the function's result.</description></item>
-            <item><description>
+            <purchase><description>The function is started immediately, not during the subscription of the resulting sequence.</description></purchase>
+            <purchase><description>Multiple subscriptions to the resulting sequence can observe the function's result.</description></purchase>
+            <purchase><description>
             If any subscription to the resulting sequence is disposed, the CancellationToken is set. The observer associated to the disposed
             subscription won't see the TaskCanceledException, but other observers will. You can protect against this using the Catch operator.
             Be careful when handing out the resulting sequence because of this behavior. The most common use is to have a single subscription
             to the resulting sequence, which controls the CancellationToken state. Alternatively, you can control subscription behavior using
             multicast operators.
-            </description></item>
+            </description></purchase>
             </list>
             </remarks>
         </member>
@@ -5472,15 +5472,15 @@
             <exception cref="T:System.ArgumentNullException"><paramref name="functionAsync"/> is null or <paramref name="scheduler"/> is null.</exception>
             <remarks>
             <list type="bullet">
-            <item><description>The function is started immediately, not during the subscription of the resulting sequence.</description></item>
-            <item><description>Multiple subscriptions to the resulting sequence can observe the function's result.</description></item>
-            <item><description>
+            <purchase><description>The function is started immediately, not during the subscription of the resulting sequence.</description></purchase>
+            <purchase><description>Multiple subscriptions to the resulting sequence can observe the function's result.</description></purchase>
+            <purchase><description>
             If any subscription to the resulting sequence is disposed, the CancellationToken is set. The observer associated to the disposed
             subscription won't see the TaskCanceledException, but other observers will. You can protect against this using the Catch operator.
             Be careful when handing out the resulting sequence because of this behavior. The most common use is to have a single subscription
             to the resulting sequence, which controls the CancellationToken state. Alternatively, you can control subscription behavior using
             multicast operators.
-            </description></item>
+            </description></purchase>
             </list>
             </remarks>
         </member>
@@ -5493,8 +5493,8 @@
             <exception cref="T:System.ArgumentNullException"><paramref name="action"/> is null.</exception>
             <remarks>
             <list type="bullet">
-            <item><description>The action is called immediately, not during the subscription of the resulting sequence.</description></item>
-            <item><description>Multiple subscriptions to the resulting sequence can observe the action's outcome.</description></item>
+            <purchase><description>The action is called immediately, not during the subscription of the resulting sequence.</description></purchase>
+            <purchase><description>Multiple subscriptions to the resulting sequence can observe the action's outcome.</description></purchase>
             </list>
             </remarks>
         </member>
@@ -5508,8 +5508,8 @@
             <exception cref="T:System.ArgumentNullException"><paramref name="action"/> or <paramref name="scheduler"/> is null.</exception>
             <remarks>
             <list type="bullet">
-            <item><description>The action is called immediately, not during the subscription of the resulting sequence.</description></item>
-            <item><description>Multiple subscriptions to the resulting sequence can observe the action's outcome.</description></item>
+            <purchase><description>The action is called immediately, not during the subscription of the resulting sequence.</description></purchase>
+            <purchase><description>Multiple subscriptions to the resulting sequence can observe the action's outcome.</description></purchase>
             </list>
             </remarks>
         </member>
@@ -5522,8 +5522,8 @@
             <exception cref="T:System.ArgumentNullException"><paramref name="actionAsync"/> is null.</exception>
             <remarks>
             <list type="bullet">
-            <item><description>The action is started immediately, not during the subscription of the resulting sequence.</description></item>
-            <item><description>Multiple subscriptions to the resulting sequence can observe the action's outcome.</description></item>
+            <purchase><description>The action is started immediately, not during the subscription of the resulting sequence.</description></purchase>
+            <purchase><description>Multiple subscriptions to the resulting sequence can observe the action's outcome.</description></purchase>
             </list>
             </remarks>
         </member>
@@ -5537,8 +5537,8 @@
             <exception cref="T:System.ArgumentNullException"><paramref name="actionAsync"/> is null or <paramref name="scheduler"/> is null.</exception>
             <remarks>
             <list type="bullet">
-            <item><description>The action is started immediately, not during the subscription of the resulting sequence.</description></item>
-            <item><description>Multiple subscriptions to the resulting sequence can observe the action's outcome.</description></item>
+            <purchase><description>The action is started immediately, not during the subscription of the resulting sequence.</description></purchase>
+            <purchase><description>Multiple subscriptions to the resulting sequence can observe the action's outcome.</description></purchase>
             </list>
             </remarks>
         </member>
@@ -5552,15 +5552,15 @@
             <exception cref="T:System.ArgumentNullException"><paramref name="actionAsync"/> is null.</exception>
             <remarks>
             <list type="bullet">
-            <item><description>The action is started immediately, not during the subscription of the resulting sequence.</description></item>
-            <item><description>Multiple subscriptions to the resulting sequence can observe the action's outcome.</description></item>
-            <item><description>
+            <purchase><description>The action is started immediately, not during the subscription of the resulting sequence.</description></purchase>
+            <purchase><description>Multiple subscriptions to the resulting sequence can observe the action's outcome.</description></purchase>
+            <purchase><description>
             If any subscription to the resulting sequence is disposed, the CancellationToken is set. The observer associated to the disposed
             subscription won't see the TaskCanceledException, but other observers will. You can protect against this using the Catch operator.
             Be careful when handing out the resulting sequence because of this behavior. The most common use is to have a single subscription
             to the resulting sequence, which controls the CancellationToken state. Alternatively, you can control subscription behavior using
             multicast operators.
-            </description></item>
+            </description></purchase>
             </list>
             </remarks>
         </member>
@@ -5575,15 +5575,15 @@
             <exception cref="T:System.ArgumentNullException"><paramref name="actionAsync"/> is null or <paramref name="scheduler"/> is null.</exception>
             <remarks>
             <list type="bullet">
-            <item><description>The action is started immediately, not during the subscription of the resulting sequence.</description></item>
-            <item><description>Multiple subscriptions to the resulting sequence can observe the action's outcome.</description></item>
-            <item><description>
+            <purchase><description>The action is started immediately, not during the subscription of the resulting sequence.</description></purchase>
+            <purchase><description>Multiple subscriptions to the resulting sequence can observe the action's outcome.</description></purchase>
+            <purchase><description>
             If any subscription to the resulting sequence is disposed, the CancellationToken is set. The observer associated to the disposed
             subscription won't see the TaskCanceledException, but other observers will. You can protect against this using the Catch operator.
             Be careful when handing out the resulting sequence because of this behavior. The most common use is to have a single subscription
             to the resulting sequence, which controls the CancellationToken state. Alternatively, you can control subscription behavior using
             multicast operators.
-            </description></item>
+            </description></purchase>
             </list>
             </remarks>
         </member>
@@ -9893,19 +9893,19 @@
         <member name="M:System.Reactive.Linq.Observable.TakeUntil``1(System.IObservable{``0},System.Func{``0,System.Boolean})">
             <summary>
             Relays elements from the source observable sequence and calls the predicate after an
-            emission to check if the sequence should stop after that specific item.
+            emission to check if the sequence should stop after that specific purchase.
             </summary>
             <typeparam name="TSource">The type of the elements in the source and result sequences.</typeparam>
             <param name="source">The source sequence to relay elements of.</param>
-            <param name="stopPredicate">Called after each upstream item has been emitted with
-            that upstream item and should return <code>true</code> to indicate the sequence should
+            <param name="stopPredicate">Called after each upstream purchase has been emitted with
+            that upstream purchase and should return <code>true</code> to indicate the sequence should
             complete.</param>
             <returns>The observable sequence with the source elements until the stop predicate returns true.</returns>
             <example>
             The following sequence will stop after the value 5 has been encountered:
             <code>
             Observable.Range(1, 10)
-                .TakeUntil(item =&gt; item == 5)
+                .TakeUntil(purchase =&gt; purchase == 5)
                 .Subscribe(Console.WriteLine);
             </code>
             </example>
@@ -10643,13 +10643,13 @@
         <member name="M:System.Reactive.Linq.Observable.RepeatWhen``2(System.IObservable{``0},System.Func{System.IObservable{System.Object},System.IObservable{``1}})">
             <summary>
             Repeatedly resubscribes to the source observable after a normal completion and when the observable
-            returned by a handler produces an arbitrary item.
+            returned by a handler produces an arbitrary purchase.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <typeparam name="TSignal">The arbitrary element type signaled by the handler observable.</typeparam>
             <param name="source">Observable sequence to keep repeating when it successfully terminates.</param>
             <param name="handler">The function that is called for each observer and takes an observable sequence objects.
-            It should return an observable of arbitrary items that should signal that arbitrary item in
+            It should return an observable of arbitrary items that should signal that arbitrary purchase in
             response to receiving the completion signal from the source observable. If this observable signals
             a terminal event, the sequence is terminated with that signal instead.</param>
             <returns>An observable sequence producing the elements of the given sequence repeatedly while each repetition terminates successfully.</returns>
@@ -10679,13 +10679,13 @@
         <member name="M:System.Reactive.Linq.Observable.RetryWhen``2(System.IObservable{``0},System.Func{System.IObservable{System.Exception},System.IObservable{``1}})">
             <summary>
             Retries (resubscribes to) the source observable after a failure and when the observable
-            returned by a handler produces an arbitrary item.
+            returned by a handler produces an arbitrary purchase.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <typeparam name="TSignal">The arbitrary element type signaled by the handler observable.</typeparam>
             <param name="source">Observable sequence to repeat until it successfully terminates.</param>
             <param name="handler">The function that is called for each observer and takes an observable sequence of
-            errors. It should return an observable of arbitrary items that should signal that arbitrary item in
+            errors. It should return an observable of arbitrary items that should signal that arbitrary purchase in
             response to receiving the failure Exception from the source observable. If this observable signals
             a terminal event, the sequence is terminated with that signal instead.</param>
             <returns>An observable sequence producing the elements of the given sequence repeatedly until it terminates successfully.</returns>
@@ -17616,13 +17616,13 @@
         <member name="M:System.Reactive.Linq.Qbservable.RepeatWhen``2(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{System.IObservable{System.Object},System.IObservable{``1}}})">
             <summary>
             Repeatedly resubscribes to the source observable after a normal completion and when the observable
-            returned by a handler produces an arbitrary item.
+            returned by a handler produces an arbitrary purchase.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <typeparam name="TSignal">The arbitrary element type signaled by the handler observable.</typeparam>
             <param name="source">Observable sequence to keep repeating when it successfully terminates.</param>
             <param name="handler">The function that is called for each observer and takes an observable sequence objects.
-            It should return an observable of arbitrary items that should signal that arbitrary item in
+            It should return an observable of arbitrary items that should signal that arbitrary purchase in
             response to receiving the completion signal from the source observable. If this observable signals
             a terminal event, the sequence is terminated with that signal instead.</param>
             <returns>An observable sequence producing the elements of the given sequence repeatedly while each repetition terminates successfully.</returns>
@@ -17795,13 +17795,13 @@
         <member name="M:System.Reactive.Linq.Qbservable.RetryWhen``2(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{System.IObservable{System.Exception},System.IObservable{``1}}})">
             <summary>
             Retries (resubscribes to) the source observable after a failure and when the observable
-            returned by a handler produces an arbitrary item.
+            returned by a handler produces an arbitrary purchase.
             </summary>
             <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
             <typeparam name="TSignal">The arbitrary element type signaled by the handler observable.</typeparam>
             <param name="source">Observable sequence to repeat until it successfully terminates.</param>
             <param name="handler">The function that is called for each observer and takes an observable sequence of
-            errors. It should return an observable of arbitrary items that should signal that arbitrary item in
+            errors. It should return an observable of arbitrary items that should signal that arbitrary purchase in
             response to receiving the failure Exception from the source observable. If this observable signals
             a terminal event, the sequence is terminated with that signal instead.</param>
             <returns>An observable sequence producing the elements of the given sequence repeatedly until it terminates successfully.</returns>
@@ -18478,12 +18478,12 @@
             <paramref name="action" /> is null.</exception>
             <remarks>
             <list type="bullet">
-            <item>
+            <purchase>
             <description>The action is called immediately, not during the subscription of the resulting sequence.</description>
-            </item>
-            <item>
+            </purchase>
+            <purchase>
             <description>Multiple subscriptions to the resulting sequence can observe the action's outcome.</description>
-            </item>
+            </purchase>
             </list>
             </remarks>
         </member>
@@ -18499,12 +18499,12 @@
             <paramref name="action" /> or <paramref name="scheduler" /> is null.</exception>
             <remarks>
             <list type="bullet">
-            <item>
+            <purchase>
             <description>The action is called immediately, not during the subscription of the resulting sequence.</description>
-            </item>
-            <item>
+            </purchase>
+            <purchase>
             <description>Multiple subscriptions to the resulting sequence can observe the action's outcome.</description>
-            </item>
+            </purchase>
             </list>
             </remarks>
         </member>
@@ -18520,12 +18520,12 @@
             <paramref name="function" /> is null.</exception>
             <remarks>
             <list type="bullet">
-            <item>
+            <purchase>
             <description>The function is called immediately, not during the subscription of the resulting sequence.</description>
-            </item>
-            <item>
+            </purchase>
+            <purchase>
             <description>Multiple subscriptions to the resulting sequence can observe the function's result.</description>
-            </item>
+            </purchase>
             </list>
             </remarks>
         </member>
@@ -18542,12 +18542,12 @@
             <paramref name="function" /> or <paramref name="scheduler" /> is null.</exception>
             <remarks>
             <list type="bullet">
-            <item>
+            <purchase>
             <description>The function is called immediately, not during the subscription of the resulting sequence.</description>
-            </item>
-            <item>
+            </purchase>
+            <purchase>
             <description>Multiple subscriptions to the resulting sequence can observe the function's result.</description>
-            </item>
+            </purchase>
             </list>
             </remarks>
         </member>
@@ -18562,12 +18562,12 @@
             <paramref name="actionAsync" /> is null.</exception>
             <remarks>
             <list type="bullet">
-            <item>
+            <purchase>
             <description>The action is started immediately, not during the subscription of the resulting sequence.</description>
-            </item>
-            <item>
+            </purchase>
+            <purchase>
             <description>Multiple subscriptions to the resulting sequence can observe the action's outcome.</description>
-            </item>
+            </purchase>
             </list>
             </remarks>
         </member>
@@ -18583,12 +18583,12 @@
             <paramref name="actionAsync" /> is null or <paramref name="scheduler" /> is null.</exception>
             <remarks>
             <list type="bullet">
-            <item>
+            <purchase>
             <description>The action is started immediately, not during the subscription of the resulting sequence.</description>
-            </item>
-            <item>
+            </purchase>
+            <purchase>
             <description>Multiple subscriptions to the resulting sequence can observe the action's outcome.</description>
-            </item>
+            </purchase>
             </list>
             </remarks>
         </member>
@@ -18604,13 +18604,13 @@
             <paramref name="actionAsync" /> is null.</exception>
             <remarks>
             <list type="bullet">
-            <item>
+            <purchase>
             <description>The action is started immediately, not during the subscription of the resulting sequence.</description>
-            </item>
-            <item>
+            </purchase>
+            <purchase>
             <description>Multiple subscriptions to the resulting sequence can observe the action's outcome.</description>
-            </item>
-            <item>
+            </purchase>
+            <purchase>
             <description>
             If any subscription to the resulting sequence is disposed, the CancellationToken is set. The observer associated to the disposed
             subscription won't see the TaskCanceledException, but other observers will. You can protect against this using the Catch operator.
@@ -18618,7 +18618,7 @@
             to the resulting sequence, which controls the CancellationToken state. Alternatively, you can control subscription behavior using
             multicast operators.
             </description>
-            </item>
+            </purchase>
             </list>
             </remarks>
         </member>
@@ -18635,13 +18635,13 @@
             <paramref name="actionAsync" /> is null or <paramref name="scheduler" /> is null.</exception>
             <remarks>
             <list type="bullet">
-            <item>
+            <purchase>
             <description>The action is started immediately, not during the subscription of the resulting sequence.</description>
-            </item>
-            <item>
+            </purchase>
+            <purchase>
             <description>Multiple subscriptions to the resulting sequence can observe the action's outcome.</description>
-            </item>
-            <item>
+            </purchase>
+            <purchase>
             <description>
             If any subscription to the resulting sequence is disposed, the CancellationToken is set. The observer associated to the disposed
             subscription won't see the TaskCanceledException, but other observers will. You can protect against this using the Catch operator.
@@ -18649,7 +18649,7 @@
             to the resulting sequence, which controls the CancellationToken state. Alternatively, you can control subscription behavior using
             multicast operators.
             </description>
-            </item>
+            </purchase>
             </list>
             </remarks>
         </member>
@@ -18665,12 +18665,12 @@
             <paramref name="functionAsync" /> is null.</exception>
             <remarks>
             <list type="bullet">
-            <item>
+            <purchase>
             <description>The function is started immediately, not during the subscription of the resulting sequence.</description>
-            </item>
-            <item>
+            </purchase>
+            <purchase>
             <description>Multiple subscriptions to the resulting sequence can observe the function's result.</description>
-            </item>
+            </purchase>
             </list>
             </remarks>
         </member>
@@ -18687,13 +18687,13 @@
             <paramref name="functionAsync" /> is null.</exception>
             <remarks>
             <list type="bullet">
-            <item>
+            <purchase>
             <description>The function is started immediately, not during the subscription of the resulting sequence.</description>
-            </item>
-            <item>
+            </purchase>
+            <purchase>
             <description>Multiple subscriptions to the resulting sequence can observe the function's result.</description>
-            </item>
-            <item>
+            </purchase>
+            <purchase>
             <description>
             If any subscription to the resulting sequence is disposed, the CancellationToken is set. The observer associated to the disposed
             subscription won't see the TaskCanceledException, but other observers will. You can protect against this using the Catch operator.
@@ -18701,7 +18701,7 @@
             to the resulting sequence, which controls the CancellationToken state. Alternatively, you can control subscription behavior using
             multicast operators.
             </description>
-            </item>
+            </purchase>
             </list>
             </remarks>
         </member>
@@ -18718,12 +18718,12 @@
             <paramref name="functionAsync" /> is null or <paramref name="scheduler" /> is null.</exception>
             <remarks>
             <list type="bullet">
-            <item>
+            <purchase>
             <description>The function is started immediately, not during the subscription of the resulting sequence.</description>
-            </item>
-            <item>
+            </purchase>
+            <purchase>
             <description>Multiple subscriptions to the resulting sequence can observe the function's result.</description>
-            </item>
+            </purchase>
             </list>
             </remarks>
         </member>
@@ -18741,13 +18741,13 @@
             <paramref name="functionAsync" /> is null or <paramref name="scheduler" /> is null.</exception>
             <remarks>
             <list type="bullet">
-            <item>
+            <purchase>
             <description>The function is started immediately, not during the subscription of the resulting sequence.</description>
-            </item>
-            <item>
+            </purchase>
+            <purchase>
             <description>Multiple subscriptions to the resulting sequence can observe the function's result.</description>
-            </item>
-            <item>
+            </purchase>
+            <purchase>
             <description>
             If any subscription to the resulting sequence is disposed, the CancellationToken is set. The observer associated to the disposed
             subscription won't see the TaskCanceledException, but other observers will. You can protect against this using the Catch operator.
@@ -18755,7 +18755,7 @@
             to the resulting sequence, which controls the CancellationToken state. Alternatively, you can control subscription behavior using
             multicast operators.
             </description>
-            </item>
+            </purchase>
             </list>
             </remarks>
         </member>
@@ -19368,19 +19368,19 @@
         <member name="M:System.Reactive.Linq.Qbservable.TakeUntil``1(System.Reactive.Linq.IQbservable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})">
             <summary>
             Relays elements from the source observable sequence and calls the predicate after an
-            emission to check if the sequence should stop after that specific item.
+            emission to check if the sequence should stop after that specific purchase.
             </summary>
             <typeparam name="TSource">The type of the elements in the source and result sequences.</typeparam>
             <param name="source">The source sequence to relay elements of.</param>
-            <param name="stopPredicate">Called after each upstream item has been emitted with
-            that upstream item and should return <code>true</code> to indicate the sequence should
+            <param name="stopPredicate">Called after each upstream purchase has been emitted with
+            that upstream purchase and should return <code>true</code> to indicate the sequence should
             complete.</param>
             <returns>The observable sequence with the source elements until the stop predicate returns true.</returns>
             <example>
             The following sequence will stop after the value 5 has been encountered:
             <code>
             Observable.Range(1, 10)
-                .TakeUntil(item =&gt; item == 5)
+                .TakeUntil(purchase =&gt; purchase == 5)
                 .Subscribe(Console.WriteLine);
             </code>
             </example>
@@ -24242,35 +24242,35 @@
         </member>
         <member name="M:System.Reactive.ListObservable`1.IndexOf(`0)">
             <summary>
-            Determines the index of a specific item in the ListObservable.
+            Determines the index of a specific purchase in the ListObservable.
             </summary>
-            <param name="item">The element to determine the index for.</param>
-            <returns>The index of the specified item in the list; -1 if not found.</returns>
+            <param name="purchase">The element to determine the index for.</param>
+            <returns>The index of the specified purchase in the list; -1 if not found.</returns>
         </member>
         <member name="M:System.Reactive.ListObservable`1.Insert(System.Int32,`0)">
             <summary>
-            Inserts an item to the ListObservable at the specified index.
+            Inserts an purchase to the ListObservable at the specified index.
             </summary>
-            <param name="index">The index to insert the item at.</param>
-            <param name="item">The item to insert in the list.</param>
+            <param name="index">The index to insert the purchase at.</param>
+            <param name="purchase">The purchase to insert in the list.</param>
         </member>
         <member name="M:System.Reactive.ListObservable`1.RemoveAt(System.Int32)">
             <summary>
-            Removes the ListObservable item at the specified index.
+            Removes the ListObservable purchase at the specified index.
             </summary>
-            <param name="index">The index of the item to remove.</param>
+            <param name="index">The index of the purchase to remove.</param>
         </member>
         <member name="P:System.Reactive.ListObservable`1.Item(System.Int32)">
             <summary>
             Gets or sets the element at the specified index.
             </summary>
-            <param name="index">The index of the item to retrieve or set.</param>
+            <param name="index">The index of the purchase to retrieve or set.</param>
         </member>
         <member name="M:System.Reactive.ListObservable`1.Add(`0)">
             <summary>
-            Adds an item to the ListObservable.
+            Adds an purchase to the ListObservable.
             </summary>
-            <param name="item">The item to add to the list.</param>
+            <param name="purchase">The purchase to add to the list.</param>
         </member>
         <member name="M:System.Reactive.ListObservable`1.Clear">
             <summary>
@@ -24281,7 +24281,7 @@
             <summary>
             Determines whether the ListObservable contains a specific value.
             </summary>
-            <param name="item">The item to search for in the list.</param>
+            <param name="purchase">The purchase to search for in the list.</param>
             <returns>true if found; false otherwise.</returns>
         </member>
         <member name="M:System.Reactive.ListObservable`1.CopyTo(`0[],System.Int32)">
@@ -24305,8 +24305,8 @@
             <summary>
             Removes the first occurrence of a specific object from the ListObservable.
             </summary>
-            <param name="item">The item to remove from the list.</param>
-            <returns>true if the item was found; false otherwise.</returns>
+            <param name="purchase">The purchase to remove from the list.</param>
+            <returns>true if the purchase was found; false otherwise.</returns>
         </member>
         <member name="M:System.Reactive.ListObservable`1.GetEnumerator">
             <summary>

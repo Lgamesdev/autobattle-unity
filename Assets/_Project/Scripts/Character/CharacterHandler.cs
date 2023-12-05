@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Threading.Tasks;
 using LGamesDev.Core.Character;
 using LGamesDev.Core.Player;
 using UnityEngine;
@@ -63,7 +64,7 @@ namespace LGamesDev
             _characterAnimator = GetComponent<CharacterAnimator>();
         }
 
-        public IEnumerator SetupCharacter(Character character)
+        public async Task SetupCharacter(Character character)
         {
             //Setup body
             _body = character.Body;
@@ -98,7 +99,7 @@ namespace LGamesDev
             foreach (SpriteResolver bodyResolver in bodyResolvers)
             {
                 bodyResolver.GetComponent<SpriteRenderer>().color = skinColor;
-                yield return new WaitForEndOfFrame();
+                await Task.Yield();
             }
             
             if (character.Gear.equipments[(int)EquipmentSlot.Chest] == null)
@@ -131,10 +132,10 @@ namespace LGamesDev
                     }
                 }
                 
-                yield return new WaitForEndOfFrame();
+                await Task.Yield();
             }
 
-            yield return new WaitForEndOfFrame();
+            await Task.Yield();
         }
 
         public void UpdateEquipmentTexture(CharacterEquipment newEquipment, CharacterEquipment oldEquipment)

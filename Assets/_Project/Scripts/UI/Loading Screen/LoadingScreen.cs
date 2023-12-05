@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using LGamesDev.UI;
 using TMPro;
 using UnityEngine;
@@ -28,6 +29,9 @@ public class LoadingScreen : MonoBehaviour
         _waitingScreenEnabled = false;
     }
     
+    /**
+     * show a black alpha overlay with a "loading..." text
+     */
     public IEnumerator EnableWaitingScreen()
     {
         _waitingScreenEnabled = true;
@@ -70,7 +74,10 @@ public class LoadingScreen : MonoBehaviour
         yield return new WaitForEndOfFrame();
     }
     
-    public IEnumerator EnableLoadingScreen()
+    /**
+     * show a parallax background with a loading text
+     */
+    public async Task EnableLoadingScreen()
     {
         if (!_loadingScreenEnabled)
         {
@@ -90,27 +97,28 @@ public class LoadingScreen : MonoBehaviour
             foreach (RectTransform layer in _parallaxBackground.GetComponentsInChildren<RectTransform>())
             {
                 LTDescr anim = layer.LeanAlpha(1f, .50f);
-                yield return new WaitForEndOfFrame();
+                await Task.Yield();
                 //yield return new WaitForSeconds(anim.time);
             }
         }
 
-        yield return new WaitForEndOfFrame();
+        await Task.Yield();
     }
 
-    public IEnumerator DisableLoadingScreen()
+    public async Task DisableLoadingScreen()
     {
         foreach (RectTransform layer in _parallaxBackground.GetComponentsInChildren<RectTransform>())
         {
             LTDescr anim = layer.LeanAlpha(0f, .50f);
-            yield return new WaitForEndOfFrame();
+            await Task.Yield();
             //yield return new WaitForSeconds(anim.time);
         }
 
-        if (!_waitingScreenEnabled)
-        {
+        /*if (!_waitingScreenEnabled)
+        {*/
             gameObject.SetActive(false);
-        }
+            _waitingScreenEnabled = false;
+        //}
 
         _loadingScreenEnabled = false;
     }

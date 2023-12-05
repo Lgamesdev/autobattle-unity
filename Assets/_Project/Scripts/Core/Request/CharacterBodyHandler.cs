@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections;
-using System.Text;
-using Newtonsoft.Json;
+using System.Collections.Generic;
+using NJsonSchema.Validation;
+using Unity.Services.CloudCode;
 using UnityEngine;
-using UnityEngine.Networking;
+using JsonSchema = NJsonSchema.JsonSchema;
 
 namespace LGamesDev.Core.Request
 {
@@ -29,8 +29,38 @@ namespace LGamesDev.Core.Request
             );*/
         }
 
-        public static /*IEnumerator*/void Save(MonoBehaviour instance, Body body, Action<string> onError, Action<string> onResult)
+        public static async void Save(Body body, Action<Exception> onError, Action<string> onSuccess)
         {
+            Dictionary<string, object> requestParams = new Dictionary<string, object> { { "body", body } };
+            
+            try
+            {
+                string result = await CloudCodeService.Instance.CallModuleEndpointAsync<string>("PlayerModule", "CreationDone", requestParams);
+                
+                Debug.Log("creation done result : " + result);
+                onSuccess?.Invoke(result);
+                
+                /*if (ValidatePlayerBody(result))
+                {
+                    Debug.Log("valid json schema : " + result);
+                    //Body body = JsonConvert.DeserializeObject<Body>(result);
+                    onSuccess?.Invoke(result);
+                }
+                else
+                {
+                    //AuthenticationException exception = JsonConvert.DeserializeObject<AuthenticationException>(result);
+                    Debug.Log("on fail : " + result);
+                    Exception e = JsonConvert.DeserializeObject<Exception>(result);
+                    onFail?.Invoke(e);
+                }*/
+            }
+            catch (Exception e)
+            {
+                Debug.Log("error while trying to cloud code connect : " + e.Message);
+
+                onError?.Invoke(e);
+            }
+            
             /*var bodyRaw = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(body));
 
             //Debug.Log("authentication : " + GameManager.Instance.GetAuthentication().ToString());
@@ -42,6 +72,19 @@ namespace LGamesDev.Core.Request
                 bodyRaw,
                 GameManager.Instance.GetAuthentication())
             );*/
+        }
+        
+        private static bool ValidatePlayerBody(string json)
+        {
+            var schema = JsonSchema.FromType<Body>();
+            //var schemaData = schema.ToJson();
+            ICollection<ValidationError> errors = schema.Validate(json);
+
+            foreach (var error in errors) {
+                Debug.LogError(error.Path + ": " + error.Kind);
+            }
+            
+            return errors.Count <= 0;
         }
     }
 }

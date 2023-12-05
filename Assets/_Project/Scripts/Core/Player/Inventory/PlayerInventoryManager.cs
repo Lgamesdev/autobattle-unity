@@ -34,7 +34,14 @@ namespace LGamesDev
 
         public void SetupManager(Inventory playerInventory)
         {
+            Debug.Log("setup inventory manager");
             _inventory = playerInventory;
+        }
+
+        public void SetInventory(Inventory inventory)
+        {
+            _inventory = inventory;
+            ItemChanged?.Invoke(_inventory.Items);
         }
 
         public void AddItem(IBaseCharacterItem item)
@@ -51,7 +58,7 @@ namespace LGamesDev
             ItemChanged?.Invoke(_inventory.Items);
         }
 
-        public IBaseCharacterItem GetItemById(int id)
+        public IBaseCharacterItem GetItemById(string id)
         {
             return items.Find(element => element.Id == id);
         }

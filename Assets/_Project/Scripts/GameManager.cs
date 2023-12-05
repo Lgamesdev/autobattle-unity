@@ -85,11 +85,11 @@ namespace LGamesDev
         {
             if (_playerConfig == null)
             {
-                StartCoroutine(sceneLoader.LoadAuthentication(true, true));
+                sceneLoader.LoadAuthentication(true, true);
             }
             else
             {
-                StartCoroutine(sceneLoader.LoadAuthentication(true, true));
+                sceneLoader.LoadAuthentication(true, true);
             }
             
             audioManager.SetMixerVolume(AudioTrack.Music, _playerOptions.MusicVolume);
@@ -98,12 +98,12 @@ namespace LGamesDev
 
         public void LoadCustomization()
         {
-            StartCoroutine(sceneLoader.LoadCustomization());
+            sceneLoader.LoadCustomization();
         }
         
         public void LoadMainMenu()
         {
-            StartCoroutine(sceneLoader.LoadMainMenu());
+            sceneLoader.LoadMainMenu();
         }
 
         public void PlayMainMenuMusic()
@@ -113,7 +113,7 @@ namespace LGamesDev
 
         public void LoadFight(Fight fight)
         {
-            StartCoroutine(sceneLoader.LoadFight(fight));
+            sceneLoader.LoadFight(fight);
         }
         
         public void PlayFightMusic()
@@ -129,8 +129,8 @@ namespace LGamesDev
             _playerConfig = null;
             
             audioManager.StopMusic();
-            
-            StartCoroutine(sceneLoader.LoadAuthentication(true, true));
+
+            sceneLoader.LoadAuthentication(true, true);
         }
         
         public PlayerConfig GetPlayerConf()

@@ -12,30 +12,30 @@ namespace LGamesDev.UI
     {
         [SerializeField] private Transform pfUIStatSlot;
 
-        private Item _item;
-        private Action<Item> _onBuy;
+        private ShopPurchase purchase;
+        private Action<ShopPurchase> _onBuy;
 
         [SerializeField] private Transform header;
         [SerializeField] private Transform content;
 
         private string _message;
 
-        public void SetupCard(Item item, Action<Item> onBuy)
+        public void SetupCard(ShopPurchase purchase, Action<ShopPurchase> onBuy)
         {
-            _item = item;
+            this.purchase = purchase;
             _onBuy = onBuy;
 
-            header.Find("nameText").GetComponent<TextMeshProUGUI>().text = item.name;
+            header.Find("nameText").GetComponent<TextMeshProUGUI>().text = purchase.item.name;
             header.Find("Item Panel").GetComponent<Image>().color =
-                GameManager.Instance.itemQualityColorLibrary.colors[(int)item.itemQuality];
-            header.Find("Item Panel/Item Image").GetComponent<Image>().sprite = item.icon;
-            header.Find("costText").GetComponent<TextMeshProUGUI>().text = AbbreviationUtility.AbbreviateNumber(item.cost);
+                GameManager.Instance.itemQualityColorLibrary.colors[(int)purchase.item.itemQuality];
+            header.Find("Item Panel/Item Image").GetComponent<Image>().sprite = purchase.item.icon;
+            header.Find("costText").GetComponent<TextMeshProUGUI>().text = AbbreviationUtility.AbbreviateNumber(purchase.item.cost);
 
-            content.Find("Item Description").GetComponent<TextMeshProUGUI>().text = "Description of " + item.name;
+            content.Find("Item Description").GetComponent<TextMeshProUGUI>().text = "Description of " + purchase.item.name;
 
-            if (item.GetType() == typeof(Equipment))
+            if (purchase.GetType() == typeof(Equipment))
             {
-                Equipment equipment = item as Equipment;
+                Equipment equipment = purchase.item as Equipment;
 
                 header.Find("levelText").GetComponent<TextMeshProUGUI>().text =
                     "Lvl." + equipment.requiredLevel;
@@ -57,12 +57,12 @@ namespace LGamesDev.UI
 
         public void OnBuyButton()
         {
-            _onBuy?.Invoke(_item);
+            _onBuy?.Invoke(purchase);
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            GameManager.Instance.modalWindow.ShowAsPrompt(_item.name, _item.icon, _message);
+            GameManager.Instance.modalWindow.ShowAsPrompt(purchase.item.name, purchase.item.icon, _message);
             //content.gameObject.SetActive(!content.gameObject.activeInHierarchy);
         }
     }

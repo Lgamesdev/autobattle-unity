@@ -18,42 +18,27 @@ namespace LGamesDev.Core.Character
 
         public void TryEquip(CharacterEquipment newCharacterEquipment) 
         {
-            GameManager.Instance.networkService.TryEquip(newCharacterEquipment);
+            //GameManager.Instance.networkService.TryEquip(newCharacterEquipment);
+            Equip(newCharacterEquipment.id);
         }
 
-        public void Equip(int id)
+        public void Equip(string id)
         {
             CharacterEquipment newCharacterEquipment = (CharacterEquipment)CharacterManager.Instance.inventoryManager.GetItemById(id);
-            
             int slotIndex = (int)newCharacterEquipment.item.equipmentSlot;
 
-            CharacterEquipment oldCharacterEquipment = null;
-
-            if (currentGear.equipments[slotIndex] != null 
-                //&& currentGear.equipments[slotIndex].item.isDefaultItem == false) {
-                && currentGear.equipments[slotIndex].item.itemType == ItemType.Equipment) {
-                oldCharacterEquipment = currentGear.equipments[slotIndex];
-            }
-            
-            //Debug.Log("Equipment successfully equipped : " + response);
-                    
-            PlayerInventoryManager.Instance.RemoveItem(newCharacterEquipment);
-            if (oldCharacterEquipment != null) {
-                PlayerInventoryManager.Instance.AddItem(oldCharacterEquipment);
-            }
-
-            currentGear.equipments[slotIndex] = newCharacterEquipment;
-            EquipmentChanged?.Invoke(newCharacterEquipment, oldCharacterEquipment);
-            
-            /*StartCoroutine(GearHandler.TryEquip(
-                this,
+            GearHandler.Equip(
                 newCharacterEquipment,
-                error =>
+                () =>
                 {
-                    Debug.Log("error on equipment saving : " + error);
-                },
-                response=>
-                {
+                    CharacterEquipment oldCharacterEquipment = null;
+
+                    if (currentGear.equipments[slotIndex] != null 
+                        //&& currentGear.equipments[slotIndex].item.isDefaultItem == false) {
+                        && currentGear.equipments[slotIndex].item.itemType == ItemType.Equipment) {
+                        oldCharacterEquipment = currentGear.equipments[slotIndex];
+                    }
+            
                     //Debug.Log("Equipment successfully equipped : " + response);
                     
                     PlayerInventoryManager.Instance.RemoveItem(newCharacterEquipment);
@@ -63,8 +48,20 @@ namespace LGamesDev.Core.Character
 
                     currentGear.equipments[slotIndex] = newCharacterEquipment;
                     EquipmentChanged?.Invoke(newCharacterEquipment, oldCharacterEquipment);
-                }
-            ));*/
+                },
+                e =>
+                {
+                    GameManager.Instance.modalWindow.ShowAsTextPopup(
+                        "Error while equipping item :",
+                        e.Message,
+                        "Ok",
+                        null,
+                        () => GameManager.Instance.modalWindow.Close()
+                    );
+                    Debug.Log("error on equip : " + e);
+                }, 
+                e => Debug.Log("error on equip : " + e)
+            );
         }
         
         public void TryUnEquip(int slotIndex) 

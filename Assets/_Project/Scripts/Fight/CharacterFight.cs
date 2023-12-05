@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Threading.Tasks;
 using LGamesDev.Core;
 using LGamesDev.Core.Character;
 using LGamesDev.Core.Player;
@@ -36,11 +37,11 @@ namespace LGamesDev.Fighting
             _characterStatsManager.OnHealthChanged += CharacterStatsManagerOnHealthChanged;
         }
 
-        public IEnumerator SetupFighter(IFighter fighter)
+        public async Task SetupFighter(IFighter fighter)
         {
             transform.localScale = new Vector3(.85f, .85f, 1);
             
-            yield return StartCoroutine(_characterManager.SetupCharacter(fighter));
+            await _characterManager.SetupCharacter(fighter);
 
             if (fighter is Character character)
             {
@@ -72,6 +73,8 @@ namespace LGamesDev.Fighting
             
             _energyBar.SetMaxResource(100);
             SetEnergy(0);
+
+            await Task.Yield();
 
             //PlayIdle();
         }

@@ -13,7 +13,7 @@ namespace LGamesDev
     [Serializable]
     public class Item
     {
-        public int? ID = null;
+        public string? ID = null;
         public string name = "New Item";
         [JsonIgnore]
         public Sprite icon;
@@ -34,28 +34,41 @@ namespace LGamesDev
                    "]";
         }
     }
+
+    [Serializable]
+    public class ItemData
+    {
+        public string name;
+        public string iconPath;
+        [JsonIgnore]
+        public Sprite icon;
+        //public bool isDefaultItem = true;
+        public ItemQuality itemQuality = ItemQuality.Normal;
+        public ItemType itemType = ItemType.Item;
+        public int requiredLevel;
+    }
     
     [JsonConverter(typeof(StringEnumConverter))]
     public enum ItemType
     {
-        [EnumMember(Value = "item")]
+        [EnumMember(Value = "Item")]
         Item,
-        [EnumMember(Value = "lootBox")]
+        [EnumMember(Value = "LootBox")]
         LootBox,
-        [EnumMember(Value = "equipment")]
+        [EnumMember(Value = "Equipment")]
         Equipment,
     }
 
     [JsonConverter(typeof(StringEnumConverter))]
     public enum ItemQuality
     {
-        [EnumMember(Value = "normal")]
+        [EnumMember(Value = "Normal")]
         Normal,
-        [EnumMember(Value = "rare")]
+        [EnumMember(Value = "Rare")]
         Rare,
-        [EnumMember(Value = "epic")]
+        [EnumMember(Value = "Epic")]
         Epic,
-        [EnumMember(Value = "legendary")]
+        [EnumMember(Value = "Legendary")]
         Legendary
     }
 }

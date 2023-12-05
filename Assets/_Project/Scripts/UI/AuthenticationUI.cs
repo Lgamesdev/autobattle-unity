@@ -45,8 +45,7 @@ namespace LGamesDev.UI
             switch (state)
             {
                 case AuthenticationState.Loading 
-                    or AuthenticationState.Refresh
-                    or AuthenticationState.PlatformConnect:
+                    or AuthenticationState.Connect:
                         StartCoroutine(GameManager.Instance.loadingScreen.EnableWaitingScreen());
                         break;
                 
@@ -71,28 +70,15 @@ namespace LGamesDev.UI
                     }
                     break;
                 
-                case AuthenticationState.PlatformRegister:
+                case AuthenticationState.Register:
                     mainPanel.gameObject.SetActive(false);
                     platformRegisterForm.gameObject.SetActive(true);
                     _activeForm = platformRegisterForm;
                     break;
-                
-                case AuthenticationState.Register:
-                    mainPanel.gameObject.SetActive(false);
-                    registerForm.gameObject.SetActive(true);
-                    _activeForm = registerForm;
-                    break;
-                
-                case AuthenticationState.Login:
-                    mainPanel.gameObject.SetActive(false);
-                    loginForm.gameObject.SetActive(true);
-                    _activeForm = loginForm;
-                    break;
             }
             
             if (state != AuthenticationState.Loading 
-                && state != AuthenticationState.Refresh
-                && state != AuthenticationState.PlatformConnect)
+                && state != AuthenticationState.Connect)
             {
                 //Debug.Log("state = " + state + " waiting screen disabled");
                 StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());
@@ -117,19 +103,19 @@ namespace LGamesDev.UI
                 } 
                 else 
                 {
-                    AuthenticationManager.Instance.Submit(
+                    /*AuthenticationManager.Instance.Submit(
                         _activeForm.Find("usernameField").GetComponent<TMP_InputField>().text,
                         _activeForm.Find("passwordField").GetComponent<TMP_InputField>().text,
                         _activeForm.Find("emailField").GetComponent<TMP_InputField>().text
-                    );
+                    );*/
                 }
             }
             else if (_activeForm == loginForm)
             {
-                AuthenticationManager.Instance.Submit(
+                /*AuthenticationManager.Instance.Submit(
                     _activeForm.Find("usernameField").GetComponent<TMP_InputField>().text,
                     _activeForm.Find("passwordField").GetComponent<TMP_InputField>().text
-                );
+                );*/
             } 
             else if (_activeForm == platformRegisterForm)
             {

@@ -78,8 +78,7 @@ namespace LGamesDev
                 }
             }
 
-            /*StartCoroutine(CharacterBodyHandler.Save(
-                this,
+            CharacterBodyHandler.Save(
                 body,
                 error =>
                 {
@@ -95,7 +94,7 @@ namespace LGamesDev
                     
                     _gameManager.LoadMainMenu();
                 }
-            ));*/
+            );
         }
     }
 }

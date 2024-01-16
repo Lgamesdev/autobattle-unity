@@ -16,7 +16,7 @@ namespace LGamesDev
 
         protected abstract IDisposable Cancellation { get; set; }
 
-        protected abstract void Subscribe(NetworkManager networkManager);
+        //protected abstract void Subscribe(NetworkManager networkManager);
 
         public abstract void OnCompleted();
 

@@ -26,7 +26,8 @@ namespace LGamesDev
             
             if (_gameManager == null)
             {
-                SceneManager.LoadScene((int)SceneIndexes.PersistentScene);
+                //SceneManager.LoadScene((int)SceneIndexes.PersistentScene);
+                Loader.Load(Loader.Scene.LoadingScene);
             }
         }
 
@@ -92,7 +93,7 @@ namespace LGamesDev
                     playerConfig.CreationDone = true;
                     _gameManager.SetPlayerConf(playerConfig);
                     
-                    _gameManager.LoadMainMenu();
+                    Loader.Load(Loader.Scene.MenuScene);
                 }
             );
         }

@@ -13,7 +13,7 @@ namespace LGamesDev.Core.Character
         {
             // Use the item
             Debug.Log("Using " + item.name);
-            GameManager.Instance.networkService.TryOpenLootBox(this);
+            //GameManager.Instance.networkService.TryOpenLootBox(this);
         }
 
         public override void Sell()

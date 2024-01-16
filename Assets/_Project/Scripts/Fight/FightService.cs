@@ -31,7 +31,7 @@ namespace LGamesDev.Fighting
         {
             if (GameManager.Instance != null)
             {
-                Subscribe(GameManager.Instance.networkManager);
+                //Subscribe(GameManager.Instance.networkManager);
             }
 
             fightManager = FightManager.Instance;
@@ -40,10 +40,10 @@ namespace LGamesDev.Fighting
             _isFightOver = false;
         }
 
-        protected override void Subscribe(NetworkManager networkManager)
+        /*protected override void Subscribe(NetworkManager networkManager)
         {
             Cancellation = networkManager.Subscribe(this);
-        }
+        }*/
 
         public override void OnCompleted()
         {

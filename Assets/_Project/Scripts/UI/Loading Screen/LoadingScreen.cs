@@ -9,24 +9,21 @@ using UnityEngine.UI;
 
 public class LoadingScreen : MonoBehaviour
 {
-    private Transform _loadingText;
+    [SerializeField] private Transform _loadingText;
     public ProgressBar progressBar;
 
-    private ParallaxBackgroundUI _parallaxBackground;
+    [SerializeField] private ParallaxBackgroundUI _parallaxBackground;
     private Coroutine _scrollingCoroutine;
 
     private bool _loadingScreenEnabled;
     private bool _waitingScreenEnabled;
 
-    private void Awake()
+    private async void Awake()
     {
-        _parallaxBackground = transform.Find("ParallaxBackground").GetComponent<ParallaxBackgroundUI>();
-
-        _loadingText = transform.Find("Progress Panel").Find("LoadingText");
-        progressBar = transform.Find("Progress Panel").Find("ProgressBar").GetComponent<ProgressBar>();
-
         _loadingScreenEnabled = false;
         _waitingScreenEnabled = false;
+        
+        gameObject.SetActive(false);
     }
     
     /**

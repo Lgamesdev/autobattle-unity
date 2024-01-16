@@ -38,12 +38,12 @@ namespace LGamesDev.UI
         public void Show()
         {
             gameObject.SetActive(true);
-            GameManager.Instance.networkService.ConnectToChat();
+            //GameManager.Instance.networkService.ConnectToChat();
         }
 
         public void Hide()
         {
-            GameManager.Instance.networkService.ExitChat();
+            //GameManager.Instance.networkService.ExitChat();
             gameObject.SetActive(false);
         }
 

@@ -32,7 +32,8 @@ namespace LGamesDev
 
         private void VideoPlayerOnloopPointReached(VideoPlayer source)
         {
-            SceneManager.LoadScene((int)SceneIndexes.PersistentScene);
+            //SceneManager.LoadScene((int)SceneIndexes.PersistentScene);
+            Loader.Load(Loader.Scene.LoadingScene);
         }
     }
 }

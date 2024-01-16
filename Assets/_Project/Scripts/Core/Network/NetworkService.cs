@@ -54,13 +54,13 @@ namespace Core.Network
         
         private void Start()
         {
-            Subscribe(GameManager.Instance.networkManager);
+            //Subscribe(GameManager.Instance.networkManager);
         }
 
-        protected override void Subscribe(NetworkManager networkManager)
+        /*protected override void Subscribe(NetworkManager networkManager)
         {
             Cancellation = networkManager.Subscribe(this);
-        }
+        }*/
 
         public override void OnCompleted()
         {
@@ -163,7 +163,10 @@ namespace Core.Network
                                 socketMessage.Content,
                                 "Reconnect",
                                 "Disconnect",
-                                GameManager.Instance.LoadMainMenu,
+                                () =>
+                                {
+                                    Loader.Load(Loader.Scene.MenuScene);
+                                },
                                 GameManager.Instance.Logout,
                                 GameManager.Instance.modalWindow.Close
                             );

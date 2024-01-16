@@ -66,7 +66,7 @@ namespace LGamesDev.Core.Character
         
         public void TryUnEquip(int slotIndex) 
         {
-            GameManager.Instance.networkService.TryUnEquip(currentGear.equipments[slotIndex]);
+            //GameManager.Instance.networkService.TryUnEquip(currentGear.equipments[slotIndex]);
         }
 
         public void UnEquip(int slotIndex)

@@ -12,13 +12,13 @@ namespace Core.Network
 
         private void Start()
         {
-            Subscribe(GameManager.Instance.networkManager);
+            //Subscribe(GameManager.Instance.networkManager);
         }
 
-        protected override void Subscribe(NetworkManager networkManager)
+        /*protected override void Subscribe(NetworkManager networkManager)
         {
             Cancellation = networkManager.Subscribe(this);
-        }
+        }*/
 
         public override void OnCompleted()
         {

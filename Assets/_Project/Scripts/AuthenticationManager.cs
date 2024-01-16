@@ -32,10 +32,11 @@ namespace LGamesDev
 
         private void Start()
         {
-            if (_gameManager == null)
+            /*if (_gameManager == null)
             {
                 SceneManager.LoadScene((int)SceneIndexes.PersistentScene);
-            }
+            }*/
+            SetupAuthentication();
         }
 
         async Task InitializeRemoteConfigAsync()
@@ -99,7 +100,7 @@ namespace LGamesDev
                 AuthenticationHandler.Connect(result =>
                 {
                     _gameManager.SetPlayerConf(result);
-                    _gameManager.LoadMainMenu();
+                    Loader.Load(Loader.Scene.MenuScene);
                 },
                 e =>
                 {
@@ -231,7 +232,7 @@ namespace LGamesDev
                 result =>
                 {
                     _gameManager.SetPlayerConf(result);
-                    _gameManager.LoadMainMenu();
+                    Loader.Load(Loader.Scene.MenuScene);
                 },
                 e =>
                 {

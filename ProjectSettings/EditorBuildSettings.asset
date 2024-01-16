@@ -6,19 +6,25 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/_Project/Scenes/0 Persistent Scene.unity
+    path: Assets/_Project/Scenes/StartScene.unity
     guid: da55f014cd83eca41a3127a4f4d930fc
   - enabled: 1
-    path: Assets/_Project/Scenes/1 Authentication.unity
+    path: Assets/_Project/Scenes/AuthenticationScene.unity
     guid: 612a0650d46fb6f4a9078ce930f55378
   - enabled: 1
-    path: Assets/_Project/Scenes/2 Customization.unity
+    path: Assets/_Project/Scenes/CustomizationScene.unity
     guid: 8704e18178f131c46ac85390dd06d5dc
   - enabled: 1
-    path: Assets/_Project/Scenes/3 Main menu.unity
+    path: Assets/_Project/Scenes/MenuScene.unity
     guid: 2ee8c00555583db43913476776e5e073
   - enabled: 1
-    path: Assets/_Project/Scenes/4 Fight.unity
+    path: Assets/_Project/Scenes/LoadingScene.unity
+    guid: 20721c5958896de488bbb123df76a53d
+  - enabled: 1
+    path: Assets/_Project/Scenes/LobbyScene.unity
+    guid: a2343074622f9ef4da612052c962b27f
+  - enabled: 1
+    path: Assets/_Project/Scenes/GameScene.unity
     guid: a7cd57e60ae66f542899b463f42fe151
   m_configObjects:
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 0477f4997e903d54089f5f205660718b, type: 2}

@@ -31,7 +31,7 @@ namespace LGamesDev.UI
 
         private void Start()
         {
-            GameManager.Instance.networkService.GetRankList();
+            //GameManager.Instance.networkService.GetRankList();
             /*StartCoroutine(RequestHandler.Request("api/user/ranking",
                 UnityWebRequest.kHttpVerbGET,
                 error => { Debug.Log("Error on /user/ranking : " + error); },

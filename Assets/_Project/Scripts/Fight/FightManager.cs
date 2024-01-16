@@ -49,7 +49,7 @@ namespace LGamesDev.Fighting
             
             if (_gameManager == null)
             {
-                SceneManager.LoadScene((int)SceneIndexes.PersistentScene);
+                //SceneManager.LoadScene((int)SceneIndexes.PersistentScene);
             }
             
             fightService.OnFightOver += OnFightOver;
@@ -254,12 +254,13 @@ namespace LGamesDev.Fighting
 
         public void BackToMainMenu()
         {
-            _gameManager.LoadMainMenu();
+            //_gameManager.LoadMainMenu();
+            Loader.Load(Loader.Scene.MenuScene);
         }
 
         public void FightAgain()
         {
-            _gameManager.networkService.SearchFight(_fight.FightType);
+            //_gameManager.networkService.SearchFight(_fight.FightType);
         }
     }
 

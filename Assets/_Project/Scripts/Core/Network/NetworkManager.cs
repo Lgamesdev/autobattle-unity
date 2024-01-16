@@ -15,7 +15,7 @@ using UnityEngine;
 
 namespace LGamesDev
 {
-    public class NetworkManager : MonoBehaviour, IObservable<SocketMessage>
+    /*public class NetworkManager : MonoBehaviour, IObservable<SocketMessage>
     {
         private List<IObserver<SocketMessage>> _observers;
 
@@ -106,7 +106,7 @@ namespace LGamesDev
             };
             
             // waiting for messages
-            await _ws.Connect();*/
+            await _ws.Connect();#1#
         }
 
         private void Update()
@@ -125,7 +125,7 @@ namespace LGamesDev
                 
                 // Provide observer with existing data.
                 /*foreach (var item in flights)
-                    observer.OnNext(item);*/
+                    observer.OnNext(item);#1#
             }
             return new UnSubscriber<SocketMessage>(_observers, observer);
         }
@@ -137,7 +137,7 @@ namespace LGamesDev
             if (_ws.State == WebSocketState.Open)
             {
                 /*Debug.Log("sending socket message : " + socketMessage + "\n" +
-                          "serialized : " + JsonConvert.SerializeObject(socketMessage));*/
+                          "serialized : " + JsonConvert.SerializeObject(socketMessage));#1#
                 
                 _ws.SendText(JsonConvert.SerializeObject(socketMessage));
             }
@@ -155,5 +155,5 @@ namespace LGamesDev
         {
             Disconnect();
         }
-    }
+    }*/
 }

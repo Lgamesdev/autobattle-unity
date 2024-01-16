@@ -237,7 +237,8 @@ namespace LGamesDev
                 "Retry", 
                 "",
                 () => {
-                    SceneManager.LoadScene((int)SceneIndexes.PersistentScene);
+                    //SceneManager.LoadScene((int)SceneIndexes.PersistentScene);
+                    Loader.Load(Loader.Scene.AuthenticationScene);
                 }
             );
         }

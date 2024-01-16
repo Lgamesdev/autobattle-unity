@@ -16,7 +16,7 @@ namespace LGamesDev
         private float _totalSceneProgress;
         private float _totalSetupProgress;
 
-        public SceneIndexes activeScene;
+        public Loader.Scene activeScene;
         
         private GameManager _gameManager;
 
@@ -31,16 +31,16 @@ namespace LGamesDev
                 () =>
                 {
                     // Load / unload scene below to load authentication
-                    UnloadAdditiveScenes();
+                    //UnloadAdditiveScenes();
                     
-                    _scenesLoading.Add(SceneManager.LoadSceneAsync((int)SceneIndexes.Authentication, LoadSceneMode.Additive));
+                    _scenesLoading.Add(SceneManager.LoadSceneAsync(Loader.Scene.AuthenticationScene.ToString(), LoadSceneMode.Additive));
                 },
                 loadingScreenEnabled,
                 loadingScreenDisabled
             );
 
             AuthenticationManager.Instance.SetupAuthentication();
-            activeScene = SceneIndexes.Authentication;
+            activeScene = Loader.Scene.AuthenticationScene;
         }
 
         public async void LoadMainMenu()
@@ -49,17 +49,17 @@ namespace LGamesDev
                 () =>
                 {
                     // Load / unload scene below to load Main menu
-                    UnloadAdditiveScenes();
+                    //UnloadAdditiveScenes();
 
-                    _scenesLoading.Add(SceneManager.LoadSceneAsync((int)SceneIndexes.MainMenu, LoadSceneMode.Additive));
+                    _scenesLoading.Add(SceneManager.LoadSceneAsync(Loader.Scene.MenuScene.ToString(), LoadSceneMode.Additive));
                 },
                 true,
                 true,
                 GetTotalProgress()
             );
 
-            SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex((int)SceneIndexes.MainMenu));
-            activeScene = SceneIndexes.MainMenu;
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName(Loader.Scene.MenuScene.ToString()));
+            activeScene = Loader.Scene.MenuScene;
             
             MainMenuManager.Instance.HandleTutorial();
         }
@@ -69,14 +69,14 @@ namespace LGamesDev
             await _gameManager.loadingScreen.EnableLoadingScreen();
 
             // Load / unload scene below to load Fight
-            UnloadAdditiveScenes();
+            //UnloadAdditiveScenes();
                     
-            _scenesLoading.Add(SceneManager.LoadSceneAsync((int)SceneIndexes.Fight, LoadSceneMode.Additive));
+            _scenesLoading.Add(SceneManager.LoadSceneAsync(Loader.Scene.CustomizationScene.ToString(), LoadSceneMode.Additive));
             
             // Get Scene load progress
             await GetSceneLoadProgress();
             
-            SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex((int)SceneIndexes.Fight));
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName(Loader.Scene.GameScene.ToString()));
             
             // When scene loaded setup the fight
             await FightManager.Instance.SetupFight(fight);
@@ -84,7 +84,7 @@ namespace LGamesDev
             await _gameManager.loadingScreen.DisableLoadingScreen();
 
             FightManager.Instance.StartFight();
-            activeScene = SceneIndexes.Fight;
+            activeScene = Loader.Scene.GameScene;
         }
 
         public async void LoadCustomization()
@@ -93,14 +93,14 @@ namespace LGamesDev
                 () =>
                 {
                     // Load / unload scene below to load Customization
-                    UnloadAdditiveScenes();
+                    //UnloadAdditiveScenes();
                     
-                    _scenesLoading.Add(SceneManager.LoadSceneAsync((int)SceneIndexes.Customization, LoadSceneMode.Additive));
+                    _scenesLoading.Add(SceneManager.LoadSceneAsync(Loader.Scene.CustomizationScene.ToString(), LoadSceneMode.Additive));
                 }    
             );
             
-            SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex((int)SceneIndexes.Customization));
-            activeScene = SceneIndexes.Customization;
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName(Loader.Scene.CustomizationScene.ToString()));
+            activeScene = Loader.Scene.CustomizationScene;//SceneIndexes.Customization;
             
             CustomizationManager.Instance.HandleTutorial();
         }
@@ -190,7 +190,7 @@ namespace LGamesDev
             await Task.Delay(500);
         }
 
-        private void UnloadAdditiveScenes()
+        /*private void UnloadAdditiveScenes()
         {
             if (SceneManager.GetSceneByBuildIndex((int)SceneIndexes.MainMenu).isLoaded)
                 _scenesLoading.Add(SceneManager.UnloadSceneAsync((int)SceneIndexes.MainMenu));
@@ -201,17 +201,8 @@ namespace LGamesDev
             if (SceneManager.GetSceneByBuildIndex((int)SceneIndexes.Fight).isLoaded)
                 _scenesLoading.Add(SceneManager.UnloadSceneAsync((int)SceneIndexes.Fight));
                     
-            if (SceneManager.GetSceneByBuildIndex((int)SceneIndexes.Customization).isLoaded)
+            if (SceneManager.GetSceneByBuildIndex(Loader.Scene.Customization).isLoaded)
                 _scenesLoading.Add(SceneManager.UnloadSceneAsync((int)SceneIndexes.Customization));
-        }
-    }
-    
-    public enum SceneIndexes
-    {
-        PersistentScene = 0,
-        Authentication = 1,
-        Customization = 2,
-        MainMenu = 3,
-        Fight = 4
+        }*/
     }
 }

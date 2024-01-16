@@ -177,7 +177,7 @@ namespace LGamesDev
         
         public void TrySellCharacterItem(IBaseCharacterItem characterItem)
         {
-            GameManager.Instance.networkService.TrySellItem(characterItem);
+            //GameManager.Instance.networkService.TrySellItem(characterItem);
             /*StartCoroutine(PlayerWalletHandler.Sell(
                 this,
                 characterItem,

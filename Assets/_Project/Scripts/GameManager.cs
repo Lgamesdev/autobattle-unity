@@ -11,12 +11,40 @@ namespace LGamesDev
 {
     public class GameManager : MonoBehaviour
     {
-        public static GameManager Instance;
+        private static GameManager s_Instance;
+        
+        
+#if UNITY_EDITOR
+        //As our manager run first, it will also be destroyed first when the app will be exiting, which lead to s_Instance
+        //to become null and so will trigger another instantiate in edit mode (as we dynamically instantiate the Manager)
+        //so this is set to true when destroyed, so we do not reinstantiate a new one
+        private static bool s_IsQuitting = false;
+#endif
+        public static GameManager Instance 
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (!Application.isPlaying || s_IsQuitting)
+                    return null;
+                
+                if (s_Instance == null)
+                {
+                    //in editor, we can start any scene to test, so we are not sure the game manager will have been
+                    //created by the first scene starting the game. So we load it manually. This check is useless in
+                    //player build as the 1st scene will have created the GameManager so it will always exists.
+                    Instantiate(Resources.Load<GameManager>("GameManager"));
+                }
+#endif
+                return s_Instance;
+            }
+        }
 
-        [SerializeField] private SceneLoader sceneLoader;
+        //[SerializeField] private SceneLoader sceneLoader;
 
-        public NetworkManager networkManager;
-        public NetworkService networkService;
+        //public NetworkManager networkManager;
+        //public NetworkService networkService;
+        
         public LoadingScreen loadingScreen;
         public ModalWindowPanel modalWindow;
         public AudioManager audioManager;
@@ -30,22 +58,23 @@ namespace LGamesDev
         private PlayerOptions _playerOptions;
         private const string OptionsKey = "options";
 
-        private void Awake()
+        private async void Awake()
         {
-            Instance = this;
+            s_Instance = this;
+            DontDestroyOnLoad(gameObject);
             
             //Network Manager
-            networkManager = GetComponent<NetworkManager>();
+            //networkManager = GetComponent<NetworkManager>();
             //Network Manager
-            networkService = GetComponent<NetworkService>();
+            //networkService = GetComponent<NetworkService>();
             //Audio Manager
             audioManager = GetComponent<AudioManager>();
             //Scene Loader
-            sceneLoader = GetComponent<SceneLoader>();
+            //sceneLoader = GetComponent<SceneLoader>();
             //Loading Screen
-            loadingScreen = GameObject.Find("/Canvas/LoadingScreen").GetComponent<LoadingScreen>();
+            //loadingScreen = GameObject.Find("/Canvas/LoadingScreen").GetComponent<LoadingScreen>();
+            await loadingScreen.DisableLoadingScreen();
             //Modal Window
-            modalWindow = GameObject.Find("/Canvas/Modal Window Panel").GetComponent<ModalWindowPanel>();
             modalWindow.Close();
 
             //Authentication
@@ -53,6 +82,7 @@ namespace LGamesDev
             //Debug.Log("player prefs authentication : " + _authentication);
             
             _playerConfig = JsonConvert.DeserializeObject<PlayerConfig>(PlayerPrefs.GetString(PlayerConfKey));
+            Debug.Log("player conf : " + _playerConfig.ToString());
             
             //Player Options
             _playerOptions = JsonConvert.DeserializeObject<PlayerOptions>(PlayerPrefs.GetString(OptionsKey)) ?? new PlayerOptions();
@@ -60,8 +90,6 @@ namespace LGamesDev
         
         /*public struct userAttributes {}
         public struct appAttributes {}
-
-        
 
         async Task Start()
         {
@@ -83,27 +111,28 @@ namespace LGamesDev
 
         private void Start()
         {
-            if (_playerConfig == null)
+            /*if (_playerConfig == null)
             {
                 sceneLoader.LoadAuthentication(true, true);
             }
             else
             {
                 sceneLoader.LoadAuthentication(true, true);
-            }
+            }*/
+            Loader.Load(Loader.Scene.AuthenticationScene);
             
-            audioManager.SetMixerVolume(AudioTrack.Music, _playerOptions.MusicVolume);
-            audioManager.SetMixerVolume(AudioTrack.Effects, _playerOptions.EffectsVolume);
+            /*audioManager.SetMixerVolume(AudioTrack.Music, _playerOptions.MusicVolume);
+            audioManager.SetMixerVolume(AudioTrack.Effects, _playerOptions.EffectsVolume);*/
         }
 
         public void LoadCustomization()
         {
-            sceneLoader.LoadCustomization();
+            //sceneLoader.LoadCustomization();
         }
         
         public void LoadMainMenu()
         {
-            sceneLoader.LoadMainMenu();
+            //sceneLoader.LoadMainMenu();
         }
 
         public void PlayMainMenuMusic()
@@ -113,7 +142,7 @@ namespace LGamesDev
 
         public void LoadFight(Fight fight)
         {
-            sceneLoader.LoadFight(fight);
+            //sceneLoader.LoadFight(fight);
         }
         
         public void PlayFightMusic()
@@ -123,14 +152,15 @@ namespace LGamesDev
 
         public void Logout()
         {
-            networkManager.Disconnect();
+            //networkManager.Disconnect();
             
             PlayerPrefs.DeleteKey(PlayerConfKey);
             _playerConfig = null;
             
             audioManager.StopMusic();
 
-            sceneLoader.LoadAuthentication(true, true);
+            //sceneLoader.LoadAuthentication(true, true);
+            Loader.Load(Loader.Scene.AuthenticationScene);
         }
         
         public PlayerConfig GetPlayerConf()
@@ -185,11 +215,6 @@ namespace LGamesDev
             {
                 Debug.LogError("trying to set options to null");
             }
-        }
-
-        public SceneIndexes GetActiveScene()
-        {
-            return sceneLoader.activeScene;
         }
     }
 }

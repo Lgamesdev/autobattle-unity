@@ -29,21 +29,24 @@ namespace LGamesDev
         private void Start()
         {
             //In start method cause of loading scene
-            if (_gameManager == null)
+            /*if (_gameManager == null)
             {
                 SceneManager.LoadScene((int)SceneIndexes.PersistentScene);
             }
             else
             {
-                if (!_gameManager.GetPlayerConf().CreationDone)
-                {
-                    _gameManager.LoadCustomization();
-                }
-                else
-                {
-                    Initialisation.Current.LoadMainMenu();
-                    _gameManager.PlayMainMenuMusic();
-                }
+                
+            }*/
+            
+            if (!_gameManager.GetPlayerConf().CreationDone)
+            {
+                //_gameManager.LoadCustomization();
+                Loader.Load(Loader.Scene.CustomizationScene);
+            }
+            else
+            {
+                Initialisation.Current.LoadMainMenu();
+                _gameManager.PlayMainMenuMusic();
             }
         }
 
@@ -72,7 +75,7 @@ namespace LGamesDev
 
         public void LoadPvpFight()
         {
-            _gameManager.networkService.SearchFight(FightType.Pvp);
+           // _gameManager.networkService.SearchFight(FightType.Pvp);
             /*StartCoroutine(FightHandler.Load(
                 this,
                 result =>
@@ -87,7 +90,7 @@ namespace LGamesDev
         
         public void LoadPveFight()
         {
-            _gameManager.networkService.SearchFight(FightType.Pve);
+            //_gameManager.networkService.SearchFight(FightType.Pve);
             /*StartCoroutine(FightHandler.Load(
                 this,
                 result =>

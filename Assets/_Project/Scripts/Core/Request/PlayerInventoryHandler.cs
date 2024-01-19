@@ -45,7 +45,7 @@ namespace LGamesDev.Core.Request
                     
                 },
                 null,
-                GameManager.Instance.GetAuthentication())
+                StartManager.Instance.GetAuthentication())
             );*/
         }
 

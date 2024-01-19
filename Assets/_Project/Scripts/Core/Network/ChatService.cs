@@ -26,9 +26,9 @@ namespace Core.Network
 
         private void Start()
         {
-            if (GameManager.Instance != null)
+            if (StartManager.Instance != null)
             {
-                //Subscribe(GameManager.Instance.networkManager);
+                //Subscribe(StartManager.Instance.networkManager);
             }
         }
 
@@ -85,11 +85,11 @@ namespace Core.Network
         //Chat
         public new void SendMessage(string message)
         {
-            /*GameManager.Instance.networkManager.SendSocket(new SocketMessage()
+            /*StartManager.Instance.networkManager.SendSocket(new SocketMessage()
             {
                 Action = SendMessageAction,
                 Channel = DefaultChatChannel,
-                Username = GameManager.Instance.GetAuthentication().username,
+                Username = StartManager.Instance.GetAuthentication().username,
                 Content = message,
             });*/
 
@@ -98,7 +98,7 @@ namespace Core.Network
             {
                 { "action", SocketSendAction.SendMessage },
                 { "channel", SocketChannel.DefaultChatChannel },
-                { "username", GameManager.Instance.GetAuthentication().username },
+                { "username", StartManager.Instance.GetAuthentication().username },
                 { "content", message }
             }));*/
         }

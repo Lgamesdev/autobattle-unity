@@ -27,7 +27,7 @@ namespace LGamesDev.UI
 
             header.Find("nameText").GetComponent<TextMeshProUGUI>().text = purchase.item.name;
             header.Find("Item Panel").GetComponent<Image>().color =
-                GameManager.Instance.itemQualityColorLibrary.colors[(int)purchase.item.itemQuality];
+                StartManager.Instance.itemQualityColorLibrary.colors[(int)purchase.item.itemQuality];
             header.Find("Item Panel/Item Image").GetComponent<Image>().sprite = purchase.item.icon;
             header.Find("costText").GetComponent<TextMeshProUGUI>().text = AbbreviationUtility.AbbreviateNumber(purchase.item.cost);
 
@@ -62,7 +62,7 @@ namespace LGamesDev.UI
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            GameManager.Instance.modalWindow.ShowAsPrompt(purchase.item.name, purchase.item.icon, _message);
+            StartManager.Instance.modalWindow.ShowAsPrompt(purchase.item.name, purchase.item.icon, _message);
             //content.gameObject.SetActive(!content.gameObject.activeInHierarchy);
         }
     }

@@ -32,7 +32,7 @@ namespace LGamesDev.Core.Request
                         setResult(playerConf);
                     },
                     null,
-                    GameManager.Instance.GetAuthentication())
+                    StartManager.Instance.GetAuthentication())
                 );
             }*/
         }

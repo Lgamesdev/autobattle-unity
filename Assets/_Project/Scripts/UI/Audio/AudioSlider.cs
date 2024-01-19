@@ -17,7 +17,7 @@ namespace LGamesDev.UI
         
         private void Start()
         {
-            _playerOptions = GameManager.Instance.GetPlayerOptions();
+            _playerOptions = StartManager.Instance.GetPlayerOptions();
             _slider = GetComponent<Slider>();
 
             float value = volumeName switch
@@ -37,7 +37,7 @@ namespace LGamesDev.UI
 
         private void UpdateValueOnChange(float value)
         {
-            GameManager.Instance.audioManager.SetMixerVolume(volumeName, value);
+            StartManager.Instance.audioManager.SetMixerVolume(volumeName, value);
             
             if (volumeLabel != null)
                 volumeLabel.text = Mathf.Round(value * 100.0f).ToString() + "%";
@@ -63,7 +63,7 @@ namespace LGamesDev.UI
                     break;
             }
             
-            GameManager.Instance.SetPlayerOptions(_playerOptions);
+            StartManager.Instance.SetPlayerOptions(_playerOptions);
         }
     }
 }

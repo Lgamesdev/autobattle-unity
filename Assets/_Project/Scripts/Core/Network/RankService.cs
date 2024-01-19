@@ -12,7 +12,7 @@ namespace Core.Network
 
         private void Start()
         {
-            //Subscribe(GameManager.Instance.networkManager);
+            //Subscribe(StartManager.Instance.networkManager);
         }
 
         /*protected override void Subscribe(NetworkManager networkManager)

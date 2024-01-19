@@ -18,7 +18,7 @@ namespace LGamesDev.Core.Character
 
         public void TryEquip(CharacterEquipment newCharacterEquipment) 
         {
-            //GameManager.Instance.networkService.TryEquip(newCharacterEquipment);
+            //StartManager.Instance.networkService.TryEquip(newCharacterEquipment);
             Equip(newCharacterEquipment.id);
         }
 
@@ -51,12 +51,12 @@ namespace LGamesDev.Core.Character
                 },
                 e =>
                 {
-                    GameManager.Instance.modalWindow.ShowAsTextPopup(
+                    StartManager.Instance.modalWindow.ShowAsTextPopup(
                         "Error while equipping item :",
                         e.Message,
                         "Ok",
                         null,
-                        () => GameManager.Instance.modalWindow.Close()
+                        () => StartManager.Instance.modalWindow.Close()
                     );
                     Debug.Log("error on equip : " + e);
                 }, 
@@ -66,7 +66,7 @@ namespace LGamesDev.Core.Character
         
         public void TryUnEquip(int slotIndex) 
         {
-            //GameManager.Instance.networkService.TryUnEquip(currentGear.equipments[slotIndex]);
+            //StartManager.Instance.networkService.TryUnEquip(currentGear.equipments[slotIndex]);
         }
 
         public void UnEquip(int slotIndex)

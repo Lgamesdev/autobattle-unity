@@ -30,7 +30,7 @@ namespace LGamesDev.UI
 
         public void OnDetailButton()
         {
-            GameManager.Instance.modalWindow.ShowAsPrompt(
+            StartManager.Instance.modalWindow.ShowAsPrompt(
                 _character.username,
                 null,
                 _message

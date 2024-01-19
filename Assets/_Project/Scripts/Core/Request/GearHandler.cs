@@ -55,7 +55,7 @@ namespace LGamesDev.Core.Request
         
         public static /*IEnumerator*/void UnEquip(MonoBehaviour instance, CharacterEquipment oldEquipment, Action<string> onError, Action<string> onResult)
         {
-            /*yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.EnableWaitingScreen());
+            /*yield return instance.StartCoroutine(StartManager.Instance.loadingScreen.EnableWaitingScreen());
             
             yield return instance.StartCoroutine(RequestHandler.Request("api/user/gear/unEquip/" + oldEquipment.id,
                 UnityWebRequest.kHttpVerbPUT,
@@ -68,10 +68,10 @@ namespace LGamesDev.Core.Request
                     onResult?.Invoke(response);
                 },
                 null,//bodyRaw,
-                GameManager.Instance.GetAuthentication())
+                StartManager.Instance.GetAuthentication())
             );
             
-            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());*/
+            yield return instance.StartCoroutine(StartManager.Instance.loadingScreen.DisableWaitingScreen());*/
         }
         
         private static bool ValidateCharacterEquipment(string json)

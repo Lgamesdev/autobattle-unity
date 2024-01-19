@@ -40,6 +40,7 @@ namespace LGamesDev
         public override string ToString()
         {
             string result = "Fighter : [ \n" +
+                            "\t username : " + username + "\n" +
                             "\t level : " + level + "\n" +
                             "\t body : " + Body + "\n" +
                             "\t stats : [ \n";

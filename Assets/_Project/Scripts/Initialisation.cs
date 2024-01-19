@@ -30,14 +30,14 @@ namespace LGamesDev
 
         private readonly Dictionary<InitialisationStage, IEnumerator> _coroutinesLoading = new();
 
-        private GameManager _gameManager;
+        private StartManager _startManager;
         
         private readonly Character _character = new();
 
         private void Awake()
         {
             Current = this;
-            _gameManager = GameManager.Instance;
+            //_startManager = StartManager.Instance;
         }
 
         public async void LoadMainMenu()
@@ -45,16 +45,16 @@ namespace LGamesDev
             isDone = false;
             progress = 0f;
 
-            /*if (!_gameManager.networkManager.isConnected)
+            /*if (!_startManager.networkManager.isConnected)
             {
-                _gameManager.networkManager.Connect();
+                _startManager.networkManager.Connect();
             }*/
 
             await EconomyService.Instance.Configuration.SyncConfigurationAsync();
             SetupInitialisation();
         }
 
-        private async Task SetupInitialisation()
+        private async void SetupInitialisation()
         {
             _finishedStage = 0;
             
@@ -177,61 +177,13 @@ namespace LGamesDev
                 _finishedStage++;
                 progress = (_finishedStage / (Enum.GetValues(typeof(InitialisationStage)).Length - 1)) * 100f;
             }
-
-            //yield return new WaitForEndOfFrame();
         }
-        
-        /*public void SetResult(InitialisationResult result)
-        {
-            currentStage = result.Stage;
-            
-            JsonSerializerSettings settings;
-            switch (result.Stage)
-            {
-                case InitialisationStage.Body:
-                    Body playerBody = JsonConvert.DeserializeObject<Body>(result.Value);
-                    _character.Body = playerBody;
-                    break;
-                case InitialisationStage.Progression:
-                    PlayerProgression playerProgression = JsonConvert.DeserializeObject<PlayerProgression>(result.Value);
-                    _character.level = playerProgression.Level;
-                    _character.Experience = playerProgression.Experience;
-                    _character.MaxExperience = playerProgression.MaxExperience;
-                    _character.StatPoint = playerProgression.StatPoint;
-                    _character.Ranking = playerProgression.Ranking;
-                    break;
-                case InitialisationStage.Wallet:
-                    Wallet wallet = JsonConvert.DeserializeObject<Wallet>(result.Value);
-                    _character.Wallet = wallet;
-                    break;
-                case InitialisationStage.Equipment:
-                    settings = new JsonSerializerSettings();
-                    settings.Converters.Add(new BaseCharacterItemConverter());
-                    Gear gear = JsonConvert.DeserializeObject<Gear>(result.Value, settings);
-                    _character.Gear = gear;
-                    break;
-                case InitialisationStage.Inventory:
-                    settings = new JsonSerializerSettings();
-                    settings.Converters.Add(new BaseCharacterItemConverter());
-                    Debug.Log("inventory : " + result.Value);
-                    Inventory inventory = JsonConvert.DeserializeObject<Inventory>(result.Value, settings);
-                    _character.Inventory = inventory;
-                    break;
-                case InitialisationStage.CharacterStats:
-                    Stat[] stats = JsonConvert.DeserializeObject<Stat[]>(result.Value);
-                    _character.stats = stats;
-                    break;
-            }
-
-            _finishedStage++;
-            progress = (_finishedStage / (Enum.GetValues(typeof(InitialisationStage)).Length - 1)) * 100f;
-        }*/
 
         private void ShowErrorWindow(string error)
         {
             string text = "error on game loading : \n " + error;
             
-            _gameManager.modalWindow.ShowAsTextPopup(
+            _startManager.modalWindow.ShowAsTextPopup(
                 "Something get wrong...", 
                 text, 
                 "Retry", 

@@ -25,7 +25,7 @@ namespace LGamesDev.Core.Request
                     setResult(playerBody);
                 },
                 null,
-                GameManager.Instance.GetAuthentication())
+                StartManager.Instance.GetAuthentication())
             );*/
         }
 
@@ -63,14 +63,14 @@ namespace LGamesDev.Core.Request
             
             /*var bodyRaw = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(body));
 
-            //Debug.Log("authentication : " + GameManager.Instance.GetAuthentication().ToString());
+            //Debug.Log("authentication : " + StartManager.Instance.GetAuthentication().ToString());
             
             yield return instance.StartCoroutine(RequestHandler.Request("api/user/body",
                 UnityWebRequest.kHttpVerbPUT,
                 onError,
                 onResult,
                 bodyRaw,
-                GameManager.Instance.GetAuthentication())
+                StartManager.Instance.GetAuthentication())
             );*/
         }
         

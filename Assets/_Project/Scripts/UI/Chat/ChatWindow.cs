@@ -38,12 +38,12 @@ namespace LGamesDev.UI
         public void Show()
         {
             gameObject.SetActive(true);
-            //GameManager.Instance.networkService.ConnectToChat();
+            //StartManager.Instance.networkService.ConnectToChat();
         }
 
         public void Hide()
         {
-            //GameManager.Instance.networkService.ExitChat();
+            //StartManager.Instance.networkService.ExitChat();
             gameObject.SetActive(false);
         }
 
@@ -55,7 +55,7 @@ namespace LGamesDev.UI
 
         private void OnEnable()
         {
-            if (GameManager.Instance != null)
+            if (StartManager.Instance != null)
             {
                 ChatService.MessageReceived += AddMessageToChannel;
             }
@@ -63,7 +63,7 @@ namespace LGamesDev.UI
 
         private void OnDisable()
         {
-            if (GameManager.Instance != null)
+            if (StartManager.Instance != null)
             {
                 ChatService.MessageReceived -= AddMessageToChannel;
             }

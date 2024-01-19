@@ -18,11 +18,11 @@ namespace LGamesDev
 
         public Loader.Scene activeScene;
         
-        private GameManager _gameManager;
+        private StartManager _startManager;
 
         private void Awake()
         {
-            _gameManager = GameManager.Instance;
+            _startManager = StartManager.Instance;
         }
 
         public async void LoadAuthentication(bool loadingScreenEnabled, bool loadingScreenDisabled)
@@ -66,7 +66,7 @@ namespace LGamesDev
 
         public async void LoadFight(Fight fight)
         {
-            await _gameManager.loadingScreen.EnableLoadingScreen();
+            await _startManager.loadingScreen.EnableLoadingScreen();
 
             // Load / unload scene below to load Fight
             //UnloadAdditiveScenes();
@@ -81,7 +81,7 @@ namespace LGamesDev
             // When scene loaded setup the fight
             await FightManager.Instance.SetupFight(fight);
             
-            await _gameManager.loadingScreen.DisableLoadingScreen();
+            await _startManager.loadingScreen.DisableLoadingScreen();
 
             FightManager.Instance.StartFight();
             activeScene = Loader.Scene.GameScene;
@@ -109,7 +109,7 @@ namespace LGamesDev
         {
             if (loadingScreenEnabled)
             {
-                await _gameManager.loadingScreen.EnableLoadingScreen();
+                await _startManager.loadingScreen.EnableLoadingScreen();
             }
 
             onLoadingScreenFunction?.Invoke();
@@ -123,7 +123,7 @@ namespace LGamesDev
 
             if (loadingScreenDisabled)
             {
-                await _gameManager.loadingScreen.DisableLoadingScreen();
+                await _startManager.loadingScreen.DisableLoadingScreen();
             }
         }
 
@@ -139,9 +139,9 @@ namespace LGamesDev
 
                     _totalSceneProgress = _totalSceneProgress / _scenesLoading.Count * 100f;
 
-                    _gameManager.loadingScreen.progressBar.progressText.text = "Loading";
-                    _gameManager.loadingScreen.progressBar.current = Mathf.RoundToInt(_totalSceneProgress);
-                    _gameManager.loadingScreen.progressBar.percentageText.text = Mathf.RoundToInt(_totalSceneProgress).ToString() + "%";
+                    _startManager.loadingScreen.progressBar.progressText.text = "Loading";
+                    _startManager.loadingScreen.progressBar.current = Mathf.RoundToInt(_totalSceneProgress);
+                    _startManager.loadingScreen.progressBar.percentageText.text = Mathf.RoundToInt(_totalSceneProgress).ToString() + "%";
 
                     await Task.Yield();
                 }
@@ -167,7 +167,7 @@ namespace LGamesDev
                 {
                     _totalSetupProgress = Initialisation.Current.progress;
 
-                    _gameManager.loadingScreen.progressBar.progressText.text = Initialisation.Current.currentStage switch
+                    _startManager.loadingScreen.progressBar.progressText.text = Initialisation.Current.currentStage switch
                     {
                         InitialisationStage.Body => "Loading Body",
                         InitialisationStage.Progression => "Loading Player Infos",
@@ -181,8 +181,8 @@ namespace LGamesDev
 
                 int totalProgress = Mathf.RoundToInt((_totalSceneProgress + _totalSetupProgress) / 2f);
 
-                _gameManager.loadingScreen.progressBar.current = Mathf.RoundToInt(totalProgress);
-                _gameManager.loadingScreen.progressBar.percentageText.text = Mathf.RoundToInt(totalProgress) + "%";
+                _startManager.loadingScreen.progressBar.current = Mathf.RoundToInt(totalProgress);
+                _startManager.loadingScreen.progressBar.percentageText.text = Mathf.RoundToInt(totalProgress) + "%";
 
                 await Task.Yield();
             }

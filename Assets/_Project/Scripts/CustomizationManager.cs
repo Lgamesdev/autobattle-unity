@@ -11,7 +11,7 @@ namespace LGamesDev
     {
         public static CustomizationManager Instance;
         
-        private GameManager _gameManager;
+        private StartManager _startManager;
 
         public TabGroup tabGroup;
 
@@ -22,9 +22,9 @@ namespace LGamesDev
 
         private void Start()
         {
-            _gameManager = GameManager.Instance;
+            _startManager = StartManager.Instance;
             
-            if (_gameManager == null)
+            if (_startManager == null)
             {
                 //SceneManager.LoadScene((int)SceneIndexes.PersistentScene);
                 Loader.Load(Loader.Scene.LoadingScene);
@@ -89,9 +89,9 @@ namespace LGamesDev
                 {
                     //Debug.Log("Received : " + response);
 
-                    PlayerConfig playerConfig = _gameManager.GetPlayerConf();
+                    PlayerConfig playerConfig = _startManager.GetPlayerConf();
                     playerConfig.CreationDone = true;
-                    _gameManager.SetPlayerConf(playerConfig);
+                    _startManager.SetPlayerConf(playerConfig);
                     
                     Loader.Load(Loader.Scene.MenuScene);
                 }

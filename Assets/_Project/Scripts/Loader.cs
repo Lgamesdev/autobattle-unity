@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 public static class Loader {
     
     public enum Scene {
-        StartScene,
         AuthenticationScene,
         CustomizationScene,
         MenuScene,

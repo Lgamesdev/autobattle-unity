@@ -48,7 +48,7 @@ namespace LGamesDev.UI
 
         private void Start()
         {
-            //GameManager.Instance.networkService.GetItemsList();
+            //StartManager.Instance.networkService.GetItemsList();
             ShopHandler.GetPurchase(
                 shopList => ShopItems = shopList,
                 e => Debug.Log("error on shopList : " + e), 

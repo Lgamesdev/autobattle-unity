@@ -7,38 +7,42 @@ using UnityEngine.UI;
 
 public class LobbyUI : MonoBehaviour
 {
-    [SerializeField] private Button closeButton;
+    [SerializeField] private Button backButton;
     [SerializeField] private Button createLobbyButton;
     [SerializeField] private Button quickJoinButton;
     [SerializeField] private Button joinCodeButton;
     [SerializeField] private TMP_InputField joinCodeInputField;
-    [SerializeField] private TMP_InputField playerNameInputField;
+    [SerializeField] private TextMeshProUGUI playerNameText;
     [SerializeField] private LobbyCreateUI lobbyCreateUI;
     [SerializeField] private Transform lobbyContainer;
     [SerializeField] private Transform lobbyTemplate;
 
     private void Awake()
     {
-        closeButton.onClick.AddListener(() =>
+        backButton.onClick.AddListener(() =>
         {
             GameLobby.Instance.LeaveLobby();
             Loader.Load(Loader.Scene.MenuScene);
         });
-        createLobbyButton.onClick.AddListener(() =>
-        {
-            GameLobby.Instance.CreateLobby(GameMultiplayer.Character.username, false);
+        createLobbyButton.onClick.AddListener(() => {
+            lobbyCreateUI.Show();
         });
-        quickJoinButton.onClick.AddListener(() =>
-        {
+        quickJoinButton.onClick.AddListener(() => {
             GameLobby.Instance.QuickJoin();
         });
+        joinCodeButton.onClick.AddListener(() => {
+            GameLobby.Instance.JoinWithCode(joinCodeInputField.text);
+        });
+        
+        lobbyTemplate.gameObject.SetActive(false);
     }
 
-    private void Start() {
-        playerNameInputField.text = GameMultiplayer.Instance.GetPlayerName();
-        playerNameInputField.onValueChanged.AddListener((string newText) => {
-            GameMultiplayer.Instance.SetPlayerName(newText);
-        });
+    private void Start()
+    {
+        Debug.Log("character : " + GameMultiplayer.Character);
+        string username = GameMultiplayer.Character.username;
+        GameMultiplayer.Instance.SetPlayerName(username);
+        playerNameText.text = username;
 
         GameLobby.Instance.OnLobbyListChanged += GameLobby_OnLobbyListChanged;
         UpdateLobbyList(new List<Lobby>());

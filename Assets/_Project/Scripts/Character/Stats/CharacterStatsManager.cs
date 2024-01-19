@@ -52,7 +52,7 @@ namespace LGamesDev.Core.Player
         {
             if (CharacterManager.Instance.Character.StatPoint > 0)
             {
-                //GameManager.Instance.networkService.TryAddStatPoint(statType);
+                //StartManager.Instance.networkService.TryAddStatPoint(statType);
             }
             else
             {

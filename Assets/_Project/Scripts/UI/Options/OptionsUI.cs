@@ -35,13 +35,13 @@ public class OptionsUI : MonoBehaviour
                 }
                 else
                 {
-                    GameManager.Instance.modalWindow.ShowAsTextPopup(
+                    StartManager.Instance.modalWindow.ShowAsTextPopup(
                         "Account link failed",
                         "Failed to retrieve Google play games authorization",
                         null,
                         "Ok",
                         null,
-                        GameManager.Instance.modalWindow.Close
+                        StartManager.Instance.modalWindow.Close
                     );
                     Debug.Log("Google login Unsuccessful");
                 }
@@ -61,13 +61,13 @@ public class OptionsUI : MonoBehaviour
         catch (AuthenticationException ex) when (ex.ErrorCode == AuthenticationErrorCodes.AccountAlreadyLinked)
         {
             // Prompt the player with an error message.
-            GameManager.Instance.modalWindow.ShowAsTextPopup(
+            StartManager.Instance.modalWindow.ShowAsTextPopup(
                 "Account already linked",
                 "This user is already linked with another account. Log in instead.",
                 null,
                 "Ok",
                 null,
-                GameManager.Instance.modalWindow.Close
+                StartManager.Instance.modalWindow.Close
             );
         }
 
@@ -87,13 +87,13 @@ public class OptionsUI : MonoBehaviour
     
     public void Logout()
     {
-        /*Authentication authentication = GameManager.Instance.GetAuthentication();
+        /*Authentication authentication = StartManager.Instance.GetAuthentication();
 
         StartCoroutine(AuthenticationHandler.Logout(
             this,
             authentication.refresh_token,
             () => {
-                GameManager.Instance.Logout();
+                StartManager.Instance.Logout();
             }
         ));*/
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Core.Player;
 using LGamesDev.Core.Request;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
@@ -16,7 +17,7 @@ namespace LGamesDev
     public class AuthenticationManager : MonoBehaviour
     {
         public static AuthenticationManager Instance;
-        private GameManager _gameManager;
+        private StartManager _startManager;
         
         private AuthenticationState _state;
         public Action<AuthenticationState> OnStateUpdate;
@@ -27,16 +28,90 @@ namespace LGamesDev
         private void Awake()
         {
             Instance = this;
-            _gameManager = GameManager.Instance;
+            
+            InitializeUnityAuthentication();
+        }
+        
+        private async void InitializeUnityAuthentication() {
+            try
+            {
+                // initialize Unity's authentication and core services, however check for internet connection
+                // in order to fail gracefully without throwing exception if connection does not exist
+                if (Utilities.CheckForInternetConnection())
+                {
+                    if (UnityServices.State != ServicesInitializationState.Initialized) {
+                        //InitializationOptions initializationOptions = new InitializationOptions();
+                        //initializationOptions.SetProfile(UnityEngine.Random.Range(0, 10000).ToString());
+                        
+                        await UnityServices.InitializeAsync(/*initializationOptions*/);
+                        
+                        SetupAuthenticationEvents();
+    
+                        await AuthenticationService.Instance.SignInAnonymouslyAsync();
+                        
+#if UNITY_ANDROID
+                        //Initialize PlayGamesPlatform
+                        PlayGamesPlatform.Activate();
+#endif
+                        try
+                        {
+#if UNITY_ANDROID
+                            TrySignInWithGooglePlayGames();
+#endif
+#if UNITY_IOS
+                            //Initialize Game Center
+                            await AuthenticationService.Instance.SignInAnonymouslyAsync();
+                            SetState(AuthenticationState.Default);
+                            /*if (_startManager.GetAuthentication() != null)
+                            {
+                                Refresh();
+                            }
+                            else
+                            {
+                                SetState(AuthenticationState.Default);
+                            }*/
+#endif
+                            AuthenticationHandler.Connect(result =>
+                                {
+                                    //_startManager.SetPlayerConf(result);
+                                    MenuManager.PlayerConfig = result;
+                                    Loader.Load(Loader.Scene.MenuScene);
+                                },
+                                e =>
+                                {
+                                    if(e.Message == "No account found for this player")
+                                        SetState(AuthenticationState.Register);
+                                },
+                                e =>
+                                {
+                                    Debug.Log("error : " + e);
+                                    SetState(AuthenticationState.Default);
+                                });
+                        }
+                        catch (AuthenticationException ex)
+                        {
+                            // Compare error code to AuthenticationErrorCodes
+                            // Notify the player with the proper error message
+                            Debug.LogException(ex);
+                        }
+                        catch (RequestFailedException ex)
+                        {
+                            // Compare error code to CommonErrorCodes
+                            // Notify the player with the proper error message
+                            Debug.LogException(ex);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+            }
         }
 
         private void Start()
         {
-            /*if (_gameManager == null)
-            {
-                SceneManager.LoadScene((int)SceneIndexes.PersistentScene);
-            }*/
-            SetupAuthentication();
+            //SetupAuthentication();
         }
 
         async Task InitializeRemoteConfigAsync()
@@ -87,7 +162,7 @@ namespace LGamesDev
                     //Initialize Game Center
                     await AuthenticationService.Instance.SignInAnonymouslyAsync();
                     SetState(AuthenticationState.Default);
-                    /*if (_gameManager.GetAuthentication() != null)
+                    /*if (_startManager.GetAuthentication() != null)
                     {
                         Refresh();
                     }
@@ -99,7 +174,8 @@ namespace LGamesDev
                 
                 AuthenticationHandler.Connect(result =>
                 {
-                    _gameManager.SetPlayerConf(result);
+                    //_startManager.SetPlayerConf(result);
+                    MenuManager.PlayerConfig = result;
                     Loader.Load(Loader.Scene.MenuScene);
                 },
                 e =>
@@ -231,7 +307,7 @@ namespace LGamesDev
                 username, 
                 result =>
                 {
-                    _gameManager.SetPlayerConf(result);
+                    _startManager.SetPlayerConf(result);
                     Loader.Load(Loader.Scene.MenuScene);
                 },
                 e =>
@@ -253,8 +329,8 @@ namespace LGamesDev
                 password,
                 result =>
                 {
-                    _gameManager.SetAuthentication(result);
-                    _gameManager.LoadMainMenu();
+                    _startManager.SetAuthentication(result);
+                    _startManager.LoadMainMenu();
                 }
             ));*/
         }
@@ -263,11 +339,11 @@ namespace LGamesDev
         {
             /*StartCoroutine(AuthenticationHandler.RefreshToken(
                 this,
-                _gameManager.GetAuthentication().refresh_token,
+                _startManager.GetAuthentication().refresh_token,
                 result =>
                 {
-                    _gameManager.SetAuthentication(result);
-                    _gameManager.LoadMainMenu();
+                    _startManager.SetAuthentication(result);
+                    _startManager.LoadMainMenu();
                 }
             ));*/
         }

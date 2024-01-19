@@ -40,7 +40,7 @@ namespace LGamesDev
             _ws = new WebSocket(Url, new Dictionary<string, string>()
             {
                 { "Client", "Unity" },
-                { "Authorization", GameManager.Instance.GetAuthentication().token },
+                { "Authorization", StartManager.Instance.GetAuthentication().token },
             });
 
             _ws.OnOpen += () =>
@@ -54,14 +54,14 @@ namespace LGamesDev
             {
                 _isError = true;
                 Debug.Log("Error! " + e.ToString());
-                GameManager.Instance.modalWindow.ShowAsTextPopup(
+                StartManager.Instance.modalWindow.ShowAsTextPopup(
                     "Something get wrong...",
                     "Error : " + e,
                     "Retry",
                     "Disconnect",
-                    GameManager.Instance.LoadMainMenu,
-                    GameManager.Instance.Logout,
-                    GameManager.Instance.modalWindow.Close
+                    StartManager.Instance.LoadMainMenu,
+                    StartManager.Instance.Logout,
+                    StartManager.Instance.modalWindow.Close
                 );
             };
 
@@ -73,14 +73,14 @@ namespace LGamesDev
                 
                 if (!_isError && isConnected)
                 {
-                    GameManager.Instance.modalWindow.ShowAsTextPopup(
+                    StartManager.Instance.modalWindow.ShowAsTextPopup(
                         "You've got disconnected...",
                         e.ToString(),
                         "Reconnect",
                         "Disconnect",
-                        GameManager.Instance.LoadMainMenu,
-                        GameManager.Instance.Logout,
-                        GameManager.Instance.modalWindow.Close
+                        StartManager.Instance.LoadMainMenu,
+                        StartManager.Instance.Logout,
+                        StartManager.Instance.modalWindow.Close
                     );
                     //Invoke(nameof(Connect), 10.0f);
                 }

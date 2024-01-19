@@ -31,7 +31,7 @@ namespace LGamesDev.UI
 
         private void Start()
         {
-            //GameManager.Instance.networkService.GetRankList();
+            //StartManager.Instance.networkService.GetRankList();
             /*StartCoroutine(RequestHandler.Request("api/user/ranking",
                 UnityWebRequest.kHttpVerbGET,
                 error => { Debug.Log("Error on /user/ranking : " + error); },
@@ -44,7 +44,7 @@ namespace LGamesDev.UI
                     SetupUI();
                 },
                 null,
-                GameManager.Instance.GetAuthentication())
+                StartManager.Instance.GetAuthentication())
             );*/
         }
 
@@ -56,7 +56,7 @@ namespace LGamesDev.UI
 
             CreateCharacterCard(new Character()
             {
-                username = GameManager.Instance.GetPlayerConf().Username,
+                username = StartManager.Instance.GetPlayerConf().Username,
                 level = playerCharacter.level,
                 Ranking = playerCharacter.Ranking,
             }, 0, true);

@@ -29,9 +29,9 @@ namespace LGamesDev.Fighting
 
         private void Start()
         {
-            if (GameManager.Instance != null)
+            if (StartManager.Instance != null)
             {
-                //Subscribe(GameManager.Instance.networkManager);
+                //Subscribe(StartManager.Instance.networkManager);
             }
 
             fightManager = FightManager.Instance;
@@ -65,7 +65,7 @@ namespace LGamesDev.Fighting
             /*switch (socketMessage.Channel)
             {
                 case var value when string.Equals(value,
-                    string.Concat(FightChannelSuffix, GameManager.Instance.GetAuthentication().username)):
+                    string.Concat(FightChannelSuffix, StartManager.Instance.GetAuthentication().username)):
                     switch (socketMessage.Action)
                     {
                         case AttackAction:
@@ -98,11 +98,11 @@ namespace LGamesDev.Fighting
             //Debug.Log("try attack action");
             /*if (!_isFightOver)
             {
-                GameManager.Instance.networkManager.SendSocket(new SocketMessage()
+                StartManager.Instance.networkManager.SendSocket(new SocketMessage()
                 {
                     Action = TryAttack,
-                    Channel = string.Concat(FightChannelSuffix, GameManager.Instance.GetAuthentication().username),
-                    Username = GameManager.Instance.GetAuthentication().username,
+                    Channel = string.Concat(FightChannelSuffix, StartManager.Instance.GetAuthentication().username),
+                    Username = StartManager.Instance.GetAuthentication().username,
                     Content = actionType.ToString(),
                 });
             }*/
@@ -110,8 +110,8 @@ namespace LGamesDev.Fighting
             /*_ws.SendText(JsonConvert.SerializeObject(new Dictionary<string, string>
             {
                 { "action", SocketSendAction.TryAttack },
-                { "channel", string.Concat(SocketChannel.FightChannelSuffix, GameManager.Instance.GetAuthentication().username) },
-                { "username", GameManager.Instance.GetAuthentication().username },
+                { "channel", string.Concat(SocketChannel.FightChannelSuffix, StartManager.Instance.GetAuthentication().username) },
+                { "username", StartManager.Instance.GetAuthentication().username },
                 { "content", actionType.ToString() },
             }));*/
         }

@@ -46,7 +46,7 @@ namespace LGamesDev.UI
             {
                 case AuthenticationState.Loading 
                     or AuthenticationState.Connect:
-                        StartCoroutine(GameManager.Instance.loadingScreen.EnableWaitingScreen());
+                        //StartCoroutine(StartManager.Instance.loadingScreen.EnableWaitingScreen());
                         break;
                 
                 case AuthenticationState.Default:
@@ -81,7 +81,7 @@ namespace LGamesDev.UI
                 && state != AuthenticationState.Connect)
             {
                 //Debug.Log("state = " + state + " waiting screen disabled");
-                StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());
+                //StartCoroutine(StartManager.Instance.loadingScreen.DisableWaitingScreen());
             }
         }
 
@@ -92,13 +92,13 @@ namespace LGamesDev.UI
                 if (!_activeForm.Find("passwordField").GetComponent<TMP_InputField>().text
                         .Equals(_activeForm.Find("rePasswordField").GetComponent<TMP_InputField>().text)) 
                 {
-                    GameManager.Instance.modalWindow.ShowAsTextPopup(
+                    StartManager.Instance.modalWindow.ShowAsTextPopup(
                         "Error on register", 
                         "Password must correspond to the password verification.", 
                         "", 
                         "Close",
                         null,
-                        GameManager.Instance.modalWindow.Close
+                        StartManager.Instance.modalWindow.Close
                     );
                 } 
                 else 
@@ -127,13 +127,13 @@ namespace LGamesDev.UI
                 }
                 else
                 {
-                    GameManager.Instance.modalWindow.ShowAsTextPopup(
+                    StartManager.Instance.modalWindow.ShowAsTextPopup(
                         "Error on register",
                         "You must enter a username!", 
                         "", 
                         "Close",
                         null,
-                        GameManager.Instance.modalWindow.Close
+                        StartManager.Instance.modalWindow.Close
                     );
                 }
             }

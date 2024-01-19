@@ -40,6 +40,6 @@ public class HeroWindowTrigger : MonoBehaviour
             alternateCallback = onAlternateCallback.Invoke;
         }*/
 
-        GameManager.Instance.modalWindow.ShowAsHero(title, sprite, message, continueCallback, cancelCallback);
+        StartManager.Instance.modalWindow.ShowAsHero(title, sprite, message, continueCallback, cancelCallback);
     }
 }

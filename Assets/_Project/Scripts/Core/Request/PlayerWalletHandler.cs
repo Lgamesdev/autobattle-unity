@@ -40,13 +40,13 @@ namespace LGamesDev.Core.Request
                     }
                 },
                 null,
-                GameManager.Instance.GetAuthentication())
+                StartManager.Instance.GetAuthentication())
             );*/
         }
 
         public static /*IEnumerator*/void Buy(MonoBehaviour instance, Item item, Action<string> onError, Action<IBaseCharacterItem> onResult)
         {
-            /*yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.EnableWaitingScreen());
+            /*yield return instance.StartCoroutine(StartManager.Instance.loadingScreen.EnableWaitingScreen());
             
             yield return instance.StartCoroutine(RequestHandler.Request("api/shop/buy/" + item.ID,
                 UnityWebRequest.kHttpVerbPOST,
@@ -66,15 +66,15 @@ namespace LGamesDev.Core.Request
                     onResult?.Invoke(characterItem);
                 },
                 null,
-                GameManager.Instance.GetAuthentication())
+                StartManager.Instance.GetAuthentication())
             );
             
-            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());*/
+            yield return instance.StartCoroutine(StartManager.Instance.loadingScreen.DisableWaitingScreen());*/
         }
         
         public static /*IEnumerator*/void Sell(MonoBehaviour instance, IBaseCharacterItem characterItem, Action<string> onError, Action<string> onResult)
         {
-            /*yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.EnableWaitingScreen());
+            /*yield return instance.StartCoroutine(StartManager.Instance.loadingScreen.EnableWaitingScreen());
             
             yield return instance.StartCoroutine(RequestHandler.Request("api/shop/sell/" + characterItem.Id,
                 UnityWebRequest.kHttpVerbPUT,
@@ -88,10 +88,10 @@ namespace LGamesDev.Core.Request
                     onResult?.Invoke(response);
                 },
                 null,
-                GameManager.Instance.GetAuthentication())
+                StartManager.Instance.GetAuthentication())
             );
             
-            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());*/
+            yield return instance.StartCoroutine(StartManager.Instance.loadingScreen.DisableWaitingScreen());*/
         }
     }
 }

@@ -18,18 +18,18 @@ namespace LGamesDev
         
         public PopupHandler firstPopup;
 
-        private GameManager _gameManager;
+        private StartManager _startManager;
 
         private void Awake()
         {
             Instance = this;
-            _gameManager = GameManager.Instance;
+            //_startManager = StartManager.Instance;
         }
 
         private void Start()
         {
             //In start method cause of loading scene
-            /*if (_gameManager == null)
+            /*if (_startManager == null)
             {
                 SceneManager.LoadScene((int)SceneIndexes.PersistentScene);
             }
@@ -38,21 +38,22 @@ namespace LGamesDev
                 
             }*/
             
-            if (!_gameManager.GetPlayerConf().CreationDone)
+            /*if (!_startManager.GetPlayerConf().CreationDone)
             {
-                //_gameManager.LoadCustomization();
+                //_startManager.LoadCustomization();
                 Loader.Load(Loader.Scene.CustomizationScene);
             }
             else
             {
-                Initialisation.Current.LoadMainMenu();
-                _gameManager.PlayMainMenuMusic();
-            }
+                
+            }*/
+            Initialisation.Current.LoadMainMenu();
+            _startManager.PlayMainMenuMusic();
         }
 
         public void HandleTutorial()
         {
-            if (!_gameManager.GetPlayerConf().TutorialDone) {
+            if (!_startManager.GetPlayerConf().TutorialDone) {
                 GetComponent<DialogTrigger>().StartDialog();
             }
         }
@@ -63,26 +64,26 @@ namespace LGamesDev
             {
                 Debug.Log("error on initialisation : " + e);
             });
-            //_gameManager.networkService.OnTutorialFinished();
+            //_startManager.networkService.OnTutorialFinished();
             /*StartCoroutine(RequestHandler.Request("api/user/tutorialDone",
                 UnityWebRequest.kHttpVerbGET,
                 error => { Debug.Log("Error on /tutorialDone : " + error); },
                 response => { Debug.Log("Received /tutorialDone : " + response); },
                 null,
-                _gameManager.GetAuthentication())
+                _startManager.GetAuthentication())
             );*/
         }
 
         public void LoadPvpFight()
         {
-           // _gameManager.networkService.SearchFight(FightType.Pvp);
+           // _startManager.networkService.SearchFight(FightType.Pvp);
             /*StartCoroutine(FightHandler.Load(
                 this,
                 result =>
                 {
                     //Debug.Log("fight request result : " + result.ToString());
 
-                    _gameManager.LoadFight(result);
+                    _startManager.LoadFight(result);
                 }
             ));*/
             
@@ -90,14 +91,14 @@ namespace LGamesDev
         
         public void LoadPveFight()
         {
-            //_gameManager.networkService.SearchFight(FightType.Pve);
+            //_startManager.networkService.SearchFight(FightType.Pve);
             /*StartCoroutine(FightHandler.Load(
                 this,
                 result =>
                 {
                     //Debug.Log("fight request result : " + result.ToString());
 
-                    _gameManager.LoadFight(result);
+                    _startManager.LoadFight(result);
                 }
             ));*/
         }

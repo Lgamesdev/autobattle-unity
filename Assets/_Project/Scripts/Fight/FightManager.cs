@@ -36,7 +36,7 @@ namespace LGamesDev.Fighting
 
         //[SerializeField] private State state = State.Busy;
 
-        private GameManager _gameManager; 
+        private StartManager _startManager; 
 
         private void Awake()
         {
@@ -45,9 +45,9 @@ namespace LGamesDev.Fighting
 
         private void Start()
         {
-            _gameManager = GameManager.Instance;
+            _startManager = StartManager.Instance;
             
-            if (_gameManager == null)
+            if (_startManager == null)
             {
                 //SceneManager.LoadScene((int)SceneIndexes.PersistentScene);
             }
@@ -57,7 +57,7 @@ namespace LGamesDev.Fighting
 
         public async Task SetupFight(Fight fight)
         {
-            SetFightSpeed(GameManager.Instance.GetPlayerOptions().FightSpeed);
+            SetFightSpeed(StartManager.Instance.GetPlayerOptions().FightSpeed);
             
             isFightOver = false;
             
@@ -90,7 +90,7 @@ namespace LGamesDev.Fighting
         {
             //playerCharacterFight.Intro(_enemyCharacterFight, PlayNextAction);
             
-            _gameManager.PlayFightMusic();
+            _startManager.PlayFightMusic();
             
             OnFightStart?.Invoke();
             PlayNextAction();
@@ -210,11 +210,11 @@ namespace LGamesDev.Fighting
         {
             if (_fight.PlayerWin)
             {
-                _gameManager.audioManager.PlayWinMusic();
+                _startManager.audioManager.PlayWinMusic();
             }
             else
             {
-                _gameManager.audioManager.PlayLoseMusic();
+                _startManager.audioManager.PlayLoseMusic();
             }
             
             //playerCharacterFight.GetLevelSystem().AddExperience(Fight.Reward.Experience);
@@ -238,9 +238,9 @@ namespace LGamesDev.Fighting
             fightSpeed = pFightSpeed;
             Time.timeScale = fightSpeed;
             
-            PlayerOptions playerOptions = _gameManager.GetPlayerOptions();
+            PlayerOptions playerOptions = _startManager.GetPlayerOptions();
             playerOptions.FightSpeed = fightSpeed;
-            _gameManager.SetPlayerOptions(playerOptions);
+            _startManager.SetPlayerOptions(playerOptions);
             FightSpeedChanged?.Invoke(fightSpeed);
         }
 
@@ -254,13 +254,13 @@ namespace LGamesDev.Fighting
 
         public void BackToMainMenu()
         {
-            //_gameManager.LoadMainMenu();
+            //_startManager.LoadMainMenu();
             Loader.Load(Loader.Scene.MenuScene);
         }
 
         public void FightAgain()
         {
-            //_gameManager.networkService.SearchFight(_fight.FightType);
+            //_startManager.networkService.SearchFight(_fight.FightType);
         }
     }
 

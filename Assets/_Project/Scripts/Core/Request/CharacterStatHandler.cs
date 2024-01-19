@@ -40,7 +40,7 @@ namespace LGamesDev.Core.Request
                     setResult(responseRaw);
                 },
                 null,
-                GameManager.Instance.GetAuthentication())
+                StartManager.Instance.GetAuthentication())
             );*/
         }
 
@@ -52,7 +52,7 @@ namespace LGamesDev.Core.Request
             
             var bodyRaw = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(form));
 
-            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.EnableWaitingScreen());
+            yield return instance.StartCoroutine(StartManager.Instance.loadingScreen.EnableWaitingScreen());
             
             yield return instance.StartCoroutine(RequestHandler.Request("api/user/stats/add",
                 UnityWebRequest.kHttpVerbPUT,
@@ -65,10 +65,10 @@ namespace LGamesDev.Core.Request
                     onResult?.Invoke(response);
                 },
                 bodyRaw,
-                GameManager.Instance.GetAuthentication())
+                StartManager.Instance.GetAuthentication())
             );
             
-            yield return instance.StartCoroutine(GameManager.Instance.loadingScreen.DisableWaitingScreen());*/
+            yield return instance.StartCoroutine(StartManager.Instance.loadingScreen.DisableWaitingScreen());*/
         }
     }
 }

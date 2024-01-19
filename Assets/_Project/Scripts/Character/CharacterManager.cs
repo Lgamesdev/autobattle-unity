@@ -41,7 +41,7 @@ namespace LGamesDev
 
         public async Task SetupCharacter(IFighter fighter)
         {
-            Character.username = GameManager.Instance.GetPlayerConf().Username;
+            Character.username = MenuManager.PlayerConfig.Username;//StartManager.Instance.GetPlayerConf().Username;
             Character.level = fighter.Level;
             
             //Setup Equipments

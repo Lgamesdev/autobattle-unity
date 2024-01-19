@@ -26,7 +26,7 @@ namespace LGamesDev.Core.Request
                         setResult(playerProgression);
                     },
                     null,
-                    GameManager.Instance.GetAuthentication())
+                    StartManager.Instance.GetAuthentication())
                 );*/
         }
     }

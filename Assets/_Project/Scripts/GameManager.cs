@@ -1,220 +1,218 @@
-using Core.Network;
-using Core.Player;
-using LGamesDev.Core;
-using LGamesDev.Core.Player;
-using LGamesDev.Fighting;
-using Newtonsoft.Json;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace LGamesDev
+public class GameManager : NetworkBehaviour
 {
-    public class GameManager : MonoBehaviour
-    {
-        private static GameManager s_Instance;
-        
-        
-#if UNITY_EDITOR
-        //As our manager run first, it will also be destroyed first when the app will be exiting, which lead to s_Instance
-        //to become null and so will trigger another instantiate in edit mode (as we dynamically instantiate the Manager)
-        //so this is set to true when destroyed, so we do not reinstantiate a new one
-        private static bool s_IsQuitting = false;
-#endif
-        public static GameManager Instance 
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (!Application.isPlaying || s_IsQuitting)
-                    return null;
-                
-                if (s_Instance == null)
-                {
-                    //in editor, we can start any scene to test, so we are not sure the game manager will have been
-                    //created by the first scene starting the game. So we load it manually. This check is useless in
-                    //player build as the 1st scene will have created the GameManager so it will always exists.
-                    Instantiate(Resources.Load<GameManager>("GameManager"));
+    public static GameManager Instance { get; private set; }
+    
+    public event EventHandler OnStateChanged;
+    public event EventHandler OnLocalGamePaused;
+    public event EventHandler OnLocalGameUnpaused;
+    public event EventHandler OnMultiplayerGamePaused;
+    public event EventHandler OnMultiplayerGameUnpaused;
+    public event EventHandler OnLocalPlayerReadyChanged;
+    
+    private enum State {
+        WaitingToStart,
+        CountdownToStart,
+        GamePlaying,
+        GameOver,
+    }
+    
+    [SerializeField] private Transform playerPrefab;
+    
+    private NetworkVariable<State> state = new NetworkVariable<State>(State.WaitingToStart);
+    private bool isLocalPlayerReady;
+    private NetworkVariable<float> countdownToStartTimer = new NetworkVariable<float>(3f);
+    private NetworkVariable<float> gamePlayingTimer = new NetworkVariable<float>(0f);
+    private float gamePlayingTimerMax = 90f;
+    private bool isLocalGamePaused = false;
+    private NetworkVariable<bool> isGamePaused = new NetworkVariable<bool>(false);
+    private Dictionary<ulong, bool> playerReadyDictionary;
+    private Dictionary<ulong, bool> playerPausedDictionary;
+    private bool autoTestGamePausedState;
+    
+    private void Awake() {
+        Instance = this;
+
+        playerReadyDictionary = new Dictionary<ulong, bool>();
+        //playerPausedDictionary = new Dictionary<ulong, bool>();
+    }
+
+    private void Start() {
+        GameInput.Instance.OnPauseAction += GameInput_OnPauseAction;
+        GameInput.Instance.OnInteractAction += GameInput_OnInteractAction;
+    }
+
+    public override void OnNetworkSpawn() {
+        state.OnValueChanged += State_OnValueChanged;
+        //isGamePaused.OnValueChanged += IsGamePaused_OnValueChanged;
+
+        if (IsServer) {
+            NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_OnClientDisconnectCallback;
+            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += SceneManager_OnLoadEventCompleted;
+        }
+    }
+
+    private void SceneManager_OnLoadEventCompleted(string sceneName, UnityEngine.SceneManagement.LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut) {
+        foreach (ulong clientId in NetworkManager.Singleton.ConnectedClientsIds) {
+            Transform playerTransform = Instantiate(playerPrefab);
+            playerTransform.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId, true);
+        }
+    }
+
+    private void NetworkManager_OnClientDisconnectCallback(ulong clientId) {
+        autoTestGamePausedState = true;
+    }
+
+    private void IsGamePaused_OnValueChanged(bool previousValue, bool newValue) {
+        if (isGamePaused.Value) {
+            Time.timeScale = 0f;
+
+            OnMultiplayerGamePaused?.Invoke(this, EventArgs.Empty);
+        } else {
+            Time.timeScale = 1f;
+
+            OnMultiplayerGameUnpaused?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
+    private void State_OnValueChanged(State previousValue, State newValue) {
+        OnStateChanged?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void GameInput_OnInteractAction(object sender, EventArgs e) {
+        if (state.Value == State.WaitingToStart) {
+            isLocalPlayerReady = true;
+            OnLocalPlayerReadyChanged?.Invoke(this, EventArgs.Empty);
+
+            SetPlayerReadyServerRpc();
+        }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void SetPlayerReadyServerRpc(ServerRpcParams serverRpcParams = default) {
+        playerReadyDictionary[serverRpcParams.Receive.SenderClientId] = true;
+
+        bool allClientsReady = true;
+        foreach (ulong clientId in NetworkManager.Singleton.ConnectedClientsIds) {
+            if (!playerReadyDictionary.ContainsKey(clientId) || !playerReadyDictionary[clientId]) {
+                // This player is NOT ready
+                allClientsReady = false;
+                break;
+            }
+        }
+
+        if (allClientsReady) {
+            state.Value = State.CountdownToStart;
+        }
+    }
+
+    private void GameInput_OnPauseAction(object sender, EventArgs e) {
+        TogglePauseGame();
+    }
+
+    private void Update() {
+        if (!IsServer) {
+            return;
+        }
+
+        switch (state.Value) {
+            case State.WaitingToStart:
+                break;
+            case State.CountdownToStart:
+                countdownToStartTimer.Value -= Time.deltaTime;
+                if (countdownToStartTimer.Value < 0f) {
+                    state.Value = State.GamePlaying;
+                    gamePlayingTimer.Value = gamePlayingTimerMax;
                 }
-#endif
-                return s_Instance;
+                break;
+            case State.GamePlaying:
+                gamePlayingTimer.Value -= Time.deltaTime;
+                if (gamePlayingTimer.Value < 0f) {
+                    state.Value = State.GameOver;
+                }
+                break;
+            case State.GameOver:
+                break;
+        }
+    }
+
+    private void LateUpdate() {
+        if (autoTestGamePausedState) {
+            autoTestGamePausedState = false;
+            TestGamePausedState();
+        }
+    }
+
+    public bool IsGamePlaying() {
+        return state.Value == State.GamePlaying;
+    }
+
+    public bool IsCountdownToStartActive() {
+        return state.Value == State.CountdownToStart;
+    }
+
+    public float GetCountdownToStartTimer() {
+        return countdownToStartTimer.Value;
+    }
+
+    public bool IsGameOver() {
+        return state.Value == State.GameOver;
+    }
+
+    public bool IsWaitingToStart() {
+        return state.Value == State.WaitingToStart;
+    }
+
+    public bool IsLocalPlayerReady() {
+        return isLocalPlayerReady;
+    }
+
+    public float GetGamePlayingTimerNormalized() {
+        return 1 - (gamePlayingTimer.Value / gamePlayingTimerMax);
+    }
+
+    public void TogglePauseGame() {
+        isLocalGamePaused = !isLocalGamePaused;
+        if (isLocalGamePaused) {
+            PauseGameServerRpc();
+
+            OnLocalGamePaused?.Invoke(this, EventArgs.Empty);
+        } else {
+            UnpauseGameServerRpc();
+
+            OnLocalGameUnpaused?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void PauseGameServerRpc(ServerRpcParams serverRpcParams = default) {
+        playerPausedDictionary[serverRpcParams.Receive.SenderClientId] = true;
+
+        TestGamePausedState();
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void UnpauseGameServerRpc(ServerRpcParams serverRpcParams = default) {
+        playerPausedDictionary[serverRpcParams.Receive.SenderClientId] = false;
+
+        TestGamePausedState();
+    }
+
+    private void TestGamePausedState() {
+        foreach (ulong clientId in NetworkManager.Singleton.ConnectedClientsIds) {
+            if (playerPausedDictionary.ContainsKey(clientId) && playerPausedDictionary[clientId]) {
+                // This player is paused
+                isGamePaused.Value = true;
+                return;
             }
         }
 
-        //[SerializeField] private SceneLoader sceneLoader;
-
-        //public NetworkManager networkManager;
-        //public NetworkService networkService;
-        
-        public LoadingScreen loadingScreen;
-        public ModalWindowPanel modalWindow;
-        public AudioManager audioManager;
-        public DialogManager dialogManager;
-        public ColorLibrary itemQualityColorLibrary;
-
-        //private Authentication _authentication;
-        private PlayerConfig _playerConfig;
-        //private const string AuthenticationKey = "authentication";
-        private const string PlayerConfKey = "playerConf";
-        private PlayerOptions _playerOptions;
-        private const string OptionsKey = "options";
-
-        private async void Awake()
-        {
-            s_Instance = this;
-            DontDestroyOnLoad(gameObject);
-            
-            //Network Manager
-            //networkManager = GetComponent<NetworkManager>();
-            //Network Manager
-            //networkService = GetComponent<NetworkService>();
-            //Audio Manager
-            audioManager = GetComponent<AudioManager>();
-            //Scene Loader
-            //sceneLoader = GetComponent<SceneLoader>();
-            //Loading Screen
-            //loadingScreen = GameObject.Find("/Canvas/LoadingScreen").GetComponent<LoadingScreen>();
-            await loadingScreen.DisableLoadingScreen();
-            //Modal Window
-            modalWindow.Close();
-
-            //Authentication
-            //_authentication = JsonConvert.DeserializeObject<Authentication>(PlayerPrefs.GetString(AuthenticationKey));
-            //Debug.Log("player prefs authentication : " + _authentication);
-            
-            _playerConfig = JsonConvert.DeserializeObject<PlayerConfig>(PlayerPrefs.GetString(PlayerConfKey));
-            Debug.Log("player conf : " + _playerConfig.ToString());
-            
-            //Player Options
-            _playerOptions = JsonConvert.DeserializeObject<PlayerOptions>(PlayerPrefs.GetString(OptionsKey)) ?? new PlayerOptions();
-        }
-        
-        /*public struct userAttributes {}
-        public struct appAttributes {}
-
-        async Task Start()
-        {
-            // initialize Unity's authentication and core services, however check for internet connection
-            // in order to fail gracefully without throwing exception if connection does not exist
-            if (Utilities.CheckForInternetConnection())
-            {
-                await InitializeRemoteConfigAsync();
-            }
-
-            RemoteConfigService.Instance.FetchCompleted += ApplyRemoteSettings;
-            RemoteConfigService.Instance.FetchConfigs(new userAttributes(), new appAttributes());
-        }
-
-        void ApplyRemoteSettings(ConfigResponse configResponse)
-        {
-            Debug.Log("RemoteConfigService.Instance.appConfig fetched: " + RemoteConfigService.Instance.appConfig.config.ToString());
-        }*/
-
-        private void Start()
-        {
-            /*if (_playerConfig == null)
-            {
-                sceneLoader.LoadAuthentication(true, true);
-            }
-            else
-            {
-                sceneLoader.LoadAuthentication(true, true);
-            }*/
-            Loader.Load(Loader.Scene.AuthenticationScene);
-            
-            /*audioManager.SetMixerVolume(AudioTrack.Music, _playerOptions.MusicVolume);
-            audioManager.SetMixerVolume(AudioTrack.Effects, _playerOptions.EffectsVolume);*/
-        }
-
-        public void LoadCustomization()
-        {
-            //sceneLoader.LoadCustomization();
-        }
-        
-        public void LoadMainMenu()
-        {
-            //sceneLoader.LoadMainMenu();
-        }
-
-        public void PlayMainMenuMusic()
-        {
-            audioManager.PlayMusic(1f);
-        }
-
-        public void LoadFight(Fight fight)
-        {
-            //sceneLoader.LoadFight(fight);
-        }
-        
-        public void PlayFightMusic()
-        {
-            audioManager.PlayFightMusic(1f);
-        }
-
-        public void Logout()
-        {
-            //networkManager.Disconnect();
-            
-            PlayerPrefs.DeleteKey(PlayerConfKey);
-            _playerConfig = null;
-            
-            audioManager.StopMusic();
-
-            //sceneLoader.LoadAuthentication(true, true);
-            Loader.Load(Loader.Scene.AuthenticationScene);
-        }
-        
-        public PlayerConfig GetPlayerConf()
-        {
-            return _playerConfig;
-        }
-        
-        public void SetPlayerConf(PlayerConfig playerConfig)
-        {
-            if (playerConfig != null)
-            {
-                _playerConfig = playerConfig;
-                PlayerPrefs.SetString(PlayerConfKey, JsonConvert.SerializeObject(_playerConfig));
-            }
-            else
-            {
-                Debug.LogError("trying to set player conf to null");
-            }
-        }
-
-        /*public Authentication GetAuthentication()
-        {
-            return _authentication;
-        }
-
-        public void SetAuthentication(Authentication authentication)
-        {
-            if (authentication != null)
-            {
-                _authentication = authentication;
-                PlayerPrefs.SetString(AuthenticationKey, JsonConvert.SerializeObject(_authentication));
-            }
-            else
-            {
-                Debug.LogError("trying to set authentication to null");
-            }
-        }*/
-
-        public PlayerOptions GetPlayerOptions()
-        {
-            return _playerOptions;
-        }
-        
-        public void SetPlayerOptions(PlayerOptions playerOptions)
-        {
-            if (playerOptions != null)
-            {
-                _playerOptions = playerOptions;
-                PlayerPrefs.SetString(OptionsKey, JsonConvert.SerializeObject(_playerOptions));
-            }
-            else
-            {
-                Debug.LogError("trying to set options to null");
-            }
-        }
+        // All players are unpaused
+        isGamePaused.Value = false;
     }
 }

@@ -40,7 +40,12 @@ public class GameLobby : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
 
-        InitializeUnityAuthentication();
+        if (UnityServices.State != ServicesInitializationState.Initialized)
+        {
+            Loader.Load(Loader.Scene.AuthenticationScene);
+        }
+        
+        //InitializeUnityAuthentication();
     }
 
     private async void InitializeUnityAuthentication() {
@@ -51,6 +56,7 @@ public class GameLobby : MonoBehaviour
             await UnityServices.InitializeAsync(initializationOptions);
 
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
+            
         }
     }
 

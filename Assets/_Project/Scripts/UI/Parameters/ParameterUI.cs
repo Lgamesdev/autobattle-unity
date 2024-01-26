@@ -11,7 +11,7 @@ using Unity.Services.Authentication;
 using Unity.Services.Core;
 using UnityEngine;
 
-public class OptionsUI : MonoBehaviour
+public class ParameterUI : MonoBehaviour
 {
 #if UNITY_ANDROID
     public async void LinkAccountWithGoogle()

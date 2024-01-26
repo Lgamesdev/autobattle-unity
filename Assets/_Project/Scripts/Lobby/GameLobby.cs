@@ -69,7 +69,7 @@ public class GameLobby : MonoBehaviour
         if (joinedLobby == null &&
             UnityServices.State == ServicesInitializationState.Initialized &&
             AuthenticationService.Instance.IsSignedIn && 
-            SceneManager.GetActiveScene().name == Loader.Scene.MenuScene.ToString()) {
+            SceneManager.GetActiveScene().name == Loader.Scene.LobbyScene.ToString()) {
 
             listLobbiesTimer -= Time.deltaTime;
             if (listLobbiesTimer <= 0f) {
@@ -97,6 +97,7 @@ public class GameLobby : MonoBehaviour
     }
 
     private async void ListLobbies() {
+        Debug.Log("list lobbies");
         try {
             QueryLobbiesOptions queryLobbiesOptions = new QueryLobbiesOptions {
                 Filters = new List<QueryFilter> {
@@ -166,7 +167,7 @@ public class GameLobby : MonoBehaviour
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(allocation, "dtls"));
 
             GameMultiplayer.Instance.StartHost();
-            Loader.LoadNetwork(Loader.Scene.GameScene);
+            Loader.LoadNetwork(Loader.Scene.CharacterSelectScene);
         } catch (LobbyServiceException e) {
             Debug.Log(e);
             OnCreateLobbyFailed?.Invoke(this, EventArgs.Empty);

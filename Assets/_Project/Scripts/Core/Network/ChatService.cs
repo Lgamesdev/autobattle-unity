@@ -26,10 +26,10 @@ namespace Core.Network
 
         private void Start()
         {
-            if (StartManager.Instance != null)
+            /*if (StartManager.Instance != null)
             {
-                //Subscribe(StartManager.Instance.networkManager);
-            }
+                Subscribe(StartManager.Instance.networkManager);
+            }*/
         }
 
         /*protected override void Subscribe(NetworkManager networkManager)

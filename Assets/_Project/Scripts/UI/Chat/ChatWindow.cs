@@ -55,18 +55,18 @@ namespace LGamesDev.UI
 
         private void OnEnable()
         {
-            if (StartManager.Instance != null)
+            /*if (StartManager.Instance != null)
             {
                 ChatService.MessageReceived += AddMessageToChannel;
-            }
+            }*/
         }
 
         private void OnDisable()
         {
-            if (StartManager.Instance != null)
+            /*if (StartManager.Instance != null)
             {
                 ChatService.MessageReceived -= AddMessageToChannel;
-            }
+            }*/
         }
     }
 }

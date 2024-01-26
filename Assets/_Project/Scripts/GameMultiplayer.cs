@@ -84,6 +84,8 @@ public class GameMultiplayer : NetworkBehaviour
         });
         SetPlayerNameServerRpc(GetPlayerName());
         SetPlayerIdServerRpc(AuthenticationService.Instance.PlayerId);
+        
+        Debug.Log("client connected callback list length : " + playerDataNetworkList.Count);
     }
 
     private void NetworkManager_ConnectionApprovalCallback(NetworkManager.ConnectionApprovalRequest connectionApprovalRequest, NetworkManager.ConnectionApprovalResponse connectionApprovalResponse) {

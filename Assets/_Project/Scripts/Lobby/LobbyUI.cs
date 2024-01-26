@@ -50,6 +50,7 @@ public class LobbyUI : MonoBehaviour
 
     private void GameLobby_OnLobbyListChanged(object sender, GameLobby.OnLobbyListChangedEventArgs e) {
         UpdateLobbyList(e.lobbyList);
+        Debug.Log("lobby list changed");
     }
 
     private void UpdateLobbyList(List<Lobby> lobbyList) {

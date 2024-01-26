@@ -11,19 +11,18 @@ public class GameStartCountdownUI : MonoBehaviour
     
     private Animator animator;
     private int previousCountdownNumber;
-
     
     private void Awake() {
         animator = GetComponent<Animator>();
     }
 
     private void Start() {
-        GameManager.Instance.OnStateChanged += KitchenGameManager_OnStateChanged;
+        GameManager.Instance.OnStateChanged += GameManager_OnStateChanged;
 
         Hide();
     }
 
-    private void KitchenGameManager_OnStateChanged(object sender, System.EventArgs e) {
+    private void GameManager_OnStateChanged(object sender, System.EventArgs e) {
         if (GameManager.Instance.IsCountdownToStartActive()) {
             Show();
         } else {
